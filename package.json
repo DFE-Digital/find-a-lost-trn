@@ -4,14 +4,23 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
     "@hotwired/turbo-rails": "^7.1.0",
-    "govuk-frontend": "^4.0.0",
     "esbuild": "^0.14.11",
+    "govuk-frontend": "^4.0.0",
     "sass": "^1.47.0"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds",
     "build:css": "sass ./app/assets/stylesheets/application.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "lint": "eslint --ext .js,.ts,.tsx ./app/javascript",
     "preinstall": "mkdir -p app/assets/builds/{fonts,images}",
     "postinstall": "cp -R node_modules/govuk-frontend/govuk/assets/fonts/. app/assets/builds/fonts && cp -R node_modules/govuk-frontend/govuk/assets/images/. app/assets/builds/images"
+  },
+  "devDependencies": {
+    "eslint": "^8.7.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-prettier": "^0.0.0-empty",
+    "prettier": "^2.5.1"
   }
 }
