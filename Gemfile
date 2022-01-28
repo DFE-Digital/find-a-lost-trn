@@ -40,6 +40,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman', '~> 0.87.2'
   gem 'rladr', '~> 1.2'
   gem 'web-console'
 
