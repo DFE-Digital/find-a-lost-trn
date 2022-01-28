@@ -100,6 +100,7 @@ GEM
     io-wait (0.2.1)
     irb (1.4.1)
       reline (>= 0.3.0)
+    logstop (0.2.8)
     loofah (2.13.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -252,6 +253,7 @@ DEPENDENCIES
   govuk-components
   govuk_design_system_formbuilder
   importmap-rails
+  logstop (~> 0.2.8)
   puma (~> 5.0)
   rails (~> 7.0.1)
   rladr (~> 1.2)
