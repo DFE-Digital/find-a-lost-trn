@@ -2,8 +2,6 @@
   "name": "app",
   "private": "true",
   "dependencies": {
-    "@hotwired/stimulus": "^3.0.1",
-    "@hotwired/turbo-rails": "^7.1.0",
     "esbuild": "^0.14.11",
     "govuk-frontend": "^4.0.0",
     "sass": "^1.47.0"
