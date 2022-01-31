@@ -52,6 +52,8 @@ group :development do
 end
 
 group :test do
+  gem 'capybara', '~> 3.36'
+  gem 'cuprite', '~> 0.13'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 5.1'
