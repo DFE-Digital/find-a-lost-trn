@@ -1,4 +1,4 @@
-# Find My TRN
+# Find my TRN
 
 A service that allows teachers to find their Teacher Reference Number (TRN).
 
@@ -7,6 +7,20 @@ A service that allows teachers to find their Teacher Reference Number (TRN).
 - Ruby 3.x
 - Node.js 16.x
 - Yarn 1.22.x
+
+## How the application works
+
+Find my TRN is a monolithic Rails app built with the GOVUK Design System and hosted on
+GOVUK PaaS.
+
+We keep track of architecture decisions in [Architecture Decision Records
+(ADRs)](/adr/).
+
+We use `rladr` to generate the boilerplate for new records:
+
+```bash
+bundle exec rladr new title
+```
 
 ## Setup
 
@@ -38,4 +52,3 @@ bin/dev
 ## Licence
 
 [MIT Licence](LICENCE).
-
