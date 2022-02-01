@@ -10,9 +10,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/cuprite'
 
-Capybara.register_driver(:cuprite) do |app|
-  Capybara::Cuprite::Driver.new(app, window_size: [1200, 800])
-end
+Capybara.register_driver(:cuprite) { |app| Capybara::Cuprite::Driver.new(app, window_size: [1200, 800]) }
 Capybara.default_driver = :cuprite
 Capybara.javascript_driver = :cuprite
 
@@ -68,11 +66,10 @@ RSpec.configure do |config|
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
+
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  config.before(:each, type: :system) do
-    driven_by(:cuprite)
-  end
+  config.before(:each, type: :system) { driven_by(:cuprite) }
 end
 
 Shoulda::Matchers.configure do |config|

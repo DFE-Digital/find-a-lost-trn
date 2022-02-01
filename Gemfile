@@ -39,6 +39,7 @@ end
 
 group :development do
   gem 'foreman', '~> 0.87.2'
+  gem 'prettier', '~> 2.0'
   gem 'rladr', '~> 1.2'
   gem 'web-console'
 

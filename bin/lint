@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+system("bundle exec rbprettier --write --ignore-unknown --loglevel warn '**/*'")
+system('bundle exec rubocop -A')
