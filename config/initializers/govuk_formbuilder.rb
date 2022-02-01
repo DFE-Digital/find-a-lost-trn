@@ -4,7 +4,6 @@ GOVUKDesignSystemFormBuilder.configure do |config|
   # for more info see:
   #
   # https://www.rubydoc.info/gems/govuk_design_system_formbuilder/GOVUKDesignSystemFormBuilder
-
   # config.brand: 'govuk'
   #
   # config.default_legend_size: 'm'
