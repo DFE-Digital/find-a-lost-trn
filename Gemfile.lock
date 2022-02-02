@@ -233,6 +233,8 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
+    rubocop-rspec (2.8.0)
+      rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
@@ -286,6 +288,7 @@ DEPENDENCIES
   rspec-rails
   rubocop
   rubocop-rails
+  rubocop-rspec
   shoulda-matchers (~> 5.1)
   sprockets-rails
   sqlite3 (~> 1.4)
