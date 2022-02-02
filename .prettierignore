@@ -18,6 +18,7 @@
 LICENCE
 Procfile
 Procfile.*
+app/assets/builds
 bin/dev
 db/*.sqlite3
 tmp
