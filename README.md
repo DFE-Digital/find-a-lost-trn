@@ -49,6 +49,19 @@ Run the application on `http://localhost:3000`:
 bin/dev
 ```
 
+To run the linters:
+
+```bash
+bin/lint
+```
+
+To run the tests (requires Chrome due to
+[cuprite](https://github.com/rubycdp/cuprite)):
+
+```bash
+bin/test
+```
+
 ## Licence
 
 [MIT Licence](LICENCE).
