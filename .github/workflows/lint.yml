@@ -7,8 +7,8 @@ on:
       - '!main'
 
 jobs:
-  ruby-tests:
-    name: Run linters
+  prettier:
+    name: Prettier
     runs-on: ubuntu-20.04
 
     steps:
@@ -17,9 +17,24 @@ jobs:
 
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
+        with:
+          skip-node: true
 
       - name: Run Prettier
         run: bundle exec rbprettier --check --ignore-unknown --loglevel warn '**/*'
+
+  rubocop:
+    name: Rubocop
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+        with:
+          skip-node: true
 
       - name: Run Rubocop
         run: bundle exec rubocop
