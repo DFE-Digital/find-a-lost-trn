@@ -14,34 +14,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-
-      - name: Set up Node
-        uses: actions/setup-node@v2.5.0
-
-      - name: Set up Yarn
-        run: npm install yarn -g
-        shell: bash
-
-      - name: Declare yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-        shell: bash
-
-      - name: Set up yarn cache
-        uses: actions/cache@v2.1.7
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install Node dependencies
-        run: yarn install
-        shell: bash
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
 
       - name: Build frontend
         run: yarn build && yarn build:css
