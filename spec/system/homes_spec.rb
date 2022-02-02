@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Home', type: :system do
-  scenario 'visiting the home page' do
+  it 'visiting the home page' do
     visit_home_page
     expect_to_see_home_page
   end

@@ -16,7 +16,7 @@ We will use the GOV PaaS platform to host the Find My TRN web application
 
 ## Consequences
 
-* Cloud services are limited to that which are available on the GOV PaaS Platform
-* Cloudfoundry to be used to operate platform
-* AWS Shield ingress protection
-* 24/7 Support available
+- Cloud services are limited to that which are available on the GOV PaaS Platform
+- Cloudfoundry to be used to operate platform
+- AWS Shield ingress protection
+- 24/7 Support available
