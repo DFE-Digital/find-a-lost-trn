@@ -18,5 +18,8 @@ jobs:
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
 
-      - name: Run tests
-        run: bin/lint
+      - name: Run Prettier
+        run: bundle exec rbprettier --check --ignore-unknown --loglevel warn '**/*'
+
+      - name: Run Rubocop
+        run: bundle exec rubocop
