@@ -1,0 +1,22 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+
+jobs:
+  ruby-tests:
+    name: Run linters
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+
+      - name: Run tests
+        run: bin/lint
