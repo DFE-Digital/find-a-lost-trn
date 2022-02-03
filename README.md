@@ -24,6 +24,8 @@ bundle exec rladr new title
 
 ## Setup
 
+#### Bare metal
+
 Install dependencies using your preferred method, using `asdf` or `rbenv` or `nvm`. Example with `asdf`:
 
 ```bash
@@ -49,11 +51,31 @@ Run the application on `http://localhost:3000`:
 bin/dev
 ```
 
+#### Docker
+
+If you prefer to run the application in a Docker container, then you can use the following commands:
+
+```bash
+bin/docker
+```
+
+This uses Docker Compose to co-ordinate all the services required to run the application.
+
+After running this for the first time, you can run the application setup using:
+
+```bash
+bin/setup
+```
+
+#### Linting
+
 To run the linters:
 
 ```bash
 bin/lint
 ```
+
+#### Testing
 
 To run the tests (requires Chrome due to
 [cuprite](https://github.com/rubycdp/cuprite)):

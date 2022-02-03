@@ -15,6 +15,7 @@
 .rspec
 .ruby-version
 .tool-versions
+Dockerfile
 LICENCE
 Procfile
 Procfile.*
