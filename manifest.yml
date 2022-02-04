@@ -1,0 +1,5 @@
+---
+applications:
+  - name: find-my-tra-dev
+    buildpacks:
+      - ruby_buildpack
