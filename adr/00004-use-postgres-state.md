@@ -16,5 +16,5 @@ We have decided to use Postgres to store session state
 
 ## Consequences
 
-* Ease of development with activerecord in the Rails framework.
-* Application is inline with standard DfE approach to use session state.
+- Ease of development with activerecord in the Rails framework.
+- Application is inline with standard DfE approach to use session state.
