@@ -1,5 +1,5 @@
 ---
 applications:
-  - name: find-my-tra-dev
+  - name: find-my-trn-dev
     buildpacks:
       - ruby_buildpack
