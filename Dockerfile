@@ -1,4 +1,4 @@
-FROM ruby:3.1.0-alpine
+FROM ruby:3.0.3-alpine
 RUN apk add gcc git libc6-compat libc-dev make nodejs sqlite-dev tzdata yarn
 
 WORKDIR /myapp
