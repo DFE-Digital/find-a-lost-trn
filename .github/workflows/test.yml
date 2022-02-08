@@ -9,9 +9,9 @@ env:
   CONTAINER_REGISTRY: ghcr.io
 
 jobs:
-  rspec:
+  build:
     name: Build & Test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       docker_image: ${{ steps.image.outputs.tag }}
 
@@ -46,3 +46,49 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.image.outputs.tag }}
+
+  validate_terraform:
+    name: Validate Terraform
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.10
+
+      - name: Check formatting
+        run: terraform fmt -check
+        working-directory: terraform
+
+      - name: Validate
+        run: |
+          terraform init -backend=false
+          terraform validate -no-color
+        working-directory: terraform
+
+  deploy_dev:
+    name: Deploy to dev environment
+    needs: [build, validate_terraform]
+    runs-on: ubuntu-latest
+    # if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
+    environment:
+      name: dev
+      url: ${{ steps.deploy.outputs.environment_url }}
+    concurrency: deploy_dev
+
+    outputs:
+      environment_url: ${{ steps.deploy.outputs.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/workflows/actions/deploy-environment
+        id: deploy
+        with:
+          environment_name: dev
+          docker_image: ${{ needs.build.outputs.docker_image }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          terraform_vars: workspace_variables/dev.tfvars.json
