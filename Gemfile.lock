@@ -107,6 +107,10 @@ GEM
       activemodel (>= 6.1)
       railties (>= 6.1)
       view_component (~> 2.47.0)
+    govuk-wizardry (0.1.2)
+      govuk-components (~> 3.0.1)
+      govuk_design_system_formbuilder (~> 3.0.1)
+      rails (>= 7.0.0)
     govuk_design_system_formbuilder (3.0.1)
       actionview (>= 6.1)
       activemodel (>= 6.1)
@@ -277,6 +281,7 @@ DEPENDENCIES
   debug
   foreman (~> 0.87.2)
   govuk-components
+  govuk-wizardry
   govuk_design_system_formbuilder
   importmap-rails
   logstop (~> 0.2.8)

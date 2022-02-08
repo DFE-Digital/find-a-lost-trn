@@ -8,6 +8,7 @@ ruby '3.0.3'
 gem 'bootsnap', require: false
 gem 'govuk-components'
 gem 'govuk_design_system_formbuilder'
+gem 'govuk-wizardry'
 gem 'importmap-rails'
 gem 'logstop', '~> 0.2.8'
 gem 'puma', '~> 5.0'
