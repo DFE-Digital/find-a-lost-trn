@@ -13,6 +13,7 @@ resource "cloudfoundry_app" "app" {
   docker_image      = var.fmt_docker_image
   strategy          = "blue-green"
   health_check_type = "http"
+  health_check_http_endpoint = "/"
 
   routes {
     route = cloudfoundry_route.fmt_public.id
