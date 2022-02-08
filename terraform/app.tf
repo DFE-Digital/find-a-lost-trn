@@ -4,7 +4,7 @@ resource "cloudfoundry_route" "fmt_public" {
   space    = data.cloudfoundry_space.space.id
 }
 
-resource "cloudfoundry_app" "api" {
+resource "cloudfoundry_app" "app" {
   name         = var.fmt_app_name
   space        = data.cloudfoundry_space.space.id
   instances    = var.fmt_instances
