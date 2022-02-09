@@ -112,6 +112,9 @@ GEM
       activemodel (>= 6.1)
       activesupport (>= 6.1)
       deep_merge (~> 1.2.1)
+    govuk_markdown (1.0.0)
+      activesupport
+      redcarpet
     i18n (1.9.1)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.0.2)
@@ -192,6 +195,7 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    redcarpet (3.5.1)
     regexp_parser (2.2.0)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -278,6 +282,7 @@ DEPENDENCIES
   foreman (~> 0.87.2)
   govuk-components
   govuk_design_system_formbuilder
+  govuk_markdown (~> 1.0)
   importmap-rails
   logstop (~> 0.2.8)
   prettier (~> 2.0)
