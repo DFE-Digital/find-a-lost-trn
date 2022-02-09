@@ -1,3 +1,7 @@
-<%= tag.h1(@wizard.current_page.title, class: "govuk-heading-l") %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= tag.h1(@wizard.current_page.title, class: "govuk-heading-xl") %>
 
-<%= wizardry_content(@wizard) %>
+    <%= wizardry_content(@wizard) %>
+  </div>
+</div>
