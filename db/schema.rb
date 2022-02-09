@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_08_150451) do
+ActiveRecord::Schema.define(version: 2022_02_09_115739) do
   create_table 'teachers', force: :cascade do |t|
     t.string 'identifier'
     t.string 'last_completed_step'
-    t.boolean 'submitted'
+    t.boolean 'complete'
     t.string 'first_name'
     t.string 'last_name'
     t.string 'previous_first_name'
