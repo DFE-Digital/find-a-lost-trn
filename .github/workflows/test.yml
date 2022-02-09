@@ -84,6 +84,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: test repo secret
+        env:
+          TEST: ${{ secrets.TEST }}
+        run: |
+          echo $TEST
 
       - uses: ./.github/workflows/actions/deploy-environment
         id: deploy

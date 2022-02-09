@@ -2,7 +2,6 @@ resource "cloudfoundry_route" "fmt_public" {
   domain   = data.cloudfoundry_domain.cloudapps.id
   hostname = var.fmt_app_name
   space    = data.cloudfoundry_space.space.id
-  port     = 3000
 }
 
 resource "cloudfoundry_app" "app" {
