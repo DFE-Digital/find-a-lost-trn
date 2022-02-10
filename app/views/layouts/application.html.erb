@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="govuk-template">
   <head>
-    <title>GOV.UK Frontend on Rails</title>
+    <title>Find a lost teacher reference number (TRN)</title>
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -28,13 +28,10 @@
 
     <%= govuk_skip_link %>
 
-    <%= govuk_header(service_name: "GOV.UK Rails Boilerplate") do |header| %>
-      <%= header.navigation_item(text: "Navigation item 1", href: "#", active: true) %>
-      <%= header.navigation_item(text: "Navigation item 2", href: "#") %>
-      <%= header.navigation_item(text: "Navigation item 3", href: "#") %>
-    <% end %>
+    <%= govuk_header(service_name: "Find a lost teacher reference number (TRN)") %>
 
     <div class="govuk-width-container">
+      <%= govuk_phase_banner(tag: { text: "Beta" }, text: "This is a new service – your feedback will help us to improve it. ") %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <%= yield %>
       </main>
