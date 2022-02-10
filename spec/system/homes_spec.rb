@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Home', type: :system do
-  it 'visiting the home page' do
+  it 'visiting the start page' do
     visit_home_page
     expect_to_see_home_page
   end
@@ -10,7 +10,7 @@ RSpec.describe 'Home', type: :system do
   private
 
   def expect_to_see_home_page
-    expect(page).to have_content('Find My TRN')
+    expect(page).to have_content('Find a lost teacher reference number (TRN)')
   end
 
   def visit_home_page

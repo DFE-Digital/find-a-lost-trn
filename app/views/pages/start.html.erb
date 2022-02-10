@@ -1,4 +1,66 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Find a lost teacher reference number (TRN)
+    </h1>
+
+    <%= govuk_notification_banner(
+      title_text: "Important",
+      classes: 'govuk-!-margin-bottom-4') do |nb| %>
+      <%- nb.heading(text: "It’s taking longer than usual to find TRNs") %>
+      <p class="govuk-body">
+        If you give us all the information we need, you won’t get a response
+        straight away. And if the information you give is incomplete, it might
+        take more than five days to get back to you.
+      </p>
+    <% end %>
+
+    <p class="govuk-body">Use this service to:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>find your <a
+          href="https://www.gov.uk/guidance/teacher-reference-number-trn"
+          class="govuk-link">teacher reference number (TRN)</a> if you do not
+        know it or have forgotten it</li>
+      <li>check if you have a TRN</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">If you need your TRN urgently</h2>
+
+    <p class="govuk-body">
+      Call the Teaching Regulation Agency, and have your National Insurance
+      number ready:
+    </p>
+
+    <ul class="govuk-list">
+      <li>Telephone: 020 7593 5394</li>
+      <li>Monday to Friday, 9am to 5pm (except public holidays)</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">Before you start</h2>
+
+    <p class="govuk-body">
+      Have your National Insurance number ready, as we’ll ask for this.
+    </p>
+
+    <%= govuk_start_button(
+      text: "Start now",
+      href: "#",
+      classes: 'govuk-!-margin-top-2 govuk-!-margin-bottom-9') %>
+
+    <h2 class="govuk-heading-m">Other ways to find your TRN</h2>
+
+    <p class="govuk-body">Your TRN may be shown on a:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>payslip</li>
+      <li>teacher pension statement</li>
+      <li>teacher training records</li>
+    </ul>
+
+    <p class="govuk-body">
+      The TRN has previously been known as a QTS, GTC, DfE, DfES and DCSF
+      number.
+    </p>
   </div>
 </div>
