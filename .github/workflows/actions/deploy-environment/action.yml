@@ -76,5 +76,5 @@ runs:
       env:
         ARM_ACCESS_KEY: ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }}
         TF_VAR_azure_sp_credentials_json: ${{ inputs.azure_credentials }}
-        TF_VAR_fmt_docker_image: ${{ inputs.docker_image }}
+        TF_VAR_flt_docker_image: ${{ inputs.docker_image }}
       shell: bash
