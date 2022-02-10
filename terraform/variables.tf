@@ -27,22 +27,22 @@ variable "paas_space" {
   type = string
 }
 
-variable "fmt_app_name" {
+variable "flt_app_name" {
   type = string
 }
 
-variable "fmt_docker_image" {
+variable "flt_docker_image" {
   type = string
 }
 
-variable "fmt_instances" {
+variable "flt_instances" {
   default = 1
 }
 
-variable "fmt_memory" {
+variable "flt_memory" {
   default = "1024"
 }
 
-variable "fmt_disk_quota" {
+variable "flt_disk_quota" {
   default = "1024"
 }
