@@ -15,8 +15,11 @@ RUN yarn install --frozen-lockfile
 ADD . /myapp
 ENV RAILS_ENV=development \
     DOCKER_BUILDKIT=1
-RUN --mount=type=secret,id=test cat /run/secrets/test
-ENV TEST=/run/secrets/test
+RUN --mount=type=secret,id=test \
+    test="$(cat /run/secrets/test)" \
+    echo ${test}
+    export test
+ENV TEST=${test}
 RUN echo $TEST
 RUN RAILS_ENV=development bundle exec rails assets:precompile
 CMD bundle exec rails server -b 0.0.0.0
