@@ -46,6 +46,8 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.image.outputs.tag }}
+          secrets: |
+            "test=${{ secrets.TEST }}"
 
   validate_terraform:
     name: Validate Terraform
