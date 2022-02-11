@@ -46,3 +46,19 @@ variable "flt_memory" {
 variable "flt_disk_quota" {
   default = "1024"
 }
+
+variable "postgres_database_name" {
+  type = string
+}
+
+variable "postgres_database_service_plan" {
+  type    = string
+  default = "small-13"
+}
+
+locals {
+  flt_routes = flatten([
+    cloudfoundry_route.flt_public,
+    values(cloudfoundry_route.flt_internal)
+  ])
+}
