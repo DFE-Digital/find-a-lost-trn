@@ -59,6 +59,6 @@ variable "postgres_database_service_plan" {
 locals {
   flt_routes = flatten([
     cloudfoundry_route.flt_public,
-    values(cloudfoundry_route.flt_internal)
+    cloudfoundry_route.flt_internal
   ])
 }
