@@ -1,4 +1,4 @@
-# Find my TRN
+# Find a lost TRN
 
 A service that allows teachers to find their Teacher Reference Number (TRN).
 
@@ -10,7 +10,7 @@ A service that allows teachers to find their Teacher Reference Number (TRN).
 
 ## How the application works
 
-Find my TRN is a monolithic Rails app built with the GOVUK Design System and hosted on
+Find a lost TRN is a monolithic Rails app built with the GOVUK Design System and hosted on
 GOVUK PaaS.
 
 We keep track of architecture decisions in [Architecture Decision Records

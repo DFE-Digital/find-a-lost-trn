@@ -8,11 +8,11 @@ Accepted
 
 ## Context
 
-We have two main hosting options for the Find My TRN service - GOV PaaS, or Azure CIP
+We have two main hosting options for the Find a lost service - GOV PaaS, or Azure CIP
 
 ## Decision
 
-We will use the GOV PaaS platform to host the Find My TRN web application
+We will use the GOV PaaS platform to host the Find a lost TRN web application
 
 ## Consequences
 
