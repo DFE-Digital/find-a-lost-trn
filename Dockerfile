@@ -17,3 +17,4 @@ ENV RAILS_ENV=production \
     SECRET_KEY_BASE=TestKey
 RUN RAILS_ENV=production bundle exec rails assets:precompile
 CMD bundle exec rails server -b 0.0.0.0
+EXPOSE 3000
