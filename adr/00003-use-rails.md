@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-Find my TRN is a transactional service that allows teachers to retrieve
+Find a lost TRN is a transactional service that allows teachers to retrieve
 their Teacher Reference Number based on information they provide using a
 wizard form.
 
