@@ -10,7 +10,9 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/cuprite'
 
-Capybara.register_driver(:cuprite) { |app| Capybara::Cuprite::Driver.new(app, window_size: [1200, 800]) }
+Capybara.register_driver(:cuprite) do |app|
+  Capybara::Cuprite::Driver.new(app, process_timeout: 30, window_size: [1200, 800])
+end
 Capybara.default_driver = :cuprite
 Capybara.javascript_driver = :cuprite
 

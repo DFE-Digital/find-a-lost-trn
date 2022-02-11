@@ -11,10 +11,10 @@ gem 'govuk_design_system_formbuilder'
 gem 'govuk_markdown', '~> 1.0'
 gem 'importmap-rails'
 gem 'logstop', '~> 0.2.8'
+gem 'pg', '~> 1.3'
 gem 'puma', '~> 5.6'
 gem 'rails', '~> 7.0.1'
 gem 'sprockets-rails'
-gem 'sqlite3', '~> 1.4'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Use Redis adapter to run Action Cable in production
