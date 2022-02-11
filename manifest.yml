@@ -3,3 +3,5 @@ applications:
   - name: find-a-lost-trn-dev
     buildpacks:
       - ruby_buildpack
+    services:
+      - find-a-lost-trn-dev-db
