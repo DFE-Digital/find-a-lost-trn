@@ -18,5 +18,5 @@ We have decided to use Dependabot and/or Gemsurance in our build pipelines to ch
 
 ## Consequences
 
-* Libraries will be scanned during the build pipeline
-* Automated builds may be interrupted if a CVE is found, potentially stopping a release from proceeding.
+- Libraries will be scanned during the build pipeline
+- Automated builds may be interrupted if a CVE is found, potentially stopping a release from proceeding.
