@@ -13,8 +13,8 @@ COPY yarn.lock /myapp/
 RUN yarn install --frozen-lockfile
 
 ADD . /myapp
-ENV RAILS_ENV=production \
-    SECRET_KEY_BASE=TestKey
-RUN RAILS_ENV=production bundle exec rails assets:precompile
+ENV RAILS_ENV=development
+
+RUN RAILS_ENV=development bundle exec rails assets:precompile
 CMD bundle exec rails server -b 0.0.0.0
 EXPOSE 3000
