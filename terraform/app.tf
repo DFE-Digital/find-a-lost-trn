@@ -25,11 +25,14 @@ resource "cloudfoundry_app" "app" {
   docker_image = var.flt_docker_image
   strategy     = "blue-green"
 
-  dynamic "routes" {
-    for_each = local.flt_routes
-    content {
-      route = routes.value.id
-    }
+  # dynamic "routes" {
+  #   for_each = local.flt_routes
+  #   content {
+  #     route = routes.value.id
+  #   }
+  # }
+  routes {
+    route = cloudfoundry_route.flt_public.id
   }
   service_binding {
     service_instance = cloudfoundry_service_instance.postgres.id
