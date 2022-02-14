@@ -10,8 +10,8 @@
     "build": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds",
     "build:css": "sass ./app/assets/stylesheets/application.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules",
     "lint": "eslint --ext .js,.ts,.tsx ./app/javascript",
-    "preinstall": "mkdir -p app/assets/builds/{fonts,images}",
-    "postinstall": "cp -R node_modules/govuk-frontend/govuk/assets/fonts/. app/assets/builds/fonts && cp -R node_modules/govuk-frontend/govuk/assets/images/. app/assets/builds/images"
+    "preinstall": "mkdir -p public/assets/{fonts,images}",
+    "postinstall": "cp -R node_modules/govuk-frontend/govuk/assets/fonts/. public/assets/fonts && cp -R node_modules/govuk-frontend/govuk/assets/images/. public/assets/images"
   },
   "devDependencies": {
     "eslint": "^8.7.0",
