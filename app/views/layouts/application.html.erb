@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>Find a lost teacher reference number (TRN)</title>
+    <title><%= [yield(:page_title).presence, 'Find a lost teacher reference number (TRN)'].compact.join(' - ') %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
