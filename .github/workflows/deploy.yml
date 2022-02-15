@@ -1,44 +1,125 @@
 name: Deploy
 
 on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deploy environment ( dev, preprod or production )'
+        required: true
+        default: dev
+        type: environment
   push:
     branches:
       - main
+env:
+  CONTAINER_REGISTRY: ghcr.io
 
 jobs:
-  deploy:
-    environment: dev
-    name: Deploy (dev)
+  setup:
+    name: Setup
     runs-on: ubuntu-latest
 
-    env:
-      CF_API: 'https://api.london.cloud.service.gov.uk'
-      CF_ORG: 'dfe'
-      CF_SPACE: 'tra-dev'
+    steps:
+    - name: Cancel Previous Runs
+      uses: styfle/cancel-workflow-action@0.9.1
+      with:
+        access_token: ${{ github.token }}
 
-    permissions:
-      contents: read
+  docker:
+    name: Docker build and push
+    runs-on: ubuntu-latest
+    needs: [setup]
+    outputs:
+      docker_image: ${{ steps.image.outputs.tag }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Docker image tag
+      id: image
+      run: |
+        echo ::set-output name=tag::$CONTAINER_REGISTRY/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]'):$GITHUB_SHA
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{ env.CONTAINER_REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Docker build & push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.image.outputs.tag }}
+
+  validate_terraform:
+    name: Validate Terraform
+    needs: [docker]
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - uses: actions/checkout@v2
 
-      - name: Install the CF CLI
-        run: |
-          wget -q -O cf.tar.gz "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=7.4.0&source=github-rel"
-          sudo tar xzf cf.tar.gz --wildcards --directory /usr/local/bin/ "cf*"
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.10
 
-      - name: Authenticate
-        env:
-          CF_USERNAME: ${{ secrets.CF_USERNAME }}
-          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-        run: |
-          echo "Logging into $CF_ORG/$CF_SPACE..."
-          cf api "${CF_API}"
-          cf auth
-          cf target -o "${CF_ORG}" -s "${CF_SPACE}"
+      - name: Check formatting
+        run: terraform fmt -check
+        working-directory: terraform
 
-      - name: Deploy to PaaS
+      - name: Validate
         run: |
-          cf push -f manifest.yml --strategy rolling
-          cf logout
+          terraform init -backend=false
+          terraform validate -no-color
+        working-directory: terraform
+
+  deploy_dev:
+    name: Deploy to dev environment
+    needs: [docker, validate_terraform]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: dev
+      url: ${{ steps.deploy.outputs.environment_url }}
+    concurrency: deploy_dev
+
+    outputs:
+      environment_url: ${{ steps.deploy.outputs.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/workflows/actions/deploy-environment
+        id: deploy
+        with:
+          environment_name: dev
+          docker_image: ${{ needs.docker.outputs.docker_image }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          terraform_vars: workspace_variables/dev.tfvars.json
+
+  deploy_environment:
+    name: Deploy to ${{ github.event.inputs.environment }} environment
+    runs-on: ubuntu-latest
+    needs: [docker, validate_terraform]
+    if: github.event_name == 'workflow_dispatch'
+    environment:
+      name: ${{ github.event.inputs.environment }}
+      url: ${{ steps.deploy.outputs.environment_url }}
+    concurrency: deploy_${{ github.event.inputs.environment }}
+
+    outputs:
+      environment_url: ${{ steps.deploy.outputs.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/workflows/actions/deploy-environment
+        id: deploy
+        with:
+          environment_name: ${{ github.event.inputs.environment }}
+          docker_image: ${{ needs.docker.outputs.docker_image }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          terraform_vars: workspace_variables/${{ github.event.inputs.environment }}.tfvars.json
