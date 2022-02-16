@@ -10,12 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_15_085120) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_16_125137) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
   create_table 'trn_requests', force: :cascade do |t|
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.datetime 'checked_at', precision: nil
+    t.date 'date_of_birth'
+    t.string 'email'
+    t.string 'name'
+    t.string 'ni_number'
   end
 end
