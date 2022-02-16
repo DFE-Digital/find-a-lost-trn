@@ -35,6 +35,7 @@
 
     <div class="govuk-width-container">
       <%= govuk_phase_banner(tag: { text: "Beta" }, text: "This is a new service – your feedback will help us to improve it. ") %>
+      <%= govuk_back_link(href: yield(:back_link_url)) unless yield(:back_link_url).blank? %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <%= yield %>
       </main>
