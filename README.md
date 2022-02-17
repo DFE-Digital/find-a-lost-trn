@@ -64,6 +64,9 @@ bin/dev
 
 #### Docker
 
+**NOTE:** Currently out of date, because `Dockerfile` is being used for the
+production deployment.
+
 If you prefer to run the application in a Docker container, then you can use the following commands:
 
 ```bash
