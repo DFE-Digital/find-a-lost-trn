@@ -21,4 +21,5 @@ ENV RAILS_ENV=production \
 RUN yarn build && yarn build:css
 RUN bundle exec rails assets:precompile
 
-CMD bundle exec rails server -b 0.0.0.0
+CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions \
+    bundle exec rails server -b 0.0.0.0
