@@ -32,3 +32,7 @@ Metrics/BlockLength:
 
 Metrics/MethodLength:
   Enabled: false
+
+RSpec/ExampleLength:
+  Exclude:
+    - spec/**/*

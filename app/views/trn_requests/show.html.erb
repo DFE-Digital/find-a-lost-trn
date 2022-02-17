@@ -1,32 +1,15 @@
 <% content_for :page_title, 'Check your answers' %>
-<%= content_for :back_link_url, start_url %>
+<%= content_for :back_link_url, start_path %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Check your answers</h1>
     <p class="govuk-body">We will send your TRN to <%= @trn_request.email %> if we find one matching your details.</p>
 
-    <%= govuk_summary_list(actions: false) do |summary_list|
-          summary_list.row do |row|
-            row.key { 'Email address' }
-            row.value { @trn_request.email }
-          end
-
-          summary_list.row do |row|
-            row.key { 'Name' }
-            row.value { @trn_request.name }
-          end
-
-          summary_list.row do |row|
-            row.key { 'Date of birth' }
-            row.value { @trn_request.date_of_birth.to_fs(:long_ordinal_uk) }
-          end
-
-          summary_list.row do |row|
-            row.key { 'National Insurance number' }
-            row.value { @trn_request.ni_number }
-          end
-        end
-    %>
+    <% rows = [
+        { key: { text: 'Email address '}, value: { text: @trn_request.email }, actions: [{ href: email_path }] }
+    ] %>
+    <%= govuk_summary_list(rows: rows) %>
 
     <%= form_with model: @trn_request, method: :put do |f| %>
       <%= f.hidden_field :answers_checked, value: true %>

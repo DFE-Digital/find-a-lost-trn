@@ -1,17 +1,5 @@
 # frozen_string_literal: true
 class TrnRequestsController < ApplicationController
-  def create
-    @trn_request =
-      TrnRequest.create(
-        date_of_birth: '1955-11-12',
-        email: 'email@example.com',
-        name: 'Jane Doe',
-        ni_number: 'QQ123456C',
-      )
-    session[:trn_request_id] = @trn_request.id
-    redirect_to check_answers_url
-  end
-
   def show
     redirect_to root_url unless trn_request
   end

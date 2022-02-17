@@ -2,10 +2,10 @@
 require 'rails_helper'
 
 RSpec.describe TrnRequest, type: :model do
+  subject(:trn_request) { described_class.new }
+
   describe '#answers_checked=' do
     before { trn_request.answers_checked = value }
-
-    let(:trn_request) { described_class.new }
 
     context 'when true' do
       let(:value) { true }
@@ -22,5 +22,11 @@ RSpec.describe TrnRequest, type: :model do
         expect(trn_request.checked_at).to be_nil
       end
     end
+  end
+
+  it do
+    expect(trn_request).to validate_presence_of(:email).with_message(
+      'Enter an email address in the correct format, like name@example.com',
+    )
   end
 end
