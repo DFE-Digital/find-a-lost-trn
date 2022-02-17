@@ -2,8 +2,12 @@ dev:
 	$(eval DEPLOY_ENV=dev)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
 
-prod:
-	$(eval DEPLOY_ENV=prod)
+preprod:
+	$(eval DEPLOY_ENV=preprod)
+	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
+
+production:
+	$(eval DEPLOY_ENV=production)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-production)
 
 read-keyvault-config:
