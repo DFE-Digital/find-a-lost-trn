@@ -1,26 +1,37 @@
 FROM ruby:3.0.3-alpine
 
-RUN apk add gcc git libc6-compat libc-dev make nodejs postgresql13-dev \
-    sqlite-dev tzdata yarn
+RUN apk -U upgrade && \
+    apk add --update --no-cache gcc git libc6-compat libc-dev make nodejs \
+    postgresql13-dev tzdata yarn
 
-WORKDIR /app
-
-COPY Gemfile Gemfile.lock ./
-RUN gem update --system
-RUN bundle install
-
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
-
-COPY . .
+RUN echo "Europe/London" > /etc/timezone && \
+    cp /usr/share/zoneinfo/Europe/London /etc/localtime
 
 ENV RAILS_ENV=production \
     RAILS_SERVE_STATIC_FILES=yes \
     LANG=en_GB.UTF-8 \
     SECRET_KEY_BASE=TestKey
 
-RUN yarn build && yarn build:css
-RUN bundle exec rails assets:precompile
+WORKDIR /app
+
+COPY Gemfile Gemfile.lock ./
+
+RUN gem update --system && \
+    bundler -v && \
+    bundle config set no-cache 'true' && \
+    bundle config set no-binstubs 'true' && \
+    bundle install --retry=5 --jobs=4 --without=development && \
+    rm -rf /usr/local/bundle/cache
+
+COPY package.json yarn.lock ./
+
+RUN yarn install --frozen-lockfile --check-files
+
+COPY . .
+
+RUN yarn build && yarn build:css && \
+    bundle exec rails assets:precompile && \
+    rm -rf tmp/* log/* node_modules /tmp/*
 
 CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \
     bundle exec rails server -b 0.0.0.0
