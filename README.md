@@ -7,6 +7,7 @@ A service that allows teachers to find their Teacher Reference Number (TRN).
 - Ruby 3.x
 - Node.js 16.x
 - Yarn 1.22.x
+- PostgreSQL 13.x
 
 ## How the application works
 
@@ -34,9 +35,19 @@ brew install asdf # Mac-specific
 asdf plugin add ruby
 asdf plugin add nodejs
 asdf plugin add yarn
+asdf plugin add postgres
 
 # To install (or update, following a change to .tool-versions)
 asdf install
+```
+
+If installing PostgreSQL via `asdf`, set up the `postgres` user:
+
+```bash
+pg_ctl start
+createdb default
+psql -d default
+default=# CREATE ROLE postgres LOGIN SUPERUSER;
 ```
 
 Setup the project (re-run after `Gemfile` or `package.json` updates, automatically restarts any running Rails server):
