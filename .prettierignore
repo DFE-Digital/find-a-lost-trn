@@ -15,12 +15,17 @@
 .rspec
 .ruby-version
 .tool-versions
+.bundle
 Dockerfile
 LICENCE
 Procfile
 Procfile.*
 app/assets/builds
 bin/dev
+data
 db/*.sqlite3
+log
+public/assets
+storage
 tmp
 vendor
