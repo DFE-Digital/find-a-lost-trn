@@ -9,7 +9,7 @@ on:
 jobs:
   prettier:
     name: Prettier
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -21,11 +21,11 @@ jobs:
           skip-node: true
 
       - name: Run Prettier
-        run: bundle exec rbprettier --check --ignore-unknown --loglevel warn '**/*'
+        run: bin/bundle exec rbprettier --check --ignore-unknown --loglevel warn '**/*'
 
   rubocop:
     name: Rubocop
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -37,4 +37,4 @@ jobs:
           skip-node: true
 
       - name: Run Rubocop
-        run: bundle exec rubocop
+        run: bin/bundle exec rubocop
