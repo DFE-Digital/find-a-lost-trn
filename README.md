@@ -20,7 +20,7 @@ We keep track of architecture decisions in [Architecture Decision Records
 We use `rladr` to generate the boilerplate for new records:
 
 ```bash
-bundle exec rladr new title
+bin/bundle exec rladr new title
 ```
 
 ## Setup
