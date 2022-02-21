@@ -6,10 +6,12 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.3'
 
 gem 'bootsnap', require: false
+gem 'cssbundling-rails'
 gem 'govuk-components'
 gem 'govuk_design_system_formbuilder'
 gem 'govuk_markdown', '~> 1.0'
 gem 'importmap-rails'
+gem 'jsbundling-rails'
 gem 'logstop', '~> 0.2.8'
 gem 'pg', '~> 1.3'
 gem 'puma', '~> 5.6'
