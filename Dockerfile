@@ -29,8 +29,7 @@ RUN yarn install --frozen-lockfile --check-files
 
 COPY . .
 
-RUN yarn build && yarn build:css && \
-    bundle exec rails assets:precompile && \
+RUN bundle exec rails assets:precompile && \
     rm -rf tmp/* log/* node_modules /tmp/*
 
 CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \
