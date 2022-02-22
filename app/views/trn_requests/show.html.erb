@@ -7,7 +7,12 @@
     <p class="govuk-body">We will send your TRN to <%= @trn_request.email %> if we find one matching your details.</p>
 
     <% rows = [
-        { key: { text: 'Email address '}, value: { text: @trn_request.email }, actions: [{ href: email_path }] }
+        { key: { text: 'Email address '}, value: { text: @trn_request.email }, actions: [{ href: email_path, visually_hidden_text: 'email' }] },
+        { 
+          key: { text: 'Teacher training provider' }, 
+          value: { text: @trn_request.itt_provider_name.presence || 'Not provided' }, 
+          actions: [{ href: itt_provider_path, visually_hidden_text: 'itt_provider' }]
+        }
     ] %>
     <%= govuk_summary_list(rows: rows) %>
 
