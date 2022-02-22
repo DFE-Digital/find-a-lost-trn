@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   patch '/email', to: 'email#update'
   get '/health', to: proc { [200, {}, ['success']] }
   get '/helpdesk-request-submitted', to: 'pages#helpdesk_request_submitted'
+  get '/itt-provider', to: 'itt_providers#edit'
+  patch '/itt-provider', to: 'itt_providers#update'
   get '/start', to: 'pages#start'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
