@@ -5,6 +5,8 @@ RSpec.describe 'TRN requests', type: :system do
   it 'completing a request' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    then_i_see_the_ni_page
+    when_i_choose_no_ni_number
     then_i_see_the_itt_provider_page
     when_i_choose_no_itt_provider
     then_i_see_the_email_page
@@ -20,6 +22,12 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_home_page
     when_i_try_to_go_to_the_check_answers_page
     then_i_see_the_home_page
+  end
+
+  it 'changing my NI number' do
+    given_i_have_completed_a_trn_request
+    when_i_change_my_ni_number
+    then_i_see_the_updated_ni_number
   end
 
   it 'changing my email address' do
@@ -52,6 +60,10 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_itt_provider_page
     when_i_press_back
     then_i_see_the_check_answers_page
+    when_i_press_change_ni_number
+    then_i_see_the_ni_page
+    when_i_press_back
+    then_i_see_the_check_answers_page
   end
 
   it 'refreshing the page and pressing back' do
@@ -77,6 +89,8 @@ RSpec.describe 'TRN requests', type: :system do
   def given_i_have_completed_a_trn_request
     visit root_path
     click_on 'Start'
+    choose 'No', visible: false
+    click_on 'Continue'
     choose 'No', visible: false
     click_on 'Continue'
     fill_in 'Your email address', with: 'email@example.com'
@@ -120,8 +134,18 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_content('Have you ever been enrolled in initial teacher training in England or Wales?')
   end
 
+  def then_i_see_the_ni_page
+    expect(page).to have_current_path('/have-ni-number')
+    expect(page.driver.browser.current_title).to start_with('Do you have a National Insurance number?')
+    expect(page).to have_content('Do you have a National Insurance number?')
+  end
+
   def then_i_see_the_updated_email_address
     expect(page).to have_content('new@example.com')
+  end
+
+  def then_i_see_the_updated_ni_number
+    expect(page).to have_content('QQ 12 34 56 C')
   end
 
   def when_i_am_on_the_check_answers_page
@@ -148,7 +172,20 @@ RSpec.describe 'TRN requests', type: :system do
     click_on 'Continue'
   end
 
+  def when_i_change_my_ni_number
+    click_on 'Change ni_number'
+    choose 'Yes', visible: false
+    click_on 'Continue'
+    fill_in 'What is your National Insurance number?', with: 'QQ123456C'
+    click_on 'Continue'
+  end
+
   def when_i_choose_no_itt_provider
+    choose 'No', visible: false
+    click_on 'Continue'
+  end
+
+  def when_i_choose_no_ni_number
     choose 'No', visible: false
     click_on 'Continue'
   end
@@ -164,6 +201,10 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_press_change_itt_provider
     click_on 'Change itt_provider'
+  end
+
+  def when_i_press_change_ni_number
+    click_on 'Change ni_number'
   end
 
   def when_i_press_the_start_button
