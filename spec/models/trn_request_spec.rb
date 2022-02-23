@@ -2,7 +2,11 @@
 require 'rails_helper'
 
 RSpec.describe TrnRequest, type: :model do
-  subject(:trn_request) { described_class.new }
+  subject(:trn_request) do
+    described_class.new(email: 'test@example.com', has_ni_number: false, itt_provider_enrolled: 'no')
+  end
+
+  it { is_expected.to be_valid }
 
   describe '#answers_checked=' do
     before { trn_request.answers_checked = value }
@@ -24,28 +28,19 @@ RSpec.describe TrnRequest, type: :model do
     end
   end
 
-  context 'when the ITT provider enrollment question has been asked' do
-    subject(:trn_request) { described_class.create(itt_provider_enrolled: true) }
+  context 'when the ITT provider enrollment and NI number questions have been asked' do
+    subject(:trn_request) { described_class.create(has_ni_number: false, itt_provider_enrolled: true) }
 
-    context 'when the email is blank' do
-      before { trn_request.email = '' }
-
-      it { is_expected.to be_invalid }
-
-      it 'displays a blank email error' do
-        trn_request.validate
-        expect(trn_request.errors.messages[:email]).to include(
-          'Enter an email address in the correct format, like name@example.com',
-        )
-      end
-    end
-
-    context 'when the email is not blank' do
-      before { trn_request.email = 'test@example.com' }
-
-      it { is_expected.to be_valid }
+    it 'validates the presence of the email address' do
+      expect(trn_request).to validate_presence_of(:email).with_message(
+        'Enter an email address in the correct format, like name@example.com',
+      )
     end
   end
 
-  it { is_expected.to validate_length_of(:itt_provider_name).is_at_most(255) }
+  context 'when the NI number question has been asked' do
+    before { trn_request.has_ni_number = false }
+
+    it { is_expected.to validate_length_of(:itt_provider_name).is_at_most(255) }
+  end
 end

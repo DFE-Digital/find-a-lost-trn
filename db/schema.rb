@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_21_101530) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_23_110719) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -24,5 +24,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_21_101530) do
     t.string 'ni_number'
     t.boolean 'itt_provider_enrolled'
     t.string 'itt_provider_name'
+    t.boolean 'has_ni_number'
   end
 end
