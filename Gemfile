@@ -18,6 +18,7 @@ gem 'puma', '~> 5.6'
 gem 'rails', '~> 7.0.1'
 gem 'sprockets-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'faraday'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"

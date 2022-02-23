@@ -97,6 +97,10 @@ GEM
     diff-lcs (1.5.0)
     digest (3.1.0)
     erubi (1.10.0)
+    faraday (2.2.0)
+      faraday-net_http (~> 2.0)
+      ruby2_keywords (>= 0.0.4)
+    faraday-net_http (2.0.1)
     ferrum (0.11)
       addressable (~> 2.5)
       cliver (~> 0.3)
@@ -245,6 +249,7 @@ GEM
     rubocop-rspec (2.8.0)
       rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
+    ruby2_keywords (0.0.5)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
     sprockets (4.0.2)
@@ -284,6 +289,7 @@ DEPENDENCIES
   cssbundling-rails
   cuprite (~> 0.13)
   debug
+  faraday
   foreman (~> 0.87.2)
   govuk-components
   govuk_design_system_formbuilder
