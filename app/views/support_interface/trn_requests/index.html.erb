@@ -10,26 +10,6 @@
     end
 
     summary_list.row do |row|
-      row.key(text: 'Email')
-      row.value(text: trn_request.email)
-    end
-
-    summary_list.row do |row|
-      row.key(text: 'NI Number')
-      row.value(text: trn_request.ni_number)
-    end
-
-    summary_list.row do |row|
-      row.key(text: 'Date of birth')
-      row.value(text: trn_request.date_of_birth)
-    end
-
-    summary_list.row do |row|
-      row.key(text: 'ITT Provider Name')
-      row.value(text: trn_request.itt_provider_name)
-    end
-
-    summary_list.row do |row|
       row.key(text: 'Created at')
       row.value(text: trn_request.created_at)
     end
