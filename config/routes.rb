@@ -7,6 +7,11 @@ Rails.application.routes.draw do
     resource :email, controller: :email, only: %i[edit update]
   end
 
+  namespace :support_interface, path: '/support' do
+    get '/', to: redirect('/support/trn-requests')
+    get '/trn-requests', to: 'trn_requests#index'
+  end
+
   get '/check-answers', to: 'trn_requests#show'
   get '/email', to: 'email#edit'
   patch '/email', to: 'email#update'
@@ -15,8 +20,4 @@ Rails.application.routes.draw do
   get '/itt-provider', to: 'itt_providers#edit'
   patch '/itt-provider', to: 'itt_providers#update'
   get '/start', to: 'pages#start'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
 end
