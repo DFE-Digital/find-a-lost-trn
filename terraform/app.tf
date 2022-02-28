@@ -1,6 +1,8 @@
 locals {
-  secret_key_base = {
-    SECRET_KEY_BASE = local.infrastructure_secrets.SECRET_KEY_BASE
+  app_environment_variables = {
+    SECRET_KEY_BASE = local.infrastructure_secrets.SECRET_KEY_BASE,
+    SUPPORT_USERNAME = local.infrastructure_secrets.SUPPORT_USERNAME,
+    SUPPORT_PASSWORD = local.infrastructure_secrets.SUPPORT_PASSWORD
   }
 }
 resource "cloudfoundry_route" "flt_public" {
@@ -29,7 +31,7 @@ resource "cloudfoundry_app" "app" {
   disk_quota   = var.flt_disk_quota
   docker_image = var.flt_docker_image
   strategy     = "blue-green"
-  environment  = local.secret_key_base
+  environment  = local.app_environment_variables
   dynamic "routes" {
     for_each = local.flt_routes
     content {
