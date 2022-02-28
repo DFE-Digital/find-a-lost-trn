@@ -48,3 +48,9 @@
 .env
 .envrc
 .env.local
+
+# Dotenv
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
