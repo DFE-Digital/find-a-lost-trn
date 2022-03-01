@@ -5,6 +5,9 @@ RSpec.describe 'TRN requests', type: :system do
   it 'completing a request' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    then_i_see_the_date_of_birth_page
+
+    when_i_complete_my_date_of_birth
     then_i_see_the_have_ni_page
 
     when_i_choose_no
@@ -38,13 +41,20 @@ RSpec.describe 'TRN requests', type: :system do
   it 'entering the NI number' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    then_i_see_the_date_of_birth_page
+
+    when_i_complete_my_date_of_birth
     then_i_see_the_have_ni_page
+
     when_i_press_continue
     then_i_see_the_ni_missing_error
+
     when_i_choose_yes_to_ni_number
     then_i_see_the_ni_number_page
+
     when_i_press_continue
     then_i_see_the_ni_number_missing_error
+
     when_i_enter_a_valid_ni_number
     then_i_see_the_itt_provider_page
   end
@@ -80,6 +90,13 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_updated_itt_provider
   end
 
+  it 'changing my date of birth' do
+    given_i_have_completed_a_trn_request
+    when_i_press_change_date_of_birth
+    then_i_see_the_date_of_birth_page
+    and_the_date_of_birth_is_prepopulated
+  end
+
   it 'pressing back' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
@@ -87,10 +104,23 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_home_page
   end
 
+  context 'when the user has reached the have NI question' do
+    it 'pressing back' do
+      given_i_am_on_the_home_page
+      when_i_press_the_start_button
+      when_i_complete_my_date_of_birth
+      then_i_see_the_have_ni_page
+
+      when_i_press_back
+      then_i_see_the_date_of_birth_page
+    end
+  end
+
   context 'when the user has reached the email question' do
     it 'pressing back' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
+      when_i_complete_my_date_of_birth
       and_i_choose_no
       and_i_press_continue
       then_i_see_the_itt_provider_page
@@ -108,6 +138,7 @@ RSpec.describe 'TRN requests', type: :system do
     it 'pressing back' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
+      when_i_complete_my_date_of_birth
       and_i_choose_no
       and_i_press_continue
       then_i_see_the_itt_provider_page
@@ -147,6 +178,7 @@ RSpec.describe 'TRN requests', type: :system do
   it 'ITT provider validations' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    when_i_complete_my_date_of_birth
     then_i_see_the_ni_page
 
     when_i_choose_no
@@ -163,6 +195,12 @@ RSpec.describe 'TRN requests', type: :system do
 
   private
 
+  def and_the_date_of_birth_is_prepopulated
+    expect(page).to have_field('Day', with: '1')
+    expect(page).to have_field('Month', with: '1')
+    expect(page).to have_field('Year', with: '1980')
+  end
+
   def given_i_am_on_the_home_page
     visit root_path
   end
@@ -170,6 +208,7 @@ RSpec.describe 'TRN requests', type: :system do
   def given_i_have_completed_a_trn_request
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    when_i_complete_my_date_of_birth
     when_i_choose_no
     and_i_press_continue
     then_i_see_the_itt_provider_page
@@ -187,6 +226,8 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page.driver.browser.current_title).to start_with('Check your answers')
     expect(page).to have_content('Check your answers')
     expect(page).to have_content('email@example.com')
+    expect(page).to have_content('Date of birth')
+    expect(page).to have_content('01 January 1980')
   end
 
   def then_i_see_the_ni_missing_error
@@ -202,6 +243,12 @@ RSpec.describe 'TRN requests', type: :system do
   def then_i_see_the_confirmation_page
     expect(page.driver.browser.current_title).to start_with('Information Received')
     expect(page).to have_content('Information received')
+  end
+
+  def then_i_see_the_date_of_birth_page
+    expect(page).to have_current_path('/date-of-birth')
+    expect(page.driver.browser.current_title).to start_with('Your date of birth')
+    expect(page).to have_content('Your date of birth')
   end
 
   def then_i_see_the_email_page
@@ -268,6 +315,7 @@ RSpec.describe 'TRN requests', type: :system do
   def when_i_am_on_the_email_page
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    when_i_complete_my_date_of_birth
     when_i_choose_no_ni_number
     when_i_choose_no_itt_provider
   end
@@ -307,6 +355,13 @@ RSpec.describe 'TRN requests', type: :system do
     click_on 'Continue'
   end
 
+  def when_i_complete_my_date_of_birth
+    fill_in 'Day', with: '01'
+    fill_in 'Month', with: '01'
+    fill_in 'Year', with: '1980'
+    click_on 'Continue'
+  end
+
   def when_i_press_back
     click_on 'Back'
   end
@@ -321,6 +376,10 @@ RSpec.describe 'TRN requests', type: :system do
     fill_in 'Your email address', with: 'new@example.com'
   end
   alias_method :and_i_fill_in_my_new_email_address, :when_i_fill_in_my_new_email_address
+
+  def when_i_press_change_date_of_birth
+    click_on 'Change date of birth'
+  end
 
   def when_i_press_change_email
     click_on 'Change email address'

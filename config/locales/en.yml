@@ -40,6 +40,11 @@ en:
   activemodel:
     errors:
       models:
+        date_of_birth_form:
+          attributes:
+            date_of_birth:
+              blank: Enter your date of birth
+              inclusion: You must be 16 or over to use this service
         has_ni_number_form:
           attributes:
             has_ni_number:
