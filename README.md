@@ -47,7 +47,16 @@ If installing PostgreSQL via `asdf`, set up the `postgres` user:
 pg_ctl start
 createdb default
 psql -d default
-default=# CREATE ROLE postgres LOGIN SUPERUSER;
+> CREATE ROLE postgres LOGIN SUPERUSER;
+```
+
+You might also need to install `postgresql-libs`:
+
+```bash
+sudo apt install libpq-dev
+sudo yum install postgresql-devel
+sudo zypper in postgresql-devel
+sudo pacman -S postgresql-libs
 ```
 
 Setup the project (re-run after `Gemfile` or `package.json` updates, automatically restarts any running Rails server):
