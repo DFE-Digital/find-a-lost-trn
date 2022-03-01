@@ -7,6 +7,11 @@
     <p class="govuk-body">We will send your TRN to <%= @trn_request.email %> if we find one matching your details.</p>
 
     <% rows = [
+        { 
+          key: { text: 'Date of birth' }, 
+          value: { text: @trn_request.date_of_birth? ? @trn_request.date_of_birth.to_fs(:long_ordinal_uk) : 'Not given' }, 
+          actions: [{ href: date_of_birth_path, visually_hidden_text: 'date of birth' }]
+        },
         { key: { text: 'Email address '},
           value: { text: @trn_request.email },
           actions: [{ href: email_path, visually_hidden_text: 'email address' }]

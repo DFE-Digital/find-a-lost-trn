@@ -7,7 +7,6 @@ class EmailController < ApplicationController
   def update
     @trn_request = TrnRequest.find_by(id: session[:trn_request_id]) || TrnRequest.new
     if @trn_request.update(email: email_params[:email])
-      session[:trn_request_id] = @trn_request.id
       redirect_to check_answers_url
     else
       render :edit

@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   end
 
   get '/check-answers', to: 'trn_requests#show'
+  get '/date-of-birth', to: 'date_of_birth#edit'
+  patch '/date-of-birth', to: 'date_of_birth#update'
   get '/email', to: 'email#edit'
   patch '/email', to: 'email#update'
   get '/have-ni-number', to: 'ni_number#new'
