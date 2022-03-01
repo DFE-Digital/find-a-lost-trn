@@ -54,31 +54,9 @@ jobs:
           push: true
           tags: ${{ steps.image.outputs.tag }}
 
-  validate_terraform:
-    name: Validate Terraform
-    needs: [docker]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 1.0.10
-
-      - name: Check formatting
-        run: terraform fmt -check
-        working-directory: terraform
-
-      - name: Validate
-        run: |
-          terraform init -backend=false
-          terraform validate -no-color
-        working-directory: terraform
-
   deploy_dev:
     name: Deploy to dev environment
-    needs: [docker, validate_terraform]
+    needs: [docker]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment:
@@ -103,7 +81,7 @@ jobs:
   deploy_environment:
     name: Deploy to ${{ github.event.inputs.environment }} environment
     runs-on: ubuntu-latest
-    needs: [docker, validate_terraform]
+    needs: [docker]
     if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
     environment:
       name: ${{ github.event.inputs.environment }}
