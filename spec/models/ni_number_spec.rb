@@ -13,7 +13,7 @@ RSpec.describe NiNumber, type: :model do
 
     it 'adds an incorrect format error message' do
       ni_number_form.validate
-      expect(ni_number_form.errors[:ni_number]).to include('Enter a National Insurance number')
+      expect(ni_number_form.errors[:ni_number]).to include('Enter a National Insurance number in the correct format')
     end
   end
 
