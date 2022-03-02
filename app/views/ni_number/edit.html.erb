@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: ni_number, url: ni_number_path, method: :patch do |f| %>
       <%= f.govuk_error_summary %>
-      <%= f.govuk_text_field(:ni_number, 
+      <%= f.govuk_text_field(:ni_number,
             label: { size: 'xl', text: 'What is your National Insurance number?' },
             hint: { text: 'It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.' },
             class: 'govuk-input--width-10',
@@ -14,7 +14,7 @@
 
       <%= govuk_details(summary_text: "I don’t know my National Insurance number") do %>
         <p class="govuk-body">
-          You can <a href='https://www.gov.uk/lost-national-insurance-number'>find a lost National Insurance number</a>.
+          You can <a class="govuk-link" href='https://www.gov.uk/lost-national-insurance-number'>find a lost National Insurance number</a>.
         </p>
 
         <p class="govuk-body">
