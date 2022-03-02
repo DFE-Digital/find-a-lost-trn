@@ -40,5 +40,5 @@ en:
         ni_number:
           attributes:
             ni_number:
-              blank: Enter a National Insurance number in the correct format
-              invalid: Enter a National Insurance number in the correct format
+              blank: Enter a National Insurance number
+              invalid: Enter a National Insurance number

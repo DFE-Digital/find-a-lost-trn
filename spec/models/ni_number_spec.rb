@@ -5,9 +5,7 @@ RSpec.describe NiNumber, type: :model do
   subject(:ni_number_form) { described_class.new }
 
   specify do
-    expect(ni_number_form).to validate_presence_of(:ni_number).with_message(
-      'Enter a National Insurance number in the correct format',
-    )
+    expect(ni_number_form).to validate_presence_of(:ni_number).with_message('Enter a National Insurance number')
   end
 
   shared_examples 'an invalid ni_number' do
@@ -15,7 +13,7 @@ RSpec.describe NiNumber, type: :model do
 
     it 'adds an incorrect format error message' do
       ni_number_form.validate
-      expect(ni_number_form.errors[:ni_number]).to include('Enter a National Insurance number in the correct format')
+      expect(ni_number_form.errors[:ni_number]).to include('Enter a National Insurance number')
     end
   end
 
