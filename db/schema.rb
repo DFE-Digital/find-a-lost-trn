@@ -12,26 +12,27 @@
 
 ActiveRecord::Schema[7.0].define(version: 2022_03_01_202214) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'features', force: :cascade do |t|
-    t.string 'name', null: false
-    t.boolean 'active', default: false, null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['name'], name: 'index_features_on_name', unique: true
+  create_table "features", force: :cascade do |t|
+    t.string "name", null: false
+    t.boolean "active", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_features_on_name", unique: true
   end
 
-  create_table 'trn_requests', force: :cascade do |t|
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.datetime 'checked_at', precision: nil
-    t.date 'date_of_birth'
-    t.string 'email'
-    t.string 'name'
-    t.string 'ni_number'
-    t.boolean 'itt_provider_enrolled'
-    t.string 'itt_provider_name'
-    t.boolean 'has_ni_number'
+  create_table "trn_requests", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "checked_at", precision: nil
+    t.date "date_of_birth"
+    t.string "email"
+    t.string "name"
+    t.string "ni_number"
+    t.boolean "itt_provider_enrolled"
+    t.string "itt_provider_name"
+    t.boolean "has_ni_number"
   end
+
 end
