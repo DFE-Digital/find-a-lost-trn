@@ -37,10 +37,4 @@ RSpec.describe TrnRequest, type: :model do
       )
     end
   end
-
-  context 'when the NI number question has been asked' do
-    before { trn_request.has_ni_number = false }
-
-    it { is_expected.to validate_length_of(:itt_provider_name).is_at_most(255) }
-  end
 end

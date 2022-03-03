@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 class IttProvidersController < ApplicationController
   def edit
-    trn_request
+    @itt_provider_form = IttProviderForm.new(trn_request: trn_request).assign_form_values
   end
 
   def update
-    if trn_request.update(itt_provider_params)
+    @itt_provider_form = IttProviderForm.new(itt_provider_params)
+    if @itt_provider_form.save
       redirect_to trn_request.email.blank? ? email_url : check_answers_url
     else
       render :edit
@@ -15,7 +16,10 @@ class IttProvidersController < ApplicationController
   private
 
   def itt_provider_params
-    params.require(:trn_request).permit(:itt_provider_enrolled, :itt_provider_name)
+    params
+      .require(:itt_provider_form)
+      .permit(:itt_provider_enrolled, :itt_provider_name)
+      .merge(trn_request: trn_request)
   end
 
   def trn_request

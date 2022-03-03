@@ -52,7 +52,9 @@ RSpec.describe 'TRN requests', type: :system do
   it 'changing my NI number' do
     given_i_have_completed_a_trn_request
     when_i_press_change_ni_number
-    and_i_choose_yes
+    then_no_should_be_checked
+
+    when_i_choose_yes
     and_i_press_continue
     and_i_fill_in_my_ni_number
     and_i_press_continue
@@ -70,7 +72,9 @@ RSpec.describe 'TRN requests', type: :system do
   it 'changing my ITT provider' do
     given_i_have_completed_a_trn_request
     when_i_press_change_itt_provider
-    and_i_choose_yes
+    then_no_should_be_checked
+
+    when_i_choose_yes
     and_i_fill_in_my_itt_provider
     and_i_press_continue
     then_i_see_the_updated_itt_provider
@@ -251,6 +255,10 @@ RSpec.describe 'TRN requests', type: :system do
 
   def then_i_see_a_validation_error
     expect(page).to have_content('There is a problem')
+  end
+
+  def then_no_should_be_checked
+    expect(find_field('No', checked: true, visible: false)).to be_truthy
   end
 
   def when_i_am_on_the_check_answers_page
