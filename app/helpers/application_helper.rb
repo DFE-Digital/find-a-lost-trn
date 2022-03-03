@@ -4,6 +4,7 @@ module ApplicationHelper
   def back_link_url(trn_request)
     referer = controller.request.env['HTTP_REFERER']
     return check_answers_path if referer&.include?('check-answers') || trn_request&.email?
+    return referer if referer
 
     start_path
   end
