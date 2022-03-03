@@ -4,7 +4,7 @@ class NiNumber
 
   attr_accessor :trn_request_id
 
-  validates :ni_number, format: { with: /\A[a-z]{2}[0-9]{6}[a-d]{1}\Z/i }, presence: true
+  validates :ni_number, presence: true, format: { with: /\A[a-z]{2}[0-9]{6}[a-d]{1}\Z/i }
 
   delegate :email?, :ni_number, to: :trn_request
 
