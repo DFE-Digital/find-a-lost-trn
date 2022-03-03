@@ -36,3 +36,7 @@ Metrics/MethodLength:
 RSpec/ExampleLength:
   Exclude:
     - spec/**/*
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/**/*

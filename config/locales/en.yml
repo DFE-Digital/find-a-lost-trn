@@ -42,6 +42,14 @@ en:
             ni_number:
               blank: Enter a National Insurance number
               invalid: Enter a National Insurance number in the correct format
+        itt_provider_form:
+          attributes:
+            itt_provider_enrolled:
+              inclusion: Tell us if you’ve been enrolled in initial teacher
+                training
+            itt_provider_name:
+              blank: Enter your school, university or other training provider
+              too_long: Enter a school that is less than 255 letters long
 
   activerecord:
     errors:
