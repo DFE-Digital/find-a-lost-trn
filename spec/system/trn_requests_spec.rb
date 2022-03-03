@@ -140,6 +140,23 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_check_answers_page
   end
 
+  it 'ITT provider validations' do
+    given_i_am_on_the_home_page
+    when_i_press_the_start_button
+    then_i_see_the_ni_page
+
+    when_i_choose_no
+    and_i_press_continue
+    then_i_see_the_itt_provider_page
+
+    when_i_press_continue
+    then_i_see_a_validation_error
+
+    when_i_choose_yes
+    and_i_press_continue
+    then_i_see_a_validation_error
+  end
+
   private
 
   def given_i_am_on_the_home_page
@@ -230,6 +247,10 @@ RSpec.describe 'TRN requests', type: :system do
 
   def then_i_see_the_updated_ni_number
     expect(page).to have_content('QQ 12 34 56 C')
+  end
+
+  def then_i_see_a_validation_error
+    expect(page).to have_content('There is a problem')
   end
 
   def when_i_am_on_the_check_answers_page
