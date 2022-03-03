@@ -57,7 +57,7 @@ RSpec.describe 'TRN requests', type: :system do
       when_i_choose_no_itt_provider
       then_i_see_the_email_page
       when_i_press_back
-      then_i_see_the_home_page
+      then_i_see_the_itt_provider_page
     end
   end
 
@@ -68,7 +68,7 @@ RSpec.describe 'TRN requests', type: :system do
       when_i_choose_no_ni_number
       then_i_see_the_itt_provider_page
       when_i_press_back
-      then_i_see_the_home_page
+      then_i_see_the_ni_page
     end
   end
 
