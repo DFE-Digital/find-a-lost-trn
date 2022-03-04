@@ -182,6 +182,7 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_change_my_itt_provider
     click_on 'Change itt_provider'
+    expect(find_field('No', checked: true, visible: false)).to be_truthy
     choose 'Yes', visible: false
     fill_in 'Your school, university or other training provider', with: 'Test ITT Provider', visible: false
     click_on 'Continue'
