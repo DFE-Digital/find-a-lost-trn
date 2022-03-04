@@ -22,6 +22,6 @@ class NiNumber
   private
 
   def trn_request
-    @trn_request ||= TrnRequest.find_by(id: trn_request_id) || TrnRequest.new
+    @trn_request ||= TrnRequest.find(trn_request_id)
   end
 end

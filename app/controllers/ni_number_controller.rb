@@ -3,8 +3,12 @@ class NiNumberController < ApplicationController
   def new; end
 
   def create
-    trn_request.update(has_ni_number: trn_request_params[:has_ni_number])
-    redirect_to trn_request.has_ni_number? ? ni_number_url : itt_provider_url
+    if trn_request.update(has_ni_number: trn_request_params[:has_ni_number])
+      session[:trn_request_id] = trn_request.id
+      redirect_to trn_request.has_ni_number? ? ni_number_url : itt_provider_url
+    else
+      render :new
+    end
   end
 
   def edit; end

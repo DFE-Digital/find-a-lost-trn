@@ -43,27 +43,50 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   it 'pressing back' do
-    given_i_am_on_the_itt_provider_page
+    given_i_am_on_the_home_page
+    when_i_press_the_start_button
     when_i_press_back
     then_i_see_the_home_page
-    when_i_am_on_the_email_page
-    when_i_press_back
-    then_i_see_the_home_page
-    when_i_am_on_the_check_answers_page
-    when_i_press_back
-    then_i_see_the_home_page
-    when_i_try_to_go_to_the_check_answers_page
-    when_i_press_change_email
-    and_i_press_back
-    then_i_see_the_check_answers_page
-    when_i_press_change_itt_provider
-    then_i_see_the_itt_provider_page
-    when_i_press_back
-    then_i_see_the_check_answers_page
-    when_i_press_change_ni_number
-    then_i_see_the_ni_page
-    when_i_press_back
-    then_i_see_the_check_answers_page
+  end
+
+  context 'when the user has reached the email question' do
+    it 'pressing back' do
+      given_i_am_on_the_home_page
+      when_i_press_the_start_button
+      when_i_choose_no_ni_number
+      when_i_choose_no_itt_provider
+      then_i_see_the_email_page
+      when_i_press_back
+      then_i_see_the_home_page
+    end
+  end
+
+  context 'when the user has reached the ITT provider question' do
+    it 'pressing back' do
+      given_i_am_on_the_home_page
+      when_i_press_the_start_button
+      when_i_choose_no_ni_number
+      then_i_see_the_itt_provider_page
+      when_i_press_back
+      then_i_see_the_home_page
+    end
+  end
+
+  context 'when the user has reached the check answers page' do
+    it 'pressing back' do
+      given_i_have_completed_a_trn_request
+      when_i_press_change_email
+      and_i_press_back
+      then_i_see_the_check_answers_page
+      when_i_press_change_itt_provider
+      then_i_see_the_itt_provider_page
+      when_i_press_back
+      then_i_see_the_check_answers_page
+      when_i_press_change_ni_number
+      then_i_see_the_ni_page
+      when_i_press_back
+      then_i_see_the_check_answers_page
+    end
   end
 
   it 'refreshing the page and pressing back' do
@@ -81,20 +104,12 @@ RSpec.describe 'TRN requests', type: :system do
     visit root_path
   end
 
-  def given_i_am_on_the_itt_provider_page
-    visit root_path
-    click_on 'Start'
-  end
-
   def given_i_have_completed_a_trn_request
     visit root_path
     click_on 'Start'
-    choose 'No', visible: false
-    click_on 'Continue'
-    choose 'No', visible: false
-    click_on 'Continue'
-    fill_in 'Your email address', with: 'email@example.com'
-    click_on 'Continue'
+    when_i_choose_no_ni_number
+    when_i_choose_no_itt_provider
+    when_i_fill_in_my_email_address
   end
 
   def then_i_see_the_check_answers_page
@@ -187,6 +202,11 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_choose_no_ni_number
     choose 'No', visible: false
+    click_on 'Continue'
+  end
+
+  def when_i_fill_in_my_email_address
+    fill_in 'Your email address', with: 'email@example.com'
     click_on 'Continue'
   end
 
