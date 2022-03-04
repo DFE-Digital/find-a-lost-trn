@@ -105,11 +105,11 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def given_i_have_completed_a_trn_request
-    visit root_path
-    click_on 'Start'
+    given_i_am_on_the_home_page
+    when_i_press_the_start_button
     when_i_choose_no_ni_number
     when_i_choose_no_itt_provider
-    when_i_fill_in_my_email_address
+    when_i_submit_my_email_address
   end
 
   def then_i_see_the_check_answers_page
@@ -168,10 +168,10 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def when_i_am_on_the_email_page
-    visit root_path
-    click_on 'Start now'
-    choose 'No', visible: false
-    click_on 'Continue'
+    given_i_am_on_the_home_page
+    when_i_press_the_start_button
+    when_i_choose_no_ni_number
+    when_i_choose_no_itt_provider
   end
 
   def when_i_change_my_email
@@ -189,6 +189,7 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_change_my_ni_number
     click_on 'Change ni_number'
+    expect(find_field('No', checked: true, visible: false)).to be_truthy
     choose 'Yes', visible: false
     click_on 'Continue'
     fill_in 'What is your National Insurance number?', with: 'QQ123456C'
@@ -202,11 +203,6 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_choose_no_ni_number
     choose 'No', visible: false
-    click_on 'Continue'
-  end
-
-  def when_i_fill_in_my_email_address
-    fill_in 'Your email address', with: 'email@example.com'
     click_on 'Continue'
   end
 
@@ -225,6 +221,10 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_press_change_ni_number
     click_on 'Change ni_number'
+  end
+
+  def when_i_press_continue
+    click_on 'Continue'
   end
 
   def when_i_press_the_start_button

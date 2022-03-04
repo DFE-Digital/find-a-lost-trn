@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get '/email', to: 'email#edit'
   patch '/email', to: 'email#update'
   get '/have-ni-number', to: 'ni_number#new'
+  patch '/have-ni-number', to: 'ni_number#create'
   post '/have-ni-number', to: 'ni_number#create'
   get '/health', to: proc { [200, {}, ['success']] }
   get '/helpdesk-request-submitted', to: 'pages#helpdesk_request_submitted'

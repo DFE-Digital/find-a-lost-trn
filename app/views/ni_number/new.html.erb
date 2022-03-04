@@ -3,8 +3,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: trn_request, url: have_ni_number_path, method: :post do |f| %>
-      <% options = [OpenStruct.new(label: 'Yes', value: 1), OpenStruct.new(label: 'No', value: 0)] %>
+    <%= form_with model: trn_request, url: have_ni_number_path, method: trn_request.new_record? ? :post : :patch do |f| %>
+      <% options = [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)] %>
+      <%= f.govuk_error_summary %>
       <%= f.govuk_collection_radio_buttons(:has_ni_number, 
             options, 
             :value, 
