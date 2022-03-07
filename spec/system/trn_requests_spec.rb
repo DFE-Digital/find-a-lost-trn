@@ -5,7 +5,7 @@ RSpec.describe 'TRN requests', type: :system do
   it 'completing a request' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
-    then_i_see_the_ni_page
+    then_i_see_the_have_ni_page
     when_i_choose_no_ni_number
     then_i_see_the_itt_provider_page
     when_i_choose_no_itt_provider
@@ -22,6 +22,20 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_home_page
     when_i_try_to_go_to_the_check_answers_page
     then_i_see_the_home_page
+  end
+
+  it 'entering the NI number' do
+    given_i_am_on_the_home_page
+    when_i_press_the_start_button
+    then_i_see_the_have_ni_page
+    when_i_press_continue
+    then_i_see_the_ni_missing_error
+    when_i_choose_yes_to_ni_number
+    then_i_see_the_ni_number_page
+    when_i_press_continue
+    then_i_see_the_ni_number_missing_error
+    when_i_enter_a_valid_ni_number
+    then_i_see_the_itt_provider_page
   end
 
   it 'changing my NI number' do
@@ -83,7 +97,7 @@ RSpec.describe 'TRN requests', type: :system do
       when_i_press_back
       then_i_see_the_check_answers_page
       when_i_press_change_ni_number
-      then_i_see_the_ni_page
+      then_i_see_the_have_ni_page
       when_i_press_back
       then_i_see_the_check_answers_page
     end
@@ -119,6 +133,10 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_content('email@example.com')
   end
 
+  def then_i_see_the_ni_missing_error
+    expect(page).to have_content('Tell us if you have a National Insurance number')
+  end
+
   def then_i_see_the_updated_itt_provider
     expect(page).to have_current_path('/check-answers')
     expect(page).to have_content('Teacher training provider')
@@ -149,10 +167,20 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_content('Have you ever been enrolled in initial teacher training in England or Wales?')
   end
 
-  def then_i_see_the_ni_page
+  def then_i_see_the_have_ni_page
     expect(page).to have_current_path('/have-ni-number')
     expect(page.driver.browser.current_title).to start_with('Do you have a National Insurance number?')
     expect(page).to have_content('Do you have a National Insurance number?')
+  end
+
+  def then_i_see_the_ni_number_page
+    expect(page).to have_current_path('/ni-number')
+    expect(page.driver.browser.current_title).to start_with('What is your National Insurance number?')
+    expect(page).to have_content('What is your National Insurance number?')
+  end
+
+  def then_i_see_the_ni_number_missing_error
+    expect(page).to have_content('Enter a National Insurance number')
   end
 
   def then_i_see_the_updated_email_address
@@ -204,6 +232,16 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_choose_no_ni_number
     choose 'No', visible: false
+    click_on 'Continue'
+  end
+
+  def when_i_choose_yes_to_ni_number
+    choose 'Yes', visible: false
+    click_on 'Continue'
+  end
+
+  def when_i_enter_a_valid_ni_number
+    fill_in 'What is your National Insurance number?', with: 'QQ123456C'
     click_on 'Continue'
   end
 
