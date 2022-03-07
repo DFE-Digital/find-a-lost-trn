@@ -323,15 +323,15 @@ RSpec.describe 'TRN requests', type: :system do
   alias_method :and_i_fill_in_my_new_email_address, :when_i_fill_in_my_new_email_address
 
   def when_i_press_change_email
-    click_on 'Change email'
+    click_on 'Change email address'
   end
 
   def when_i_press_change_itt_provider
-    click_on 'Change itt_provider'
+    click_on 'Change teacher training provider'
   end
 
   def when_i_press_change_ni_number
-    click_on 'Change ni_number'
+    click_on 'Change national insurance number'
   end
 
   def when_i_press_continue
