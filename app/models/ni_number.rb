@@ -16,7 +16,7 @@ class NiNumber
     self.ni_number = params[:ni_number]
     return false if invalid?
 
-    trn_request.update(params)
+    trn_request.save!
   end
 
   private

@@ -42,3 +42,11 @@ en:
             ni_number:
               blank: Enter a National Insurance number
               invalid: Enter a National Insurance number in the correct format
+
+  activerecord:
+    errors:
+      models:
+        trn_request:
+          attributes:
+            has_ni_number:
+              inclusion: Tell us if you have a National Insurance number
