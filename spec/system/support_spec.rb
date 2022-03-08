@@ -24,7 +24,7 @@ RSpec.describe 'Support', type: :system do
   end
 
   def when_i_visit_the_feature_flags_page
-    visit support_interface_features_path
+    click_on 'Features'
   end
 
   def when_i_activate_the_zendesk_feature_flag
