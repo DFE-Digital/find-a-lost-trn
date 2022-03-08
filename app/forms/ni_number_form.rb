@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-class NiNumber
+class NiNumberForm
   include ActiveModel::Model
 
-  attr_accessor :trn_request_id
+  attr_accessor :trn_request
 
   validates :ni_number, presence: true, format: { with: /\A[a-z]{2}[0-9]{6}[a-d]{1}\Z/i }
 
@@ -17,11 +17,5 @@ class NiNumber
     return false if invalid?
 
     trn_request.save!
-  end
-
-  private
-
-  def trn_request
-    @trn_request ||= TrnRequest.find(trn_request_id)
   end
 end

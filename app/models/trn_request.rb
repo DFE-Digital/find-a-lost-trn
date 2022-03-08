@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class TrnRequest < ApplicationRecord
   validates :email, valid_for_notify: true, if: %i[itt_provider_answered? ni_number_answered?]
-  validates :has_ni_number, inclusion: { in: [true, false] }
 
   def answers_checked=(value)
     return unless value

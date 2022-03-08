@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe NiNumber, type: :model do
-  subject(:ni_number_form) { described_class.new(trn_request_id: trn_request.id) }
+RSpec.describe NiNumberForm, type: :model do
+  subject(:ni_number_form) { described_class.new(trn_request: trn_request) }
 
-  let(:trn_request) { TrnRequest.create(has_ni_number: false) }
+  let(:trn_request) { TrnRequest.new }
 
   specify do
     expect(ni_number_form).to validate_presence_of(:ni_number).with_message('Enter a National Insurance number')
