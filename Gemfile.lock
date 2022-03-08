@@ -109,10 +109,10 @@ GEM
     foreman (0.87.2)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    govuk-components (3.0.1)
+    govuk-components (3.0.3)
       activemodel (>= 6.1)
       railties (>= 6.1)
-      view_component (~> 2.47.0)
+      view_component (~> 2.49.1)
     govuk_design_system_formbuilder (3.0.1)
       actionview (>= 6.1)
       activemodel (>= 6.1)
@@ -265,7 +265,7 @@ GEM
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.1.0)
-    view_component (2.47.0)
+    view_component (2.49.1)
       activesupport (>= 5.0.0, < 8.0)
       method_source (~> 1.0)
     web-console (4.2.0)
@@ -291,7 +291,7 @@ DEPENDENCIES
   debug
   dotenv-rails
   foreman (~> 0.87.2)
-  govuk-components
+  govuk-components (~> 3.0.3)
   govuk_design_system_formbuilder
   govuk_markdown (~> 1.0)
   importmap-rails
