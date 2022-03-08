@@ -31,7 +31,21 @@
 
     <%= govuk_skip_link %>
 
-    <%= govuk_header(service_name: "Find a lost teacher reference number (TRN)") %>
+    <%= govuk_header(service_name: "Find a lost teacher reference number (TRN)") do |header| %>
+      <% case try(:current_namespace) %>
+      <% when 'support_interface' %>
+        <% header.navigation_item(
+          text: "TRN Requests",
+          href: support_interface_trn_requests_path,
+          active: current_page?(support_interface_trn_requests_path),
+        ) %>
+        <% header.navigation_item(
+          text: "Features",
+          href: support_interface_features_path,
+          active: current_page?(support_interface_features_path)
+        ) %>
+      <% end %>
+    <% end %>
 
     <div class="govuk-width-container">
       <%= govuk_phase_banner(tag: { text: "Beta" }, text: "This is a new service – your feedback will help us to improve it. ") %>
