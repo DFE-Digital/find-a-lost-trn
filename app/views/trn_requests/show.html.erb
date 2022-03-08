@@ -12,15 +12,15 @@
           actions: [{ href: email_path, visually_hidden_text: 'email address' }]
         },
         {
+          key: { text: @trn_request.has_ni_number? ? 'National Insurance number' : 'Do you have a National Insurance number?' },
+          value: { text: @trn_request.has_ni_number? ? pretty_ni_number(@trn_request.ni_number) : 'No' },
+          actions: [{ href: have_ni_number_path, visually_hidden_text: 'national insurance number' }]
+        },
+        {
           key: { text: @trn_request.itt_provider_enrolled ? 'Teacher training provider' : 'Have you been enrolled in initial teacher training in England or Wales?' },
           value: { text: @trn_request.itt_provider_name.presence || 'No' },
           actions: [{ href: itt_provider_path, visually_hidden_text: 'teacher training provider' }]
         },
-        {
-          key: { text: @trn_request.has_ni_number? ? 'National Insurance number' : 'Do you have a National Insurance number?' },
-          value: { text: @trn_request.has_ni_number? ? pretty_ni_number(@trn_request.ni_number) : 'No' },
-          actions: [{ href: have_ni_number_path, visually_hidden_text: 'national insurance number' }]
-        }
     ] %>
     <%= govuk_summary_list(rows: rows) %>
 
