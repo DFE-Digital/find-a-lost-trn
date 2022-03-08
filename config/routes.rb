@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   namespace :support_interface, path: '/support' do
     get '/', to: redirect('/support/trn-requests')
     get '/trn-requests', to: 'trn_requests#index'
+
+    get '/features', to: 'feature_flags#index'
+    post '/features/:feature_name/activate', to: 'feature_flags#activate', as: :activate_feature
+    post '/features/:feature_name/deactivate', to: 'feature_flags#deactivate', as: :deactivate_feature
   end
 
   get '/check-answers', to: 'trn_requests#show'
