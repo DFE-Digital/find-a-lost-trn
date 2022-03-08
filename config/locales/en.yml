@@ -37,7 +37,11 @@ en:
   activemodel:
     errors:
       models:
-        ni_number:
+        has_ni_number_form:
+          attributes:
+            has_ni_number:
+              inclusion: Tell us if you have a National Insurance number
+        ni_number_form:
           attributes:
             ni_number:
               blank: Enter a National Insurance number
@@ -50,11 +54,3 @@ en:
             itt_provider_name:
               blank: Enter your school, university or other training provider
               too_long: Enter a school that is less than 255 letters long
-
-  activerecord:
-    errors:
-      models:
-        trn_request:
-          attributes:
-            has_ni_number:
-              inclusion: Tell us if you have a National Insurance number

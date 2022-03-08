@@ -3,11 +3,10 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: trn_request, url: have_ni_number_path, method: trn_request.new_record? ? :post : :patch do |f| %>
-      <% options = [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)] %>
+    <%= form_with model: @has_ni_number_form, url: have_ni_number_path, method: :post do |f| %>
       <%= f.govuk_error_summary %>
       <%= f.govuk_collection_radio_buttons(:has_ni_number, 
-            options, 
+            [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
             :value, 
             :label, 
             legend: { size: 'xl', text: 'Do you have a National Insurance number?' }
