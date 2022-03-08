@@ -30,7 +30,10 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: 'Hello world'
+  notification_banner:
+    info: Information
+    warning: Warning
+    success: Success
   validation_errors:
     email_address_format: Enter an email address in the correct format, like name@example.com
 
