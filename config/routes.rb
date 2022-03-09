@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   root to: redirect('/start')
 
-  resource :trn_request, only: %i[show update] do
+  resource :trn_request, path: 'trn-request', only: %i[show update] do
     resource :email, controller: :email, only: %i[edit update]
   end
 
