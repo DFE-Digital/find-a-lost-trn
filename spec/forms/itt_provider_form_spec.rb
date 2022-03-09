@@ -30,7 +30,7 @@ RSpec.describe IttProviderForm, type: :model do
       it 'returns false' do
         form = described_class.new
 
-        expect(form.save).to eq false
+        expect(form.save).to be false
       end
     end
 
@@ -45,7 +45,7 @@ RSpec.describe IttProviderForm, type: :model do
 
         form.save
 
-        expect(form.trn_request.itt_provider_enrolled).to eq true
+        expect(form.trn_request.itt_provider_enrolled).to be true
         expect(form.trn_request.itt_provider_name).to eq 'Big SCITT'
       end
     end
