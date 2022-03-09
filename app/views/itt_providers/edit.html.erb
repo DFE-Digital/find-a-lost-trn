@@ -6,7 +6,7 @@
     <%= form_with model: @itt_provider_form, url: itt_provider_path, method: :patch do |f| %>
       <%= f.govuk_error_summary %>
       <%= f.govuk_radio_buttons_fieldset(:itt_provider_enrolled, legend: { size: 'xl', text: 'Have you ever been enrolled in initial teacher training in England or Wales?' }) do %>
-        <%= f.govuk_radio_button :itt_provider_enrolled, true, label: { text: 'Yes' } do %>
+        <%= f.govuk_radio_button :itt_provider_enrolled, true, label: { text: 'Yes' }, link_errors: true do %>
           <%= f.govuk_text_field(:itt_provider_name,
                 label: { text: 'Your school, university or other training provider' }
             )
