@@ -4,7 +4,6 @@ class DateOfBirthController < ApplicationController
 
   def update
     if date_of_birth_form.update(date_of_birth_params)
-      session[:trn_request_id] = date_of_birth_form.trn_request.id
       redirect_to date_of_birth_form.email? ? check_answers_url : have_ni_number_url
     else
       render :edit
@@ -23,6 +22,6 @@ class DateOfBirthController < ApplicationController
   end
 
   def trn_request
-    @trn_request ||= TrnRequest.find_or_initialize_by(id: session[:trn_request_id])
+    @trn_request ||= TrnRequest.find_by(id: session[:trn_request_id])
   end
 end

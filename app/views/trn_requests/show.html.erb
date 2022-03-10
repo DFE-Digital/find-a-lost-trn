@@ -8,6 +8,11 @@
 
     <% rows = [
         { 
+          key: { text: 'Your Name' }, 
+          value: { text: @trn_request.name }, 
+          actions: [{ href: name_path, visually_hidden_text: 'name' }]
+        },
+        { 
           key: { text: 'Date of birth' }, 
           value: { text: @trn_request.date_of_birth? ? @trn_request.date_of_birth.to_fs(:long_ordinal_uk) : 'Not given' }, 
           actions: [{ href: date_of_birth_path, visually_hidden_text: 'date of birth' }]
