@@ -5,6 +5,9 @@ RSpec.describe 'TRN requests', type: :system do
   it 'completing a request' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    then_i_see_the_name_page
+
+    when_i_fill_in_the_name_form
     then_i_see_the_date_of_birth_page
 
     when_i_complete_my_date_of_birth
@@ -41,6 +44,9 @@ RSpec.describe 'TRN requests', type: :system do
   it 'entering the NI number' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    then_i_see_the_name_page
+
+    when_i_fill_in_the_name_form
     then_i_see_the_date_of_birth_page
 
     when_i_complete_my_date_of_birth
@@ -57,6 +63,15 @@ RSpec.describe 'TRN requests', type: :system do
 
     when_i_enter_a_valid_ni_number
     then_i_see_the_itt_provider_page
+  end
+
+  it 'changing my name' do
+    given_i_have_completed_a_trn_request
+    when_i_press_change_name
+    then_i_see_the_existing_name
+
+    when_i_enter_a_new_name
+    then_i_see_the_updated_name
   end
 
   it 'changing my NI number' do
@@ -104,10 +119,23 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_home_page
   end
 
+  context 'when the user has reached the date of birth question' do
+    it 'pressing back' do
+      given_i_am_on_the_home_page
+      when_i_press_the_start_button
+      when_i_fill_in_the_name_form
+      then_i_see_the_date_of_birth_page
+
+      when_i_press_back
+      then_i_see_the_name_page
+    end
+  end
+
   context 'when the user has reached the have NI question' do
     it 'pressing back' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
+      when_i_fill_in_the_name_form
       when_i_complete_my_date_of_birth
       then_i_see_the_have_ni_page
 
@@ -120,6 +148,7 @@ RSpec.describe 'TRN requests', type: :system do
     it 'pressing back' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
+      when_i_fill_in_the_name_form
       when_i_complete_my_date_of_birth
       and_i_choose_no
       and_i_press_continue
@@ -138,6 +167,7 @@ RSpec.describe 'TRN requests', type: :system do
     it 'pressing back' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
+      when_i_fill_in_the_name_form
       when_i_complete_my_date_of_birth
       and_i_choose_no
       and_i_press_continue
@@ -178,6 +208,7 @@ RSpec.describe 'TRN requests', type: :system do
   it 'ITT provider validations' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    when_i_fill_in_the_name_form
     when_i_complete_my_date_of_birth
     then_i_see_the_ni_page
 
@@ -208,6 +239,7 @@ RSpec.describe 'TRN requests', type: :system do
   def given_i_have_completed_a_trn_request
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    when_i_fill_in_the_name_form
     when_i_complete_my_date_of_birth
     when_i_choose_no
     and_i_press_continue
@@ -225,6 +257,7 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_current_path('/check-answers')
     expect(page.driver.browser.current_title).to start_with('Check your answers')
     expect(page).to have_content('Check your answers')
+    expect(page).to have_content('John Smith')
     expect(page).to have_content('email@example.com')
     expect(page).to have_content('Date of birth')
     expect(page).to have_content('01 January 1980')
@@ -257,6 +290,11 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_content('Your email address')
   end
 
+  def then_i_see_the_existing_name
+    expect(page).to have_field('First name', with: 'John')
+    expect(page).to have_field('Last name', with: 'Smith')
+  end
+
   def then_i_see_the_home_page
     expect(page).to have_current_path(start_path)
     expect(page).to have_content('Find a lost teacher reference number (TRN)')
@@ -274,6 +312,12 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_current_path('/have-ni-number')
     expect(page.driver.browser.current_title).to start_with('Do you have a National Insurance number?')
     expect(page).to have_content('Do you have a National Insurance number?')
+  end
+
+  def then_i_see_the_name_page
+    expect(page).to have_current_path('/name')
+    expect(page.driver.browser.current_title).to start_with('Your name')
+    expect(page).to have_content('Your name')
   end
 
   def then_i_see_the_ni_page
@@ -294,6 +338,10 @@ RSpec.describe 'TRN requests', type: :system do
 
   def then_i_see_the_updated_email_address
     expect(page).to have_content('new@example.com')
+  end
+
+  def then_i_see_the_updated_name
+    expect(page).to have_content('John Doe')
   end
 
   def then_i_see_the_updated_ni_number
@@ -318,6 +366,20 @@ RSpec.describe 'TRN requests', type: :system do
     when_i_complete_my_date_of_birth
     when_i_choose_no_ni_number
     when_i_choose_no_itt_provider
+  end
+
+  def when_i_enter_a_new_name
+    fill_in 'First name', with: 'John'
+    fill_in 'Last name', with: 'Doe'
+    check 'I’ve changed my name since I received my TRN', visible: false
+    fill_in 'Previous last name', with: 'Smith'
+    when_i_press_continue
+  end
+
+  def when_i_fill_in_the_name_form
+    fill_in 'First name', with: 'John'
+    fill_in 'Last name', with: 'Smith'
+    when_i_press_continue
   end
 
   def when_i_fill_in_my_itt_provider
@@ -387,6 +449,10 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_press_change_itt_provider
     click_on 'Change teacher training provider'
+  end
+
+  def when_i_press_change_name
+    click_on 'Change name'
   end
 
   def when_i_press_change_ni_number

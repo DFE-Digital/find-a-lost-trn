@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   get '/helpdesk-request-submitted', to: 'pages#helpdesk_request_submitted'
   get '/itt-provider', to: 'itt_providers#edit'
   patch '/itt-provider', to: 'itt_providers#update'
+  get '/name', to: 'name#edit'
+  patch '/name', to: 'name#update'
   get '/ni-number', to: 'ni_number#edit'
   patch '/ni-number', to: 'ni_number#update'
   get '/start', to: 'pages#start'

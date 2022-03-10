@@ -12,6 +12,10 @@ class TrnRequest < ApplicationRecord
     !itt_provider_enrolled.nil? && !itt_provider_enrolled_was.nil?
   end
 
+  def name
+    [first_name, last_name].compact.join(' ')
+  end
+
   def ni_number_answered?
     return ni_number.present? if has_ni_number
 

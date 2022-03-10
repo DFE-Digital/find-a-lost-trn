@@ -37,4 +37,12 @@ RSpec.describe TrnRequest, type: :model do
       )
     end
   end
+
+  describe '#name' do
+    subject { trn_request.name }
+
+    let(:trn_request) { described_class.new(first_name: 'John', last_name: 'Doe') }
+
+    it { is_expected.to eq('John Doe') }
+  end
 end
