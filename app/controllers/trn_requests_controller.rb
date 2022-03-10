@@ -8,6 +8,7 @@ class TrnRequestsController < ApplicationController
     redirect_to root_url unless trn_request
 
     trn_request.update(trn_request_params)
+    ZendeskService.create_ticket!(trn_request)
     redirect_to helpdesk_request_submitted_url
   end
 
