@@ -4,7 +4,7 @@ require 'gds_zendesk/dummy_client'
 
 GDS_ZENDESK_CLIENT =
   if Rails.env.development? || Rails.env.test?
-    GDSZendesk::DummyClient.new(logger: Rails.logger)
+    GDSZendesk::DummyClient.new(development_mode: true, logger: Rails.logger)
   else
     GDSZendesk::Client.new(
       token: ENV['ZENDESK_TOKEN'],
