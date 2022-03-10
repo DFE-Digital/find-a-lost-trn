@@ -56,6 +56,10 @@ variable "postgres_database_service_plan" {
   default = "small-13"
 }
 
+variable "statuscake_alerts" {
+  type = map(any)
+}
+
 locals {
   flt_routes = flatten([
     cloudfoundry_route.flt_public,
