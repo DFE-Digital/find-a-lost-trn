@@ -23,7 +23,7 @@
         },
         {
           key: { text: @trn_request.itt_provider_enrolled ? 'Teacher training provider' : 'Have you been enrolled in initial teacher training in England or Wales?' },
-          value: { text: @trn_request.itt_provider_name.presence || 'No' },
+          value: { text: @trn_request.itt_provider_enrolled ? @trn_request.itt_provider_name : 'No' },
           actions: [{ href: itt_provider_path, visually_hidden_text: 'teacher training provider' }]
         },
     ] %>
