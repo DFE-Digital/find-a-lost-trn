@@ -34,7 +34,15 @@ RSpec.describe NameForm, type: :model do
     end
 
     context 'when the previous names are present' do
-      let(:name_form) { described_class.new(first_name: 'John', previous_first_name: 'Jonathan', previous_last_name: 'Smith', last_name: 'Doe', trn_request: trn_request) }
+      let(:name_form) do
+        described_class.new(
+          first_name: 'John',
+          previous_first_name: 'Jonathan',
+          previous_last_name: 'Smith',
+          last_name: 'Doe',
+          trn_request: trn_request,
+        )
+      end
 
       it 'sets the previous first name on the TrnRequest' do
         save
