@@ -45,4 +45,36 @@ RSpec.describe TrnRequest, type: :model do
 
     it { is_expected.to eq('John Doe') }
   end
+
+  describe '#previous_name?' do
+    subject { trn_request.previous_name? }
+
+    context 'when a previous first name is present' do
+      let(:trn_request) { described_class.new(previous_first_name: 'John') }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context 'when a previous last name is present' do
+      let(:trn_request) { described_class.new(previous_last_name: 'John') }
+
+      it { is_expected.to be_truthy }
+    end
+  end
+
+  describe '#previous_name' do
+    subject { trn_request.previous_name }
+
+    context 'when a previous first name is present' do
+      let(:trn_request) { described_class.new(first_name: 'John', last_name: 'Doe', previous_first_name: 'Joan') }
+
+      it { is_expected.to eq('Joan Doe') }
+    end
+
+    context 'when a previous last name is present' do
+      let(:trn_request) { described_class.new(first_name: 'John', last_name: 'Doe', previous_last_name: 'Smith') }
+
+      it { is_expected.to eq('John Smith') }
+    end
+  end
 end

@@ -3,7 +3,7 @@ class NameForm
   include ActiveModel::Model
 
   attr_accessor :trn_request
-  attr_writer :first_name, :previous_first_name, :previous_last_name, :last_name
+  attr_writer :first_name, :previous_first_name, :previous_last_name, :last_name, :name_changed
 
   validates :first_name, presence: true, length: { maximum: 255 }
   validates :last_name, presence: true, length: { maximum: 255 }
@@ -17,14 +17,20 @@ class NameForm
   end
 
   def name_changed
-    previous_first_name.present? || previous_last_name.present?
+    return @name_changed unless @name_changed.nil?
+
+    @name_changed ||= previous_first_name.present? || previous_last_name.present? || trn_request.previous_name?
   end
 
   def previous_first_name
+    return nil if !@name_changed.nil? && !@name_changed
+
     @previous_first_name ||= trn_request&.previous_first_name
   end
 
   def previous_last_name
+    return nil if !@name_changed.nil? && !@name_changed
+
     @previous_last_name ||= trn_request&.previous_last_name
   end
 

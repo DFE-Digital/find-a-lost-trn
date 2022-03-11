@@ -12,6 +12,14 @@ class TrnRequest < ApplicationRecord
     !itt_provider_enrolled.nil? && !itt_provider_enrolled_was.nil?
   end
 
+  def previous_name?
+    previous_first_name.present? || previous_last_name.present?
+  end
+
+  def previous_name
+    [previous_first_name.presence || first_name, previous_last_name.presence || last_name].join(' ')
+  end
+
   def name
     [first_name, last_name].compact.join(' ')
   end
