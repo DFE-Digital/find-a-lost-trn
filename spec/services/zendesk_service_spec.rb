@@ -43,11 +43,13 @@ RSpec.describe ZendeskService do
           TrnRequest.new(
             date_of_birth: 20.years.ago,
             email: 'test@example.com',
+            first_name: 'Test',
             has_ni_number: true,
             itt_provider_enrolled: true,
             itt_provider_name: 'Big SCITT',
-            name: 'Test User',
+            last_name: 'User',
             ni_number: 'QC123456A',
+            previous_last_name: 'Smith',
           )
 
         described_class.create_ticket!(trn_request)
@@ -62,6 +64,7 @@ RSpec.describe ZendeskService do
                   'A user has submitted a request to find their lost ' \
                     "TRN. Their information is:\n" \
                     "\nName: Test User" \
+                    "\nPrevious name: Test Smith" \
                     "\nDate of birth: #{20.years.ago.strftime('%d %B %Y')}" \
                     "\nNI number: QC123456A" \
                     "\nITT provider: Big SCITT\n",
@@ -78,7 +81,8 @@ RSpec.describe ZendeskService do
             has_ni_number: true,
             itt_provider_enrolled: true,
             itt_provider_name: 'Big SCITT',
-            name: 'break_zendesk',
+            first_name: 'break_zendesk',
+            last_name: 'User',
             ni_number: 'QC123456A',
           )
 

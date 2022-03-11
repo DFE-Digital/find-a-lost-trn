@@ -18,6 +18,7 @@ class ZendeskService
           'A user has submitted a request to find their lost TRN. Their ' \
             "information is:\n" \
             "\nName: #{trn_request.name}" \
+            "\nPrevious name: #{trn_request.previous_name? ? trn_request.previous_name : 'None'}" \
             "\nDate of birth: #{trn_request.date_of_birth.strftime('%d %B %Y')}" \
             "\nNI number: #{trn_request.ni_number || 'Not provided'}" \
             "\nITT provider: #{trn_request.itt_provider_name || 'Not provided'}\n",
