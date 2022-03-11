@@ -5,8 +5,10 @@ class NameForm
   attr_accessor :trn_request
   attr_writer :first_name, :previous_first_name, :previous_last_name, :last_name
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  validates :first_name, presence: true, length: { maximum: 255 }
+  validates :last_name, presence: true, length: { maximum: 255 }
+  validates :previous_first_name, length: { maximum: 255 }
+  validates :previous_last_name, length: { maximum: 255 }
 
   delegate :email?, :first_name, :last_name, to: :trn_request, allow_nil: true
 
