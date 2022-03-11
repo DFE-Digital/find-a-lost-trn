@@ -2,7 +2,8 @@ locals {
   app_environment_variables = {
     SECRET_KEY_BASE  = local.infrastructure_secrets.SECRET_KEY_BASE,
     SUPPORT_USERNAME = local.infrastructure_secrets.SUPPORT_USERNAME,
-    SUPPORT_PASSWORD = local.infrastructure_secrets.SUPPORT_PASSWORD
+    SUPPORT_PASSWORD = local.infrastructure_secrets.SUPPORT_PASSWORD,
+    ZENDESK_TOKEN    = local.infrastructure_secrets.ZENDESK_TOKEN
   }
 }
 resource "cloudfoundry_route" "flt_public" {
