@@ -16,6 +16,10 @@ class NameForm
     @first_name ||= trn_request&.first_name
   end
 
+  def name_changed
+    previous_first_name.present? || previous_last_name.present?
+  end
+
   def previous_first_name
     @previous_first_name ||= trn_request&.previous_first_name
   end
