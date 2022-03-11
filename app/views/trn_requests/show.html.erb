@@ -8,7 +8,7 @@
 
     <% rows = [
         { 
-          key: { text: 'Your Name' }, 
+          key: { text: 'Name' }, 
           value: { text: @trn_request.name }, 
           actions: [{ href: name_path, visually_hidden_text: 'name' }]
         },
@@ -31,7 +31,22 @@
           value: { text: @trn_request.itt_provider_name.presence || 'No' },
           actions: [{ href: itt_provider_path, visually_hidden_text: 'teacher training provider' }]
         },
-    ] %>
+      ] 
+
+      previous_first_name = {
+        key: { text: 'Previous first name' },
+        value: { text: @trn_request.previous_first_name },
+        actions: [{ href: name_path, visually_hidden_text: 'previous first name' }]
+      }
+
+      previous_last_name = {
+        key: { text: 'Previous last name' },
+        value: { text: @trn_request.previous_last_name },
+        actions: [{ href: name_path, visually_hidden_text: 'previous last name' }]
+      }
+      rows.insert(1, previous_last_name) if @trn_request.previous_last_name?
+      rows.insert(1, previous_first_name) if @trn_request.previous_first_name?
+    %>
     <%= govuk_summary_list(rows: rows) %>
 
     <%= form_with model: @trn_request, method: :put do |f| %>
