@@ -33,19 +33,13 @@
         },
       ] 
 
-      previous_first_name = {
-        key: { text: 'Previous first name' },
-        value: { text: @trn_request.previous_first_name },
-        actions: [{ href: name_path, visually_hidden_text: 'previous first name' }]
+      previous_name = {
+        key: { text: 'Previous name' },
+        value: { text: @trn_request.previous_name },
+        actions: [{ href: name_path, visually_hidden_text: 'previous name' }]
       }
 
-      previous_last_name = {
-        key: { text: 'Previous last name' },
-        value: { text: @trn_request.previous_last_name },
-        actions: [{ href: name_path, visually_hidden_text: 'previous last name' }]
-      }
-      rows.insert(1, previous_last_name) if @trn_request.previous_last_name?
-      rows.insert(1, previous_first_name) if @trn_request.previous_first_name?
+      rows.insert(1, previous_name) if @trn_request.previous_name?
     %>
     <%= govuk_summary_list(rows: rows) %>
 
