@@ -69,8 +69,7 @@ en:
         itt_provider_form:
           attributes:
             itt_provider_enrolled:
-              inclusion: Tell us if you’ve been enrolled in initial teacher
-                training
+              inclusion: Tell us if you have been awarded QTS
             itt_provider_name:
-              blank: Enter your school, university or other training provider
+              blank: Enter your university, SCITT, school or other training provider
               too_long: Enter a school that is less than 255 letters long

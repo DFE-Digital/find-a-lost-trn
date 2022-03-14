@@ -269,7 +269,7 @@ RSpec.describe 'TRN requests', type: :system do
 
   def then_i_see_the_updated_itt_provider
     expect(page).to have_current_path('/check-answers')
-    expect(page).to have_content('Teacher training provider')
+    expect(page).to have_content('Where did you get your QTS?')
     expect(page).to have_content('Test ITT Provider')
   end
 
@@ -302,10 +302,8 @@ RSpec.describe 'TRN requests', type: :system do
 
   def then_i_see_the_itt_provider_page
     expect(page).to have_current_path('/itt-provider')
-    expect(page.driver.browser.current_title).to start_with(
-      'Have you ever been enrolled in initial teacher training in England or Wales?',
-    )
-    expect(page).to have_content('Have you ever been enrolled in initial teacher training in England or Wales?')
+    expect(page.driver.browser.current_title).to start_with('Have you been awarded qualified teacher status (QTS)?')
+    expect(page).to have_content('Have you been awarded qualified teacher status (QTS)?')
   end
 
   def then_i_see_the_have_ni_page
@@ -383,7 +381,7 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def when_i_fill_in_my_itt_provider
-    fill_in 'Your school, university or other training provider', with: 'Test ITT Provider', visible: false
+    fill_in 'Where did you get your QTS?', with: 'Test ITT Provider', visible: false
   end
   alias_method :and_i_fill_in_my_itt_provider, :when_i_fill_in_my_itt_provider
 

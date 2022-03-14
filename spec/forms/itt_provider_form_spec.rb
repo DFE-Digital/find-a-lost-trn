@@ -5,15 +5,13 @@ RSpec.describe IttProviderForm, type: :model do
   describe 'validations' do
     specify do
       form = described_class.new
-      expect(form).to validate_presence_of(:itt_provider_enrolled).with_message(
-        'Tell us if you’ve been enrolled in initial teacher training',
-      )
+      expect(form).to validate_presence_of(:itt_provider_enrolled).with_message('Tell us if you have been awarded QTS')
     end
 
     specify do
       form = described_class.new(itt_provider_enrolled: 'true')
       expect(form).to validate_presence_of(:itt_provider_name).with_message(
-        'Enter your school, university or other training provider',
+        'Enter your university, SCITT, school or other training provider',
       )
     end
 
