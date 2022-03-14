@@ -5,6 +5,12 @@ RSpec.describe 'TRN requests', type: :system do
   it 'completing a request' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    then_i_see_the_check_trn_page
+
+    when_i_confirm_i_have_a_trn_number
+    then_i_see_the_ask_questions_page
+
+    when_i_press_continue
     then_i_see_the_name_page
 
     when_i_fill_in_the_name_form
@@ -44,6 +50,8 @@ RSpec.describe 'TRN requests', type: :system do
   it 'entering the NI number' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    when_i_confirm_i_have_a_trn_number
+    when_i_press_continue
     then_i_see_the_name_page
 
     when_i_fill_in_the_name_form
@@ -123,6 +131,8 @@ RSpec.describe 'TRN requests', type: :system do
     it 'pressing back' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
+      when_i_confirm_i_have_a_trn_number
+      when_i_press_continue
       when_i_fill_in_the_name_form
       then_i_see_the_date_of_birth_page
 
@@ -135,6 +145,8 @@ RSpec.describe 'TRN requests', type: :system do
     it 'pressing back' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
+      when_i_confirm_i_have_a_trn_number
+      when_i_press_continue
       when_i_fill_in_the_name_form
       when_i_complete_my_date_of_birth
       then_i_see_the_have_ni_page
@@ -148,6 +160,8 @@ RSpec.describe 'TRN requests', type: :system do
     it 'pressing back' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
+      when_i_confirm_i_have_a_trn_number
+      when_i_press_continue
       when_i_fill_in_the_name_form
       when_i_complete_my_date_of_birth
       and_i_choose_no
@@ -167,6 +181,8 @@ RSpec.describe 'TRN requests', type: :system do
     it 'pressing back' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
+      when_i_confirm_i_have_a_trn_number
+      when_i_press_continue
       when_i_fill_in_the_name_form
       when_i_complete_my_date_of_birth
       and_i_choose_no
@@ -208,6 +224,8 @@ RSpec.describe 'TRN requests', type: :system do
   it 'ITT provider validations' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    when_i_confirm_i_have_a_trn_number
+    when_i_press_continue
     when_i_fill_in_the_name_form
     when_i_complete_my_date_of_birth
     then_i_see_the_ni_page
@@ -222,6 +240,13 @@ RSpec.describe 'TRN requests', type: :system do
     when_i_choose_yes
     and_i_press_continue
     then_i_see_a_validation_error
+  end
+
+  it 'no TRN' do
+    given_i_am_on_the_home_page
+    when_i_press_the_start_button
+    when_i_choose_no_trn
+    then_i_see_the_no_trn_page
   end
 
   private
@@ -239,6 +264,8 @@ RSpec.describe 'TRN requests', type: :system do
   def given_i_have_completed_a_trn_request
     given_i_am_on_the_home_page
     when_i_press_the_start_button
+    when_i_confirm_i_have_a_trn_number
+    when_i_press_continue
     when_i_fill_in_the_name_form
     when_i_complete_my_date_of_birth
     when_i_choose_no
@@ -251,6 +278,12 @@ RSpec.describe 'TRN requests', type: :system do
 
     when_i_fill_in_my_email_address
     and_i_press_continue
+  end
+
+  def then_i_see_the_ask_questions_page
+    expect(page).to have_current_path('/ask-questions')
+    expect(page.driver.browser.current_title).to start_with('We’ll ask you some questions to help find your TRN')
+    expect(page).to have_content('We’ll ask you some questions to help find your TRN')
   end
 
   def then_i_see_the_check_answers_page
@@ -271,6 +304,12 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_current_path('/check-answers')
     expect(page).to have_content('Where did you get your QTS?')
     expect(page).to have_content('Test ITT Provider')
+  end
+
+  def then_i_see_the_check_trn_page
+    expect(page).to have_current_path('/check-trn')
+    expect(page.driver.browser.current_title).to start_with('Check if you have a TRN')
+    expect(page).to have_content('Check if you have a TRN')
   end
 
   def then_i_see_the_confirmation_page
@@ -334,6 +373,12 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_content('Enter a National Insurance number')
   end
 
+  def then_i_see_the_no_trn_page
+    expect(page).to have_current_path('/you-dont-have-a-trn')
+    expect(page.driver.browser.current_title).to start_with('You do not have a TRN')
+    expect(page).to have_content('You don’t have a TRN')
+  end
+
   def then_i_see_the_updated_email_address
     expect(page).to have_content('new@example.com')
   end
@@ -364,6 +409,16 @@ RSpec.describe 'TRN requests', type: :system do
     when_i_complete_my_date_of_birth
     when_i_choose_no_ni_number
     when_i_choose_no_itt_provider
+  end
+
+  def when_i_choose_no_trn
+    choose 'No', visible: false
+    when_i_press_continue
+  end
+
+  def when_i_confirm_i_have_a_trn_number
+    choose 'Yes', visible: false
+    when_i_press_continue
   end
 
   def when_i_enter_a_new_name
