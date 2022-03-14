@@ -16,7 +16,10 @@ Rails.application.routes.draw do
     post '/features/:feature_name/deactivate', to: 'feature_flags#deactivate', as: :deactivate_feature
   end
 
+  get '/ask-questions', to: 'pages#ask_questions'
   get '/check-answers', to: 'trn_requests#show'
+  get '/check-trn', to: 'check_trn#new'
+  post '/check-trn', to: 'check_trn#create'
   get '/date-of-birth', to: 'date_of_birth#edit'
   patch '/date-of-birth', to: 'date_of_birth#update'
   get '/email', to: 'email#edit'
@@ -32,5 +35,6 @@ Rails.application.routes.draw do
   patch '/name', to: 'name#update'
   get '/ni-number', to: 'ni_number#edit'
   patch '/ni-number', to: 'ni_number#update'
+  get '/you-dont-have-a-trn', to: 'pages#you_dont_have_a_trn'
   get '/start', to: 'pages#start'
 end

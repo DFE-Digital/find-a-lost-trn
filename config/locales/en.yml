@@ -40,6 +40,10 @@ en:
   activemodel:
     errors:
       models:
+        check_trn_form:
+          attributes:
+            has_trn:
+              inclusion: Tell us if you think you have a TRN
         date_of_birth_form:
           attributes:
             date_of_birth:
