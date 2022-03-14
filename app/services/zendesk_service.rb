@@ -24,6 +24,10 @@ class ZendeskService
             "\nNI number: #{trn_request.ni_number || 'Not provided'}" \
             "\nITT provider: #{trn_request.itt_provider_name || 'Not provided'}\n",
       },
+      requester: {
+        email: trn_request.email,
+        name: trn_request.name,
+      },
     }
   end
 
