@@ -20,16 +20,6 @@ env:
   CONTAINER_REGISTRY: ghcr.io
 
 jobs:
-  setup:
-    name: Setup
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
-        with:
-          access_token: ${{ github.token }}
-
   docker:
     name: Docker build and push
     runs-on: ubuntu-latest
