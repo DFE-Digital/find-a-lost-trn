@@ -8,6 +8,7 @@ A service that allows teachers to find their Teacher Reference Number (TRN).
 - Node.js 16.x
 - Yarn 1.22.x
 - PostgreSQL 13.x
+- Redis 6.x
 
 ## How the application works
 
@@ -36,6 +37,7 @@ asdf plugin add ruby
 asdf plugin add nodejs
 asdf plugin add yarn
 asdf plugin add postgres
+asdf plugin add redis
 
 # To install (or update, following a change to .tool-versions)
 asdf install
@@ -57,6 +59,12 @@ sudo apt install libpq-dev
 sudo yum install postgresql-devel
 sudo zypper in postgresql-devel
 sudo pacman -S postgresql-libs
+```
+
+If installing Redis, you'll need to start it in a separate terminal:
+
+```bash
+redis-server
 ```
 
 Setup the project (re-run after `Gemfile` or `package.json` updates, automatically restarts any running Rails server):
