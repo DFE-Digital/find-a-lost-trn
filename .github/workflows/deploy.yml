@@ -23,7 +23,6 @@ jobs:
   docker:
     name: Docker build and push
     runs-on: ubuntu-latest
-    needs: [setup]
     outputs:
       docker_image: ${{ steps.image.outputs.tag }}
     steps:
