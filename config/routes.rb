@@ -14,6 +14,22 @@ Rails.application.routes.draw do
     get '/features', to: 'feature_flags#index'
     post '/features/:feature_name/activate', to: 'feature_flags#activate', as: :activate_feature
     post '/features/:feature_name/deactivate', to: 'feature_flags#deactivate', as: :deactivate_feature
+
+    # https://github.com/mperham/sidekiq/wiki/Monitoring#rails-http-basic-auth-from-routes
+    require 'sidekiq/web'
+
+    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+      ActiveSupport::SecurityUtils.secure_compare(
+        ::Digest::SHA256.hexdigest(username),
+        ::Digest::SHA256.hexdigest(ENV['SUPPORT_USERNAME']),
+      ) &
+        ActiveSupport::SecurityUtils.secure_compare(
+          ::Digest::SHA256.hexdigest(password),
+          ::Digest::SHA256.hexdigest(ENV['SUPPORT_PASSWORD']),
+        )
+    end
+
+    mount Sidekiq::Web, at: 'sidekiq'
   end
 
   get '/ask-questions', to: 'pages#ask_questions'
