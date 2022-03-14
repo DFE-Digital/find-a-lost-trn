@@ -15,7 +15,7 @@ on:
           - production
   push:
     branches:
-      - main
+      - '**'
 env:
   CONTAINER_REGISTRY: ghcr.io
 
@@ -63,7 +63,8 @@ jobs:
     name: Deploy to dev environment
     needs: [docker]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.event_name == 'push'
     environment:
       name: dev
       url: ${{ steps.deploy.outputs.environment_url }}
