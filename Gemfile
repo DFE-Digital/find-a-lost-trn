@@ -17,6 +17,7 @@ gem 'logstop', '~> 0.2.8'
 gem 'pg', '~> 1.3'
 gem 'puma', '~> 5.6'
 gem 'rails', '~> 7.0.2.3'
+gem 'sidekiq'
 gem 'sprockets-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 

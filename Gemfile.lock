@@ -84,6 +84,7 @@ GEM
       xpath (~> 3.2)
     cliver (0.3.2)
     concurrent-ruby (1.1.9)
+    connection_pool (2.2.5)
     crass (1.0.6)
     cssbundling-rails (1.1.0)
       railties (>= 6.0.0)
@@ -235,6 +236,7 @@ GEM
     rainbow (3.1.1)
     rake (13.0.6)
     redcarpet (3.5.1)
+    redis (4.6.0)
     regexp_parser (2.2.1)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -282,6 +284,10 @@ GEM
     ruby2_keywords (0.0.5)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
+    sidekiq (6.4.1)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     spring (4.0.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -350,6 +356,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   shoulda-matchers (~> 5.1)
+  sidekiq
   spring
   spring-commands-rspec
   sprockets-rails
