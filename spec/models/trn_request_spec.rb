@@ -28,16 +28,6 @@ RSpec.describe TrnRequest, type: :model do
     end
   end
 
-  context 'when the ITT provider enrollment and NI number questions have been asked' do
-    subject(:trn_request) { described_class.create(has_ni_number: false, itt_provider_enrolled: true) }
-
-    it 'validates the presence of the email address' do
-      expect(trn_request).to validate_presence_of(:email).with_message(
-        'Enter an email address in the correct format, like name@example.com',
-      )
-    end
-  end
-
   describe '#name' do
     subject { trn_request.name }
 
