@@ -2,6 +2,10 @@ dev:
 	$(eval DEPLOY_ENV=dev)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
 
+test:
+	$(eval DEPLOY_ENV=test)
+	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
+
 preprod:
 	$(eval DEPLOY_ENV=preprod)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
