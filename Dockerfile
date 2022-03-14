@@ -10,7 +10,8 @@ RUN echo "Europe/London" > /etc/timezone && \
 ENV RAILS_ENV=production \
     RAILS_SERVE_STATIC_FILES=yes \
     LANG=en_GB.UTF-8 \
-    SECRET_KEY_BASE=TestKey
+    SECRET_KEY_BASE=TestKey \
+    ZENDESK_TOKEN=TestToken
 
 WORKDIR /app
 
