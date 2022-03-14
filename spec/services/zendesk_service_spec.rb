@@ -64,6 +64,7 @@ RSpec.describe ZendeskService do
                   'A user has submitted a request to find their lost ' \
                     "TRN. Their information is:\n" \
                     "\nName: Test User" \
+                    "\nEmail: test@example.com" \
                     "\nPrevious name: Test Smith" \
                     "\nDate of birth: #{20.years.ago.strftime('%d %B %Y')}" \
                     "\nNI number: QC123456A" \
