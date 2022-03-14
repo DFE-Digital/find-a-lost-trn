@@ -70,6 +70,10 @@ RSpec.describe ZendeskService do
                     "\nNI number: QC123456A" \
                     "\nITT provider: Big SCITT\n",
               },
+              requester: {
+                email: 'test@example.com',
+                name: 'Test User',
+              },
             },
           )
       end
