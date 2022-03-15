@@ -249,6 +249,17 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_no_trn_page
   end
 
+  it 'taking longer than usual' do
+    given_it_is_taking_longer_than_usual
+    when_i_am_on_the_home_page
+    when_i_press_the_start_button
+    when_i_confirm_i_have_a_trn_number
+    when_i_press_continue
+    then_i_see_the_taking_longer_page
+    when_i_press_continue
+    then_i_see_the_name_page
+  end
+
   private
 
   def and_the_date_of_birth_is_prepopulated
@@ -260,6 +271,7 @@ RSpec.describe 'TRN requests', type: :system do
   def given_i_am_on_the_home_page
     visit root_path
   end
+  alias_method :when_i_am_on_the_home_page, :given_i_am_on_the_home_page
 
   def given_i_have_completed_a_trn_request
     given_i_am_on_the_home_page
@@ -278,6 +290,10 @@ RSpec.describe 'TRN requests', type: :system do
 
     when_i_fill_in_my_email_address
     and_i_press_continue
+  end
+
+  def given_it_is_taking_longer_than_usual
+    FeatureFlag.activate(:longer_than_normal)
   end
 
   def then_i_see_the_ask_questions_page
@@ -377,6 +393,10 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_current_path('/you-dont-have-a-trn')
     expect(page.driver.browser.current_title).to start_with('You do not have a TRN')
     expect(page).to have_content('You don’t have a TRN')
+  end
+
+  def then_i_see_the_taking_longer_page
+    expect(page).to have_current_path('/longer-than-normal')
   end
 
   def then_i_see_the_updated_email_address
