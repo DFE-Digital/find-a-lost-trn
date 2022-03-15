@@ -15,6 +15,7 @@ class FeatureFlag
   PERMANENT_SETTINGS = [].freeze
 
   TEMPORARY_FEATURE_FLAGS = [
+    [:longer_than_normal, 'It’s taking us longer than usual to find TRNs', 'Felix Clack'],
     [:zendesk_integration, 'Submit tickets to Zendesk on behalf of users at the end of the journey', 'Theodor Vararu'],
   ].freeze
 
