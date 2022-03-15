@@ -24,16 +24,23 @@ resource "cloudfoundry_service_instance" "postgres" {
   service_plan = data.cloudfoundry_service.postgres.service_plans[var.postgres_database_service_plan]
 }
 
+resource "cloudfoundry_service_instance" "redis" {
+  name         = var.redis_name
+  space        = data.cloudfoundry_space.space.id
+  service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_service_plan]
+}
 
 resource "cloudfoundry_app" "app" {
-  name         = var.flt_app_name
-  space        = data.cloudfoundry_space.space.id
-  instances    = var.flt_instances
-  memory       = var.flt_memory
-  disk_quota   = var.flt_disk_quota
-  docker_image = var.flt_docker_image
-  strategy     = "blue-green"
-  environment  = local.app_environment_variables
+  name                       = var.flt_app_name
+  space                      = data.cloudfoundry_space.space.id
+  instances                  = var.flt_instances
+  memory                     = var.flt_memory
+  disk_quota                 = var.flt_disk_quota
+  docker_image               = var.flt_docker_image
+  strategy                   = "blue-green"
+  environment                = local.app_environment_variables
+  health_check_type          = "http"
+  health_check_http_endpoint = "/health"
   dynamic "routes" {
     for_each = local.flt_routes
     content {
@@ -43,4 +50,9 @@ resource "cloudfoundry_app" "app" {
   service_binding {
     service_instance = cloudfoundry_service_instance.postgres.id
   }
+
+  service_binding {
+    service_instance = cloudfoundry_service_instance.redis.id
+  }
+
 }
