@@ -1,18 +1,16 @@
-<% content_for :page_title, 'Information Received' %>
+<% content_for :page_title, 'We’ve received your request' %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= govuk_panel(
-      title_text: 'Information received',
-      text: 'We’ll send your TRN by email or get in touch to ask for more information',
+      title_text: 'We’ve received your request',
       classes: %w[govuk-!-margin-bottom-6]
-    ) %>
+    ) do %>
+      <p class='app-!-inherit-colour govuk-!-margin-bottom-0 govuk-!-font-size-24'>You’ll get an email with your TRN if we find a match. Otherwise, we’ll contact you for more information.</p>
+    <% end %>
     <h2 class="govuk-heading-m">What happens next?</h2>
     <p class='govuk-body'>
-      You’ll get an email with your TRN if we find a match. Otherwise, we’ll be in touch to ask for more information.
-    </p>
-    <p class='govuk-body'>
-      We aim to respond in 5 working days.
+      We’re likely to get back to you in 2 working days, but it could take up to 5.
     </p>
     <h2 class="govuk-heading-m">For urgent requests, call the Teaching Regulation Agency</h2>
     <p class="govuk-body">
@@ -20,7 +18,7 @@
     </p>
     <ul class="govuk-list">
       <li>Telephone: 020 7593 5394</li>
-      <li>Monday to Friday, 9am to 5pm (except public holidays)</li>
+      <li>Lines are open Monday to Thursday, 9am to 5pm, and on Friday from 9am to 4:30pm (except public holidays)</li>
     </ul>
   </div>
 </div>
