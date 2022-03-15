@@ -4,7 +4,8 @@ locals {
     SUPPORT_USERNAME = local.infrastructure_secrets.SUPPORT_USERNAME,
     SUPPORT_PASSWORD = local.infrastructure_secrets.SUPPORT_PASSWORD,
     ZENDESK_TOKEN    = local.infrastructure_secrets.ZENDESK_TOKEN,
-    ZENDESK_USER     = local.infrastructure_secrets.ZENDESK_USER
+    ZENDESK_USER     = local.infrastructure_secrets.ZENDESK_USER,
+    REDIS_URL        = cloudfoundry_service_key.redis_key.credentials.uri
   }
 }
 resource "cloudfoundry_route" "flt_public" {
@@ -30,6 +31,10 @@ resource "cloudfoundry_service_instance" "redis" {
   service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_service_plan]
 }
 
+resource "cloudfoundry_service_key" "redis_key" {
+  name             = "${var.redis_name}_key"
+  service_instance = cloudfoundry_service_instance.redis.id
+}
 resource "cloudfoundry_app" "app" {
   name                       = var.flt_app_name
   space                      = data.cloudfoundry_space.space.id
