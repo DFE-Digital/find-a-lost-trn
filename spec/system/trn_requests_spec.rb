@@ -293,7 +293,7 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def given_it_is_taking_longer_than_usual
-    FeatureFlag.activate(:longer_than_normal)
+    FeatureFlag.activate(:processing_delays)
   end
 
   def then_i_see_the_ask_questions_page
