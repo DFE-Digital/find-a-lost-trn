@@ -329,8 +329,8 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def then_i_see_the_confirmation_page
-    expect(page.driver.browser.current_title).to start_with('Information Received')
-    expect(page).to have_content('Information received')
+    expect(page.driver.browser.current_title).to start_with('We’ve received your request')
+    expect(page).to have_content('We’ve received your request')
   end
 
   def then_i_see_the_date_of_birth_page
