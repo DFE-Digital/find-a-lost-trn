@@ -127,8 +127,18 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_home_page
   end
 
+  context 'when the user sees a validation error' do
+    it 'pressing back goes to the previous page' do
+      given_i_am_on_the_home_page
+      when_i_press_the_start_button
+      when_i_press_continue
+      when_i_press_back
+      then_i_see_the_home_page
+    end
+  end
+
   context 'when the user has reached the date of birth question' do
-    it 'pressing back' do
+    it 'pressing back goes to the name page' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
@@ -142,7 +152,7 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   context 'when the user has reached the have NI question' do
-    it 'pressing back' do
+    it 'pressing back goes to the date of birth page' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
@@ -157,7 +167,7 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   context 'when the user has reached the email question' do
-    it 'pressing back' do
+    it 'pressing back goes to the ITT provider page' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
@@ -178,7 +188,7 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   context 'when the user has reached the ITT provider question' do
-    it 'pressing back' do
+    it 'pressing back goes to the NI page' do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
@@ -195,7 +205,7 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   context 'when the user has reached the check answers page' do
-    it 'pressing back' do
+    it 'pressing back goes to the check answers page' do
       given_i_have_completed_a_trn_request
       when_i_press_change_email
       and_i_press_back
@@ -207,6 +217,11 @@ RSpec.describe 'TRN requests', type: :system do
       when_i_press_change_ni_number
       then_i_see_the_have_ni_page
       when_i_press_back
+      then_i_see_the_check_answers_page
+      when_i_press_change_email
+      and_i_enter_a_blank_email_address
+      and_i_press_continue
+      and_i_press_back
       then_i_see_the_check_answers_page
     end
   end
@@ -261,6 +276,10 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   private
+
+  def and_i_enter_a_blank_email_address
+    fill_in 'Your email address', with: '', visible: false
+  end
 
   def and_the_date_of_birth_is_prepopulated
     expect(page).to have_field('Day', with: '1')
