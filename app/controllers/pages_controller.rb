@@ -7,6 +7,6 @@ class PagesController < ApplicationController
   end
 
   def start
-    @trn_request = TrnRequest.new
+    session[:form_complete] = false
   end
 end

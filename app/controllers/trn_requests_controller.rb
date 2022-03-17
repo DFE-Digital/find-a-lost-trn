@@ -2,10 +2,12 @@
 class TrnRequestsController < ApplicationController
   def show
     redirect_to root_url unless trn_request
+    session[:form_complete] = true
   end
 
   def update
     redirect_to root_url unless trn_request
+    session[:form_complete] = false
 
     trn_request.update(trn_request_params)
     ZendeskService.create_ticket!(trn_request)
