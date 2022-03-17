@@ -1,5 +1,5 @@
 <% content_for :page_title, "#{'Error: ' if ni_number.errors.any?}What is your National Insurance number?" %>
-<% content_for :back_link_url, back_link_url(ni_number) %>
+<% content_for :back_link_url, have_ni_number_path %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

@@ -1,14 +1,14 @@
 <% content_for :page_title, "#{'Error: ' if @email_form.errors.any?}Your email address" %>
-<%= content_for :back_link_url, back_link_url(@email_form) %>
+<%= content_for :back_link_url, back_link_url(itt_provider_path) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @email_form, url: email_path, method: :patch do |f| %>
       <%= f.govuk_error_summary %>
       <%= f.govuk_email_field(
-            :email, 
-            label: { size: 'xl', text: 'Your email address' }, 
-            hint: { text: 'If we can find your TRN, we’ll send it to the email address you give.' } 
+            :email,
+            label: { size: 'xl', text: 'Your email address' },
+            hint: { text: 'If we can find your TRN, we’ll send it to the email address you give.' }
           )
       %>
       <%= f.govuk_submit prevent_double_click: false %>

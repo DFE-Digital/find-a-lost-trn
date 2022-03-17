@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def back_link_url(trn_request)
-    referer = controller.request.env['HTTP_REFERER']
-    return check_answers_path if referer&.include?('check-answers') || trn_request&.email?
-    return referer if referer
+  def back_link_url(back = url_for(:back))
+    return check_answers_path if session[:form_complete]
 
-    start_path
+    back
   end
 
   def pretty_ni_number(ni_number)
