@@ -1,5 +1,5 @@
 <% content_for :page_title, "#{'Error: ' if @itt_provider_form.errors.any?}Have you been awarded qualified teacher status (QTS)?" %>
-<%= content_for :back_link_url, back_link_url(have_ni_number_path) %>
+<%= content_for :back_link_url, back_link_url(@trn_request) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
