@@ -1,15 +1,15 @@
 <% content_for :page_title, "#{'Error: ' if date_of_birth_form.errors.any?}Your date of birth" %>
-<% content_for :back_link_url, back_link_url(date_of_birth_form) %>
+<% content_for :back_link_url, back_link_url(name_path) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: date_of_birth_form, url: date_of_birth_path, method: :patch do |f| %>
       <%= f.govuk_error_summary %>
       <%= f.govuk_date_field(
-            :date_of_birth, 
-            date_of_birth: true, 
-            legend: { size: 'xl', text: 'Your date of birth' }, 
-            hint: { text: 'For example, 27 3 1987' } 
+            :date_of_birth,
+            date_of_birth: true,
+            legend: { size: 'xl', text: 'Your date of birth' },
+            hint: { text: 'For example, 27 3 1987' }
           )
       %>
       <%= f.govuk_submit prevent_double_click: false %>
