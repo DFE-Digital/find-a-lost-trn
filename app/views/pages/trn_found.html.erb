@@ -1,0 +1,13 @@
+<% content_for :page_title, 'We’ve found your TRN' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= govuk_panel(
+      title_text: 'Success',
+      classes: %w[govuk-!-margin-bottom-6]
+    ) do %>
+      <h2 class="govuk-heading-m">We’ve found your TRN</h2>
+      <p class='app-!-inherit-colour govuk-!-margin-bottom-0 govuk-!-font-size-24'>TRN: <%= @trn_request.trn %></p>
+    <% end %>
+  </div>
+</div>

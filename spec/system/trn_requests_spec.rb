@@ -276,12 +276,21 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_should_see_the_home_page
   end
 
+  context 'when the use_dqt_api feature is enabled' do
+    it 'displays the TRN returned by the DQT API', vcr: true do
+      given_the_use_dqt_api_feature_is_enabled
+      when_i_have_completed_a_trn_request
+      and_i_press_the_submit_button
+      then_i_see_my_trn_number
+    end
+  end
+
   private
 
   def and_the_date_of_birth_is_prepopulated
     expect(page).to have_field('Day', with: '1')
     expect(page).to have_field('Month', with: '1')
-    expect(page).to have_field('Year', with: '1980')
+    expect(page).to have_field('Year', with: '1990')
   end
 
   def given_i_am_on_the_home_page
@@ -308,6 +317,7 @@ RSpec.describe 'TRN requests', type: :system do
     when_i_fill_in_my_email_address
     and_i_press_continue
   end
+  alias_method :when_i_have_completed_a_trn_request, :given_i_have_completed_a_trn_request
 
   def given_it_is_taking_longer_than_usual
     FeatureFlag.activate(:processing_delays)
@@ -321,6 +331,15 @@ RSpec.describe 'TRN requests', type: :system do
     FeatureFlag.deactivate(:service_open)
   end
 
+  def given_the_use_dqt_api_feature_is_enabled
+    FeatureFlag.activate(:use_dqt_api)
+  end
+
+  def then_i_see_my_trn_number
+    expect(page).to have_content('We’ve found your TRN')
+    expect(page).to have_content('TRN: 1275362')
+  end
+
   def then_i_see_the_ask_questions_page
     expect(page).to have_current_path('/ask-questions')
     expect(page.driver.browser.current_title).to start_with('We’ll ask you some questions to help find your TRN')
@@ -331,10 +350,10 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_current_path('/check-answers')
     expect(page.driver.browser.current_title).to start_with('Check your answers')
     expect(page).to have_content('Check your answers')
-    expect(page).to have_content('John Smith')
-    expect(page).to have_content('email@example.com')
+    expect(page).to have_content('Kevin E')
+    expect(page).to have_content('kevin@kevin.com')
     expect(page).to have_content('Date of birth')
-    expect(page).to have_content('01 January 1980')
+    expect(page).to have_content('01 January 1990')
   end
 
   def then_i_see_the_ni_missing_error
@@ -371,8 +390,8 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def then_i_see_the_existing_name
-    expect(page).to have_field('First name', with: 'John')
-    expect(page).to have_field('Last name', with: 'Smith')
+    expect(page).to have_field('First name', with: 'Kevin')
+    expect(page).to have_field('Last name', with: 'E')
   end
 
   def then_i_see_the_home_page
@@ -429,7 +448,7 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def then_i_see_the_updated_name
-    expect(page).to have_content('John Doe')
+    expect(page).to have_content('Kevin Smith')
   end
 
   def then_i_see_the_updated_ni_number
@@ -475,16 +494,16 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def when_i_enter_a_new_name
-    fill_in 'First name', with: 'John'
-    fill_in 'Last name', with: 'Doe'
+    fill_in 'First name', with: 'Kevin'
+    fill_in 'Last name', with: 'Smith'
     check 'I’ve changed my name since I received my TRN', visible: false
-    fill_in 'Previous last name', with: 'Smith'
+    fill_in 'Previous last name', with: 'Evans'
     when_i_press_continue
   end
 
   def when_i_fill_in_the_name_form
-    fill_in 'First name', with: 'John'
-    fill_in 'Last name', with: 'Smith'
+    fill_in 'First name', with: 'Kevin'
+    fill_in 'Last name', with: 'E'
     when_i_press_continue
   end
 
@@ -526,7 +545,7 @@ RSpec.describe 'TRN requests', type: :system do
   def when_i_complete_my_date_of_birth
     fill_in 'Day', with: '01'
     fill_in 'Month', with: '01'
-    fill_in 'Year', with: '1980'
+    fill_in 'Year', with: '1990'
     click_on 'Continue'
   end
 
@@ -536,7 +555,7 @@ RSpec.describe 'TRN requests', type: :system do
   alias_method :and_i_press_back, :when_i_press_back
 
   def when_i_fill_in_my_email_address
-    fill_in 'Your email address', with: 'email@example.com'
+    fill_in 'Your email address', with: 'kevin@kevin.com'
   end
   alias_method :and_i_fill_in_my_email_address, :when_i_fill_in_my_email_address
 
@@ -576,6 +595,7 @@ RSpec.describe 'TRN requests', type: :system do
   def when_i_press_the_submit_button
     click_on 'Submit'
   end
+  alias_method :and_i_press_the_submit_button, :when_i_press_the_submit_button
 
   def when_i_refresh_the_page
     page.driver.browser.refresh

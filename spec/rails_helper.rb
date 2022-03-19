@@ -10,6 +10,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'view_component/test_helpers'
 require 'capybara/cuprite'
+require 'vcr'
 
 Capybara.register_driver(:cuprite) do |app|
   Capybara::Cuprite::Driver.new(app, process_timeout: 30, window_size: [1200, 800])
@@ -82,4 +83,12 @@ Shoulda::Matchers.configure do |config|
     with.test_framework :rspec
     with.library :rails
   end
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/cassettes'
+  config.hook_into :webmock
+  config.configure_rspec_metadata!
+  config.ignore_localhost = true
+  config.default_cassette_options = { record: :new_episodes, erb: true }
 end

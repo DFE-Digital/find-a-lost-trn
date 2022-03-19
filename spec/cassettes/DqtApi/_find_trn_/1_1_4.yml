@@ -1,0 +1,203 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://qualified-teachers-api-preprod.london.cloudapps.digital/v2/teachers/find?dateOfBirth&emailAddress&firstName=Jane&ittProviderName&lastName=Doe&nationalInsuranceNumber
+      body:
+        encoding: US-ASCII
+        string: ''
+      headers:
+        User-Agent:
+          - Faraday v1.10.0
+        Authorization:
+          - Bearer kTWC7StTAeEKBpMz
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - '*/*'
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Thu, 24 Mar 2022 09:11:56 GMT
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Server:
+          - Kestrel
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - '299'
+        X-Rate-Limit-Reset:
+          - '2022-03-24T09:12:00.0000000Z'
+        X-Vcap-Request-Id:
+          - da666529-3bdc-48e3-50e7-4ff7813ead42
+        X-Xss-Protection:
+          - '0'
+      body:
+        encoding: UTF-8
+        string: '{"results":[{"trn":"2908369","emailAddresses":null,"firstName":"Jane","lastName":"Doe","dateOfBirth":"1989-08-23","nationalInsuranceNumber":null,"uid":"d2046afd-0af7-eb11-94ef-000d3ade7c90"},{"trn":null,"emailAddresses":null,"firstName":"Jane","lastName":"Doe","dateOfBirth":"1903-03-21","nationalInsuranceNumber":null,"uid":"d0410365-d9ae-e311-b8ed-005056822391"}]}'
+    recorded_at: Thu, 24 Mar 2022 09:11:56 GMT
+  - request:
+      method: get
+      uri: https://qualified-teachers-api-preprod.london.cloudapps.digital/v2/teachers/find?dateOfBirth&emailAddress=kevin@kevin.com&firstName=kevin&ittProviderName=provider&lastName&nationalInsuranceNumber=1000000
+      body:
+        encoding: US-ASCII
+        string: ''
+      headers:
+        User-Agent:
+          - Faraday v1.10.0
+        Authorization:
+          - Bearer kTWC7StTAeEKBpMz
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - '*/*'
+    response:
+      status:
+        code: 400
+        message: Bad Request
+      headers:
+        Date:
+          - Thu, 24 Mar 2022 09:21:16 GMT
+        Content-Type:
+          - application/problem+json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Server:
+          - Kestrel
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - '296'
+        X-Rate-Limit-Reset:
+          - '2022-03-24T09:22:00.0000000Z'
+        X-Vcap-Request-Id:
+          - 8be0b481-45ea-4255-6009-e0f5d0e38856
+        X-Xss-Protection:
+          - '0'
+      body:
+        encoding: UTF-8
+        string: '{"title":"Organisation not found","status":400,"errorCode":10008}'
+    recorded_at: Thu, 24 Mar 2022 09:21:16 GMT
+  - request:
+      method: get
+      uri: https://qualified-teachers-api-preprod.london.cloudapps.digital/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=kevin&ittProviderName=provider&lastName&nationalInsuranceNumber=1000000
+      body:
+        encoding: US-ASCII
+        string: ''
+      headers:
+        User-Agent:
+          - Faraday v1.10.0
+        Authorization:
+          - Bearer kTWC7StTAeEKBpMz
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - '*/*'
+    response:
+      status:
+        code: 400
+        message: Bad Request
+      headers:
+        Date:
+          - Thu, 24 Mar 2022 09:21:32 GMT
+        Content-Type:
+          - application/problem+json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Server:
+          - Kestrel
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - '288'
+        X-Rate-Limit-Reset:
+          - '2022-03-24T09:22:00.0000000Z'
+        X-Vcap-Request-Id:
+          - 711a8b24-d086-4bfe-562c-90f640677bed
+        X-Xss-Protection:
+          - '0'
+      body:
+        encoding: UTF-8
+        string: '{"title":"Organisation not found","status":400,"errorCode":10008}'
+    recorded_at: Thu, 24 Mar 2022 09:21:32 GMT
+  - request:
+      method: get
+      uri: https://qualified-teachers-api-preprod.london.cloudapps.digital/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=kevin&ittProviderName&lastName&nationalInsuranceNumber=1000000
+      body:
+        encoding: US-ASCII
+        string: ''
+      headers:
+        User-Agent:
+          - Faraday v1.10.0
+        Authorization:
+          - Bearer kTWC7StTAeEKBpMz
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - '*/*'
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Thu, 24 Mar 2022 09:34:23 GMT
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Server:
+          - Kestrel
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - '297'
+        X-Rate-Limit-Reset:
+          - '2022-03-24T09:35:00.0000000Z'
+        X-Vcap-Request-Id:
+          - 59360350-8d11-492e-423d-61aa198cbdd6
+        X-Xss-Protection:
+          - '0'
+      body:
+        encoding: UTF-8
+        string: '{"results":[{"trn":"1275362","emailAddresses":["anonymous@anonymousdomain.org.net.co.uk"],"firstName":"Kevin","lastName":"Evans","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"SD78771P9","uid":"f7891223-7661-e411-8047-005056822391"}]}'
+    recorded_at: Thu, 24 Mar 2022 09:34:23 GMT
+recorded_with: VCR 6.1.0

@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   patch '/name', to: 'name#update'
   get '/ni-number', to: 'ni_number#edit'
   patch '/ni-number', to: 'ni_number#update'
+  get '/trn-found', to: 'pages#trn_found'
   get '/you-dont-have-a-trn', to: 'pages#you_dont_have_a_trn'
   get '/start', to: 'pages#start'
 end

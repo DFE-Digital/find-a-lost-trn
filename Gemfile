@@ -7,6 +7,7 @@ ruby '3.0.3'
 
 gem 'bootsnap', require: false
 gem 'cssbundling-rails'
+gem 'faraday', '~> 1.10'
 gem 'gds_zendesk'
 gem 'govuk-components', '~> 3.0.3'
 gem 'govuk_design_system_formbuilder'
@@ -65,4 +66,6 @@ group :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 5.1'
   gem 'timecop'
+  gem 'vcr', '~> 6.1'
+  gem 'webmock', '~> 3.14'
 end
