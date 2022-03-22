@@ -15,6 +15,7 @@ class FeatureFlag
   PERMANENT_SETTINGS = [].freeze
 
   TEMPORARY_FEATURE_FLAGS = [
+    [:service_open, 'Allow users to access the service and submit TRN Requests', 'Theodor Vararu'],
     [:processing_delays, 'Show users banners and interstitials warning them of increased waiting times', 'Felix Clack'],
     [:zendesk_integration, 'Submit tickets to Zendesk on behalf of users at the end of the journey', 'Theodor Vararu'],
   ].freeze
