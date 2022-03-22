@@ -2,6 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe 'TRN requests', type: :system do
+  before { given_the_service_is_open }
+
   it 'completing a request' do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
@@ -260,6 +262,20 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_name_page
   end
 
+  it 'service is closed' do
+    given_the_service_is_closed
+    and_i_visit_the_home_page
+    then_i_should_not_see_the_home_page
+
+    when_i_am_authorized_as_a_support_user
+    and_i_visit_the_home_page
+    then_i_should_see_the_home_page
+
+    given_the_service_is_open
+    and_i_visit_the_home_page
+    then_i_should_see_the_home_page
+  end
+
   private
 
   def and_the_date_of_birth_is_prepopulated
@@ -272,6 +288,7 @@ RSpec.describe 'TRN requests', type: :system do
     visit root_path
   end
   alias_method :when_i_am_on_the_home_page, :given_i_am_on_the_home_page
+  alias_method :and_i_visit_the_home_page, :given_i_am_on_the_home_page
 
   def given_i_have_completed_a_trn_request
     given_i_am_on_the_home_page
@@ -294,6 +311,14 @@ RSpec.describe 'TRN requests', type: :system do
 
   def given_it_is_taking_longer_than_usual
     FeatureFlag.activate(:processing_delays)
+  end
+
+  def given_the_service_is_open
+    FeatureFlag.activate(:service_open)
+  end
+
+  def given_the_service_is_closed
+    FeatureFlag.deactivate(:service_open)
   end
 
   def then_i_see_the_ask_questions_page
@@ -413,6 +438,14 @@ RSpec.describe 'TRN requests', type: :system do
 
   def then_i_see_a_validation_error
     expect(page).to have_content('There is a problem')
+  end
+
+  def then_i_should_see_the_home_page
+    expect(page).to have_content('Find a lost teacher reference number')
+  end
+
+  def then_i_should_not_see_the_home_page
+    expect(page).not_to have_content('Find a lost teacher reference number')
   end
 
   def then_no_should_be_checked
@@ -554,5 +587,9 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_try_to_go_to_the_check_answers_page
     visit trn_request_path
+  end
+
+  def when_i_am_authorized_as_a_support_user
+    page.driver.basic_authorize('test', 'test')
   end
 end
