@@ -19,6 +19,13 @@ resource "cloudfoundry_route" "flt_internal" {
   space    = data.cloudfoundry_space.space.id
   hostname = var.flt_app_name
 }
+
+resource "cloudfoundry_route" "flt_education" {
+  for_each = toset(var.hostnames)
+  domain   = data.cloudfoundry_domain.education_gov_uk.id
+  space    = data.cloudfoundry_space.space.id
+  hostname = each.value
+}
 resource "cloudfoundry_service_instance" "postgres" {
   name         = var.postgres_database_name
   space        = data.cloudfoundry_space.space.id

@@ -69,9 +69,14 @@ variable "statuscake_alerts" {
   type = map(any)
 }
 
+variable "hostnames" {
+  default = []
+  type    = list(any)
+}
 locals {
   flt_routes = flatten([
     cloudfoundry_route.flt_public,
-    cloudfoundry_route.flt_internal
+    cloudfoundry_route.flt_internal,
+    values(cloudfoundry_route.flt_education)
   ])
 }

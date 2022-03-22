@@ -25,6 +25,9 @@ data "cloudfoundry_domain" "cloudapps" {
 data "cloudfoundry_domain" "internal" {
   name = "apps.internal"
 }
+data "cloudfoundry_domain" "education_gov_uk" {
+  name = "education.gov.uk"
+}
 
 data "cloudfoundry_service" "postgres" {
   name = "postgres"
