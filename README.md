@@ -2,6 +2,15 @@
 
 A service that allows teachers to find their Teacher Reference Number (TRN).
 
+## Live environments
+
+| Name       | URL                                                               | Description                                                           | PaaS space       | PaaS application             |
+| ---------- | ----------------------------------------------------------------- | --------------------------------------------------------------------- | ---------------- | ---------------------------- |
+| Production | [production](https://find-a-lost-trn.education.gov.uk/start)      | Public site                                                           | `tra-production` | `find-a-lost-trn-production` |
+| Preprod    | [preprod](https://preprod-find-a-lost-trn.education.gov.uk/start) | For internal use by DfE to test deploys                               | `tra-test`       | `find-a-lost-trn-preprod`    |
+| Test       | [test](https://test-find-a-lost-trn.education.gov.uk/start)       | Demo environment for software vendors who integrate with our API      | `tra-test`       | `find-a-lost-trn-test`       |
+| Dev        | [dev](https://dev-find-a-lost-trn.education.gov.uk/start)         | For internal use by DfE for testing. Automatically deployed from main | `tra-dev`        | `find-a-lost-trn-dev`        |
+
 ## Dependencies
 
 - Ruby 3.x
