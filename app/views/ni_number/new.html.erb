@@ -9,7 +9,7 @@
             [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
             :value,
             :label,
-            legend: { size: 'xl', text: 'Do you have a National Insurance number?' }
+            legend: { tag: 'h1', size: 'xl', text: 'Do you have a National Insurance number?' }
           ) %>
       <%= f.govuk_submit prevent_double_click: false %>
     <% end %>
