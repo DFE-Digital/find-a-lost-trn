@@ -47,6 +47,10 @@ variable "flt_disk_quota" {
   default = "2048"
 }
 
+variable "logging_service_name" {
+  type = string
+}
+
 variable "postgres_database_name" {
   type = string
 }
