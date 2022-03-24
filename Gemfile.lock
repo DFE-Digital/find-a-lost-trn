@@ -285,6 +285,11 @@ GEM
       rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
+    sentry-rails (5.2.1)
+      railties (>= 5.0)
+      sentry-ruby-core (~> 5.2.1)
+    sentry-ruby-core (5.2.1)
+      concurrent-ruby
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
     sidekiq (6.4.1)
@@ -364,6 +369,7 @@ DEPENDENCIES
   rubocop
   rubocop-rails
   rubocop-rspec
+  sentry-rails
   shoulda-matchers (~> 5.1)
   sidekiq
   spring
