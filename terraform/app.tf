@@ -7,6 +7,7 @@ locals {
     ZENDESK_USER     = local.infrastructure_secrets.ZENDESK_USER,
     REDIS_URL        = cloudfoundry_service_key.redis_key.credentials.uri
   }
+  logstash_endpoint = data.azurerm_key_vault_secret.secrets["LOGSTASH-ENDPOINT"].value
 }
 resource "cloudfoundry_route" "flt_public" {
   domain   = data.cloudfoundry_domain.cloudapps.id
@@ -25,6 +26,12 @@ resource "cloudfoundry_route" "flt_education" {
   domain   = data.cloudfoundry_domain.education_gov_uk.id
   space    = data.cloudfoundry_space.space.id
   hostname = each.value
+}
+
+resource "cloudfoundry_user_provided_service" "logging" {
+  name             = var.logging_service_name
+  space            = data.cloudfoundry_space.space.id
+  syslog_drain_url = "syslog-tls://${local.logstash_endpoint}"
 }
 resource "cloudfoundry_service_instance" "postgres" {
   name         = var.postgres_database_name
@@ -58,6 +65,10 @@ resource "cloudfoundry_app" "app" {
     content {
       route = routes.value.id
     }
+  }
+
+  service_binding {
+    service_instance = cloudfoundry_user_provided_service.logging.id
   }
   service_binding {
     service_instance = cloudfoundry_service_instance.postgres.id
