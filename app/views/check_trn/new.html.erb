@@ -3,18 +3,18 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Check if you have a TRN</h1>
-    <p class="govuk-body">You will have a TRN if you:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>hold qualified teacher status (QTS) in England or Wales</li>
-      <li>hold early years teacher status (EYTS) in England</li>
-      <li>hold a national professional qualification (NPQ)</li>
-      <li>are working towards QTS, EYTS or an NPQ</li>
-      <li>contribute to the Teachers’ Pensions scheme</li>
-      <li>have a relevant restriction in relation to teaching in England</li>
-    </ul>
     <%= form_with model: @check_trn_form, url: check_trn_path, method: :post do |f| %>
       <%= f.govuk_error_summary %>
+      <h1 class="govuk-heading-xl">Check if you have a TRN</h1>
+      <p class="govuk-body">You will have a TRN if you:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>hold qualified teacher status (QTS) in England or Wales</li>
+        <li>hold early years teacher status (EYTS) in England</li>
+        <li>hold a national professional qualification (NPQ)</li>
+        <li>are working towards QTS, EYTS or an NPQ</li>
+        <li>contribute to the Teachers’ Pensions scheme</li>
+        <li>have a relevant restriction in relation to teaching in England</li>
+      </ul>
       <%= f.govuk_collection_radio_buttons(:has_trn,
             [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
             :value,
