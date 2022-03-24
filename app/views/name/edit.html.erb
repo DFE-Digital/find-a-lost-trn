@@ -3,12 +3,14 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      Your name
-    </h1>
-    <p class="govuk-body">We’ll match your name against the Teaching Regulation Agency records.</p>
     <%= form_with model: @name_form, url: name_path, method: :patch do |f| %>
       <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-xl">
+        Your name
+      </h1>
+      <p class="govuk-body">We’ll match your name against the Teaching Regulation Agency records.</p>
+
       <%= f.govuk_text_field(:first_name,
             label: { size: 'm', text: 'First name' },
             required: true
