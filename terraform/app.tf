@@ -1,5 +1,7 @@
 locals {
   app_environment_variables = {
+    DQT_API_KEY      = local.infrastructure_secrets.DQT_API_KEY,
+    DQT_API_URL      = local.infrastructure_secrets.DQT_API_URL,
     SECRET_KEY_BASE  = local.infrastructure_secrets.SECRET_KEY_BASE,
     SUPPORT_USERNAME = local.infrastructure_secrets.SUPPORT_USERNAME,
     SUPPORT_PASSWORD = local.infrastructure_secrets.SUPPORT_PASSWORD,
