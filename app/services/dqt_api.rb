@@ -27,6 +27,8 @@ class DqtApi
       firstName: trn_request.first_name,
       ittProviderName: trn_request.itt_provider_name,
       lastName: trn_request.last_name,
+      previousFirstName: trn_request.previous_first_name,
+      previousLastName: trn_request.previous_last_name,
       nationalInsuranceNumber: trn_request.ni_number,
     }
   end
