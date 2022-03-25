@@ -10,7 +10,7 @@ http_interactions:
         User-Agent:
           - Faraday v1.10.0
         Authorization:
-          - Bearer kTWC7StTAeEKBpMz
+          - Bearer testkey
         Accept-Encoding:
           - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
         Accept:
@@ -60,7 +60,7 @@ http_interactions:
         User-Agent:
           - Faraday v1.10.0
         Authorization:
-          - Bearer kTWC7StTAeEKBpMz
+          - Bearer testkey
         Accept-Encoding:
           - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
         Accept:
@@ -110,7 +110,7 @@ http_interactions:
         User-Agent:
           - Faraday v1.10.0
         Authorization:
-          - Bearer kTWC7StTAeEKBpMz
+          - Bearer testkey
         Accept-Encoding:
           - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
         Accept:
