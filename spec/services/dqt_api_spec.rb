@@ -26,15 +26,5 @@ RSpec.describe DqtApi do
         expect { find_trn! }.to raise_error(Faraday::TimeoutError)
       end
     end
-
-    context 'when the API returns more than 1 result' do
-      before { FeatureFlag.activate(:dqt_api_too_many_results) }
-
-      after { FeatureFlag.deactivate(:dqt_api_too_many_results) }
-
-      it 'raises a TooManyResults error' do
-        expect { find_trn! }.to raise_error(described_class::TooManyResults)
-      end
-    end
   end
 end
