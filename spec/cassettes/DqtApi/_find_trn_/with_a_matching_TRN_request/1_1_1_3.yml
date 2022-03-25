@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://qualified-teachers-api-preprod.london.cloudapps.digital/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Kevin&ittProviderName=&lastName=E&nationalInsuranceNumber&previousFirstName=&previousLastName=
+      uri: https://qualified-teachers-api-preprod.london.cloudapps.digital/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=kevin&ittProviderName&lastName&nationalInsuranceNumber=1000000&previousFirstName&previousLastName
       body:
         encoding: US-ASCII
         string: ''
@@ -21,7 +21,7 @@ http_interactions:
         message: OK
       headers:
         Date:
-          - Fri, 25 Mar 2022 10:27:00 GMT
+          - Fri, 25 Mar 2022 11:03:09 GMT
         Content-Type:
           - application/json; charset=utf-8
         Transfer-Encoding:
@@ -39,15 +39,15 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - '299'
+          - '297'
         X-Rate-Limit-Reset:
-          - '2022-03-25T10:27:00.0000000Z'
+          - '2022-03-25T11:04:00.0000000Z'
         X-Vcap-Request-Id:
-          - dacee1c8-a721-4127-676d-ec4328748b9f
+          - 2f0c35ec-5e63-47fa-6620-5e3c47026bdb
         X-Xss-Protection:
           - '0'
       body:
         encoding: UTF-8
         string: '{"results":[{"trn":"1275362","emailAddresses":["anonymous@anonymousdomain.org.net.co.uk"],"firstName":"Kevin","lastName":"Evans","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"SD78771P9","uid":"f7891223-7661-e411-8047-005056822391"}]}'
-    recorded_at: Fri, 25 Mar 2022 10:27:00 GMT
+    recorded_at: Fri, 25 Mar 2022 11:03:09 GMT
 recorded_with: VCR 6.1.0
