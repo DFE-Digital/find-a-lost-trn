@@ -15,7 +15,7 @@ class DqtApi
     raise ApiError, response.reason_phrase unless response.status == 200
 
     results = response.body['results']
-    raise TooManyResults if FeatureFlag.active?(:dqt_api_too_many_results) || results.size > 1
+    raise TooManyResults if results.size > 1
 
     results.first
   end
