@@ -5,13 +5,14 @@ class TrnRequestsController < ApplicationController
     session[:form_complete] = true
   end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     redirect_to root_url unless trn_request
     session[:form_complete] = false
 
     update_trn_request
     unless FeatureFlag.active?(:use_dqt_api)
-      create_zendesk_ticket_and_redirect
+      ZendeskService.create_ticket!(trn_request)
+      redirect_to helpdesk_request_submitted_url
       return
     end
 
@@ -20,16 +21,12 @@ class TrnRequestsController < ApplicationController
       trn_request.update(trn: response['trn'])
       redirect_to trn_found_path
     rescue DqtApi::ApiError, Faraday::TimeoutError, DqtApi::TooManyResults
-      create_zendesk_ticket_and_redirect
+      ZendeskService.create_ticket!(trn_request)
+      redirect_to helpdesk_request_submitted_url
     end
   end
 
   private
-
-  def create_zendesk_ticket_and_redirect
-    ZendeskService.create_ticket!(trn_request)
-    redirect_to helpdesk_request_submitted_url
-  end
 
   def trn_request
     @trn_request ||= TrnRequest.find_by(id: session[:trn_request_id])
