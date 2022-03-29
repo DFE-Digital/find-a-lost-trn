@@ -59,3 +59,7 @@ SSH into the machine and run:
 ```bash
 $ tail -f /app/log/production.log
 ```
+
+## Logit
+
+You can raise a request to #digital-tools-support on Slack filling the [Digital Tools Request Form](https://docs.google.com/forms/d/e/1FAIpQLSe8pAACWb8FUH0qXpUsoUoa6w1GuRvSNour-lHliGPaJ7u73A/viewform) to be added to Teaching Regulation Agency (TRA) stack. Follow the **Logit** section of [the TRA resources Google document](https://docs.google.com/document/d/1A6TMWkFYc_q2IQLh5KhRSPOr91e_l9lxI_tFtZ8tdxc/edit#heading=h.8atf3at2he6o)document to help you fill the form. You can sign in once your email is added to the Logit stack.
