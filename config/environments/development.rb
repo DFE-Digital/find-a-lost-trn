@@ -62,4 +62,11 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # Do not raise errors in development for mail delivery.
+  config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :notify
+  config.action_mailer.notify_settings = { api_key: ENV.fetch('GOVUK_NOTIFY_API_KEY') }
 end
