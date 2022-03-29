@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class TrnRequestsController < ApplicationController
+  include EnforceQuestionOrder
+
   def show
     redirect_to root_url unless trn_request
     session[:form_complete] = true
@@ -27,10 +29,6 @@ class TrnRequestsController < ApplicationController
   end
 
   private
-
-  def trn_request
-    @trn_request ||= TrnRequest.find_by(id: session[:trn_request_id])
-  end
 
   def trn_request_params
     params.require(:trn_request).permit(:answers_checked)

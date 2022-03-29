@@ -47,6 +47,38 @@ RSpec.describe 'TRN requests', type: :system do
 
     when_i_try_to_go_to_the_check_answers_page
     then_i_see_the_home_page
+
+    when_i_am_on_the_name_page
+    when_i_try_to_go_to_the_date_of_birth_page
+    then_i_see_the_name_page
+
+    when_i_fill_in_the_name_form
+    then_i_see_the_date_of_birth_page
+
+    when_i_try_to_go_to_the_ni_number_page
+    then_i_see_the_date_of_birth_page
+
+    when_i_complete_my_date_of_birth
+    then_i_see_the_have_ni_page
+
+    when_i_try_to_go_to_the_ni_number_page
+    then_i_see_the_have_ni_page
+    when_i_try_to_go_to_the_itt_provider_page
+    then_i_see_the_have_ni_page
+
+    when_i_choose_no
+    and_i_press_continue
+    then_i_see_the_itt_provider_page
+
+    when_i_try_to_go_to_the_email_page
+    then_i_see_the_itt_provider_page
+
+    when_i_choose_no
+    and_i_press_continue
+    then_i_see_the_email_page
+
+    when_i_try_to_go_to_the_check_answers_page
+    then_i_see_the_email_page
   end
 
   it 'entering the NI number' do
@@ -382,6 +414,7 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page.driver.browser.current_title).to start_with('Your date of birth')
     expect(page).to have_content('Your date of birth')
   end
+  alias_method :then_i_am_redirected_to_the_date_of_birth_page, :then_i_see_the_date_of_birth_page
 
   def then_i_see_the_email_page
     expect(page).to have_current_path('/email')
@@ -416,6 +449,7 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page.driver.browser.current_title).to start_with('Your name')
     expect(page).to have_content('Your name')
   end
+  alias_method :then_i_am_redirected_to_the_name_page, :then_i_see_the_name_page
 
   def then_i_see_the_ni_page
     expect(page).to have_current_path('/have-ni-number')
@@ -481,6 +515,18 @@ RSpec.describe 'TRN requests', type: :system do
     when_i_complete_my_date_of_birth
     when_i_choose_no_ni_number
     when_i_choose_no_itt_provider
+  end
+
+  def when_i_am_on_the_name_page
+    given_i_am_on_the_home_page
+    when_i_press_the_start_button
+    then_i_see_the_check_trn_page
+
+    when_i_confirm_i_have_a_trn_number
+    then_i_see_the_ask_questions_page
+
+    when_i_press_continue
+    then_i_see_the_name_page
   end
 
   def when_i_choose_no_trn
@@ -607,6 +653,22 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_try_to_go_to_the_check_answers_page
     visit trn_request_path
+  end
+
+  def when_i_try_to_go_to_the_date_of_birth_page
+    visit date_of_birth_path
+  end
+
+  def when_i_try_to_go_to_the_email_page
+    visit email_path
+  end
+
+  def when_i_try_to_go_to_the_itt_provider_page
+    visit itt_provider_path
+  end
+
+  def when_i_try_to_go_to_the_ni_number_page
+    visit ni_number_path
   end
 
   def when_i_am_authorized_as_a_support_user
