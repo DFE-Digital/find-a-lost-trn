@@ -51,4 +51,11 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+
+  # Tell Action Mailer not to deliver emails to the real world.
+  # The :test delivery method accumulates sent emails in the
+  # ActionMailer::Base.deliveries array.
+  config.action_mailer.delivery_method = :test
+  config.action_mailer.default_options = { from: 'mail@example.com' }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
