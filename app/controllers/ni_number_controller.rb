@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class NiNumberController < ApplicationController
+  include EnforceQuestionOrder
+
   def new
     @has_ni_number_form = HasNiNumberForm.new(trn_request: trn_request)
   end
@@ -36,7 +38,7 @@ class NiNumberController < ApplicationController
   end
 
   def trn_request
-    @trn_request ||= TrnRequest.find_by(id: session[:trn_request_id]) || TrnRequest.new
+    @trn_request ||= TrnRequest.find_by(id: session[:trn_request_id])
   end
   helper_method :trn_request
 end

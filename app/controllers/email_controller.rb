@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 class EmailController < ApplicationController
+  include EnforceQuestionOrder
+
   def edit
-    trn_request = TrnRequest.find_by(id: session[:trn_request_id])
     @email_form = EmailForm.new(trn_request: trn_request)
   end
 
   def update
-    trn_request = TrnRequest.find_by(id: session[:trn_request_id])
     @email_form = EmailForm.new(email: email_params[:email], trn_request: trn_request)
     if @email_form.save
       redirect_to check_answers_url

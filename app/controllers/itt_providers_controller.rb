@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class IttProvidersController < ApplicationController
+  include EnforceQuestionOrder
+
   def edit
     @itt_provider_form = IttProviderForm.new(trn_request: trn_request).assign_form_values
   end
@@ -20,9 +22,5 @@ class IttProvidersController < ApplicationController
       .require(:itt_provider_form)
       .permit(:itt_provider_enrolled, :itt_provider_name)
       .merge(trn_request: trn_request)
-  end
-
-  def trn_request
-    @trn_request ||= TrnRequest.find(session[:trn_request_id])
   end
 end

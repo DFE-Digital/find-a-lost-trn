@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class DateOfBirthController < ApplicationController
+  include EnforceQuestionOrder
+
   def edit; end
 
   def update
@@ -19,9 +21,5 @@ class DateOfBirthController < ApplicationController
 
   def date_of_birth_params
     params.require(:date_of_birth_form).permit('date_of_birth(3i)', 'date_of_birth(2i)', 'date_of_birth(1i)')
-  end
-
-  def trn_request
-    @trn_request ||= TrnRequest.find_by(id: session[:trn_request_id])
   end
 end
