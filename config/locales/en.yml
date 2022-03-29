@@ -30,6 +30,9 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  tra:
+    tel: 020 7593 5394
+
   notification_banner:
     info: Information
     warning: Warning
