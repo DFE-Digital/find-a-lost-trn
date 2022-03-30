@@ -12,8 +12,8 @@ ENV GOVUK_NOTIFY_API_KEY=TestKey \
     RAILS_ENV=production \
     RAILS_SERVE_STATIC_FILES=yes \
     SECRET_KEY_BASE=TestKey \
-    ZENDESK_TOKEN=TestToken
-    ZENDESK_USER=TestUser \
+    ZENDESK_TOKEN=TestToken \
+    ZENDESK_USER=TestUser
 
 WORKDIR /app
 
