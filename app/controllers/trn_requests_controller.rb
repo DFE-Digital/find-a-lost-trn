@@ -22,7 +22,7 @@ class TrnRequestsController < ApplicationController
       response = DqtApi.find_trn!(trn_request)
       trn_request.update(trn: response['trn'])
       redirect_to trn_found_path
-    rescue DqtApi::ApiError, Faraday::TimeoutError, DqtApi::TooManyResults
+    rescue DqtApi::ApiError, Faraday::ConnectionFailed, Faraday::TimeoutError, DqtApi::TooManyResults
       ZendeskService.create_ticket!(trn_request)
       redirect_to helpdesk_request_submitted_url
     end
