@@ -7,12 +7,13 @@ RUN apk -U upgrade && \
 RUN echo "Europe/London" > /etc/timezone && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime
 
-ENV RAILS_ENV=production \
-    RAILS_SERVE_STATIC_FILES=yes \
+ENV GOVUK_NOTIFY_API_KEY=TestKey \
     LANG=en_GB.UTF-8 \
+    RAILS_ENV=production \
+    RAILS_SERVE_STATIC_FILES=yes \
     SECRET_KEY_BASE=TestKey \
-    ZENDESK_USER=TestUser \
     ZENDESK_TOKEN=TestToken
+    ZENDESK_USER=TestUser \
 
 WORKDIR /app
 
