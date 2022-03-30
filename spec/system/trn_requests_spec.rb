@@ -313,7 +313,7 @@ RSpec.describe 'TRN requests', type: :system do
       given_the_use_dqt_api_feature_is_enabled
       when_i_have_completed_a_trn_request
       and_i_press_the_submit_button
-      then_i_see_my_trn_number
+      then_i_see_a_message_to_check_my_email
     end
   end
 
@@ -367,9 +367,8 @@ RSpec.describe 'TRN requests', type: :system do
     FeatureFlag.activate(:use_dqt_api)
   end
 
-  def then_i_see_my_trn_number
-    expect(page).to have_content('We’ve found your TRN')
-    expect(page).to have_content('TRN: 1275362')
+  def then_i_see_a_message_to_check_my_email
+    expect(page).to have_content('We have sent your TRN to')
   end
 
   def then_i_see_the_ask_questions_page

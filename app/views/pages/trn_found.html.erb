@@ -6,8 +6,10 @@
       title_text: 'Success',
       classes: %w[govuk-!-margin-bottom-6]
     ) do %>
-      <h1 class="govuk-heading-m">We’ve found your TRN</h1>
-      <p class='app-!-inherit-colour govuk-!-margin-bottom-0 govuk-!-font-size-24'>TRN: <%= @trn_request.trn %></p>
+      <h1 class="govuk-heading-l app-!-inherit-colour">
+        We have sent your TRN to<br />
+        <%= @trn_request.email %>
+      </h1>
     <% end %>
   </div>
 </div>
