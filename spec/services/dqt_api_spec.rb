@@ -16,7 +16,7 @@ RSpec.describe DqtApi do
       it { is_expected.to match(hash_including('firstName' => 'Kevin')) }
       it { is_expected.to match(hash_including('lastName' => 'Evans')) }
       it { is_expected.to match(hash_including('dateOfBirth' => '1990-01-01')) }
-      it { is_expected.to match(hash_including('nationalInsuranceNumber' => 'SD78771P9')) }
+      it { is_expected.to match(hash_including('nationalInsuranceNumber' => 'AA123456A')) }
       it { is_expected.to match(hash_including('uid' => 'f7891223-7661-e411-8047-005056822391')) }
     end
 

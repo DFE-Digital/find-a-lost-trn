@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://qualified-teachers-api-preprod.london.cloudapps.digital/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=kevin&ittProviderName&lastName&nationalInsuranceNumber=1000000&previousFirstName&previousLastName
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=kevin&ittProviderName&lastName&nationalInsuranceNumber=1000000&previousFirstName&previousLastName
       body:
         encoding: US-ASCII
         string: ''
@@ -20,16 +20,14 @@ http_interactions:
         code: 200
         message: OK
       headers:
-        Date:
-          - Fri, 25 Mar 2022 11:03:10 GMT
         Content-Type:
           - application/json; charset=utf-8
         Transfer-Encoding:
           - chunked
         Connection:
           - keep-alive
-        Server:
-          - Kestrel
+        Date:
+          - Fri, 01 Apr 2022 10:40:16 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -41,13 +39,21 @@ http_interactions:
         X-Rate-Limit-Remaining:
           - '294'
         X-Rate-Limit-Reset:
-          - '2022-03-25T11:04:00.0000000Z'
+          - '2022-04-01T10:41:00.0000000Z'
         X-Vcap-Request-Id:
-          - 7ce08a5d-7934-4600-59d7-a8368ae19138
+          - 4622e0ff-0df7-4896-7f5a-d500d7942c09
         X-Xss-Protection:
           - '0'
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 c975be6c710711d2ced7184eca05c992.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-C1
+        X-Amz-Cf-Id:
+          - oFO9MfW2F608a6TGFLyF79Yy41J-Bw36NK1klaXIZYIG9go74h7EiQ==
       body:
         encoding: UTF-8
-        string: '{"results":[{"trn":"1275362","emailAddresses":["anonymous@anonymousdomain.org.net.co.uk"],"firstName":"Kevin","lastName":"Evans","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"SD78771P9","uid":"f7891223-7661-e411-8047-005056822391"}]}'
-    recorded_at: Fri, 25 Mar 2022 11:03:10 GMT
+        string: '{"results":[{"trn":"1275362","emailAddresses":["anonymous@anonymousdomain.org.net.co.uk"],"firstName":"Kevin","lastName":"Evans","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","uid":"f7891223-7661-e411-8047-005056822391"}]}'
+    recorded_at: Fri, 01 Apr 2022 10:40:16 GMT
 recorded_with: VCR 6.1.0
