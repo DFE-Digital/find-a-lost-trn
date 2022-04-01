@@ -308,17 +308,21 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_should_see_the_home_page
   end
 
-  context 'when the use_dqt_api feature is enabled',
-          skip: 'We need to add Redis to the CI and also to update this test to check that an email was sent' do
+  context 'when the use_dqt_api feature is enabled' do
     it 'displays the TRN returned by the DQT API', vcr: true do
       given_the_use_dqt_api_feature_is_enabled
       when_i_have_completed_a_trn_request
       and_i_press_the_submit_button
       then_i_see_a_message_to_check_my_email
+      and_i_receive_an_email_with_the_trn_number
     end
   end
 
   private
+
+  def and_i_receive_an_email_with_the_trn_number
+    expect(ActionMailer::Base.deliveries.last.subject).to eq('Your TRN is 1275362')
+  end
 
   def and_the_date_of_birth_is_prepopulated
     expect(page).to have_field('Day', with: '1')
