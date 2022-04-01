@@ -48,7 +48,7 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Setup DB
-        run: bin/rails db:setup
+        run: bin/rails db:prepare
 
       - name: Run tests
         run: bin/bundle exec rspec --format documentation
