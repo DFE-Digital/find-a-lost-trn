@@ -321,7 +321,8 @@ RSpec.describe 'TRN requests', type: :system do
   private
 
   def and_i_receive_an_email_with_the_trn_number
-    expect(ActionMailer::Base.deliveries.last.subject).to eq('Your TRN is 1275362')
+    open_email('kevin@kevin.com')
+    expect(current_email.subject).to eq('Your TRN is 1275362')
   end
 
   def and_the_date_of_birth_is_prepopulated
