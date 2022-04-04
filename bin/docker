@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
+echo "WARNING: This is out of date and untested."
+
 docker compose up css js web
