@@ -107,21 +107,12 @@ the Notify dashboard in the `API integration` section.
 
 ### Docker
 
-**NOTE:** Currently out of date, because `Dockerfile` is being used for the
-production deployment.
-
-If you prefer to run the application in a Docker container, then you can use the following commands:
+To run the application locally in production mode (to test that the container
+builds and runs successfully):
 
 ```bash
-bin/docker
-```
-
-This uses Docker Compose to co-ordinate all the services required to run the application.
-
-After running this for the first time, you can run the application setup using:
-
-```bash
-bin/setup
+docker build .
+docker run --net=host --env-file .env.development <SHA>
 ```
 
 ### Linting
