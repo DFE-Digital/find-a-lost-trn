@@ -63,6 +63,7 @@ end
 
 group :test do
   gem 'capybara', '~> 3.36'
+  gem 'capybara-email'
   gem 'cuprite', '~> 0.13'
   gem 'rspec'
   gem 'rspec-rails'
