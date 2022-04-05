@@ -57,12 +57,13 @@ Rails.application.routes.draw do
   post '/check-trn', to: 'check_trn#create'
 
   get '/ask-questions', to: 'pages#ask_questions'
-  get '/cookies', to: 'pages#cookies'
   get '/helpdesk-request-submitted', to: 'pages#helpdesk_request_submitted'
   get '/longer-than-normal', to: 'pages#longer_than_normal'
   get '/start', to: 'pages#start'
   get '/trn-found', to: 'pages#trn_found'
   get '/you-dont-have-a-trn', to: 'pages#you_dont_have_a_trn'
+
+  get '/cookies', to: 'static#cookies'
 
   get '/health', to: proc { [200, {}, ['success']] }
 end
