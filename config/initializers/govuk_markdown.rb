@@ -2,12 +2,9 @@
 
 class MarkdownTemplate
   def self.call(template, source)
-    compiled = GovukMarkdown.render(source)
-    erb_handler.call(template, compiled)
-  end
-
-  def self.erb_handler
-    ActionView::Template.registered_template_handler(:erb)
+    erb_handler = ActionView::Template.registered_template_handler(:erb)
+    compiled_source = erb_handler.call(template, source)
+    "GovukMarkdown.render(begin;#{compiled_source};end).html_safe"
   end
 end
 
