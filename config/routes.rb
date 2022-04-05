@@ -3,10 +3,6 @@
 Rails.application.routes.draw do
   root to: redirect('/start')
 
-  resource :trn_request, path: 'trn-request', only: %i[show update] do
-    resource :email, controller: :email, only: %i[edit update]
-  end
-
   namespace :support_interface, path: '/support' do
     get '/', to: redirect('/support/trn-requests')
     get '/trn-requests', to: 'trn_requests#index'
@@ -32,29 +28,33 @@ Rails.application.routes.draw do
     mount Sidekiq::Web, at: 'sidekiq'
   end
 
-  get '/check-answers', to: 'trn_requests#show'
-
-  get '/check-trn', to: 'check_trn#new'
-  post '/check-trn', to: 'check_trn#create'
+  get '/name', to: 'name#edit'
+  patch '/name', to: 'name#update'
 
   get '/date-of-birth', to: 'date_of_birth#edit'
   patch '/date-of-birth', to: 'date_of_birth#update'
-
-  get '/email', to: 'email#edit'
-  patch '/email', to: 'email#update'
 
   get '/have-ni-number', to: 'ni_number#new'
   patch '/have-ni-number', to: 'ni_number#create'
   post '/have-ni-number', to: 'ni_number#create'
 
+  get '/ni-number', to: 'ni_number#edit'
+  patch '/ni-number', to: 'ni_number#update'
+
   get '/itt-provider', to: 'itt_providers#edit'
   patch '/itt-provider', to: 'itt_providers#update'
 
-  get '/name', to: 'name#edit'
-  patch '/name', to: 'name#update'
+  get '/email', to: 'email#edit'
+  patch '/email', to: 'email#update'
 
-  get '/ni-number', to: 'ni_number#edit'
-  patch '/ni-number', to: 'ni_number#update'
+  resource :trn_request, path: 'trn-request', only: %i[show update] do
+    resource :email, controller: :email, only: %i[edit update]
+  end
+
+  get '/check-answers', to: 'trn_requests#show'
+
+  get '/check-trn', to: 'check_trn#new'
+  post '/check-trn', to: 'check_trn#create'
 
   get '/ask-questions', to: 'pages#ask_questions'
   get '/cookies', to: 'pages#cookies'
