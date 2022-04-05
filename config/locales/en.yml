@@ -33,6 +33,8 @@ en:
   tra:
     tel: 020 7593 5394
     service_name: Find a lost teacher reference number (TRN)
+    url: https://find-a-lost-trn.education.gov.uk/
+    email: qts.enquiries@education.gov.uk
 
   notification_banner:
     info: Information

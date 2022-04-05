@@ -63,6 +63,7 @@ Rails.application.routes.draw do
   get '/trn-found', to: 'pages#trn_found'
   get '/you-dont-have-a-trn', to: 'pages#you_dont_have_a_trn'
 
+  get '/accessibility', to: 'static#accessibility'
   get '/cookies', to: 'static#cookies'
 
   get '/health', to: proc { [200, {}, ['success']] }
