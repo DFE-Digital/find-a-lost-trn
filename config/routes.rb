@@ -32,27 +32,37 @@ Rails.application.routes.draw do
     mount Sidekiq::Web, at: 'sidekiq'
   end
 
-  get '/ask-questions', to: 'pages#ask_questions'
   get '/check-answers', to: 'trn_requests#show'
+
   get '/check-trn', to: 'check_trn#new'
   post '/check-trn', to: 'check_trn#create'
+
   get '/date-of-birth', to: 'date_of_birth#edit'
   patch '/date-of-birth', to: 'date_of_birth#update'
+
   get '/email', to: 'email#edit'
   patch '/email', to: 'email#update'
+
   get '/have-ni-number', to: 'ni_number#new'
   patch '/have-ni-number', to: 'ni_number#create'
   post '/have-ni-number', to: 'ni_number#create'
-  get '/health', to: proc { [200, {}, ['success']] }
-  get '/helpdesk-request-submitted', to: 'pages#helpdesk_request_submitted'
+
   get '/itt-provider', to: 'itt_providers#edit'
   patch '/itt-provider', to: 'itt_providers#update'
-  get '/longer-than-normal', to: 'pages#longer_than_normal'
+
   get '/name', to: 'name#edit'
   patch '/name', to: 'name#update'
+
   get '/ni-number', to: 'ni_number#edit'
   patch '/ni-number', to: 'ni_number#update'
+
+  get '/ask-questions', to: 'pages#ask_questions'
+  get '/cookies', to: 'pages#cookies'
+  get '/helpdesk-request-submitted', to: 'pages#helpdesk_request_submitted'
+  get '/longer-than-normal', to: 'pages#longer_than_normal'
+  get '/start', to: 'pages#start'
   get '/trn-found', to: 'pages#trn_found'
   get '/you-dont-have-a-trn', to: 'pages#you_dont_have_a_trn'
-  get '/start', to: 'pages#start'
+
+  get '/health', to: proc { [200, {}, ['success']] }
 end

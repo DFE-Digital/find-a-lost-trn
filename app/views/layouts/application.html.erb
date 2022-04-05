@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title><%= [yield(:page_title).presence, 'Find a lost teacher reference number (TRN)'].compact.join(' - ') %></title>
+    <title><%= [yield(:page_title).presence, t('tra.service_name')].compact.join(' - ') %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -30,7 +30,7 @@
 
     <%= govuk_skip_link %>
 
-    <%= govuk_header(service_name: "Find a lost teacher reference number (TRN)") do |header| %>
+    <%= govuk_header(service_name: t('tra.service_name')) do |header| %>
       <% case try(:current_namespace) %>
       <% when 'support_interface' %>
         <% header.navigation_item(
@@ -59,6 +59,8 @@
       </main>
     </div>
 
-    <%= govuk_footer %>
+    <%= govuk_footer(
+      meta_items_title: 'Footer links',
+      meta_items: { 'Cookies': '/cookies' }) %>
   </body>
 </html>
