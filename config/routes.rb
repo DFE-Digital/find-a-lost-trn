@@ -65,6 +65,7 @@ Rails.application.routes.draw do
 
   get '/accessibility', to: 'static#accessibility'
   get '/cookies', to: 'static#cookies'
+  get '/privacy', to: 'static#privacy'
 
   get '/health', to: proc { [200, {}, ['success']] }
 end
