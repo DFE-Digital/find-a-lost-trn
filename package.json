@@ -3,7 +3,7 @@
   "private": "true",
   "dependencies": {
     "esbuild": "^0.14.29",
-    "govuk-frontend": "^4.0.0",
+    "govuk-frontend": "^4.0.1",
     "sass": "^1.49.10"
   },
   "scripts": {
