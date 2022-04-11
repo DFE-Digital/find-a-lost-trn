@@ -40,5 +40,7 @@ module FindALostTrn
     config.generators.system_tests = nil
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.exceptions_app = routes
   end
 end
