@@ -39,6 +39,12 @@ class DqtApi
         faraday.request :authorization, 'Bearer', ENV['DQT_API_KEY']
         faraday.request :json
         faraday.response :json
+        faraday.response :logger, nil, { bodies: true, headers: true } do |logger|
+          logger.filter(
+            /(emailAddress=|firstName=|lastName=|nationalInsuranceNumber=|previousFirstName=|previousLastName=)([^&]+)/,
+            '\1[REDACTED]',
+          )
+        end
         faraday.adapter Faraday.default_adapter
       end
   end
