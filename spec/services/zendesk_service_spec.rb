@@ -26,8 +26,7 @@ RSpec.describe ZendeskService do
         allow(ticket_client).to receive(:create!)
         trn_request = TrnRequest.new
 
-        described_class.create_ticket!(trn_request)
-
+        expect { described_class.create_ticket!(trn_request) }.to raise_error(ZendeskService::ZendeskOffError)
         expect(ticket_client).not_to have_received(:create!)
       end
     end
