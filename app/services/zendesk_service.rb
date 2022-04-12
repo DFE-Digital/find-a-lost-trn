@@ -34,6 +34,10 @@ class ZendeskService
         email: trn_request.email,
         name: trn_request.name,
       },
+      custom_fields: {
+        id: '4419328659089',
+        value: 'Request from Find a lost TRN app',
+      },
     }
   end
 

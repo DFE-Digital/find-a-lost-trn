@@ -74,6 +74,10 @@ RSpec.describe ZendeskService do
                 email: 'test@example.com',
                 name: 'Test User',
               },
+              custom_fields: {
+                id: '4419328659089',
+                value: 'Request from Find a lost TRN app',
+              },
             },
           )
         expect(trn_request.zendesk_ticket_id).to eq(42)
