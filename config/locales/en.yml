@@ -55,6 +55,10 @@ en:
             date_of_birth:
               blank: Enter your date of birth
               inclusion: You must be 16 or over to use this service
+              missing_day: Your date of birth must include a day
+              missing_month: Your date of birth must include a month
+              missing_year: Your date of birth must include a year
+              in_the_future: Your date of birth must be in the past
         has_ni_number_form:
           attributes:
             has_ni_number:
