@@ -9,4 +9,12 @@ class TeacherMailer < ApplicationMailer
 
     notify_email(mailer_options)
   end
+
+  def information_received(trn_request)
+    @trn_request = trn_request
+
+    mailer_options = { to: @trn_request.email, subject: 'We’ve received the information you submitted' }
+
+    notify_email(mailer_options)
+  end
 end
