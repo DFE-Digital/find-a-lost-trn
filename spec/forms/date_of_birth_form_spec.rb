@@ -13,7 +13,7 @@ RSpec.describe DateOfBirthForm, type: :model do
 
     it 'updates the date of birth' do
       update
-      expect(date_of_birth_form.date_of_birth).to eq(Date.new(2000, 1, 1))
+      expect(trn_request.date_of_birth).to eq(Date.new(2000, 1, 1))
     end
 
     context 'without a valid date' do
@@ -21,7 +21,7 @@ RSpec.describe DateOfBirthForm, type: :model do
 
       it 'does not update the date of birth' do
         update
-        expect(date_of_birth_form.date_of_birth).to be_nil
+        expect(trn_request.date_of_birth).to be_nil
       end
     end
 
@@ -45,18 +45,7 @@ RSpec.describe DateOfBirthForm, type: :model do
 
       it 'adds an error' do
         update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['You must be 16 or over to use this service'])
-      end
-    end
-
-    context 'with an invalid date' do
-      let(:params) { { 'date_of_birth(1i)' => '', 'date_of_birth(2i)' => '1', 'date_of_birth(3i)' => '1' } }
-
-      it { is_expected.to be_falsy }
-
-      it 'adds an error' do
-        update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Enter your date of birth'])
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must be in the past'])
       end
     end
 
@@ -85,6 +74,39 @@ RSpec.describe DateOfBirthForm, type: :model do
       it 'adds an error' do
         update
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(['You must be 16 or over to use this service'])
+      end
+    end
+
+    context 'with a missing day' do
+      let(:params) { { 'date_of_birth(1i)' => '1990', 'date_of_birth(2i)' => '1', 'date_of_birth(3i)' => '' } }
+
+      it { is_expected.to be_falsy }
+
+      it 'adds an error' do
+        update
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must include a day'])
+      end
+    end
+
+    context 'with a missing month' do
+      let(:params) { { 'date_of_birth(1i)' => '1990', 'date_of_birth(2i)' => '', 'date_of_birth(3i)' => '1' } }
+
+      it { is_expected.to be_falsy }
+
+      it 'adds an error' do
+        update
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must include a month'])
+      end
+    end
+
+    context 'with a missing year' do
+      let(:params) { { 'date_of_birth(1i)' => '', 'date_of_birth(2i)' => '1', 'date_of_birth(3i)' => '1' } }
+
+      it { is_expected.to be_falsy }
+
+      it 'adds an error' do
+        update
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must include a year'])
       end
     end
   end
