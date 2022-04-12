@@ -20,7 +20,7 @@ module GDSZendesk
 end
 
 GDS_ZENDESK_CLIENT =
-  if Rails.env.development? || Rails.env.test?
+  if HostingEnvironment.test_environment?
     GDSZendesk::DummyClient.new(development_mode: true, logger: Rails.logger)
   else
     GDSZendesk::Client.new(
