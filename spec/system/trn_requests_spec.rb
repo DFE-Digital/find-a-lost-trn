@@ -2,7 +2,10 @@
 require 'rails_helper'
 
 RSpec.describe 'TRN requests', type: :system do
-  before { given_the_service_is_open }
+  before do
+    given_the_service_is_open
+    given_the_zendesk_integration_feature_is_enabled
+  end
 
   it 'completing a request' do
     given_i_am_on_the_home_page
@@ -373,6 +376,10 @@ RSpec.describe 'TRN requests', type: :system do
     FeatureFlag.activate(:use_dqt_api)
   end
 
+  def given_the_zendesk_integration_feature_is_enabled
+    FeatureFlag.activate(:zendesk_integration)
+  end
+
   def then_i_see_a_message_to_check_my_email
     expect(page).to have_content('We have sent your TRN to')
   end
@@ -412,6 +419,7 @@ RSpec.describe 'TRN requests', type: :system do
   def then_i_see_the_confirmation_page
     expect(page.driver.browser.current_title).to start_with('We’ve received your request')
     expect(page).to have_content('We’ve received your request')
+    expect(page).to have_content('Give the helpdesk your ticket number: 42')
   end
 
   def then_i_see_the_date_of_birth_page
