@@ -41,6 +41,7 @@ RSpec.describe 'TRN requests', type: :system do
 
     when_i_press_the_submit_button
     then_i_see_the_confirmation_page
+    and_i_receive_an_email_with_the_zendesk_ticket_number
   end
 
   it 'trying to skip steps' do
@@ -326,6 +327,12 @@ RSpec.describe 'TRN requests', type: :system do
   def and_i_receive_an_email_with_the_trn_number
     open_email('kevin@kevin.com')
     expect(current_email.subject).to eq('Your TRN is 1275362')
+  end
+
+  def and_i_receive_an_email_with_the_zendesk_ticket_number
+    open_email('kevin@kevin.com')
+    expect(current_email.subject).to eq('We’ve received the information you submitted')
+    expect(current_email.body).to include('give the helpdesk your ticket number: 42')
   end
 
   def and_the_date_of_birth_is_prepopulated

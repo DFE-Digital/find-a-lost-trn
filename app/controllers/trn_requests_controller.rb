@@ -14,6 +14,7 @@ class TrnRequestsController < ApplicationController
     update_trn_request
     unless FeatureFlag.active?(:use_dqt_api)
       ZendeskService.create_ticket!(trn_request)
+      TeacherMailer.information_received(trn_request).deliver_now
       redirect_to helpdesk_request_submitted_url
       return
     end
@@ -25,6 +26,7 @@ class TrnRequestsController < ApplicationController
       redirect_to trn_found_path
     rescue DqtApi::ApiError, Faraday::ConnectionFailed, Faraday::TimeoutError, DqtApi::TooManyResults
       ZendeskService.create_ticket!(trn_request)
+      TeacherMailer.information_received(trn_request).deliver_now
       redirect_to helpdesk_request_submitted_url
     end
   end
