@@ -1,10 +1,12 @@
 # frozen_string_literal: true
+
 class ZendeskService
   def self.create_ticket!(trn_request)
     return unless FeatureFlag.active?(:zendesk_integration)
 
     begin
-      GDS_ZENDESK_CLIENT.ticket.create!(ticket_template(trn_request))
+      ticket = GDS_ZENDESK_CLIENT.ticket.create!(ticket_template(trn_request))
+      trn_request.update!(zendesk_ticket_id: ticket.id)
     rescue ZendeskAPI::Error::RecordInvalid
       raise CreateError, 'Could not create Zendesk ticket'
     end

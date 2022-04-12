@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_22_103427) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_12_115717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -37,6 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_22_103427) do
     t.string "previous_first_name"
     t.string "previous_last_name"
     t.string "trn"
+    t.integer "zendesk_ticket_id"
   end
 
 end

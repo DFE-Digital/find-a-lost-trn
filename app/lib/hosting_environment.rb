@@ -6,4 +6,8 @@ module HostingEnvironment
   def self.environment_name
     ENV.fetch('HOSTING_ENVIRONMENT_NAME', 'unknown-environment')
   end
+
+  def self.test_environment?
+    TEST_ENVIRONMENTS.include?(HostingEnvironment.environment_name)
+  end
 end

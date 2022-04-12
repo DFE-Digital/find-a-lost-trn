@@ -38,7 +38,8 @@ RSpec.describe ZendeskService do
 
     describe '.create_ticket!' do
       it 'creates a ticket' do
-        allow(ticket_client).to receive(:create!)
+        allow(ticket_client).to receive(:create!).and_return(ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42))
+
         trn_request =
           TrnRequest.new(
             date_of_birth: 20.years.ago,
@@ -76,6 +77,7 @@ RSpec.describe ZendeskService do
               },
             },
           )
+        expect(trn_request.zendesk_ticket_id).to eq(42)
       end
 
       it 'throws an error when it fails to create a ticket' do
