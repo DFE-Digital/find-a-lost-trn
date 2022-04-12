@@ -2,7 +2,10 @@
 
 class ZendeskService
   def self.create_ticket!(trn_request)
-    return unless FeatureFlag.active?(:zendesk_integration)
+    unless FeatureFlag.active?(:zendesk_integration)
+      raise ZendeskOffError, 'Could not create a Zendesk ticket because the ' \
+        ':zendesk_integration feature flag is off'
+    end
 
     begin
       ticket = GDS_ZENDESK_CLIENT.ticket.create!(ticket_template(trn_request))
@@ -34,5 +37,8 @@ class ZendeskService
   end
 
   class CreateError < StandardError
+  end
+
+  class ZendeskOffError < StandardError
   end
 end
