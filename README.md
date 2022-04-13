@@ -11,6 +11,15 @@ A service that allows teachers to find their Teacher Reference Number (TRN).
 | Test       | [test](https://test-find-a-lost-trn.education.gov.uk/start)       | Demo environment for software vendors who integrate with our API      | `tra-test`       | `find-a-lost-trn-test`       |
 | Dev        | [dev](https://dev-find-a-lost-trn.education.gov.uk/start)         | For internal use by DfE for testing. Automatically deployed from main | `tra-dev`        | `find-a-lost-trn-dev`        |
 
+Gotchas:
+
+- Dev uses a `test` Notify key so it doesn't send real emails. You have to
+  check the API integration section of Notify to see them.
+- Dev uses the `preprod` deployment of the `qualified-teachers-api` which
+  should allow us to find the TRN of anonymised users.
+- All other environments use production Notify and the production
+  `qualified-teachers-api`.
+
 ## Dependencies
 
 - Ruby 3.x
