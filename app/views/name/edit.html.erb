@@ -21,7 +21,7 @@
           ) %>
 
       <%= f.govuk_check_boxes_fieldset :name_changed, legend: nil do %>
-        <%= f.govuk_check_box :name_changed, true, label: { text: 'I’ve changed my name since I received my TRN' }, link_errors: true do %>
+        <%= f.govuk_check_box :name_changed, "true", label: { text: 'I’ve changed my name since I received my TRN' }, link_errors: true, multiple: false do %>
           <%= f.govuk_text_field(:previous_first_name, label: { text: 'Previous first name' }) %>
           <%= f.govuk_text_field(:previous_last_name, label: { text: 'Previous last name' }) %>
         <% end %>
