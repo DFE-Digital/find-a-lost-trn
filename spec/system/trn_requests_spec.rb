@@ -416,8 +416,8 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def then_i_see_a_missing_previous_name_error
-    expect(page).to have_content('Please enter your previous first name')
-    expect(page).to have_content('Please enter your previous last name')
+    expect(page).to have_content('Enter your previous first name')
+    expect(page).to have_content('Enter your previous last name')
   end
 
   def then_i_see_the_ask_questions_page
