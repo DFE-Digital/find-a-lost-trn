@@ -36,7 +36,7 @@ class ZendeskService
       },
       custom_fields: {
         id: '4419328659089',
-        value: 'Request from Find a lost TRN app',
+        value: 'request_from_find_a_lost_trn_app',
       },
     }
   end
