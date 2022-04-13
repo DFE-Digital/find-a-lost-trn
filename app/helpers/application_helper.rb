@@ -2,7 +2,7 @@
 
 module ApplicationHelper
   def back_link_url(back = url_for(:back))
-    return check_answers_path if session[:form_complete]
+    return check_answers_path if session[:form_complete] && request.path != check_answers_path
 
     back
   end
