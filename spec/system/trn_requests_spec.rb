@@ -40,7 +40,7 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_check_answers_page
 
     when_i_press_the_submit_button
-    then_i_see_the_confirmation_page
+    then_i_see_the_zendesk_confirmation_page
     and_i_receive_an_email_with_the_zendesk_ticket_number
 
     when_i_navigate_to_the_name_page
@@ -321,8 +321,18 @@ RSpec.describe 'TRN requests', type: :system do
       given_the_use_dqt_api_feature_is_enabled
       when_i_have_completed_a_trn_request
       and_i_press_the_submit_button
+
       then_i_see_a_message_to_check_my_email
       and_i_receive_an_email_with_the_trn_number
+    end
+
+    it 'opens a Zendesk ticket when there is no match', vcr: true do
+      given_the_use_dqt_api_feature_is_enabled
+      when_i_have_completed_a_trn_request_that_wont_match
+      and_i_press_the_submit_button
+
+      then_i_see_the_zendesk_confirmation_page
+      and_i_receive_an_email_with_the_zendesk_ticket_number
     end
   end
 
@@ -374,6 +384,12 @@ RSpec.describe 'TRN requests', type: :system do
     and_i_press_continue
   end
   alias_method :when_i_have_completed_a_trn_request, :given_i_have_completed_a_trn_request
+
+  def when_i_have_completed_a_trn_request_that_wont_match
+    given_i_have_completed_a_trn_request
+    when_i_press_change_name
+    when_i_fill_in_the_name_form_with_data_that_will_not_match
+  end
 
   def given_it_is_taking_longer_than_usual
     FeatureFlag.activate(:processing_delays)
@@ -431,7 +447,7 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_content('Check if you have a TRN')
   end
 
-  def then_i_see_the_confirmation_page
+  def then_i_see_the_zendesk_confirmation_page
     expect(page.driver.browser.current_title).to start_with('We’ve received your request')
     expect(page).to have_content('We’ve received your request')
     expect(page).to have_content('Give the helpdesk your ticket number: 42')
@@ -578,6 +594,12 @@ RSpec.describe 'TRN requests', type: :system do
   def when_i_fill_in_the_name_form
     fill_in 'First name', with: 'Kevin'
     fill_in 'Last name', with: 'E'
+    when_i_press_continue
+  end
+
+  def when_i_fill_in_the_name_form_with_data_that_will_not_match
+    fill_in 'First name', with: 'Do not'
+    fill_in 'Last name', with: 'Match me'
     when_i_press_continue
   end
 
