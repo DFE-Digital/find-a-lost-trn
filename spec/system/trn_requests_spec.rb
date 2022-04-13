@@ -42,6 +42,10 @@ RSpec.describe 'TRN requests', type: :system do
     when_i_press_the_submit_button
     then_i_see_the_confirmation_page
     and_i_receive_an_email_with_the_zendesk_ticket_number
+
+    when_i_navigate_to_the_name_page
+    then_i_see_the_name_page
+    and_my_name_is_not_filled_in
   end
 
   it 'trying to skip steps' do
@@ -339,6 +343,10 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_field('Day', with: '1')
     expect(page).to have_field('Month', with: '1')
     expect(page).to have_field('Year', with: '1990')
+  end
+
+  def and_my_name_is_not_filled_in
+    expect(page).not_to have_field('First name', with: 'Kevin')
   end
 
   def given_i_am_on_the_home_page
@@ -693,5 +701,9 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_am_authorized_as_a_support_user
     page.driver.basic_authorize('test', 'test')
+  end
+
+  def when_i_navigate_to_the_name_page
+    visit name_path
   end
 end
