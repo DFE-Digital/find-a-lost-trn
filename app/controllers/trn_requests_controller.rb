@@ -7,26 +7,19 @@ class TrnRequestsController < ApplicationController
     session[:form_complete] = true
   end
 
-  def update # rubocop:disable Metrics/AbcSize
+  def update
     redirect_to root_url unless trn_request
     session[:form_complete] = false
 
     update_trn_request
-    unless FeatureFlag.active?(:use_dqt_api)
-      ZendeskService.create_ticket!(trn_request)
-      TeacherMailer.information_received(trn_request).deliver_now
-      redirect_to helpdesk_request_submitted_url
-      return
-    end
 
     begin
-      response = DqtApi.find_trn!(trn_request)
-      trn_request.update(trn: response['trn'])
-      TeacherMailer.found_trn(trn_request).deliver_now
+      find_trn_using_api
+
       redirect_to trn_found_path
     rescue DqtApi::ApiError, Faraday::ConnectionFailed, Faraday::TimeoutError, DqtApi::TooManyResults
-      ZendeskService.create_ticket!(trn_request)
-      TeacherMailer.information_received(trn_request).deliver_now
+      create_zendesk_ticket
+
       redirect_to helpdesk_request_submitted_url
     end
   end
@@ -39,5 +32,18 @@ class TrnRequestsController < ApplicationController
 
   def update_trn_request
     trn_request.update(trn_request_params)
+  end
+
+  def find_trn_using_api
+    raise DqtApi::ApiError unless FeatureFlag.active?(:use_dqt_api)
+
+    response = DqtApi.find_trn!(trn_request)
+    trn_request.update(trn: response['trn'])
+    TeacherMailer.found_trn(trn_request).deliver_now
+  end
+
+  def create_zendesk_ticket
+    ZendeskService.create_ticket!(trn_request)
+    TeacherMailer.information_received(trn_request).deliver_now
   end
 end
