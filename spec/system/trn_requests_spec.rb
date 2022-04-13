@@ -415,6 +415,11 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_content('We have sent your TRN to')
   end
 
+  def then_i_see_a_missing_previous_name_error
+    expect(page).to have_content('Please enter your previous first name')
+    expect(page).to have_content('Please enter your previous last name')
+  end
+
   def then_i_see_the_ask_questions_page
     expect(page).to have_current_path('/ask-questions')
     expect(page.driver.browser.current_title).to start_with('We’ll ask you some questions to help find your TRN')
@@ -587,6 +592,8 @@ RSpec.describe 'TRN requests', type: :system do
     fill_in 'First name', with: 'Kevin'
     fill_in 'Last name', with: 'Smith'
     check 'I’ve changed my name since I received my TRN', visible: false
+    when_i_press_continue
+    then_i_see_a_missing_previous_name_error
     fill_in 'Previous last name', with: 'Evans'
     when_i_press_continue
   end

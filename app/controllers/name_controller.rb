@@ -17,7 +17,7 @@ class NameController < ApplicationController
   private
 
   def name_params
-    params.require(:name_form).permit(:first_name, :previous_first_name, :previous_last_name, :last_name)
+    params.require(:name_form).permit(:first_name, :last_name, :name_changed, :previous_first_name, :previous_last_name)
   end
 
   def trn_request

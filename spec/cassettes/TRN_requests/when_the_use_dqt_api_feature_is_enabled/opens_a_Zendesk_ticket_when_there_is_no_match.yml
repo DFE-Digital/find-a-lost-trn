@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Do%20not&ittProviderName=&lastName=Match%20me&nationalInsuranceNumber&previousFirstName=&previousLastName=
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Do%20not&ittProviderName=&lastName=Match%20me&nationalInsuranceNumber&previousFirstName&previousLastName
       body:
         encoding: US-ASCII
         string: ''

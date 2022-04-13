@@ -46,7 +46,7 @@ class DqtApi
         faraday.response :json
         faraday.response :logger, nil, { bodies: true, headers: true } do |logger|
           logger.filter(
-            /(emailAddress=|firstName=|lastName=|nationalInsuranceNumber=|previousFirstName=|previousLastName=)([^&]+)/,
+            /((emailAddress|firstName|lastName|nationalInsuranceNumber|previousFirstName|previousLastName)=)([^&]+)/,
             '\1[REDACTED]',
           )
         end
