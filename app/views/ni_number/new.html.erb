@@ -1,4 +1,4 @@
-<% content_for :page_title, "Do you have a National Insurance number?" %>
+<% content_for :page_title, "#{'Error: ' if @has_ni_number_form.errors.any?}Do you have a National Insurance number?" %>
 <% content_for :back_link_url, back_link_url(date_of_birth_path) %>
 
 <div class="govuk-grid-row">
