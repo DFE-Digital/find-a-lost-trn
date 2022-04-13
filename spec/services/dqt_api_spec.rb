@@ -44,5 +44,21 @@ RSpec.describe DqtApi do
         expect { find_trn! }.to raise_error(DqtApi::TooManyResults)
       end
     end
+
+    context 'when the API returns no results', vcr: true do
+      let(:trn_request) do
+        TrnRequest.new(
+          date_of_birth: '1990-01-01',
+          email: 'no@results.com',
+          first_name: 'No',
+          last_name: 'Results',
+          ni_number: 'QQ123456C',
+        )
+      end
+
+      it 'raises an error' do
+        expect { find_trn! }.to raise_error(DqtApi::NoResults)
+      end
+    end
   end
 end

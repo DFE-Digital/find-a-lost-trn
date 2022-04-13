@@ -92,10 +92,10 @@ VCR.configure do |config|
   config.ignore_localhost = true
   config.default_cassette_options = { record: :once, erb: true }
 
-  config.filter_sensitive_data('<BEARER_TOKEN_REDACTED>') { |interaction|
+  config.filter_sensitive_data('<BEARER_TOKEN_REDACTED>') do |interaction|
     auths = interaction.request.headers['Authorization'].first
-    if (match = auths.match /^Bearer\s+([^,\s]+)/ )
+    if (match = auths.match(/^Bearer\s+([^,\s]+)/))
       match.captures.first
     end
-  }
+  end
 end

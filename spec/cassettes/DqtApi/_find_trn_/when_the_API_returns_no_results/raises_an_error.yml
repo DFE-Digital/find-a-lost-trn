@@ -1,0 +1,59 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=no@results.com&firstName=No&ittProviderName&lastName=Results&nationalInsuranceNumber=QQ123456C&previousFirstName&previousLastName
+      body:
+        encoding: US-ASCII
+        string: ''
+      headers:
+        User-Agent:
+          - Faraday v1.10.0
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - '*/*'
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Wed, 13 Apr 2022 15:37:42 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - '299'
+        X-Rate-Limit-Reset:
+          - '2022-04-13T15:38:00.0000000Z'
+        X-Vcap-Request-Id:
+          - b727f08b-61ec-41fd-74aa-001ad451e13c
+        X-Xss-Protection:
+          - '0'
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 2bdf303ca8bff8095bc652af90ed892a.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR62-C5
+        X-Amz-Cf-Id:
+          - IY2V6rlDzsJ58CKcf1mO6GEDyRG0of1s7lyofpsrAN02-qICUXQEeg==
+      body:
+        encoding: UTF-8
+        string: '{"results":[]}'
+    recorded_at: Wed, 13 Apr 2022 15:37:42 GMT
+recorded_with: VCR 6.1.0

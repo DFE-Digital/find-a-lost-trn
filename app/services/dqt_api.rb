@@ -6,9 +6,12 @@ class DqtApi
   class TooManyResults < StandardError
   end
 
+  class NoResults < StandardError
+  end
+
   TWO_SECONDS = 2
 
-  def self.find_trn!(trn_request)
+  def self.find_trn!(trn_request) # rubocop:disable Metrics/AbcSize
     raise Faraday::TimeoutError, 'Time-out feature flag enabled' if FeatureFlag.active?(:dqt_api_always_timeout)
 
     response = new.client.get('/v2/teachers/find', trn_request_params(trn_request))
@@ -16,6 +19,8 @@ class DqtApi
 
     results = response.body['results']
     raise TooManyResults if results.size > 1
+
+    raise NoResults if results.size.zero?
 
     results.first
   end
