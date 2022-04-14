@@ -3,7 +3,11 @@
     <h1 class="govuk-heading-xl">
       <%= t('tra.service_name') %>
     </h1>
+  </div>
+</div>
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body">Use this service to:</p>
 
     <ul class="govuk-list govuk-list--bullet">
@@ -12,18 +16,6 @@
           class="govuk-link">teacher reference number (TRN)</a> if you do not
         know it or have forgotten it</li>
       <li>check if you have a TRN</li>
-    </ul>
-
-    <h2 class="govuk-heading-m">If you need your TRN urgently</h2>
-
-    <p class="govuk-body">
-      Call the Teaching Regulation Agency, and have your National Insurance
-      number ready:
-    </p>
-
-    <ul class="govuk-list">
-      <li>Telephone: <%= t('tra.tel') %></li>
-      <li>Monday to Friday, 9am to 5pm (except public holidays)</li>
     </ul>
 
     <h2 class="govuk-heading-m">Before you start</h2>
@@ -48,5 +40,30 @@
       The TRN has previously been known as a QTS, GTC, DfE, DfES and DCSF
       number.
     </p>
+
+    <h2 class="govuk-heading-m">Find a lost TRN by phone</h2>
+    <p class="govuk-body">Call the Teaching Regulation Agency, and have your National Insurance number ready:</p>
+    <ul class="govuk-list">
+      <li>Telephone: <%= t('tra.tel') %></li>
+      <li>Lines are open Monday to Thursday, 9am to 5pm, and on Friday from 9am to 4:30pm (except public holidays)</li>
+    </ul>
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <div class="x-govuk-related-navigation">
+      <nav class="x-govuk-related-navigation__nav-section" role="navigation" aria-labelledby="related-nav-related-content">
+        <h2 class="govuk-heading-s x-govuk-related-navigation__main-heading" id="related-nav-related_items-related-content">
+          Related content
+        </h2>
+        <ul class="x-govuk-related-navigation__link-list">
+          <li class="x-govuk-related-navigation__link">
+            <a class="govuk-link" href="https://www.gov.uk/guidance/teacher-reference-number-trn">Teacher reference number (TRN)</a>
+          </li>
+          <li class="x-govuk-related-navigation__link">
+            <a class="govuk-link" href="https://www.gov.uk/guidance/teacher-self-service-portal">Teacher self service portal</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </div>

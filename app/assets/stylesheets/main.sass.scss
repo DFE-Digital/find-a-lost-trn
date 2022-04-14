@@ -6,3 +6,27 @@ $govuk-new-link-styles: true;
 .app-\!-inherit-colour {
   color: inherit;
 }
+
+.x-govuk-related-navigation {
+  border-top: 2px solid #1d70b8;
+}
+
+.x-govuk-related-navigation__nav-section {
+  margin-bottom: 30px;
+}
+
+.x-govuk-related-navigation__main-heading {
+  margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+.x-govuk-related-navigation__link-list {
+  list-style: none;
+  margin-bottom: 1.25em;
+  margin: 0;
+  padding: 0;
+}
+
+.x-govuk-related-navigation__link {
+  margin-top: 15px;
+}
