@@ -9,7 +9,7 @@ class DqtApi
   class NoResults < StandardError
   end
 
-  TWO_SECONDS = 2
+  FIVE_SECONDS = 5
 
   def self.find_trn!(trn_request) # rubocop:disable Metrics/AbcSize
     raise Faraday::TimeoutError, 'Time-out feature flag enabled' if FeatureFlag.active?(:dqt_api_always_timeout)
@@ -40,7 +40,7 @@ class DqtApi
 
   def client
     @client ||=
-      Faraday.new(url: ENV['DQT_API_URL'], request: { timeout: TWO_SECONDS }) do |faraday|
+      Faraday.new(url: ENV['DQT_API_URL'], request: { timeout: FIVE_SECONDS }) do |faraday|
         faraday.request :authorization, 'Bearer', ENV['DQT_API_KEY']
         faraday.request :json
         faraday.response :json
