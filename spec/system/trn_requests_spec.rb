@@ -455,7 +455,7 @@ RSpec.describe 'TRN requests', type: :system do
   def then_i_see_the_zendesk_confirmation_page
     expect(page.driver.browser.current_title).to start_with('We’ve received your request')
     expect(page).to have_content('We’ve received your request')
-    expect(page).to have_content('Give the helpdesk your ticket number: 42')
+    expect(page).to have_content('give the helpdesk your request number: 42')
   end
 
   def then_i_see_the_date_of_birth_page
