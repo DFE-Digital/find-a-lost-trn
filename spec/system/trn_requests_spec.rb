@@ -326,11 +326,25 @@ RSpec.describe 'TRN requests', type: :system do
       and_i_receive_an_email_with_the_trn_number
     end
 
-    it 'opens a Zendesk ticket when there is no match', vcr: true do
+    it 'shows the no match page and opens a Zendesk ticket when there is no match', vcr: true do
       given_the_use_dqt_api_feature_is_enabled
       when_i_have_completed_a_trn_request_that_wont_match
       and_i_press_the_submit_button
+      then_i_see_the_no_match_page
+      and_i_see_my_not_matching_details
 
+      when_i_press_continue
+      then_i_see_the_no_match_validation_error
+
+      when_i_choose_yes_i_have_different_details
+      and_i_press_continue
+      then_i_see_the_check_answers_page_with_not_matching_details
+
+      when_i_press_the_submit_button
+      then_i_see_the_no_match_page
+
+      when_i_choose_no_my_details_are_correct
+      and_i_press_continue
       then_i_see_the_zendesk_confirmation_page
       and_i_receive_an_email_with_the_zendesk_ticket_number
     end
@@ -435,6 +449,21 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_content('Date of birth')
     expect(page).to have_content('1 January 1990')
   end
+
+  def then_i_see_the_check_answers_page_with_not_matching_details
+    expect(page).to have_current_path('/check-answers')
+    expect(page.driver.browser.current_title).to start_with('Check your answers')
+    expect(page).to have_content('Check your answers')
+    and_i_see_my_not_matching_details
+  end
+
+  def then_i_see_my_not_matching_details
+    expect(page).to have_content('Do not Match me')
+    expect(page).to have_content('kevin@kevin.com')
+    expect(page).to have_content('Date of birth')
+    expect(page).to have_content('1 January 1990')
+  end
+  alias_method :and_i_see_my_not_matching_details, :then_i_see_my_not_matching_details
 
   def then_i_see_the_ni_missing_error
     expect(page).to have_content('Tell us if you have a National Insurance number')
@@ -542,6 +571,15 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_content('There is a problem')
   end
 
+  def then_i_see_the_no_match_validation_error
+    expect(page).to have_content('There is a problem')
+    expect(page).to have_content('Choose if you want to try different details, or keep the current ones')
+  end
+
+  def then_i_see_the_no_match_page
+    expect(page).to have_content('We could not find your TRN')
+  end
+
   def then_i_should_see_the_home_page
     expect(page).to have_content('Find a lost teacher reference number')
   end
@@ -638,6 +676,14 @@ RSpec.describe 'TRN requests', type: :system do
   def when_i_choose_yes_to_ni_number
     choose 'Yes', visible: false
     click_on 'Continue'
+  end
+
+  def when_i_choose_yes_i_have_different_details
+    choose 'Yes, I have different details I can try', visible: false
+  end
+
+  def when_i_choose_no_my_details_are_correct
+    choose 'No, submit these details, they are correct', visible: false
   end
 
   def when_i_enter_a_valid_ni_number

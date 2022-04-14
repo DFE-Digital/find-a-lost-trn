@@ -50,6 +50,10 @@ en:
           attributes:
             has_trn:
               inclusion: Tell us if you think you have a TRN
+        no_match_form:
+          attributes:
+            try_again:
+              inclusion: Choose if you want to try different details, or keep the current ones
         date_of_birth_form:
           attributes:
             date_of_birth:
