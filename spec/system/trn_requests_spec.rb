@@ -433,7 +433,7 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_content('Kevin E')
     expect(page).to have_content('kevin@kevin.com')
     expect(page).to have_content('Date of birth')
-    expect(page).to have_content('01 January 1990')
+    expect(page).to have_content('1 January 1990')
   end
 
   def then_i_see_the_ni_missing_error
