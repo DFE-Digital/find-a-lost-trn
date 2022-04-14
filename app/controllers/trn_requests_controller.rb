@@ -17,10 +17,12 @@ class TrnRequestsController < ApplicationController
       find_trn_using_api
 
       redirect_to trn_found_path
-    rescue DqtApi::ApiError, Faraday::ConnectionFailed, Faraday::TimeoutError, DqtApi::TooManyResults, DqtApi::NoResults
+    rescue DqtApi::NoResults
+      redirect_to no_match_path
+    rescue DqtApi::ApiError, Faraday::ConnectionFailed, Faraday::TimeoutError, DqtApi::TooManyResults
       create_zendesk_ticket
 
-      redirect_to helpdesk_request_submitted_url
+      redirect_to helpdesk_request_submitted_path
     end
   end
 

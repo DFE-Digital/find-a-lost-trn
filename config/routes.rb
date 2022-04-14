@@ -56,6 +56,9 @@ Rails.application.routes.draw do
   get '/check-trn', to: 'check_trn#new'
   post '/check-trn', to: 'check_trn#create'
 
+  get '/no-match', to: 'no_match#new'
+  post '/no-match', to: 'no_match#create'
+
   get '/ask-questions', to: 'pages#ask_questions'
   get '/helpdesk-request-submitted', to: 'pages#helpdesk_request_submitted'
   get '/longer-than-normal', to: 'pages#longer_than_normal'
