@@ -4,10 +4,17 @@ require 'rails_helper'
 RSpec.describe EmailForm, type: :model do
   subject(:email_form) { described_class.new }
 
-  specify do
-    expect(email_form).to validate_presence_of(:email).with_message(
-      'Enter an email address in the correct format, like name@example.com',
-    )
+  specify { expect(email_form).to validate_presence_of(:email).with_message('Enter an email address') }
+
+  context 'when the email is in the wrong format' do
+    subject(:email_form) { described_class.new(email: 'not_an_email') }
+
+    specify do
+      email_form.valid?
+      expect(email_form.errors[:email]).to include(
+        'Enter an email address in the correct format, like name@example.com',
+      )
+    end
   end
 
   describe '#save' do
