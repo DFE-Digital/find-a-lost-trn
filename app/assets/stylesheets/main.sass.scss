@@ -1,32 +1,37 @@
 $govuk-global-styles: true;
 $govuk-new-link-styles: true;
 
-@use 'govuk-frontend/govuk/all';
+@import 'govuk-frontend/govuk/all';
 
 .app-\!-inherit-colour {
   color: inherit;
 }
 
-.x-govuk-related-navigation {
-  border-top: 2px solid #1d70b8;
-}
+.app-govuk-related-navigation {
+  @include govuk-text-colour;
+  border-top: 2px solid $govuk-brand-colour;
+  
+  &__nav-section {
+    margin-bottom: govuk-spacing(6);
+  }
+  
+  &__main-heading {
+    margin-bottom: govuk-spacing(2);
+    margin-top: govuk-spacing(3);
+  }
+  
+  &__link-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  &__link {
+    @include govuk-font($size: 16, $weight: regular, $line-height: 1.45);
+    margin-top: govuk-spacing(3);
 
-.x-govuk-related-navigation__nav-section {
-  margin-bottom: 30px;
-}
-
-.x-govuk-related-navigation__main-heading {
-  margin-bottom: 10px;
-  margin-top: 15px;
-}
-
-.x-govuk-related-navigation__link-list {
-  list-style: none;
-  margin-bottom: 1.25em;
-  margin: 0;
-  padding: 0;
-}
-
-.x-govuk-related-navigation__link {
-  margin-top: 15px;
+    @include govuk-media-query($from: tablet) {
+      line-height: 1.28;
+    }
+  }
 }
