@@ -5,7 +5,7 @@ class EmailForm
   attr_accessor :trn_request
   attr_writer :email
 
-  validates :email, valid_for_notify: true
+  validates :email, presence: true, valid_for_notify: { if: :email }
 
   delegate :email?, to: :trn_request, allow_nil: true
 
