@@ -25,9 +25,6 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_have_ni_page
 
     when_i_choose_no
-    then_i_see_the_ni_page
-
-    when_i_choose_no
     and_i_press_continue
     then_i_see_the_itt_provider_page
 
@@ -232,7 +229,7 @@ RSpec.describe 'TRN requests', type: :system do
       then_i_see_the_itt_provider_page
 
       when_i_press_back
-      then_i_see_the_ni_page
+      then_i_see_the_have_ni_page
     end
   end
 
@@ -270,7 +267,7 @@ RSpec.describe 'TRN requests', type: :system do
     when_i_press_continue
     when_i_fill_in_the_name_form
     when_i_complete_my_date_of_birth
-    then_i_see_the_ni_page
+    then_i_see_the_have_ni_page
 
     when_i_choose_no
     and_i_press_continue
@@ -528,12 +525,6 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_content('Your name')
   end
   alias_method :then_i_am_redirected_to_the_name_page, :then_i_see_the_name_page
-
-  def then_i_see_the_ni_page
-    expect(page).to have_current_path('/have-ni-number')
-    expect(page.driver.browser.current_title).to start_with('Do you have a National Insurance number?')
-    expect(page).to have_content('Do you have a National Insurance number?')
-  end
 
   def then_i_see_the_ni_number_page
     expect(page).to have_current_path('/ni-number')
