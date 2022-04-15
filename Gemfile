@@ -41,6 +41,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
+  gem 'factory_bot_rails'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
@@ -64,6 +65,7 @@ group :test do
   gem 'capybara', '~> 3.36'
   gem 'capybara-email'
   gem 'cuprite', '~> 0.13'
+  gem 'faker'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 5.1'

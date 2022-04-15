@@ -41,6 +41,9 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
+Faker::Config.locale = 'en-GB'
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -76,6 +79,10 @@ RSpec.configure do |config|
   config.before(:each, type: :system) { driven_by(:cuprite) }
 
   config.include ViewComponent::TestHelpers, type: :component
+
+  config.include FactoryBot::Syntax::Methods
+
+  config.before { Faker::UniqueGenerator.clear }
 end
 
 Shoulda::Matchers.configure do |config|
