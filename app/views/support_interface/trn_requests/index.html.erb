@@ -22,11 +22,32 @@
 
     summary_list.row do |row|
       row.key(text: 'Submitted at')
-      row.value(text: trn_request.checked_at)
+      row.value { trn_request.checked_at ? trn_request.checked_at.to_s : govuk_tag(colour: 'grey', text: 'Not yet submitted') }
+    end
+
+    if trn_request.checked_at
+      summary_list.row do |row|
+        row.key(text: 'TRN')
+        row.value { trn_request.trn ? govuk_tag(colour: 'green', text: 'Found 🎉') : govuk_tag(colour: 'yellow', text: 'Not found') }
+      end
+
+      unless trn_request.trn
+        summary_list.row do |row|
+          row.key(text: 'Zendesk ticket ID')
+          row.value { trn_request.zendesk_ticket_id ? govuk_tag(colour: 'pink', text: trn_request.zendesk_ticket_id) : govuk_tag(colour: 'grey', text: 'Not submitted') }
+        end
+      end
     end
   end %>
 
-  <h3 class="govuk-heading-s">Anonymised data</h3>
+  <% if Rails.env.production? %>
+    <h3 class="govuk-heading-s">Anonymised information</h3>
+  <% else %>
+    <h3 class="govuk-heading-s">
+      <%= govuk_tag(colour: 'blue', text: 'Development only') %>
+      Information
+    </h3>
+  <% end %>
 
-  <%= render(TrnDetailsComponent.new(trn_request: trn_request, anonymise: true)) %>
+  <%= render(TrnDetailsComponent.new(trn_request: trn_request, anonymise: Rails.env.production?)) %>
 <% end %>
