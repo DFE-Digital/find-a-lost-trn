@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class TrnDetailsComponent < ViewComponent::Base
   def initialize(trn_request:, actions: false, anonymise: false)
+    super
     @actions = actions
     @anonymise = anonymise
     @trn_request = trn_request
@@ -9,14 +10,7 @@ class TrnDetailsComponent < ViewComponent::Base
   end
 
   def name
-    if @anonymise
-      @trn_request.name
-        .split(' ')
-        .map {|name| name.first + '****' }
-        .join(' ')
-    else
-      @trn_request.name
-    end
+    @anonymise ? @trn_request.name.split.map { |name| "#{name.first}****" }.join(' ') : @trn_request.name
   end
 
   def date_of_birth
@@ -33,7 +27,7 @@ class TrnDetailsComponent < ViewComponent::Base
 
   def ni_value
     if @anonymise && @trn_request.has_ni_number?
-      @trn_request.ni_number.first + '* ** ** ** ' + @trn_request.ni_number.last
+      "#{@trn_request.ni_number.first}* ** ** ** #{@trn_request.ni_number.last}"
     else
       @trn_request.has_ni_number? ? helpers.pretty_ni_number(@trn_request.ni_number) : 'No'
     end
@@ -49,7 +43,7 @@ class TrnDetailsComponent < ViewComponent::Base
 
   def email
     if @anonymise && !@trn_request.email.nil?
-      @trn_request.email.first + '****@****.' + @trn_request.email.split('.').last
+      "#{@trn_request.email.first}****@****.#{@trn_request.email.split('.').last}"
     else
       @trn_request.email
     end
@@ -57,10 +51,7 @@ class TrnDetailsComponent < ViewComponent::Base
 
   def previous_name
     if @anonymise
-      @trn_request.previous_name
-        .split(' ')
-        .map {|name| name.first + '****' }
-        .join(' ')
+      @trn_request.previous_name.split.map { |name| "#{name.first}****" }.join(' ')
     else
       @trn_request.previous_name
     end

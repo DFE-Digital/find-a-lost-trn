@@ -1,14 +1,15 @@
 <% content_for :page_title, 'TRN Requests' %>
 
-<h1 class="govuk-heading-l">TRN Requests</h1>
+<h1 class="govuk-heading-l">
+  TRN Requests
+  <span class="govuk-caption-l">
+     Ordered by last updated, showing <%= "#{[100, TrnRequest.count].min} of #{TrnRequest.count}" %> total
+  </span>
+</h1>
 
 <% @trn_requests.each do |trn_request| %>
+  <h2 class="govuk-heading-m">TRN Request #<%= trn_request.id %></h2>
   <%= govuk_summary_list do |summary_list|
-    summary_list.row do |row|
-      row.key(text: 'ID')
-      row.value(text: trn_request.id)
-    end
-
     summary_list.row do |row|
       row.key(text: 'Created at')
       row.value(text: trn_request.created_at)
@@ -24,4 +25,8 @@
       row.value(text: trn_request.checked_at)
     end
   end %>
+
+  <h3 class="govuk-heading-s">Anonymised data</h3>
+
+  <%= render(TrnDetailsComponent.new(trn_request: trn_request, anonymise: true)) %>
 <% end %>

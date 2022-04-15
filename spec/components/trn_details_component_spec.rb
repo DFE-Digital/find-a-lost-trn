@@ -2,17 +2,19 @@
 require 'rails_helper'
 
 RSpec.describe TrnDetailsComponent, type: :component do
-  let(:trn_request) { TrnRequest.new(
-    date_of_birth: 20.years.ago.to_date,
-    email: 'test@example.com',
-    first_name: 'Test',
-    has_ni_number: true,
-    itt_provider_enrolled: true,
-    itt_provider_name: 'Big SCITT',
-    last_name: 'User',
-    ni_number: 'QC123456A',
-    previous_last_name: 'Smith',
-  ) }
+  let(:trn_request) do
+    TrnRequest.new(
+      date_of_birth: 20.years.ago.to_date,
+      email: 'test@example.com',
+      first_name: 'Test',
+      has_ni_number: true,
+      itt_provider_enrolled: true,
+      itt_provider_name: 'Big SCITT',
+      last_name: 'User',
+      ni_number: 'QC123456A',
+      previous_last_name: 'Smith',
+    )
+  end
   let(:component) { render_inline(described_class.new(trn_request: trn_request)) }
 
   it 'renders name' do
@@ -101,9 +103,9 @@ RSpec.describe TrnDetailsComponent, type: :component do
 
   context 'with both actions and anonymised data' do
     it 'raises an error' do
-      expect {
+      expect do
         render_inline(described_class.new(trn_request: trn_request, anonymise: true, actions: true))
-      }.to raise_error(ArgumentError)
+      end.to raise_error(ArgumentError)
     end
   end
 end
