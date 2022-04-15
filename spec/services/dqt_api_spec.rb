@@ -3,6 +3,8 @@ require 'rails_helper'
 require 'webmock/rspec'
 
 RSpec.describe DqtApi do
+  before { FeatureFlag.activate(:use_dqt_api) }
+
   describe '.find_trn!' do
     subject(:find_trn!) { described_class.find_trn!(trn_request) }
 

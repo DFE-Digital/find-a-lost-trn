@@ -345,6 +345,29 @@ RSpec.describe 'TRN requests', type: :system do
       then_i_see_the_zendesk_confirmation_page
       and_i_receive_an_email_with_the_zendesk_ticket_number
     end
+
+    it 'matches eagerly', vcr: true do
+      given_the_use_dqt_api_feature_is_enabled
+      given_i_am_on_the_home_page
+      when_i_press_the_start_button
+      when_i_confirm_i_have_a_trn_number
+      when_i_press_continue
+      when_i_fill_in_the_name_form
+      when_i_complete_my_date_of_birth
+      when_i_choose_yes
+      when_i_press_continue
+      when_i_fill_in_my_ni_number
+      when_i_press_continue
+      then_i_see_the_email_page
+
+      when_i_fill_in_my_email_address
+      and_i_press_continue
+      then_i_see_the_check_answers_page
+
+      when_i_press_the_submit_button
+      then_i_see_a_message_to_check_my_email
+      and_i_receive_an_email_with_the_trn_number
+    end
   end
 
   private
