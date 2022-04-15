@@ -19,36 +19,7 @@
 
       <h2 class="govuk-heading-m">Check your details</h2>
 
-      <% rows = [
-          {
-            key: { text: 'Name' },
-            value: { text: @trn_request.name },
-          },
-          {
-            key: { text: 'Date of birth' },
-            value: { text: @trn_request.date_of_birth? ? @trn_request.date_of_birth.to_fs(:long_ordinal_uk) : 'Not given' },
-          },
-          {
-            key: { text: @trn_request.has_ni_number? ? 'National Insurance number' : 'Do you have a National Insurance number?' },
-            value: { text: @trn_request.has_ni_number? ? pretty_ni_number(@trn_request.ni_number) : 'No' },
-          },
-          {
-            key: { text: @trn_request.itt_provider_enrolled ? 'Where did you get your QTS?' : 'Have you been awarded QTS?' },
-            value: { text: @trn_request.itt_provider_enrolled ? @trn_request.itt_provider_name : 'No' },
-          },
-          { key: { text: 'Email address '},
-            value: { text: @trn_request.email },
-          },
-        ]
-
-        previous_name = {
-          key: { text: 'Previous name' },
-          value: { text: @trn_request.previous_name },
-        }
-
-        rows.insert(1, previous_name) if @trn_request.previous_name?
-      %>
-      <%= govuk_summary_list(rows: rows) %>
+      <%= render(TrnDetailsComponent.new(trn_request: @trn_request)) %>
 
       <%= f.govuk_collection_radio_buttons(:try_again,
             [OpenStruct.new(label: 'Yes, I have different details I can try', value: true), OpenStruct.new(label: 'No, submit these details, they are correct', value: false)],
