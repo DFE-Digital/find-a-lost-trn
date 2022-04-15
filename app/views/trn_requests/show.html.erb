@@ -6,42 +6,7 @@
     <h1 class="govuk-heading-xl">Check your answers</h1>
     <p class="govuk-body">We will send your TRN to <%= @trn_request.email %> if we find one matching your details.</p>
 
-    <% rows = [
-        {
-          key: { text: 'Name' },
-          value: { text: @trn_request.name },
-          actions: [{ href: name_path, visually_hidden_text: 'name' }]
-        },
-        {
-          key: { text: 'Date of birth' },
-          value: { text: @trn_request.date_of_birth? ? @trn_request.date_of_birth.to_fs(:long_ordinal_uk) : 'Not given' },
-          actions: [{ href: date_of_birth_path, visually_hidden_text: 'date of birth' }]
-        },
-        {
-          key: { text: @trn_request.has_ni_number? ? 'National Insurance number' : 'Do you have a National Insurance number?' },
-          value: { text: @trn_request.has_ni_number? ? pretty_ni_number(@trn_request.ni_number) : 'No' },
-          actions: [{ href: have_ni_number_path, visually_hidden_text: 'national insurance number' }]
-        },
-        {
-          key: { text: @trn_request.itt_provider_enrolled ? 'Where did you get your QTS?' : 'Have you been awarded QTS?' },
-          value: { text: @trn_request.itt_provider_enrolled ? @trn_request.itt_provider_name : 'No' },
-          actions: [{ href: itt_provider_path, visually_hidden_text: 'teacher training provider' }]
-        },
-        { key: { text: 'Email address '},
-          value: { text: @trn_request.email },
-          actions: [{ href: email_path, visually_hidden_text: 'email address' }]
-        },
-      ]
-
-      previous_name = {
-        key: { text: 'Previous name' },
-        value: { text: @trn_request.previous_name },
-        actions: [{ href: name_path, visually_hidden_text: 'previous name' }]
-      }
-
-      rows.insert(1, previous_name) if @trn_request.previous_name?
-    %>
-    <%= govuk_summary_list(rows: rows) %>
+    <%= render(TrnDetailsComponent.new(trn_request: @trn_request, actions: true)) %>
 
     <%= form_with model: @trn_request, method: :put do |f| %>
       <%= f.hidden_field :answers_checked, value: true %>
