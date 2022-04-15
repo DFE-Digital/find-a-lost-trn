@@ -12,6 +12,8 @@ class DqtApi
   FIVE_SECONDS = 5
 
   def self.find_trn!(trn_request) # rubocop:disable Metrics/AbcSize
+    raise DqtApi::ApiError unless FeatureFlag.active?(:use_dqt_api)
+
     raise Faraday::TimeoutError, 'Time-out feature flag enabled' if FeatureFlag.active?(:dqt_api_always_timeout)
 
     response = new.client.get('/v2/teachers/find', trn_request_params(trn_request))

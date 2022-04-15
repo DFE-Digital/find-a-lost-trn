@@ -20,7 +20,17 @@ class NiNumberController < ApplicationController
 
   def update
     if ni_number.update(ni_number_params)
-      redirect_to ni_number.email? ? check_answers_url : itt_provider_url
+      begin
+        find_trn_using_api
+
+        redirect_to ni_number.email? ? check_answers_url : email_url
+      rescue DqtApi::ApiError,
+             Faraday::ConnectionFailed,
+             Faraday::TimeoutError,
+             DqtApi::TooManyResults,
+             DqtApi::NoResults
+        redirect_to ni_number.email? ? check_answers_url : itt_provider_url
+      end
     else
       render :edit
     end
@@ -35,6 +45,11 @@ class NiNumberController < ApplicationController
 
   def ni_number_params
     params.require(:ni_number_form).permit(:ni_number)
+  end
+
+  def find_trn_using_api
+    response = DqtApi.find_trn!(trn_request)
+    trn_request.update(trn: response['trn'])
   end
 
   def trn_request

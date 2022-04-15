@@ -16,6 +16,8 @@ module EnforceQuestionOrder
   private
 
   def current_page_is_allowed?
+    return true if trn_request&.trn
+
     order = urls.keys.index(trn_request&.status)
     current_position = urls.values.index(request.url)
     current_position && order && current_position <= order

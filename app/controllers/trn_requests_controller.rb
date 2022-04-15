@@ -7,14 +7,16 @@ class TrnRequestsController < ApplicationController
     session[:form_complete] = true
   end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     redirect_to root_url unless trn_request
     session[:form_complete] = false
 
     update_trn_request
 
     begin
-      find_trn_using_api
+      find_trn_using_api unless trn_request.trn
+
+      TeacherMailer.found_trn(trn_request).deliver_now
 
       redirect_to trn_found_path
     rescue DqtApi::NoResults
@@ -37,11 +39,8 @@ class TrnRequestsController < ApplicationController
   end
 
   def find_trn_using_api
-    raise DqtApi::ApiError unless FeatureFlag.active?(:use_dqt_api)
-
     response = DqtApi.find_trn!(trn_request)
     trn_request.update(trn: response['trn'])
-    TeacherMailer.found_trn(trn_request).deliver_now
   end
 
   def create_zendesk_ticket
