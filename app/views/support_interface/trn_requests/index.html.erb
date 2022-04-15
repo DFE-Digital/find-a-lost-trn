@@ -22,19 +22,37 @@
 
     summary_list.row do |row|
       row.key(text: 'Submitted at')
-      row.value { trn_request.checked_at ? trn_request.checked_at.to_s : govuk_tag(colour: 'grey', text: 'Not yet submitted') }
+      row.value do
+        if trn_request.checked_at
+          trn_request.checked_at.to_s
+        else
+          govuk_tag(colour: 'grey', text: 'Not yet submitted')
+        end
+      end
     end
 
     if trn_request.checked_at
       summary_list.row do |row|
         row.key(text: 'TRN')
-        row.value { trn_request.trn ? govuk_tag(colour: 'green', text: 'Found 🎉') : govuk_tag(colour: 'yellow', text: 'Not found') }
+        row.value do
+          if trn_request.trn
+            govuk_tag(colour: 'green', text: 'Found 🎉')
+          else
+            govuk_tag(colour: 'yellow', text: 'Not found')
+          end
+        end
       end
 
       unless trn_request.trn
         summary_list.row do |row|
-          row.key(text: 'Zendesk ticket ID')
-          row.value { trn_request.zendesk_ticket_id ? govuk_tag(colour: 'pink', text: trn_request.zendesk_ticket_id) : govuk_tag(colour: 'grey', text: 'Not submitted') }
+          row.key(text: 'Zendesk ticket')
+          row.value do
+            if trn_request.zendesk_ticket_id
+              tag.a "Ticket #{trn_request.zendesk_ticket_id}", class: 'govuk-link', href: "https://teachingregulationagency.zendesk.com/agent/tickets/#{trn_request.zendesk_ticket_id}"
+            else
+              govuk_tag(colour: 'grey', text: 'Not submitted')
+            end
+          end
         end
       end
     end
