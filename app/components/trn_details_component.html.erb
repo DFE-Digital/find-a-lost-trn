@@ -1,29 +1,11 @@
-<% rows = [
-    {
-      key: { text: 'Name' },
-      value: { text: name },
-      actions: [{ href: name_path, visually_hidden_text: 'name' }]
-    },
-    {
-      key: { text: 'Date of birth' },
-      value: { text: date_of_birth },
-      actions: [{ href: date_of_birth_path, visually_hidden_text: 'date of birth' }]
-    },
-    {
-      key: { text: ni_key },
-      value: { text: ni_value },
-      actions: [{ href: have_ni_number_path, visually_hidden_text: 'national insurance number' }]
-    },
-    {
-      key: { text: itt_provider_key },
-      value: { text: itt_provider_value },
-      actions: [{ href: itt_provider_path, visually_hidden_text: 'teacher training provider' }]
-    },
-    { key: { text: 'Email address' },
-      value: { text: email },
-      actions: [{ href: email_path, visually_hidden_text: 'email address' }]
-    },
-  ]
+<%
+  rows = []
+
+  name_row = {
+    key: { text: 'Name' },
+    value: { text: name },
+    actions: [{ href: name_path, visually_hidden_text: 'name' }]
+  }
 
   previous_name_row = {
     key: { text: 'Previous name' },
@@ -31,7 +13,36 @@
     actions: [{ href: name_path, visually_hidden_text: 'previous name' }]
   }
 
-  rows.insert(1, previous_name_row) if @trn_request.previous_name?
+  date_of_birth_row = {
+    key: { text: 'Date of birth' },
+    value: { text: date_of_birth },
+    actions: [{ href: date_of_birth_path, visually_hidden_text: 'date of birth' }]
+  }
+
+  ni_row = {
+    key: { text: ni_key },
+    value: { text: ni_value },
+    actions: [{ href: have_ni_number_path, visually_hidden_text: 'national insurance number' }]
+  }
+
+  itt_provider_row = {
+    key: { text: itt_provider_key },
+    value: { text: itt_provider_value },
+    actions: [{ href: itt_provider_path, visually_hidden_text: 'teacher training provider' }]
+  }
+
+  email_row = {
+    key: { text: 'Email address' },
+    value: { text: email },
+    actions: [{ href: email_path, visually_hidden_text: 'email address' }]
+  }
+
+  rows.push(name_row)
+  rows.push(previous_name_row) if @trn_request.previous_name?
+  rows.push(date_of_birth_row)
+  rows.push(ni_row)
+  rows.push(itt_provider_row) unless @trn_request.itt_provider_enrolled.nil?
+  rows.push(email_row)
 
   rows.map! {|r| r.except(:actions)} unless @actions
 %>
