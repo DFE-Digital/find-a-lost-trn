@@ -18,10 +18,10 @@ class NiNumberController < ApplicationController
 
   def edit; end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     if ni_number.update(ni_number_params)
       begin
-        find_trn_using_api
+        find_trn_using_api unless trn_request.trn
 
         redirect_to ni_number.email? ? check_answers_url : email_url
       rescue DqtApi::ApiError,

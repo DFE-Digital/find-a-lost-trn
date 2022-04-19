@@ -360,6 +360,12 @@ RSpec.describe 'TRN requests', type: :system do
       when_i_press_continue
       then_i_see_the_email_page
 
+      when_i_press_back
+      then_i_see_the_ni_number_page
+
+      when_i_press_continue
+      then_i_see_the_email_page
+
       when_i_fill_in_my_email_address
       and_i_press_continue
       then_i_see_the_check_answers_page
