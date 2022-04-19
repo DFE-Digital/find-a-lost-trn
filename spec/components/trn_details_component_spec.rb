@@ -40,7 +40,7 @@ RSpec.describe TrnDetailsComponent, type: :component do
   end
 
   it 'renders email' do
-    expect(component.text).to include('test@example.com')
+    expect(component.text).to include('test­@example­.com') # NB: This is test&shy;@example&shy;.com
   end
 
   it 'does not render change buttons' do

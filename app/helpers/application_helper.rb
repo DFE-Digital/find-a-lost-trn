@@ -15,4 +15,15 @@ module ApplicationHelper
     section = request.path.split('/').second
     section == 'support' ? 'support_interface' : 'find_interface'
   end
+
+  # S-oftly hy-phenated email
+  # john     .doe     @digital     .education     .gov     .uk ->
+  # john&shy;.doe&shy;@digital&shy;.education&shy;.gov&shy;.uk
+  #
+  # We're using `sanitize`, so `html_safe` should be okay here.
+  # rubocop:disable Rails/OutputSafety
+  def shy_email(email)
+    sanitize(email).scan(/\W?\w+/).join('&shy;').html_safe
+  end
+  # rubocop:enable Rails/OutputSafety
 end

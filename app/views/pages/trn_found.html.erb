@@ -7,7 +7,7 @@
       classes: %w[govuk-!-margin-bottom-6]
     ) do %>
       We’ve sent it to<br />
-      <strong><%= @trn_request.email %></strong>
+      <strong><%= shy_email @trn_request.email %></strong>
     <% end %>
 
     <h2 class="govuk-heading-m">Give feedback</h2>
