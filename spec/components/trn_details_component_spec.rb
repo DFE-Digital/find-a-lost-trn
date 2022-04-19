@@ -2,16 +2,18 @@
 require 'rails_helper'
 
 RSpec.describe TrnDetailsComponent, type: :component do
+  let(:has_ni_number) { true }
+  let(:ni_number) { 'QC123456A' }
   let(:trn_request) do
     TrnRequest.new(
       date_of_birth: 20.years.ago.to_date,
       email: 'test@example.com',
       first_name: 'Test',
-      has_ni_number: true,
+      has_ni_number: has_ni_number,
       itt_provider_enrolled: true,
       itt_provider_name: 'Big SCITT',
       last_name: 'User',
-      ni_number: 'QC123456A',
+      ni_number: ni_number,
       previous_last_name: 'Smith',
     )
   end
@@ -106,6 +108,24 @@ RSpec.describe TrnDetailsComponent, type: :component do
       expect do
         render_inline(described_class.new(trn_request: trn_request, anonymise: true, actions: true))
       end.to raise_error(ArgumentError)
+    end
+  end
+
+  context 'when NI number not available' do
+    let(:has_ni_number) { false }
+    let(:ni_number) { nil }
+
+    it 'renders "No"' do
+      expect(component.text).to include('No')
+    end
+  end
+
+  context 'when NI number not provided' do
+    let(:has_ni_number) { true }
+    let(:ni_number) { nil }
+
+    it 'renders "Not provided"' do
+      expect(component.text).to include('Not provided')
     end
   end
 end
