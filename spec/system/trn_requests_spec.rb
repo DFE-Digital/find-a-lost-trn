@@ -452,7 +452,7 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def then_i_see_a_message_to_check_my_email
-    expect(page).to have_content('We have sent your TRN to')
+    expect(page).to have_content('We’ve sent it to')
   end
 
   def then_i_see_a_missing_previous_name_error
@@ -471,7 +471,7 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page.driver.browser.current_title).to start_with('Check your answers')
     expect(page).to have_content('Check your answers')
     expect(page).to have_content('Kevin E')
-    expect(page).to have_content('kevin@kevin.com')
+    expect(page).to have_content('kevin­@kevin­.com') # NB: This is kevin&shy;@kevin&shy;.com
     expect(page).to have_content('Date of birth')
     expect(page).to have_content('1 January 1990')
   end
@@ -485,7 +485,7 @@ RSpec.describe 'TRN requests', type: :system do
 
   def then_i_see_my_not_matching_details
     expect(page).to have_content('Do not Match me')
-    expect(page).to have_content('kevin@kevin.com')
+    expect(page).to have_content('kevin­@kevin­.com') # NB: This is kevin&shy;@kevin&shy;.com
     expect(page).to have_content('Date of birth')
     expect(page).to have_content('1 January 1990')
   end

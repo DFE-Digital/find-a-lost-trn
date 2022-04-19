@@ -48,7 +48,7 @@ class TrnDetailsComponent < ViewComponent::Base
     if @anonymise && !@trn_request.email.nil?
       "#{@trn_request.email.first}****@****.#{@trn_request.email.split('.').last}"
     else
-      @trn_request.email
+      helpers.shy_email(@trn_request.email)
     end
   end
 
