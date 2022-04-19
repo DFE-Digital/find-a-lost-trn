@@ -26,10 +26,13 @@ class TrnDetailsComponent < ViewComponent::Base
   end
 
   def ni_value
-    if @anonymise && @trn_request.has_ni_number?
+    return 'Not provided' if @trn_request.has_ni_number? && !@trn_request.ni_number
+    return 'No' unless @trn_request.has_ni_number?
+
+    if @anonymise
       "#{@trn_request.ni_number.first}* ** ** ** #{@trn_request.ni_number.last}"
     else
-      @trn_request.has_ni_number? ? helpers.pretty_ni_number(@trn_request.ni_number) : 'No'
+      helpers.pretty_ni_number(@trn_request.ni_number)
     end
   end
 
