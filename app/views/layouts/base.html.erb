@@ -50,7 +50,9 @@
     <% end %>
 
     <div class="govuk-width-container">
-      <%= govuk_phase_banner(tag: { text: "Beta" }, text: "This is a new service – your feedback will help us to improve it. ") %>
+      <%= govuk_phase_banner(tag: { text: "Beta" }) do %>
+        This is a new service – <a class="govuk-link" href="https://forms.gle/3LGJXe9EFaeQbFgP7">your feedback will help us to improve it</a>.
+      <% end %>
       <%= govuk_back_link(href: yield(:back_link_url)) unless yield(:back_link_url).blank? %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <%= render(FlashMessageComponent.new(flash: flash)) %>
