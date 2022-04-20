@@ -4,10 +4,11 @@ require 'rails_helper'
 RSpec.describe TrnDetailsComponent, type: :component do
   let(:has_ni_number) { true }
   let(:ni_number) { 'QC123456A' }
+  let(:email) { 'test@example.com' }
   let(:trn_request) do
     TrnRequest.new(
       date_of_birth: 20.years.ago.to_date,
-      email: 'test@example.com',
+      email: email,
       first_name: 'Test',
       has_ni_number: has_ni_number,
       itt_provider_enrolled: true,
@@ -126,6 +127,14 @@ RSpec.describe TrnDetailsComponent, type: :component do
 
     it 'renders "Not provided"' do
       expect(component.text).to include('Not provided')
+    end
+  end
+
+  context 'when email is nil' do
+    let(:email) { nil }
+
+    it 'renders "Not provided"' do
+      expect(component.text).to include('Email addressNot provided')
     end
   end
 end

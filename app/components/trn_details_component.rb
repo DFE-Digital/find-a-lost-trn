@@ -45,7 +45,9 @@ class TrnDetailsComponent < ViewComponent::Base
   end
 
   def email
-    if @anonymise && !@trn_request.email.nil?
+    return 'Not provided' if @trn_request.email.nil?
+
+    if @anonymise
       "#{@trn_request.email.first}****@****.#{@trn_request.email.split('.').last}"
     else
       helpers.shy_email(@trn_request.email)
