@@ -7,6 +7,14 @@ $govuk-new-link-styles: true;
   color: inherit;
 }
 
+.app-\!-border-top-1 {
+  border-top: 1px solid $govuk-border-colour;
+}
+
+.app-\!-colour--link {
+  color: $govuk-link-colour;
+}
+
 .app-govuk-related-navigation {
   @include govuk-text-colour;
   border-top: 2px solid $govuk-brand-colour;
@@ -33,5 +41,12 @@ $govuk-new-link-styles: true;
     @include govuk-media-query($from: tablet) {
       line-height: 1.28;
     }
+  }
+}
+
+.app-performance-table {
+  .govuk-table__header:nth-child(n + 2),
+  .govuk-table__cell:nth-child(n + 2) {
+    text-align: right;
   }
 }

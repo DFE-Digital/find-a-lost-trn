@@ -62,6 +62,7 @@ Rails.application.routes.draw do
   get '/ask-questions', to: 'pages#ask_questions'
   get '/helpdesk-request-submitted', to: 'pages#helpdesk_request_submitted'
   get '/longer-than-normal', to: 'pages#longer_than_normal'
+  get '/performance', to: 'pages#performance'
   get '/start', to: 'pages#start'
   get '/trn-found', to: 'pages#trn_found'
   get '/you-dont-have-a-trn', to: 'pages#you_dont_have_a_trn'
