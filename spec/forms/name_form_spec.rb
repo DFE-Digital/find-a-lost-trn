@@ -6,16 +6,13 @@ RSpec.describe NameForm, type: :model do
   it { is_expected.to validate_presence_of(:last_name).with_message('Enter your last name') }
   it { is_expected.to validate_length_of(:first_name).is_at_most(255) }
   it { is_expected.to validate_length_of(:last_name).is_at_most(255) }
-  it { is_expected.not_to validate_presence_of(:previous_first_name) }
-  it { is_expected.not_to validate_presence_of(:previous_last_name) }
+  it { is_expected.to validate_length_of(:previous_first_name).is_at_most(255) }
+  it { is_expected.to validate_length_of(:previous_last_name).is_at_most(255) }
 
-  context 'when name_changed is true' do
+  context 'when name_changed is true and previous names are empty' do
     subject { described_class.new(name_changed: true) }
 
-    it { is_expected.to validate_presence_of(:previous_first_name).with_message('Enter your previous first name') }
-    it { is_expected.to validate_presence_of(:previous_last_name).with_message('Enter your previous last name') }
-    it { is_expected.to validate_length_of(:previous_first_name).is_at_most(255) }
-    it { is_expected.to validate_length_of(:previous_last_name).is_at_most(255) }
+    it { is_expected.to validate_absence_of(:name_changed).with_message('Enter a previous first name or last name') }
   end
 
   describe '#save' do
