@@ -46,6 +46,10 @@ en:
   activemodel:
     errors:
       models:
+        awarded_qts_form:
+          attributes:
+            awarded_qts:
+              inclusion: Tell us if you have been awarded qualified teacher status (QTS)
         check_trn_form:
           attributes:
             has_trn:
@@ -96,7 +100,7 @@ en:
         itt_provider_form:
           attributes:
             itt_provider_enrolled:
-              inclusion: Tell us if you have been awarded QTS
+              inclusion: Tell us how you were awarded qualified teacher status (QTS)
             itt_provider_name:
               blank: Enter your university, SCITT, school or other training provider
               too_long: Enter a school that is less than 255 letters long

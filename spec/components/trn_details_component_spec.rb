@@ -3,15 +3,17 @@ require 'rails_helper'
 
 RSpec.describe TrnDetailsComponent, type: :component do
   let(:has_ni_number) { true }
+  let(:itt_provider_enrolled) { true }
   let(:ni_number) { 'QC123456A' }
   let(:email) { 'test@example.com' }
   let(:trn_request) do
     TrnRequest.new(
+      awarded_qts: true,
       date_of_birth: 20.years.ago.to_date,
       email: email,
       first_name: 'Test',
       has_ni_number: has_ni_number,
-      itt_provider_enrolled: true,
+      itt_provider_enrolled: itt_provider_enrolled,
       itt_provider_name: 'Big SCITT',
       last_name: 'User',
       ni_number: ni_number,
@@ -34,6 +36,11 @@ RSpec.describe TrnDetailsComponent, type: :component do
 
   it 'renders NI number' do
     expect(component.text).to include('QC 12 34 56 A')
+  end
+
+  it 'renders the qualified teacher status' do
+    expect(component.text).to include('Have you been awarded QTS?')
+    expect(component.text).to include('Yes')
   end
 
   it 'renders ITT provider' do
@@ -136,5 +143,14 @@ RSpec.describe TrnDetailsComponent, type: :component do
     it 'renders "Not provided"' do
       expect(component.text).to include('Email addressNot provided')
     end
+  end
+
+  context 'when ITT provider not enrolled' do
+    subject { component.text }
+
+    let(:itt_provider_enrolled) { false }
+
+    it { is_expected.to include('Did a university, SCITT or school award your QTS?') }
+    it { is_expected.to include('No, I was awarded QTS another way') }
   end
 end

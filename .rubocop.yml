@@ -41,3 +41,7 @@ RSpec/ExampleLength:
 RSpec/MultipleExpectations:
   Exclude:
     - spec/**/*
+
+RSpec/MultipleMemoizedHelpers:
+  Exclude:
+    - spec/components/trn_details_component_spec.rb

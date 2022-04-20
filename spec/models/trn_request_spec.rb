@@ -100,12 +100,33 @@ RSpec.describe TrnRequest, type: :model do
     context 'when an NI number is present' do
       let(:attributes) { { date_of_birth: '01/01/2000', has_ni_number: false, first_name: 'John', last_name: 'Smith' } }
 
+      it { is_expected.to eq(:awarded_qts) }
+    end
+
+    context 'when awarded QTS is present' do
+      let(:attributes) { { awarded_qts: true, date_of_birth: '01/01/2000', first_name: 'John', last_name: 'Smith' } }
+
       it { is_expected.to eq(:itt_provider) }
+    end
+
+    context 'when awarded QTS is false' do
+      let(:attributes) do
+        {
+          awarded_qts: false,
+          date_of_birth: '01/01/2000',
+          first_name: 'John',
+          has_ni_number: false,
+          last_name: 'Smith',
+        }
+      end
+
+      it { is_expected.to eq(:email) }
     end
 
     context 'when an ITT provider is present' do
       let(:attributes) do
         {
+          awarded_qts: true,
           date_of_birth: '01/01/2000',
           first_name: 'John',
           itt_provider_enrolled: false,

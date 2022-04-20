@@ -26,9 +26,13 @@ RSpec.describe 'TRN requests', type: :system do
 
     when_i_choose_no
     and_i_press_continue
+    then_i_see_the_awarded_qts_page
+
+    when_i_choose_yes
+    and_i_press_continue
     then_i_see_the_itt_provider_page
 
-    when_i_choose_no
+    when_i_fill_in_my_itt_provider
     and_i_press_continue
     then_i_see_the_email_page
 
@@ -73,10 +77,10 @@ RSpec.describe 'TRN requests', type: :system do
 
     when_i_choose_no
     and_i_press_continue
-    then_i_see_the_itt_provider_page
+    then_i_see_the_awarded_qts_page
 
     when_i_try_to_go_to_the_email_page
-    then_i_see_the_itt_provider_page
+    then_i_see_the_awarded_qts_page
 
     when_i_choose_no
     and_i_press_continue
@@ -109,7 +113,7 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_ni_number_missing_error
 
     when_i_enter_a_valid_ni_number
-    then_i_see_the_itt_provider_page
+    then_i_see_the_awarded_qts_page
   end
 
   it 'changing my name' do
@@ -143,13 +147,21 @@ RSpec.describe 'TRN requests', type: :system do
 
   it 'changing my ITT provider' do
     given_i_have_completed_a_trn_request
-    when_i_press_change_itt_provider
+    when_i_press_change_awarded_qts
     then_no_should_be_checked
 
+    when_i_choose_yes
+    and_i_press_continue
     when_i_choose_yes
     and_i_fill_in_my_itt_provider
     and_i_press_continue
     then_i_see_the_updated_itt_provider
+
+    when_i_press_change_awarded_qts
+    then_yes_should_be_checked
+    when_i_choose_no
+    and_i_press_continue
+    then_i_see_no_qts_awarded
   end
 
   it 'changing my date of birth' do
@@ -205,14 +217,14 @@ RSpec.describe 'TRN requests', type: :system do
       when_i_complete_my_date_of_birth
       and_i_choose_no
       and_i_press_continue
-      then_i_see_the_itt_provider_page
+      then_i_see_the_awarded_qts_page
 
       when_i_choose_no
       and_i_press_continue
       then_i_see_the_email_page
 
       when_i_press_back
-      then_i_see_the_itt_provider_page
+      then_i_see_the_awarded_qts_page
     end
   end
 
@@ -226,7 +238,7 @@ RSpec.describe 'TRN requests', type: :system do
       when_i_complete_my_date_of_birth
       and_i_choose_no
       and_i_press_continue
-      then_i_see_the_itt_provider_page
+      then_i_see_the_awarded_qts_page
 
       when_i_press_back
       then_i_see_the_have_ni_page
@@ -239,8 +251,8 @@ RSpec.describe 'TRN requests', type: :system do
       when_i_press_change_email
       and_i_press_back
       then_i_see_the_check_answers_page
-      when_i_press_change_itt_provider
-      then_i_see_the_itt_provider_page
+      when_i_press_change_awarded_qts
+      then_i_see_the_awarded_qts_page
       when_i_press_back
       then_i_see_the_check_answers_page
       when_i_press_change_ni_number
@@ -271,10 +283,14 @@ RSpec.describe 'TRN requests', type: :system do
 
     when_i_choose_no
     and_i_press_continue
-    then_i_see_the_itt_provider_page
+    then_i_see_the_awarded_qts_page
 
     when_i_press_continue
     then_i_see_a_validation_error
+
+    when_i_choose_yes
+    and_i_press_continue
+    then_i_see_the_itt_provider_page
 
     when_i_choose_yes
     and_i_press_continue
@@ -414,7 +430,7 @@ RSpec.describe 'TRN requests', type: :system do
     when_i_complete_my_date_of_birth
     when_i_choose_no
     and_i_press_continue
-    then_i_see_the_itt_provider_page
+    then_i_see_the_awarded_qts_page
 
     when_i_choose_no
     and_i_press_continue
@@ -463,6 +479,12 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_current_path('/ask-questions')
     expect(page.driver.browser.current_title).to start_with('We’ll ask you some questions to help find your TRN')
     expect(page).to have_content('We’ll ask you some questions to help find your TRN')
+  end
+
+  def then_i_see_the_awarded_qts_page
+    expect(page).to have_current_path('/awarded-qts')
+    expect(page.driver.browser.current_title).to start_with('Have you been awarded qualified teacher status (QTS)?')
+    expect(page).to have_content('Have you been awarded qualified teacher status (QTS)?')
   end
 
   def then_i_see_the_check_answers_page
@@ -537,8 +559,8 @@ RSpec.describe 'TRN requests', type: :system do
 
   def then_i_see_the_itt_provider_page
     expect(page).to have_current_path('/itt-provider')
-    expect(page.driver.browser.current_title).to start_with('Have you been awarded qualified teacher status (QTS)?')
-    expect(page).to have_content('Have you been awarded qualified teacher status (QTS)?')
+    expect(page.driver.browser.current_title).to start_with('Did a university, SCITT or school award your QTS?')
+    expect(page).to have_content('Did a university, SCITT or school award your QTS?')
   end
 
   def then_i_see_the_have_ni_page
@@ -599,6 +621,13 @@ RSpec.describe 'TRN requests', type: :system do
     expect(page).to have_content('We could not find your TRN')
   end
 
+  def then_i_see_no_qts_awarded
+    expect(page).to have_current_path('/check-answers')
+    expect(page).to have_content('Have you been awarded QTS?')
+    expect(page).to have_content('No')
+    expect(page).not_to have_content('Where did you get your QTS?')
+  end
+
   def then_i_should_see_the_home_page
     expect(page).to have_content('Find a lost teacher reference number')
   end
@@ -609,6 +638,10 @@ RSpec.describe 'TRN requests', type: :system do
 
   def then_no_should_be_checked
     expect(find_field('No', checked: true, visible: false)).to be_truthy
+  end
+
+  def then_yes_should_be_checked
+    expect(find_field('Yes', checked: true, visible: false)).to be_truthy
   end
 
   def when_i_am_on_the_check_answers_page
@@ -633,6 +666,11 @@ RSpec.describe 'TRN requests', type: :system do
 
     when_i_press_continue
     then_i_see_the_name_page
+  end
+
+  def when_i_choose_no_itt_provider
+    choose 'No, I was awarded QTS another way', visible: false
+    when_i_press_continue
   end
 
   def when_i_choose_no_trn
@@ -668,6 +706,7 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def when_i_fill_in_my_itt_provider
+    choose 'Yes', visible: false
     fill_in 'Where did you get your QTS?', with: 'Test ITT Provider', visible: false
   end
   alias_method :and_i_fill_in_my_itt_provider, :when_i_fill_in_my_itt_provider
@@ -738,6 +777,10 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_press_change_email
     click_on 'Change email address'
+  end
+
+  def when_i_press_change_awarded_qts
+    click_on 'Change awarded QTS'
   end
 
   def when_i_press_change_itt_provider
