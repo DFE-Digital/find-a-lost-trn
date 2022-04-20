@@ -1,11 +1,11 @@
-<% content_for :page_title, "#{'Error: ' if @itt_provider_form.errors.any?}Have you been awarded qualified teacher status (QTS)?" %>
-<%= content_for :back_link_url, back_link_url(@itt_provider_form.trn_request.has_ni_number? ? ni_number_path : have_ni_number_path) %>
+<% content_for :page_title, "#{'Error: ' if @itt_provider_form.errors.any?}Did a university, SCITT or school award your QTS?" %>
+<%= content_for :back_link_url, back_link_url(awarded_qts_path) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @itt_provider_form, url: itt_provider_path, method: :patch do |f| %>
       <%= f.govuk_error_summary %>
-      <%= f.govuk_radio_buttons_fieldset(:itt_provider_enrolled, legend: { tag: 'h1', size: 'xl', text: 'Have you been awarded qualified teacher status (QTS)?' }) do %>
+      <%= f.govuk_radio_buttons_fieldset(:itt_provider_enrolled, legend: { tag: 'h1', size: 'xl', text: 'Did a university, SCITT or school award your QTS?' }) do %>
         <%= f.govuk_radio_button :itt_provider_enrolled, true, label: { text: 'Yes' }, link_errors: true do %>
           <%= f.govuk_text_field(:itt_provider_name,
                 hint: { text: 'Your university, SCITT, school or other training provider' },
@@ -13,7 +13,7 @@
             )
           %>
         <% end %>
-        <%= f.govuk_radio_button :itt_provider_enrolled, false, label: { text: 'No' } %>
+        <%= f.govuk_radio_button :itt_provider_enrolled, false, label: { text: 'No, I was awarded QTS another way' } %>
       <% end %>
       <%= f.govuk_submit prevent_double_click: false %>
     <% end %>

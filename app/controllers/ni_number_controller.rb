@@ -10,7 +10,7 @@ class NiNumberController < ApplicationController
     @has_ni_number_form = HasNiNumberForm.new(trn_request: trn_request)
     if @has_ni_number_form.update(has_ni_number: params[:has_ni_number_form][:has_ni_number])
       session[:trn_request_id] = trn_request.id
-      redirect_to trn_request.has_ni_number? ? ni_number_url : itt_provider_url
+      redirect_to trn_request.has_ni_number? ? ni_number_url : awarded_qts_url
     else
       render :new
     end
@@ -29,7 +29,7 @@ class NiNumberController < ApplicationController
              Faraday::TimeoutError,
              DqtApi::TooManyResults,
              DqtApi::NoResults
-        redirect_to ni_number.email? ? check_answers_url : itt_provider_url
+        redirect_to ni_number.email? ? check_answers_url : awarded_qts_url
       end
     else
       render :edit

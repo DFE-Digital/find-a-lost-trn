@@ -37,6 +37,7 @@ module EnforceQuestionOrder
       date_of_birth: date_of_birth_url,
       has_ni_number: have_ni_number_url,
       ni_number: ni_number_url,
+      awarded_qts: awarded_qts_url,
       itt_provider: itt_provider_url,
       email: email_url,
     }

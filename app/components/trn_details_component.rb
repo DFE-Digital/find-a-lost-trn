@@ -36,12 +36,20 @@ class TrnDetailsComponent < ViewComponent::Base
     end
   end
 
+  def awarded_qts_value
+    return 'Yes' if @trn_request.awarded_qts?
+
+    'No'
+  end
+
   def itt_provider_key
-    @trn_request.itt_provider_enrolled ? 'Where did you get your QTS?' : 'Have you been awarded QTS?'
+    return 'Where did you get your QTS?' if @trn_request.itt_provider_enrolled
+
+    'Did a university, SCITT or school award your QTS?'
   end
 
   def itt_provider_value
-    @trn_request.itt_provider_enrolled ? @trn_request.itt_provider_name : 'No'
+    @trn_request.itt_provider_enrolled ? @trn_request.itt_provider_name : 'No, I was awarded QTS another way'
   end
 
   def email
