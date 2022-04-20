@@ -85,6 +85,8 @@ en:
             previous_last_name:
               blank: Enter your previous last name
               too_long: Enter a previous last name that is less than 255 letters long
+            name_changed:
+              present: Enter a previous first name or last name
         ni_number_form:
           attributes:
             ni_number:

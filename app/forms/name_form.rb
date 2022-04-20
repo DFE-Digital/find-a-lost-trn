@@ -7,8 +7,9 @@ class NameForm
 
   validates :first_name, presence: true, length: { maximum: 255 }
   validates :last_name, presence: true, length: { maximum: 255 }
-  validates :previous_first_name, presence: { if: %i[name_changed no_previous_last_name?] }, length: { maximum: 255 }
-  validates :previous_last_name, presence: { if: %i[name_changed no_previous_first_name?] }, length: { maximum: 255 }
+  validates :name_changed, absence: { if: :no_previous_names? }
+  validates :previous_first_name, length: { maximum: 255 }
+  validates :previous_last_name, length: { maximum: 255 }
 
   delegate :email?, :first_name, :last_name, to: :trn_request, allow_nil: true
 
@@ -19,15 +20,11 @@ class NameForm
   def name_changed
     return @name_changed unless @name_changed.nil?
 
-    @name_changed ||= previous_first_name.present? || previous_last_name.present? || trn_request&.previous_name?
+    @name_changed ||= previous_first_name.present? || previous_last_name.present?
   end
 
-  def no_previous_first_name?
-    previous_first_name.blank?
-  end
-
-  def no_previous_last_name?
-    previous_last_name.blank?
+  def no_previous_names?
+    previous_first_name.blank? && previous_last_name.blank?
   end
 
   def previous_first_name
