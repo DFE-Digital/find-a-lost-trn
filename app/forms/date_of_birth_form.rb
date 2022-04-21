@@ -5,12 +5,7 @@ class DateOfBirthForm
   attr_accessor :trn_request
   attr_writer :date_of_birth
 
-  validates :date_of_birth,
-            presence: true,
-            inclusion: {
-              in: Date.new(1900, 1, 1)..16.years.ago.to_date,
-              if: :date_of_birth,
-            }
+  validates :date_of_birth, presence: true
 
   delegate :email?, to: :trn_request, allow_nil: true
 
@@ -46,8 +41,13 @@ class DateOfBirthForm
       return false
     end
 
-    if year.zero?
+    if year < 1000
       errors.add(:date_of_birth, t('missing_year'))
+      return false
+    end
+
+    if year < 1900
+      errors.add(:date_of_birth, t('born_after_1900'))
       return false
     end
 
@@ -60,6 +60,11 @@ class DateOfBirthForm
       self.date_of_birth = Date.new(year, month, day)
     rescue Date::Error
       errors.add(:date_of_birth, t('blank'))
+      return false
+    end
+
+    if self.date_of_birth > 16.years.ago
+      errors.add(:date_of_birth, t('inclusion'))
       return false
     end
 
