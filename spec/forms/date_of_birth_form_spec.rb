@@ -16,8 +16,19 @@ RSpec.describe DateOfBirthForm, type: :model do
       expect(trn_request.date_of_birth).to eq(Date.new(2000, 1, 1))
     end
 
+    context 'with a short month name' do
+      let(:params) { { 'date_of_birth(1i)' => '2000', 'date_of_birth(2i)' => 'Jan', 'date_of_birth(3i)' => '01' } }
+
+      it 'updates the date of birth' do
+        update
+        expect(trn_request.date_of_birth).to eq(Date.new(2000, 1, 1))
+      end
+    end
+
     context 'without a valid date' do
       let(:params) { { 'date_of_birth(1i)' => '2000', 'date_of_birth(2i)' => '02', 'date_of_birth(3i)' => '30' } }
+
+      it { is_expected.to be_falsy }
 
       it 'does not update the date of birth' do
         update
