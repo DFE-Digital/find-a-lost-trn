@@ -28,6 +28,7 @@ RSpec.describe 'Performance', type: :system do
   end
 
   def then_i_see_the_live_stats
+    expect(page).to have_content("28\nrequests over the last 7 days")
     expect(page).to have_content("21 April\t1")
     expect(page).to have_content("15 April\t7")
   end
