@@ -73,7 +73,18 @@ RSpec.describe DateOfBirthForm, type: :model do
 
       it 'adds an error' do
         update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['You must be 16 or over to use this service'])
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Year of birth must be 1900 or later'])
+      end
+    end
+
+    context 'with a year that is less than 4 digits' do
+      let(:params) { { 'date_of_birth(1i)' => '99', 'date_of_birth(2i)' => '1', 'date_of_birth(3i)' => '1' } }
+
+      it { is_expected.to be_falsy }
+
+      it 'adds an error' do
+        update
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['The year must include 4 digits'])
       end
     end
 
@@ -96,17 +107,6 @@ RSpec.describe DateOfBirthForm, type: :model do
       it 'adds an error' do
         update
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must include a month'])
-      end
-    end
-
-    context 'with a missing year' do
-      let(:params) { { 'date_of_birth(1i)' => '', 'date_of_birth(2i)' => '1', 'date_of_birth(3i)' => '1' } }
-
-      it { is_expected.to be_falsy }
-
-      it 'adds an error' do
-        update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must include a year'])
       end
     end
   end

@@ -58,10 +58,11 @@ en:
           attributes:
             date_of_birth:
               blank: Enter your date of birth
+              born_after_1900: Year of birth must be 1900 or later
               inclusion: You must be 16 or over to use this service
               missing_day: Your date of birth must include a day
               missing_month: Your date of birth must include a month
-              missing_year: Your date of birth must include a year
+              missing_year: The year must include 4 digits
               in_the_future: Your date of birth must be in the past
         email_form:
           attributes:
