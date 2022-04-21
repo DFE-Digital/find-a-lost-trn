@@ -36,6 +36,8 @@ class DateOfBirthForm
       return false
     end
 
+    month = Date.parse(date_fields[1]).month if month.zero? && date_fields[1].length.positive?
+
     if month.zero?
       errors.add(:date_of_birth, t('missing_month'))
       return false
@@ -63,7 +65,7 @@ class DateOfBirthForm
       return false
     end
 
-    if self.date_of_birth > 16.years.ago
+    if date_of_birth > 16.years.ago
       errors.add(:date_of_birth, t('inclusion'))
       return false
     end
