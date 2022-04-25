@@ -11,4 +11,19 @@ RSpec.describe HasNiNumberForm, type: :model do
       'Tell us if you have a National Insurance number',
     )
   end
+
+  describe '#update' do
+    subject(:update) { has_ni_number_form.update(params) }
+
+    context 'when the form is invalid' do
+      let(:params) { { trn_request: TrnRequest.new } }
+
+      it { is_expected.to be_falsy }
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { update }.to change(ValidationError, :count).by(1)
+      end
+    end
+  end
 end

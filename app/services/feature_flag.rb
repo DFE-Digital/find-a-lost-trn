@@ -16,6 +16,7 @@ class FeatureFlag
 
   TEMPORARY_FEATURE_FLAGS = [
     [:dqt_api_always_timeout, 'Always time-out the DQT API', 'Felix Clack'],
+    [:log_validation_errors, 'Log validation errors', 'Felix Clack'],
     [:processing_delays, 'Show users banners and interstitials warning them of increased waiting times', 'Felix Clack'],
     [:service_open, 'Allow users to access the service and submit TRN Requests', 'Theodor Vararu'],
     [:use_dqt_api, 'Use DQT API to find TRN', 'Felix Clack'],

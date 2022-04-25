@@ -78,4 +78,17 @@ RSpec.describe NiNumberForm, type: :model do
       end
     end
   end
+
+  describe '#update' do
+    subject(:update) { ni_number_form.update(ni_number: ni_number) }
+
+    context 'when the ni_number is invalid' do
+      let(:ni_number) { '' }
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { update }.to change(ValidationError, :count).by(1)
+      end
+    end
+  end
 end

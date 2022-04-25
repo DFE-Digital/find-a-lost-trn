@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class EmailForm
   include ActiveModel::Model
+  include LogErrors
 
   attr_accessor :trn_request
   attr_writer :email
@@ -14,7 +15,10 @@ class EmailForm
   end
 
   def save
-    return false if invalid?
+    if invalid?
+      log_errors
+      return false
+    end
 
     trn_request.email = email
     trn_request.save

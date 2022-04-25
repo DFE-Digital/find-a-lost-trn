@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class DateOfBirthForm
   include ActiveModel::Model
+  include LogErrors
 
   attr_accessor :trn_request
   attr_writer :date_of_birth
@@ -28,11 +29,13 @@ class DateOfBirthForm
 
     if day.zero? && month.zero? && year.zero?
       errors.add(:date_of_birth, t('blank'))
+      log_errors
       return false
     end
 
     if day.zero?
       errors.add(:date_of_birth, t('missing_day'))
+      log_errors
       return false
     end
 
@@ -40,21 +43,25 @@ class DateOfBirthForm
 
     if month.zero?
       errors.add(:date_of_birth, t('missing_month'))
+      log_errors
       return false
     end
 
     if year < 1000
       errors.add(:date_of_birth, t('missing_year'))
+      log_errors
       return false
     end
 
     if year < 1900
       errors.add(:date_of_birth, t('born_after_1900'))
+      log_errors
       return false
     end
 
     if year > Time.zone.today.year
       errors.add(:date_of_birth, t('in_the_future'))
+      log_errors
       return false
     end
 
@@ -62,15 +69,20 @@ class DateOfBirthForm
       self.date_of_birth = Date.new(year, month, day)
     rescue Date::Error
       errors.add(:date_of_birth, t('blank'))
+      log_errors
       return false
     end
 
     if date_of_birth > 16.years.ago
       errors.add(:date_of_birth, t('inclusion'))
+      log_errors
       return false
     end
 
-    return false if invalid?
+    if invalid?
+      log_errors
+      return false
+    end
 
     trn_request.update!(date_of_birth: date_of_birth)
   end

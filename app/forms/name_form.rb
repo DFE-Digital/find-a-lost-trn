@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class NameForm
   include ActiveModel::Model
+  include LogErrors
 
   attr_accessor :trn_request
   attr_writer :first_name, :last_name, :name_changed, :previous_first_name, :previous_last_name
@@ -44,7 +45,10 @@ class NameForm
   end
 
   def save
-    return false if invalid?
+    if invalid?
+      log_errors
+      return false
+    end
 
     trn_request.first_name = first_name
     trn_request.last_name = last_name
