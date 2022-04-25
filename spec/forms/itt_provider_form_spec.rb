@@ -26,25 +26,26 @@ RSpec.describe IttProviderForm, type: :model do
   end
 
   describe '#save' do
-    context 'when itt_provider_enrolled is missing' do
-      it 'returns false' do
-        form = described_class.new
+    subject(:save) { form.save }
 
-        expect(form.save).to be false
+    context 'when itt_provider_enrolled is missing' do
+      let(:form) { described_class.new(trn_request: TrnRequest.new) }
+
+      it { is_expected.to be_falsy }
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { save }.to change(ValidationError, :count).by(1)
       end
     end
 
     context 'when form data is correct' do
+      let(:form) do
+        described_class.new(trn_request: TrnRequest.new, itt_provider_enrolled: 'true', itt_provider_name: 'Big SCITT')
+      end
+
       it 'saves the model' do
-        form =
-          described_class.new(
-            trn_request: TrnRequest.new,
-            itt_provider_enrolled: 'true',
-            itt_provider_name: 'Big SCITT',
-          )
-
-        form.save
-
+        save
         expect(form.trn_request.itt_provider_enrolled).to be true
         expect(form.trn_request.itt_provider_name).to eq 'Big SCITT'
       end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class HasNiNumberForm
   include ActiveModel::Model
+  include LogErrors
 
   attr_accessor :trn_request
 
@@ -10,7 +11,10 @@ class HasNiNumberForm
 
   def update(params = {})
     self.has_ni_number = params[:has_ni_number]
-    return false if invalid?
+    if invalid?
+      log_errors
+      return false
+    end
 
     trn_request.save!
   end

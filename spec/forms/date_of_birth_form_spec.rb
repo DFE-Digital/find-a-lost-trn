@@ -34,6 +34,11 @@ RSpec.describe DateOfBirthForm, type: :model do
         update
         expect(trn_request.date_of_birth).to be_nil
       end
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { update }.to change(ValidationError, :count).by(1)
+      end
     end
 
     context 'with a blank date' do
@@ -44,6 +49,11 @@ RSpec.describe DateOfBirthForm, type: :model do
       it 'adds an error' do
         update
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Enter your date of birth'])
+      end
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { update }.to change(ValidationError, :count).by(1)
       end
     end
 
@@ -57,6 +67,11 @@ RSpec.describe DateOfBirthForm, type: :model do
       it 'adds an error' do
         update
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must be in the past'])
+      end
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { update }.to change(ValidationError, :count).by(1)
       end
     end
 
@@ -75,6 +90,11 @@ RSpec.describe DateOfBirthForm, type: :model do
         update
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(['You must be 16 or over to use this service'])
       end
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { update }.to change(ValidationError, :count).by(1)
+      end
     end
 
     context 'with a date before 1900' do
@@ -85,6 +105,11 @@ RSpec.describe DateOfBirthForm, type: :model do
       it 'adds an error' do
         update
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Year of birth must be 1900 or later'])
+      end
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { update }.to change(ValidationError, :count).by(1)
       end
     end
 
@@ -97,6 +122,11 @@ RSpec.describe DateOfBirthForm, type: :model do
         update
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(['The year must include 4 digits'])
       end
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { update }.to change(ValidationError, :count).by(1)
+      end
     end
 
     context 'with a missing day' do
@@ -108,6 +138,11 @@ RSpec.describe DateOfBirthForm, type: :model do
         update
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must include a day'])
       end
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { update }.to change(ValidationError, :count).by(1)
+      end
     end
 
     context 'with a missing month' do
@@ -118,6 +153,11 @@ RSpec.describe DateOfBirthForm, type: :model do
       it 'adds an error' do
         update
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must include a month'])
+      end
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { update }.to change(ValidationError, :count).by(1)
       end
     end
   end

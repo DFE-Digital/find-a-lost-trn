@@ -94,6 +94,20 @@ RSpec.describe NameForm, type: :model do
         save
         expect(name_form.errors[:first_name]).to include('Enter your first name')
       end
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { save }.to change(ValidationError, :count).by(1)
+      end
+
+      it 'records all the validation error messages' do
+        FeatureFlag.activate(:log_validation_errors)
+        save
+        expect(ValidationError.last.messages).to include(
+          'first_name' => ['Enter your first name'],
+          'last_name' => ['Enter your last name'],
+        )
+      end
     end
   end
 

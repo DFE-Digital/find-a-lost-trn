@@ -35,6 +35,11 @@ RSpec.describe EmailForm, type: :model do
       let(:email) { '' }
 
       it { is_expected.to be_falsy }
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { save }.to change(ValidationError, :count).by(1)
+      end
     end
   end
 
