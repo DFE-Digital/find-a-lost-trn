@@ -83,3 +83,30 @@ Once the plan is reviewed, type **yes** to initiate the deployment process. This
 Once restore has been ran successfully and checked, make sure to delete the renamed instance created before the restore process was intitated in step 4.
 
 Run `cf delete-service <db-service-instance-name>-old`
+
+# How to restore backup from Azure storage
+
+Backup of production database **find-a-lost-trn-production-pg-svc** is taken every night and stored in Azure storage **s165p01dbbackup** for 35 days. You can download the backup file and restore it to the PaaS postgres instance.
+
+_Note: This process assumes that the database instance is available on PaaS._
+
+## Permissions required
+
+- **SpaceDeveloper** role to run the restore command in Gov PaaS.
+- **Contributor** access to **s165-teachingqualificationsservice-production** subscription raised through PIM request. This will enable access to storage account.
+
+## Tool required
+
+- Conduit plugin
+
+Install CF Conduit plugin by running `cf install-plugin conduit`
+
+### 1. Download the backup file
+
+- Go to Azure storage account **s165p01dbbackup** and container **find-a-lost-trn**.
+- Download the specific backup file avaialable to restore
+- extract the zip file locally
+
+## 2. Restore to database
+
+Run `cf conduit find-a-lost-trn-production-pg-svc -- psql < backup.sql`, where **backup.sql** is the backup you downloaded from Azure storage.
