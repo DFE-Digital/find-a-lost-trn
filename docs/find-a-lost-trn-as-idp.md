@@ -27,3 +27,4 @@ The information gathered during the process is stored against a local account, a
     * Someone needs to rotate those keys I just mentioned
     * We need to handle client registration - if the gem supports OIDC dynamic registration, great - if not, its manual.
         * Maybe just support dynamic registration in prelive environments, to allow other services to test?
+    * If FALTRN cannot find the records in DQT, how will the back office function associate the TRN to the record in the FALTRN service, so that the login account is linked to a TRN?
