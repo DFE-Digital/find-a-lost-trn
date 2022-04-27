@@ -6,7 +6,9 @@ module LogErrors
     def log_errors
       return unless FeatureFlag.active?(:log_validation_errors)
 
-      ValidationError.create(form_object: self.class.name, messages: errors.messages, trn_request: trn_request)
+      error_messages =
+        errors.messages.to_h { |field, messages| [field, { messages: messages, value: public_send(field) }] }
+      ValidationError.create(form_object: self.class.name, messages: error_messages, trn_request: trn_request)
     end
   end
 end

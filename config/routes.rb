@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     post '/features/:feature_name/activate', to: 'feature_flags#activate', as: :activate_feature
     post '/features/:feature_name/deactivate', to: 'feature_flags#deactivate', as: :deactivate_feature
 
+    get '/validation-errors' => 'validation_errors#index', :as => :validation_errors
+    get '/validation-errors/:form_object' => 'validation_errors#show', :as => :validation_error
+
     # https://github.com/mperham/sidekiq/wiki/Monitoring#rails-http-basic-auth-from-routes
     require 'sidekiq/web'
 

@@ -1,0 +1,51 @@
+<% content_for :page_title, "Validation errors for #{@form_object}" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">
+        <%= t('tra.service_name') %>
+      </span>
+      Validation errors for <%= @form_object %>
+    </h1>
+
+    <%= govuk_table do |table|
+          table.head do |head|
+            head.row do |row|
+              row.cell(header: true, text: 'Time', width: 'one-quarter')
+              row.cell(header: true, text: 'TRN Request ID')
+              row.cell(header: true, text: 'Errors')
+            end
+          end
+
+          table.body do |body|
+            @validation_errors.each do |validation_error|
+              body.row do |row|
+                row.cell(text: validation_error.created_at.to_s(:long_ordinal))
+                row.cell(text: validation_error.trn_request.id)
+                row.cell do
+                  validation_error.messages.map do |error, details|
+                    govuk_summary_list(actions: false) do |summary_list|
+                      summary_list.row do |row|
+                        row.key { 'Attribute' }
+                        row.value { error }
+                      end
+
+                      summary_list.row do |row|
+                        row.key { 'Value' }
+                        row.value { details['value'].inspect }
+                      end
+
+                      summary_list.row do |row|
+                        row.key { 'Errors' }
+                        row.value { details['messages'].map { |s| ERB::Util.html_escape(s) }.join('<br>').html_safe }
+                      end
+                    end
+                  end.join.html_safe
+                end
+              end
+            end
+          end
+        end %>
+  </div>
+</div>
