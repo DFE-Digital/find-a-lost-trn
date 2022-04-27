@@ -1,0 +1,33 @@
+<% content_for :page_title, 'Validation errors' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">
+        <%= t('tra.service_name') %>
+      </span>
+      Validation errors
+    </h1>
+
+    <div class="app-!-border-top-1 govuk-!-padding-top-2">
+      <%= govuk_table do |table| 
+            table.head do |head|
+              head.row do |row|
+                row.cell(header: true, text: 'Form')
+                row.cell(header: true, text: 'Error count')
+              end
+            end
+
+            table.body do |body|
+              @validation_errors.each do |form_name, count|
+                body.row do |row|
+                  row.cell(text: link_to(form_name, support_interface_validation_error_path(form_name)))
+                  row.cell(text: count)
+                end
+              end
+            end
+          end
+      %>
+    </div>
+  </div>
+</div>

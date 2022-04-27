@@ -104,8 +104,14 @@ RSpec.describe NameForm, type: :model do
         FeatureFlag.activate(:log_validation_errors)
         save
         expect(ValidationError.last.messages).to include(
-          'first_name' => ['Enter your first name'],
-          'last_name' => ['Enter your last name'],
+          'first_name' => {
+            'messages' => ['Enter your first name'],
+            'value' => nil,
+          },
+          'last_name' => {
+            'messages' => ['Enter your last name'],
+            'value' => nil,
+          },
         )
       end
     end
