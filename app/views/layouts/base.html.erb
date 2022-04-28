@@ -46,6 +46,11 @@
           text: "Sidekiq",
           href: support_interface_sidekiq_web_path
         ) %>
+        <% header.navigation_item(
+          active: current_page?(support_interface_validation_errors_path),
+          href: support_interface_validation_errors_path,
+          text: 'Validation errors'
+        ) %>
       <% end %>
     <% end %>
 
