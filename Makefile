@@ -1,23 +1,40 @@
+
+.DEFAULT_GOAL		:=help
+SHELL				:=/bin/bash
+
 .PHONY: help
 help: ## Show this help
 	@grep -E '^[a-zA-Z\.\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+##@ Set environment and corresponding configuration
+.PHONY: dev
 dev:
 	$(eval DEPLOY_ENV=dev)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
 
+.PHONY: test
 test:
 	$(eval DEPLOY_ENV=test)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
 
+.PHONY: preprod
 preprod:
 	$(eval DEPLOY_ENV=preprod)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
 
+.PHONY: production
 production:
 	$(eval DEPLOY_ENV=production)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-production)
+	$(eval AZURE_BACKUP_STORAGE_ACCOUNT_NAME=s165p01dbbackup)
+	$(eval AZURE_BACKUP_STORAGE_CONTAINER_NAME=find-a-lost-trn)
 
+ci:	## Run in automation environment
+	$(eval DISABLE_PASSCODE=true)
+	$(eval AUTO_APPROVE=-auto-approve)
+	$(eval SP_AUTH=true)
+
+.PHONY: read-keyvault-config
 read-keyvault-config:
 	$(eval KEY_VAULT_NAME=$(shell jq -r '.key_vault_name' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval KEY_VAULT_SECRET_NAME=$(shell jq -r '.key_vault_secret_name' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
@@ -27,14 +44,10 @@ read-deployment-config:
 	$(eval POSTGRES_DATABASE_NAME=$(shell jq -r '.postgres_database_name' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval FLT_APP_NAME=$(shell jq -r '.flt_app_name' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 
+##@ Query parameter store to display environment variables. Requires Azure credentials
 set-azure-account: ${environment}
 	echo "Logging on to ${AZURE_SUBSCRIPTION}"
 	az account set -s ${AZURE_SUBSCRIPTION}
-
-ci:	## Run in automation environment
-	$(eval DISABLE_PASSCODE=true)
-	$(eval AUTO_APPROVE=-auto-approve)
-	$(eval SP_AUTH=true)
 
 .PHONY: install-fetch-config
 install-fetch-config: ## Install the fetch-config script, for viewing/editing secrets in Azure Key Vault
@@ -91,6 +104,13 @@ restore-postgres: terraform-init read-deployment-config ## make dev restore-post
 	$(eval export TF_VAR_paas_restore_db_from_point_in_time_before=$(BEFORE_TIME))
 	echo "Restoring ${POSTGRES_DATABASE_NAME} from $(TF_VAR_paas_restore_db_from_db_instance) before $(TF_VAR_paas_restore_db_from_point_in_time_before)"
 	make ${DEPLOY_ENV} terraform-apply
+
+restore-data-from-backup: read-deployment-config # make production restore-data-from-backup CONFIRM_RESTORE=YES BACKUP_FILENAME="find-a-lost-trn-production-pg-svc-2022-04-28-01"
+	@if [[ "$(CONFIRM_RESTORE)" != YES ]]; then echo "Please enter "CONFIRM_RESTORE=YES" to run workflow"; exit 1; fi
+	$(eval export AZURE_BACKUP_STORAGE_ACCOUNT_NAME=$(AZURE_BACKUP_STORAGE_ACCOUNT_NAME))
+	$(if $(BACKUP_FILENAME), , $(error can only run with BACKUP_FILENAME, eg BACKUP_FILENAME="find-a-lost-trn-production-pg-svc-2022-04-28-01"))
+	bin/download-db-backup ${AZURE_BACKUP_STORAGE_ACCOUNT_NAME} ${AZURE_BACKUP_STORAGE_CONTAINER_NAME} ${BACKUP_FILENAME}.tar.gz
+	bin/restore-db ${DEPLOY_ENV} ${CONFIRM_RESTORE} ${SPACE} ${BACKUP_FILENAME}.sql ${POSTGRES_DATABASE_NAME}
 
 terraform-init:
 	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
