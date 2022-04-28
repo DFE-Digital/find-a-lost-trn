@@ -2,10 +2,8 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column">
+    <%= govuk_breadcrumbs(breadcrumbs: { "Validation errors" => support_interface_validation_errors_path, @form_object => nil }) %>
     <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl">
-        <%= t('tra.service_name') %>
-      </span>
       Validation errors for <%= @form_object %>
     </h1>
 
@@ -21,9 +19,9 @@
           table.body do |body|
             @validation_errors.each do |validation_error|
               body.row do |row|
-                row.cell(text: validation_error.created_at.to_s(:long_ordinal))
+                row.cell(text: validation_error.created_at.to_s(:long_ordinal_uk))
                 row.cell(text: validation_error.trn_request.id)
-                row.cell do
+                row.cell(classes: ['app-p0']) do
                   validation_error.messages.map do |error, details|
                     govuk_summary_list(actions: false) do |summary_list|
                       summary_list.row do |row|
