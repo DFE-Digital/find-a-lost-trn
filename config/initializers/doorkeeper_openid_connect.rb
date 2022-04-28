@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 Doorkeeper::OpenidConnect.configure do
-  issuer do |resource_owner, application|
-    'issuer string'
-  end
+  issuer 'https://dev-find-a-lost-trn.education.gov.uk/'
 
   signing_key <<~KEY
     -----BEGIN RSA PRIVATE KEY-----
