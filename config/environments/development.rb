@@ -69,4 +69,6 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :notify
   config.action_mailer.notify_settings = { api_key: ENV.fetch('GOVUK_NOTIFY_API_KEY') }
+
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
