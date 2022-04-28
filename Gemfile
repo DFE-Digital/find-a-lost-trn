@@ -75,3 +75,5 @@ group :test do
   gem 'vcr', '~> 6.1'
   gem 'webmock', '~> 3.14'
 end
+
+gem "doorkeeper-openid_connect", "~> 1.8"

@@ -68,8 +68,10 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
+    aes_key_wrap (1.1.0)
     ast (2.4.2)
     bcrypt (3.1.17)
+    bindata (2.4.10)
     bindex (0.8.1)
     bootsnap (1.11.1)
       msgpack (~> 1.2)
@@ -111,6 +113,9 @@ GEM
     digest (3.1.0)
     doorkeeper (5.5.4)
       railties (>= 5)
+    doorkeeper-openid_connect (1.8.1)
+      doorkeeper (>= 5.5, < 5.6)
+      json-jwt (>= 1.11.0)
     dotenv (2.7.6)
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
@@ -180,6 +185,10 @@ GEM
       reline (>= 0.3.0)
     jsbundling-rails (1.0.2)
       railties (>= 6.0.0)
+    json-jwt (1.13.0)
+      activesupport (>= 4.2)
+      aes_key_wrap
+      bindata
     jwt (2.3.0)
     logstop (0.2.8)
     loofah (2.14.0)
@@ -384,6 +393,7 @@ DEPENDENCIES
   debug
   devise (~> 4.8)
   doorkeeper (~> 5.5)
+  doorkeeper-openid_connect (~> 1.8)
   dotenv-rails
   factory_bot_rails
   faker
