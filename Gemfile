@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.3'
 
+gem "devise", "~> 4.8"
 gem 'bootsnap', require: false
 gem 'cssbundling-rails'
 gem 'faraday', '~> 1.10'
