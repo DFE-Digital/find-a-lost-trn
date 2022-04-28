@@ -7,10 +7,12 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
-    # Put your resource owner authentication logic here.
-    # Example implementation:
-    current_user || redirect_to(new_user_session_url)
+    if current_user
+      current_user
+    else
+      redirect_to(new_user_session_url)
+      nil
+    end
   end
 
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb
