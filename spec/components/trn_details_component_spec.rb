@@ -6,9 +6,10 @@ RSpec.describe TrnDetailsComponent, type: :component do
   let(:itt_provider_enrolled) { true }
   let(:ni_number) { 'QC123456A' }
   let(:email) { 'test@example.com' }
+  let(:awarded_qts) { true }
   let(:trn_request) do
     TrnRequest.new(
-      awarded_qts: true,
+      awarded_qts: awarded_qts,
       date_of_birth: 20.years.ago.to_date,
       email: email,
       first_name: 'Test',
@@ -134,6 +135,14 @@ RSpec.describe TrnDetailsComponent, type: :component do
 
     it 'renders "Not provided"' do
       expect(component.text).to include('Not provided')
+    end
+  end
+
+  context 'when awarded_qts is nil' do
+    let(:awarded_qts) { nil }
+
+    it 'does not render QTS row' do
+      expect(component.text).not_to include('Have you been awarded QTS?')
     end
   end
 
