@@ -47,7 +47,7 @@
   rows.push(previous_name_row) if @trn_request.previous_name?
   rows.push(date_of_birth_row)
   rows.push(ni_row)
-  rows.push(awarded_qts_row)
+  rows.push(awarded_qts_row) unless @trn_request.awarded_qts.nil?
   rows.push(itt_provider_row) unless @trn_request.itt_provider_enrolled.nil?
   rows.push(email_row)
 
