@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.1'
 
 gem 'bootsnap', require: false
+gem 'clockwork', '~> 3.0'
 gem 'cssbundling-rails'
 gem 'faraday', '~> 1.10'
 gem 'gds_zendesk'
@@ -64,6 +65,7 @@ end
 group :test do
   gem 'capybara', '~> 3.36'
   gem 'capybara-email'
+  gem 'clockwork-test', '~> 0.4.0'
   gem 'cuprite', '~> 0.13'
   gem 'faker'
   gem 'rspec'

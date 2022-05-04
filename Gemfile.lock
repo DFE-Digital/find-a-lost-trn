@@ -86,6 +86,12 @@ GEM
       capybara (>= 2.4, < 4.0)
       mail
     cliver (0.3.2)
+    clockwork (3.0.0)
+      activesupport
+      tzinfo
+    clockwork-test (0.4.0)
+      clockwork
+      timecop
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
     crack (0.4.5)
@@ -362,6 +368,8 @@ DEPENDENCIES
   bootsnap
   capybara (~> 3.36)
   capybara-email
+  clockwork (~> 3.0)
+  clockwork-test (~> 0.4.0)
   cssbundling-rails
   cuprite (~> 0.13)
   debug
