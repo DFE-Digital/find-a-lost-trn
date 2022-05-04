@@ -42,8 +42,8 @@ class DqtApi
 
   def client
     @client ||=
-      Faraday.new(url: ENV['DQT_API_URL'], request: { timeout: FIVE_SECONDS }) do |faraday|
-        faraday.request :authorization, 'Bearer', ENV['DQT_API_KEY']
+      Faraday.new(url: ENV.fetch('DQT_API_URL', nil), request: { timeout: FIVE_SECONDS }) do |faraday|
+        faraday.request :authorization, 'Bearer', ENV.fetch('DQT_API_KEY', nil)
         faraday.request :json
         faraday.response :json
         faraday.response :logger, nil, { bodies: true, headers: true } do |logger|

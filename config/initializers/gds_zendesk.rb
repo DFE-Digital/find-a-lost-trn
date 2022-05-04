@@ -24,8 +24,8 @@ GDS_ZENDESK_CLIENT =
     GDSZendesk::DummyClient.new(development_mode: true, logger: Rails.logger)
   else
     GDSZendesk::Client.new(
-      username: ENV['ZENDESK_USER'],
-      token: ENV['ZENDESK_TOKEN'],
+      username: ENV.fetch('ZENDESK_USER', nil),
+      token: ENV.fetch('ZENDESK_TOKEN', nil),
       logger: Rails.logger,
       url: 'https://teachingregulationagency.zendesk.com/api/v2/',
     )
