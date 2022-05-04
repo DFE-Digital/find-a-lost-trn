@@ -49,7 +49,7 @@ class NiNumberController < ApplicationController
 
   def find_trn_using_api
     response = DqtApi.find_trn!(trn_request)
-    trn_request.update(trn: response['trn'])
+    trn_request.update(trn: response['trn'], has_active_sanctions: response['hasActiveSanctions'])
   end
 
   def trn_request
