@@ -85,6 +85,10 @@ variable "hostnames" {
   default = []
   type    = list(any)
 }
+
+variable "prometheus_app" {
+  default = null
+}
 locals {
   flt_routes = flatten([
     cloudfoundry_route.flt_public,
