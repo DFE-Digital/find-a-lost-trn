@@ -21,6 +21,7 @@ resource "cloudfoundry_route" "flt_public" {
 }
 
 resource "cloudfoundry_route" "flt_internal" {
+  count    = local.configure_prometheus_network_policy
   domain   = data.cloudfoundry_domain.internal.id
   space    = data.cloudfoundry_space.space.id
   hostname = var.flt_app_name
