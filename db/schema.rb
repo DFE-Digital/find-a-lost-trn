@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_22_110101) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_04_100623) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -39,6 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_22_110101) do
     t.string "trn"
     t.integer "zendesk_ticket_id"
     t.boolean "awarded_qts"
+    t.boolean "has_active_sanctions"
   end
 
   create_table "validation_errors", force: :cascade do |t|
