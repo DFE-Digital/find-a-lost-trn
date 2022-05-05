@@ -10,7 +10,7 @@ class NiNumberForm
   delegate :email?, :ni_number, to: :trn_request
 
   def ni_number=(value)
-    trn_request.ni_number = value&.gsub(/\s/, '')
+    trn_request.ni_number = value&.gsub(/\s|-/, '')
   end
 
   def update(params = {})
