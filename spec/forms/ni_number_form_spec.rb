@@ -69,6 +69,7 @@ RSpec.describe NiNumberForm, type: :model do
       'QQ123456C',
       'QQ 1 2 3 4 5 6 C',
       'qq123456c',
+      'QQ-12-34-56-C',
     ]
 
     valid_numbers_in_strange_formats.each do |ni_number|
