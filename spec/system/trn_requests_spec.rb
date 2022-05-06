@@ -116,6 +116,21 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_awarded_qts_page
   end
 
+  it 'when the user has a NI number but says they do not remember it' do
+    given_i_am_on_the_home_page
+    when_i_press_the_start_button
+    when_i_confirm_i_have_a_trn_number
+    when_i_press_continue
+    when_i_fill_in_the_name_form
+    when_i_complete_my_date_of_birth
+    when_i_choose_yes_to_ni_number
+    then_i_see_the_ni_number_page
+
+    when_i_click_on_the_forgotten_ni_number_link
+    and_i_press_continue_without_it
+    then_i_see_the_awarded_qts_page
+  end
+
   it 'changing my name' do
     given_i_have_completed_a_trn_request
     when_i_press_change_name
@@ -838,6 +853,14 @@ RSpec.describe 'TRN requests', type: :system do
 
   def when_i_am_authorized_as_a_support_user
     page.driver.basic_authorize('test', 'test')
+  end
+
+  def when_i_click_on_the_forgotten_ni_number_link
+    find('.govuk-details__summary-text', text: 'I don’t know my National Insurance number').click
+  end
+
+  def and_i_press_continue_without_it
+    click_on 'Continue without it'
   end
 
   def when_i_navigate_to_the_name_page
