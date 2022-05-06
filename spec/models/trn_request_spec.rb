@@ -91,14 +91,22 @@ RSpec.describe TrnRequest, type: :model do
       it { is_expected.to eq(:has_ni_number) }
     end
 
-    context 'when has_ni_number is true' do
+    context 'when has_ni_number is true and ni_number is nil' do
       let(:attributes) { { date_of_birth: '01/01/2000', first_name: 'John', has_ni_number: true, last_name: 'Smith' } }
 
-      it { is_expected.to eq(:ni_number) }
+      it { is_expected.to eq(:awarded_qts) }
     end
 
     context 'when an NI number is present' do
-      let(:attributes) { { date_of_birth: '01/01/2000', has_ni_number: false, first_name: 'John', last_name: 'Smith' } }
+      let(:attributes) do
+        {
+          date_of_birth: '01/01/2000',
+          has_ni_number: true,
+          ni_number: 'QQ123456C',
+          first_name: 'John',
+          last_name: 'Smith',
+        }
+      end
 
       it { is_expected.to eq(:awarded_qts) }
     end
