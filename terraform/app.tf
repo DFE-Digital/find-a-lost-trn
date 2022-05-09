@@ -7,6 +7,7 @@ locals {
     REDIS_URL                = cloudfoundry_service_key.redis_key.credentials.uri,
     SECRET_KEY_BASE          = local.infrastructure_secrets.SECRET_KEY_BASE,
     SENTRY_DSN               = local.infrastructure_secrets.SENTRY_DSN,
+    SLACK_TOKEN              = local.infrastructure_secrets.SLACK_TOKEN,
     SUPPORT_PASSWORD         = local.infrastructure_secrets.SUPPORT_PASSWORD,
     SUPPORT_USERNAME         = local.infrastructure_secrets.SUPPORT_USERNAME,
     ZENDESK_TOKEN            = local.infrastructure_secrets.ZENDESK_TOKEN,

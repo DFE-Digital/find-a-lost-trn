@@ -6,7 +6,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.1'
 
 gem 'bootsnap', require: false
-gem 'clockwork', '~> 3.0'
 gem 'cssbundling-rails'
 gem 'faraday', '~> 1.10'
 gem 'gds_zendesk'
@@ -21,6 +20,7 @@ gem 'puma', '~> 5.6'
 gem 'rails', '~> 7.0.2.4'
 gem 'sentry-rails'
 gem 'sidekiq'
+gem 'sidekiq-cron', '~> 1.4'
 gem 'sprockets-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
