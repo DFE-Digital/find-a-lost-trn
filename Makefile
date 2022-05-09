@@ -123,5 +123,8 @@ terraform-plan: terraform-init
 terraform-apply: terraform-init
 	terraform -chdir=terraform apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
+terraform-apply-replace-redis: terraform-init # make dev terraform-apply-replace-redis PASSCODE="XXX"
+	terraform -chdir=terraform apply -replace="cloudfoundry_service_instance.redis" -replace="cloudfoundry_app.app" -replace="cloudfoundry_service_key.redis_key" -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+
 terraform-destroy: terraform-init
 	terraform -chdir=terraform destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
