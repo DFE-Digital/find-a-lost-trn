@@ -14,21 +14,22 @@ This service will need to run jobs on a schedule. We need a way to run domain lo
 
 We have considered:
 
-- run jobs via the infrastructure (they use sidekiq/sidekiq_cron)
+- run jobs via the infrastructure (use sidekiq/sidekiq_cron)
 - clockwork gem on its own
 
-Considering the ability to enforce time-dependent business rules is core functionality
-for the service, we have decided to follow the approach used in [Apply](https://github.com/DFE-Digital/apply-for-teacher-training/blob/7e059d390e0c8381cf8d039415569340cfa89411/adr/0009-async-and-scheduled-jobs.md).
+Considering the effort to deploy and maintain the infrastructure to run the jobs, we think it's better to use sidekiq/sidekiq_cron.
+
+The clockwork gem requires some workarounds to be able to run on PaaS.
 
 #### Pros
 
-- The sidekiq/clockwork combination is a proven, stable and scalable combination which can take us all the way to public launch and beyond.
+- The sidekiq/sidekiq_cron combination is a proven, stable and scalable combination which can take us all the way to public launch and beyond.
 - Code scheduling and organisation will be transparent, as the schedule is defined within the source code of the app and calls standard Rails workers and services. This also gives us an update path for schedules and background tasks, re-using the standard deployment pipelines, as well as auditing information through git version control.
 - Because background processing will be handled by Sidekiq, failed jobs can be retried automatically.
 
 #### Cons
 
-- Requires additional Azure work: support multiple containers/services (web/worker/clock) and a Redis instance.
+- Requires support for multiple containers/services (web/worker) and a Redis instance.
 
 ## Decision
 
@@ -36,36 +37,23 @@ We will add the following capabilities to the app:
 
 #### Scheduling
 
-This will be achieved via the `clockwork` gem. It alllows periodic jobs to be defined in a ruby file within the main Rails app. For example:
+This will be achieved via the `sidekiq_cron` gem. It alllows periodic jobs to be defined in a YAML file within the main Rails app. For example:
 
 ```ruby
-# config/clock.rb
+# config/schedule.yml
 
-class Clock
-  include Clockwork
-
-  every(1.minute, 'SayHello') { Rails.logger.info 'hi!' }
-end
+performance_report:
+  cron: '0 9 * * MON'
 ```
 
-Clockwork requires the scheduling daemon to be run as a separate process to the Rails server, but it uses the same codebase, so all models/services/workers defined in Rails are available to be triggered. This extra process can be started like this: `bundle exec clockwork ./config/clock.rb`
-
-**Note** While many Rails server instances may be run in a scaling out/load-balancing scenario, there must only always be ONLY ONE clockwork process, otherwise tasks will be triggered multiple times. Furthermore, in production this process should be supervised and restarted, if needed.
-
-While it is technically possible to perform any kind of processing within the 'clock' process, this is to be avoided, as any application errors could terminate the scheduler and prevent other tasks from running. Good practice suggests the 'clock' process should only be used to trigger/enqueue tasks, which are then processed within the context of a background processing system. That's why config/clock.rb should be a list of times and Sidekiq worker perform_async statements.
+Sidekiq_cron hooks into the existing Sidekiq setup and will run the jobs defined in the schedule file.
 
 #### Background processing
 
-We will use the `sidekiq` gem, which is the current standard for Rails background processing. This also needs to be run as a separate process (e.g. `bundle exec sidekiq -c 5 -C sidekiq.yml`, where 5 is a concurrency setting), but it also introduces an infrastructure requirement for Redis.
+We will use the existing `sidekiq` gem, which is the current standard for Rails background processing. 
 
-Workers are usually placed within `app/workers` and can call any other classes within the Rails app, such as service objects to achieve their goals.
+Jobs are usually placed within `app/jobs` and can call any other classes within the Rails app, such as service objects to achieve their goals.
 
 ## Consequences
 
-Some additional work will be required on Azure in order to:
-
-- Run multiple containers as separate services on Azure, all based on the same Docker image and the same set of environment variables, but using different start commands.
-- Add a Redis instance/service to the stack, ideally using an managed/hosted service with the Azure ecosystem.
-- Logging will need to be adapted to distinguish between logs from different services.
-
-These services will need to be supervised by the platform and restarted in case of errors.
+No additional work will be required on Azure to run the scheduled jobs.

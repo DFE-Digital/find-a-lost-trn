@@ -1,0 +1,3 @@
+performance_alert:
+  cron: '0 9 * * MON'
+  class: 'PerformanceAlertJob'
