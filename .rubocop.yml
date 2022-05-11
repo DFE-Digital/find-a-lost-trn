@@ -45,3 +45,12 @@ RSpec/MultipleExpectations:
 RSpec/MultipleMemoizedHelpers:
   Exclude:
     - spec/components/trn_details_component_spec.rb
+
+# This style is really nice and I like it, but unfortunately it breaks when
+# combined with rbprettier. For some reason, the `gem` version of
+# `@prettier/plugin-ruby` fails to correctly interpret the new hash style.
+# There is a node_modules version of `rbprettier`, but that one seems to
+# ignore `.prettierrc` and configuration that is passed into it via the CLI.
+# Easiest thing to do for now is to disable this syntax.
+Style/HashSyntax:
+  Enabled: false
