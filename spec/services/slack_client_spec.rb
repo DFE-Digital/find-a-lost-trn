@@ -17,10 +17,7 @@ RSpec.describe SlackClient, type: :service do
 
     it 'posts a message to the Slack API' do
       create_message
-      expect(faraday).to have_received(:post).with(
-        'chat.postMessage',
-        { channel: '#test', mrkdwn: true, text: message },
-      )
+      expect(faraday).to have_received(:post).with('/', { text: message })
     end
 
     context 'when the API returns an error' do

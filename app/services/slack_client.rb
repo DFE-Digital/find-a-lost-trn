@@ -8,11 +8,7 @@ class SlackClient
   end
 
   def create_message(message)
-    response =
-      client.post(
-        'chat.postMessage',
-        { channel: "##{ENV['SLACK_CHANNEL']}", mrkdwn: true, text: message },
-      )
+    response = client.post('/', { text: message })
     return if response.success?
 
     raise Error, "Status code: #{response.status} - #{response.body}"
@@ -21,8 +17,7 @@ class SlackClient
   private
 
   def client
-    Faraday.new(url: 'https://slack.com/api') do |faraday|
-      faraday.authorization :Bearer, ENV['SLACK_TOKEN']
+    Faraday.new(url: ENV.fetch('SLACK_WEBHOOK_URL')) do |faraday|
       faraday.request :json
       faraday.response :json
       faraday.response :logger, nil, { bodies: true, headers: true }
