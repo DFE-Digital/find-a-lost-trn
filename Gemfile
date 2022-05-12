@@ -65,7 +65,6 @@ end
 group :test do
   gem 'capybara', '~> 3.36'
   gem 'capybara-email'
-  gem 'clockwork-test', '~> 0.4.0'
   gem 'cuprite', '~> 0.13'
   gem 'faker'
   gem 'rspec'

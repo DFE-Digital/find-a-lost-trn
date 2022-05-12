@@ -50,7 +50,7 @@ Sidekiq_cron hooks into the existing Sidekiq setup and will run the jobs defined
 
 #### Background processing
 
-We will use the existing `sidekiq` gem, which is the current standard for Rails background processing. 
+We will use the existing `sidekiq` gem, which is the current standard for Rails background processing.
 
 Jobs are usually placed within `app/jobs` and can call any other classes within the Rails app, such as service objects to achieve their goals.
 
