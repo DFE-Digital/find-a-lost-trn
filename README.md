@@ -4,21 +4,42 @@ A service that allows teachers to find their Teacher Reference Number (TRN).
 
 ## Live environments
 
-| Name       | URL                                                               | Description                                                           | PaaS space       | PaaS application             |
-| ---------- | ----------------------------------------------------------------- | --------------------------------------------------------------------- | ---------------- | ---------------------------- |
-| Production | [production](https://find-a-lost-trn.education.gov.uk/start)      | Public site                                                           | `tra-production` | `find-a-lost-trn-production` |
-| Preprod    | [preprod](https://preprod-find-a-lost-trn.education.gov.uk/start) | For internal use by DfE to test deploys                               | `tra-test`       | `find-a-lost-trn-preprod`    |
-| Test       | [test](https://test-find-a-lost-trn.education.gov.uk/start)       | Demo environment for software vendors who integrate with our API      | `tra-test`       | `find-a-lost-trn-test`       |
-| Dev        | [dev](https://dev-find-a-lost-trn.education.gov.uk/start)         | For internal use by DfE for testing. Automatically deployed from main | `tra-dev`        | `find-a-lost-trn-dev`        |
+### Links and application names
+
+| Name       | URL                                               | Deployment | PaaS space       | PaaS application             |
+| ---------- | ------------------------------------------------- | ---------- | ---------------- | ---------------------------- |
+| Production | https://find-a-lost-trn.education.gov.uk/         | Manual     | `tra-production` | `find-a-lost-trn-production` |
+| Preprod    | https://preprod-find-a-lost-trn.education.gov.uk/ | Manual     | `tra-test`       | `find-a-lost-trn-preprod`    |
+| Test       | https://test-find-a-lost-trn.education.gov.uk/    | Manual     | `tra-test`       | `find-a-lost-trn-test`       |
+| Dev        | https://dev-find-a-lost-trn.education.gov.uk/     | Automatic  | `tra-dev`        | `find-a-lost-trn-dev`        |
+
+### Details and configuration
+
+| Name       | Description                                   | Zendesk | Notify   | `qualified-teachers-api` |
+| ---------- | --------------------------------------------- | ------- | -------- | ------------------------ |
+| Production | Public site                                   | Live    | Live key | Production               |
+| Preprod    | For internal use by DfE to test deploys       | Live    | Live key | Production               |
+| Test       | For external use by 3rd parties to run audits | Stubbed | Live key | Preprod                  |
+| Dev        | For internal use by DfE for testing           | Stubbed | Test key | Preprod                  |
 
 Gotchas:
 
 - Dev uses a `test` Notify key so it doesn't send real emails. You have to
   check the API integration section of Notify to see them.
 - Dev uses the `preprod` deployment of the `qualified-teachers-api` which
-  should allow us to find the TRN of anonymised users.
-- All other environments use production Notify and the production
-  `qualified-teachers-api`.
+  allows us to find the TRNs of test users.
+
+### Test users
+
+You can use this user to test that matching works against the preprod
+`qualified-teachers-api` (for example, on `find-a-lost-trn-dev`):
+
+| Field                     | Value       |
+| ------------------------- | ----------- |
+| First name                | `Kevin`     |
+| Last name                 | `E`         |
+| Date of birth             | `1 1 1990`  |
+| National insurance number | `AA123456A` |
 
 ## Dependencies
 
