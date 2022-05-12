@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Performance', type: :system do
-  before { Timecop.freeze(Date.new(2022, 0o4, 21)) }
+  before { Timecop.freeze(Date.new(2022, 5, 12)) }
 
   after { Timecop.return }
 
@@ -11,6 +11,9 @@ RSpec.describe 'Performance', type: :system do
     given_there_are_a_few_trns
     when_i_visit_the_performance_page
     then_i_see_the_live_stats
+
+    when_i_visit_the_performance_page_since_launch
+    then_i_see_the_live_stats_since_launch
   end
 
   private
@@ -20,7 +23,7 @@ RSpec.describe 'Performance', type: :system do
   end
 
   def given_there_are_a_few_trns
-    (0..6).each.with_index { |n, i| (i + 1).times { create(:trn_request, created_at: n.days.ago) } }
+    (0..8).each.with_index { |n, i| (i + 1).times { create(:trn_request, created_at: n.days.ago) } }
   end
 
   def when_i_visit_the_performance_page
@@ -28,8 +31,18 @@ RSpec.describe 'Performance', type: :system do
   end
 
   def then_i_see_the_live_stats
-    expect(page).to have_content("28\nrequests over the last 7 days")
-    expect(page).to have_content("21 April\t1")
-    expect(page).to have_content("15 April\t7")
+    expect(page).to have_content("36\nrequests over the last 7 days")
+    expect(page).to have_content("12 May\t1")
+    expect(page).to have_content("06 May\t7")
+  end
+
+  def when_i_visit_the_performance_page_since_launch
+    visit performance_path(since_launch: true)
+  end
+
+  def then_i_see_the_live_stats_since_launch
+    expect(page).to have_content("45\nrequests since launch")
+    expect(page).to have_content("12 May\t1")
+    expect(page).to have_content("04 May\t9")
   end
 end
