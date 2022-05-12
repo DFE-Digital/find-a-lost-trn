@@ -11,6 +11,7 @@ locals {
     SUPPORT_USERNAME         = local.infrastructure_secrets.SUPPORT_USERNAME,
     ZENDESK_TOKEN            = local.infrastructure_secrets.ZENDESK_TOKEN,
     ZENDESK_USER             = local.infrastructure_secrets.ZENDESK_USER,
+    SLACK_WEBHOOK_URL        = try(local.infrastructure_secrets.SLACK_WEBHOOK_URL, null)
   }
   logstash_endpoint = data.azurerm_key_vault_secret.secrets["LOGSTASH-ENDPOINT"].value
 }
