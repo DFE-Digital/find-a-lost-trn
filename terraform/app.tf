@@ -1,20 +1,12 @@
 locals {
-  app_environment_variables = {
-    DQT_API_KEY              = local.infrastructure_secrets.DQT_API_KEY,
-    DQT_API_URL              = local.infrastructure_secrets.DQT_API_URL,
-    GOVUK_NOTIFY_API_KEY     = local.infrastructure_secrets.GOVUK_NOTIFY_API_KEY,
-    HOSTING_ENVIRONMENT_NAME = local.infrastructure_secrets.HOSTING_ENVIRONMENT_NAME,
-    REDIS_URL                = cloudfoundry_service_key.redis_key.credentials.uri,
-    SECRET_KEY_BASE          = local.infrastructure_secrets.SECRET_KEY_BASE,
-    SENTRY_DSN               = local.infrastructure_secrets.SENTRY_DSN,
-    SUPPORT_PASSWORD         = local.infrastructure_secrets.SUPPORT_PASSWORD,
-    SUPPORT_USERNAME         = local.infrastructure_secrets.SUPPORT_USERNAME,
-    ZENDESK_TOKEN            = local.infrastructure_secrets.ZENDESK_TOKEN,
-    ZENDESK_USER             = local.infrastructure_secrets.ZENDESK_USER,
-    SLACK_WEBHOOK_URL        = try(local.infrastructure_secrets.SLACK_WEBHOOK_URL, null)
-  }
+  app_environment_variables = merge(try(local.infrastructure_secrets, null),
+    {
+      REDIS_URL = cloudfoundry_service_key.redis_key.credentials.uri
+    }
+  )
   logstash_endpoint = data.azurerm_key_vault_secret.secrets["LOGSTASH-ENDPOINT"].value
 }
+
 resource "cloudfoundry_route" "flt_public" {
   domain   = data.cloudfoundry_domain.cloudapps.id
   hostname = var.flt_app_name
