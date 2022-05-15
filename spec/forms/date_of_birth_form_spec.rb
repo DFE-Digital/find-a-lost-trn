@@ -160,5 +160,21 @@ RSpec.describe DateOfBirthForm, type: :model do
         expect { update }.to change(ValidationError, :count).by(1)
       end
     end
+
+    context 'with a whitespace month' do
+      let(:params) { { 'date_of_birth(1i)' => '1990', 'date_of_birth(2i)' => ' ', 'date_of_birth(3i)' => '1' } }
+
+      it { is_expected.to be_falsy }
+
+      it 'adds an error' do
+        update
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must include a month'])
+      end
+
+      it 'logs a validation error' do
+        FeatureFlag.activate(:log_validation_errors)
+        expect { update }.to change(ValidationError, :count).by(1)
+      end
+    end
   end
 end
