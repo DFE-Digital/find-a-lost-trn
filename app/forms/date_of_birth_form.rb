@@ -39,7 +39,7 @@ class DateOfBirthForm
       return false
     end
 
-    month = Date.parse(date_fields[1]).month if month.zero? && date_fields[1].length.positive?
+    month = Date.parse(date_fields[1]).month if month.zero? && date_fields[1].strip.length.positive?
 
     if month.zero?
       errors.add(:date_of_birth, t('missing_month'))
