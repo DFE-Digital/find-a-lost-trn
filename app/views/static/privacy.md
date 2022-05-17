@@ -44,6 +44,8 @@ We use the data you give us to try and find your TRN in our records. If we can
 match your data to our records, we’ll email your TRN to you. This allows you to
 apply for teaching jobs or access other DfE services.
 
+We might also use your details when analysing data to improve the service.
+
 We use GOV.UK PaaS to run the service. [Visit the GOV.UK PaaS
 website](https://www.cloud.service.gov.uk/privacy-notice/#what-data-we-collect-from-end-users)
 to find out how they use and look after your data.
