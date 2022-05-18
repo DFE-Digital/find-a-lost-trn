@@ -120,4 +120,4 @@ Commissioner’s Office (ICO)](https://ico.org.uk/concerns/).
 
 We’ll update this privacy notice when required. You should review it at least once a year.
 
-This version was last updated on 4 April 2022.
+This version was last updated on 17 May 2022.
