@@ -20,6 +20,6 @@ resource "cloudfoundry_network_policy" "prometheus_to_flt_policy" {
   policy {
     source_app      = data.cloudfoundry_app.prometheus_app[0].id
     destination_app = data.cloudfoundry_app.flt_web_app.id
-    port            = "80"
+    port            = "3000"
   }
 }
