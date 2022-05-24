@@ -1,34 +1,3 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   "true": "foo"
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
   tra:
     tel: 020 7593 5394
@@ -62,11 +31,11 @@ en:
           attributes:
             date_of_birth:
               blank: Enter your date of birth
-              born_after_1900: Year of birth must be 1900 or later
+              born_after_1900: Enter a year of birth later than 1900
               inclusion: You must be 16 or over to use this service
-              missing_day: Your date of birth must include a day
-              missing_month: Your date of birth must include a month
-              missing_year: The year must include 4 digits
+              missing_day: Enter a day for your date of birth
+              missing_month: Enter a month for your date of birth
+              missing_year: Enter a year with 4 digits
               in_the_future: Your date of birth must be in the past
         email_form:
           attributes:
