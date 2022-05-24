@@ -104,7 +104,7 @@ RSpec.describe DateOfBirthForm, type: :model do
 
       it 'adds an error' do
         update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Year of birth must be 1900 or later'])
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Enter a year of birth later than 1900'])
       end
 
       it 'logs a validation error' do
@@ -120,7 +120,7 @@ RSpec.describe DateOfBirthForm, type: :model do
 
       it 'adds an error' do
         update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['The year must include 4 digits'])
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Enter a year with 4 digits'])
       end
 
       it 'logs a validation error' do
@@ -136,7 +136,7 @@ RSpec.describe DateOfBirthForm, type: :model do
 
       it 'adds an error' do
         update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must include a day'])
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Enter a day for your date of birth'])
       end
 
       it 'logs a validation error' do
@@ -152,7 +152,7 @@ RSpec.describe DateOfBirthForm, type: :model do
 
       it 'adds an error' do
         update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must include a month'])
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Enter a month for your date of birth'])
       end
 
       it 'logs a validation error' do
@@ -168,7 +168,7 @@ RSpec.describe DateOfBirthForm, type: :model do
 
       it 'adds an error' do
         update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Your date of birth must include a month'])
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Enter a month for your date of birth'])
       end
 
       it 'logs a validation error' do
