@@ -20,12 +20,14 @@ class DateOfBirthForm
   def update(params = {})
     date_fields = [params['date_of_birth(1i)'], params['date_of_birth(2i)'], params['date_of_birth(3i)']]
 
+    date_fields.map! { |f| f.is_a?(String) ? f.strip : f }
+
     # Use a struct instead of a date object to maintain what the user typed in,
     # and not transform the fields into other data types like integers that
     # Date.new is capable of accepting.
     self.date_of_birth = Struct.new(:year, :month, :day).new(*date_fields)
 
-    year, month, day = date_fields.map(&:to_i)
+    year, month, day = date_fields.map { |f| word_to_number(f) }.map(&:to_i)
 
     if day.zero? && month.zero? && year.zero?
       errors.add(:date_of_birth, t('blank'))
@@ -39,7 +41,7 @@ class DateOfBirthForm
       return false
     end
 
-    month = Date.parse(date_fields[1]).month if month.zero? && date_fields[1].strip.length.positive?
+    month = Date.parse(date_fields[1]).month if month.zero? && date_fields[1].length.positive?
 
     if month.zero?
       errors.add(:date_of_birth, t('missing_month'))
@@ -95,5 +97,26 @@ class DateOfBirthForm
 
   def t(str)
     I18n.t("activemodel.errors.models.date_of_birth_form.attributes.date_of_birth.#{str}")
+  end
+
+  def word_to_number(field)
+    return field if field.is_a? Integer
+
+    words = {
+      one: 1,
+      two: 2,
+      three: 3,
+      four: 4,
+      five: 5,
+      six: 6,
+      seven: 7,
+      eight: 8,
+      nine: 9,
+      ten: 10,
+      eleven: 11,
+      twelve: 12,
+    }
+
+    words[field.downcase.to_sym] || field
   end
 end

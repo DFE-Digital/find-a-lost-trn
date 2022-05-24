@@ -25,6 +25,17 @@ RSpec.describe DateOfBirthForm, type: :model do
       end
     end
 
+    context 'with a word for for a number for the day and month' do
+      let(:params) do
+        { 'date_of_birth(1i)' => '2000', 'date_of_birth(2i)' => 'tWeLvE  ', 'date_of_birth(3i)' => 'One' }
+      end
+
+      it 'updates the date of birth' do
+        update
+        expect(trn_request.date_of_birth).to eq(Date.new(2000, 12, 1))
+      end
+    end
+
     context 'without a valid date' do
       let(:params) { { 'date_of_birth(1i)' => '2000', 'date_of_birth(2i)' => '02', 'date_of_birth(3i)' => '30' } }
 
