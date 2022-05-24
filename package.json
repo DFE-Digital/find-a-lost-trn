@@ -7,7 +7,7 @@
     "sass": "^1.49.10"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
+    "build": "esbuild app/javascript/*.* --target=ie11 --bundle --sourcemap --outdir=app/assets/builds",
     "build:css": "sass ./app/assets/stylesheets/main.sass.scss ./app/assets/builds/main.css --no-source-map --load-path=node_modules",
     "lint": "eslint --ext .js,.ts,.tsx ./app/javascript",
     "preinstall": "mkdir -p public/assets/fonts public/assets/images",
