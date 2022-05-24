@@ -35,7 +35,7 @@ RSpec.describe 'Validation errors', type: :system do
     create(:trn_request).tap do |trn_request|
       DateOfBirthForm
         .new(trn_request: trn_request)
-        .update('date_of_birth(1i)' => nil, 'date_of_birth(2i)' => nil, 'date_of_birth(3i)' => nil)
+        .update('date_of_birth(1i)' => '', 'date_of_birth(2i)' => '', 'date_of_birth(3i)' => '')
     end
   end
 
