@@ -25,7 +25,7 @@ RSpec.describe DateOfBirthForm, type: :model do
       end
     end
 
-    context 'with a word for for a number for the day and month' do
+    context 'with a word for a number for the day and month' do
       let(:params) do
         { 'date_of_birth(1i)' => '2000', 'date_of_birth(2i)' => 'tWeLvE  ', 'date_of_birth(3i)' => 'One' }
       end
