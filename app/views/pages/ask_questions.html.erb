@@ -6,6 +6,6 @@
     <h1 class='govuk-heading-xl'>We’ll ask you some questions to help find your TRN</h1>
 
     <p class="govuk-body govuk-!-margin-bottom-6">We’ll ask for your name, date of birth and National Insurance number. If you do not have your National Insurance number available, we may ask some follow-up questions.</p>
-    <%= govuk_button_link_to 'Continue', FeatureFlag.active?(:processing_delays) ? longer_than_normal_path : name_path %>
+    <%= govuk_button_link_to 'Continue', FeatureFlag.active?(:processing_delays) ? longer_than_normal_path : name_path, role: 'button', draggable: 'false', data: { module: 'govuk-button' } %>
   </div>
 </div>
