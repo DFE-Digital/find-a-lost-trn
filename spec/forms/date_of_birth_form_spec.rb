@@ -2,8 +2,6 @@
 require 'rails_helper'
 
 RSpec.describe DateOfBirthForm, type: :model do
-  it { is_expected.to validate_presence_of(:date_of_birth).with_message('Enter your date of birth') }
-
   describe '#update' do
     subject(:update) { date_of_birth_form.update(params) }
 
@@ -59,7 +57,7 @@ RSpec.describe DateOfBirthForm, type: :model do
 
       it 'adds an error' do
         update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Enter your date of birth'])
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Enter your date of birth, formatted as a number'])
       end
 
       it 'logs a validation error' do
@@ -147,7 +145,9 @@ RSpec.describe DateOfBirthForm, type: :model do
 
       it 'adds an error' do
         update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Enter a day for your date of birth'])
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(
+          ['Enter a day for your date of birth, formatted as a number'],
+        )
       end
 
       it 'logs a validation error' do
@@ -163,7 +163,9 @@ RSpec.describe DateOfBirthForm, type: :model do
 
       it 'adds an error' do
         update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Enter a month for your date of birth'])
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(
+          ['Enter a month for your date of birth, formatted as a number'],
+        )
       end
 
       it 'logs a validation error' do
@@ -179,7 +181,9 @@ RSpec.describe DateOfBirthForm, type: :model do
 
       it 'adds an error' do
         update
-        expect(date_of_birth_form.errors[:date_of_birth]).to eq(['Enter a month for your date of birth'])
+        expect(date_of_birth_form.errors[:date_of_birth]).to eq(
+          ['Enter a month for your date of birth, formatted as a number'],
+        )
       end
 
       it 'logs a validation error' do

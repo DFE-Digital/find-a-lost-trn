@@ -30,11 +30,11 @@ en:
         date_of_birth_form:
           attributes:
             date_of_birth:
-              blank: Enter your date of birth
+              blank: Enter your date of birth, formatted as a number
               born_after_1900: Enter a year of birth later than 1900
               inclusion: You must be 16 or over to use this service
-              missing_day: Enter a day for your date of birth
-              missing_month: Enter a month for your date of birth
+              missing_day: Enter a day for your date of birth, formatted as a number
+              missing_month: Enter a month for your date of birth, formatted as a number
               missing_year: Enter a year with 4 digits
               in_the_future: Your date of birth must be in the past
         email_form:
