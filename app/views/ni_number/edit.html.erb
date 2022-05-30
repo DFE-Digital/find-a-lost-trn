@@ -21,7 +21,7 @@
           Or you can continue without it, but we are less likely to find your TRN.
         </p>
 
-        <%= govuk_button_link_to 'Continue without it', session[:form_complete] ? check_answers_path : itt_provider_path, secondary: true %>
+        <%= govuk_button_link_to 'Continue without it', session[:form_complete] ? check_answers_path : itt_provider_path, secondary: true, role: 'button', draggable: false, data: { module: 'govuk-button' } %>
       <% end %>
 
       <%= f.govuk_submit prevent_double_click: false %>

@@ -19,6 +19,6 @@
       <li>Telephone: <%= t('tra.tel') %></li>
       <li>Lines are open Monday to Thursday, 9am to 5pm, and on Friday from 9am to 4:30pm (except public holidays)</li>
     </ul>
-    <%= govuk_button_link_to 'Continue', name_path %>
+    <%= govuk_button_link_to 'Continue', name_path, role: 'button', draggable: 'false', data: { module: 'govuk-button' } %>
   </div>
 </div>
