@@ -71,6 +71,40 @@ accordance with the Public Sector Bodies (Websites and Mobile Applications)
 This service is fully compliant with [the Web Content Accessibility Guidelines
 version 2.2 AA standard](https://www.w3.org/TR/WCAG22/).
 
+## Non-accessible content
+
+The content listed below is non-accessible for the following reasons.
+
+### Non-compliance with the accessibility regulations
+
+When encountering an error message, browser focus is moved to an error summary.
+In NVDA and VoiceOver, this reads out the error summary heading, which says
+"There is a problem," as well as a list of individual error messages, such as
+"Tell us if you think you have a TRN." This meets [WCAG 2.1 success criterion
+3.3.1 (error
+identification)](https://www.w3.org/WAI/WCAG21/Understanding/error-identification.html).
+
+However, in JAWS 2022 in Windows 11, only the error summary heading is read out
+by the screen reader. This fails criterion 3.3.1, specifically that the user
+cannot immediately determine what is wrong:
+
+> "The intent of this Success Criterion is to ensure that users are aware that
+> an error has occurred and **can determine what is wrong.**"
+
+As we are using the error summary pattern from the GOV.UK Design System, we are
+[investigating this issue with the upstream design system
+team](https://github.com/alphagov/govuk-frontend/issues/2657).
+
+### Disproportionate burden
+
+There are no known accessibility problems in our service that we consider would
+be a disproportionate burden to fix.
+
+### Content that’s not within the scope of the accessibility regulations
+
+There is no content in our service that's not within the scope of the
+accessibility regulations.
+
 ## What we are doing to improve accessibility
 
 We’ll carry out ongoing internal audits to check the accessibility of this
@@ -85,9 +119,9 @@ any changes we make to address any issues raised.
 ## Preparation of this accessibility statement
 
 This statement was prepared on Tuesday 5 April 2022. It was last reviewed on
-Tuesday 5 April 2022.
+Tuesday 7 June 2022.
 
-This service was last tested on Thursday 24 March 2022. The test was carried
-out by the TRA Digital team.
+This service was last tested on Thursday 16 May 2022. The test was carried
+out by the DFE Accessibility team.
 
-Last updated: Tuesday 5 April 2022
+Last updated: Tuesday 7 June 2022
