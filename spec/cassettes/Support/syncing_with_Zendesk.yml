@@ -1,0 +1,64 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v1/teachers/2921020?birthdate=1990-01-01
+      body:
+        encoding: US-ASCII
+        string: ''
+      headers:
+        User-Agent:
+          - Faraday v1.10.0
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - '*/*'
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Mon, 13 Jun 2022 10:26:38 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - '299'
+        X-Rate-Limit-Reset:
+          - '2022-06-13T10:27:00.0000000Z'
+        X-Vcap-Request-Id:
+          - 83d63ae5-95c0-4dac-6deb-412fc002dfad
+        X-Xss-Protection:
+          - '0'
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 58336461deb255b6ec24bb4f21db9b6a.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR50-C1
+        X-Amz-Cf-Id:
+          - vRiNAe1RcFYznNfR40d3r-inlq0uC0dYYK8LH5dINyZaJBsydP2vUg==
+      body:
+        encoding: UTF-8
+        string: '{"trn":"2921020","ni_number":"AA123456A","qualified_teacher_status":{"name":"Trainee
+          Teacher:DMS","state":"Active","state_name":"Active","qts_date":null},"induction":null,"initial_teacher_training":{"state":"Active","state_code":"Active","programme_start_date":"2020-04-01T00:00:00Z","programme_end_date":"2020-10-10T00:00:00Z","programme_type":"Graduate
+          Teacher Programme","result":"In Training","subject1":"computer science","subject2":null,"subject3":null,"qualification":null,"subject1_code":"100366","subject2_code":null,"subject3_code":null},"qualifications":[{"name":"Higher
+          Education","date_awarded":"2021-05-03T00:00:00Z","he_qualification_name":"First
+          Degree","he_subject1":"computer science","he_subject2":null,"he_subject3":null,"he_subject1_code":"100366","he_subject2_code":null,"he_subject3_code":null,"class":"FirstClassHonours"}],"name":"Kevin
+          E","dob":"1990-01-01T00:00:00","active_alert":false,"state":"Active","state_name":"Active"}'
+    recorded_at: Mon, 13 Jun 2022 10:26:38 GMT
+recorded_with: VCR 6.1.0

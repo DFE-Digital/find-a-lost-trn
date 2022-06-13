@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     get '/validation-errors' => 'validation_errors#index', :as => :validation_errors
     get '/validation-errors/:form_object' => 'validation_errors#show', :as => :validation_error
 
+    resources :trn_requests, only: [] do
+      resource :zendesk_sync, only: [:create], controller: 'zendesk_sync'
+    end
+
     # https://github.com/mperham/sidekiq/wiki/Monitoring#rails-http-basic-auth-from-routes
     require 'sidekiq/web'
 

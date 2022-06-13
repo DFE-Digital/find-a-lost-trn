@@ -16,6 +16,10 @@ class ZendeskService
     end
   end
 
+  def self.find_ticket(id)
+    GDS_ZENDESK_CLIENT.ticket.find(id)
+  end
+
   def self.ticket_template(trn_request)
     {
       subject: "[Find a lost TRN] Support request from #{trn_request.name}",
