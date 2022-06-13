@@ -27,6 +27,11 @@ class DqtApi
     results.first
   end
 
+  def self.find_teacher!(birthdate:, trn:)
+    response = new.client.get("/v1/teachers/#{trn}", { birthdate: })
+    response.body
+  end
+
   def self.trn_request_params(trn_request)
     {
       dateOfBirth: trn_request.date_of_birth,

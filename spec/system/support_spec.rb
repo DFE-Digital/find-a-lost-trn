@@ -19,10 +19,24 @@ RSpec.describe 'Support', type: :system do
     then_the_zendesk_flag_is_off
   end
 
+  it 'syncing with Zendesk', vcr: true do
+    given_there_is_a_completed_trn_request
+    when_i_am_authorized_as_a_support_user
+    and_i_visit_the_support_page
+    then_i_see_the_completed_trn_request
+
+    when_i_press_sync_with_zendesk
+    then_i_see_the_diff_with_zendesk
+  end
+
   private
 
   def given_there_is_a_trn_request_in_progress
     create(:trn_request)
+  end
+
+  def given_there_is_a_completed_trn_request
+    create(:trn_request, :has_zendesk_ticket, date_of_birth: '1990-01-01', zendesk_ticket_id: 1234)
   end
 
   def when_i_am_authorized_as_a_support_user
@@ -41,6 +55,10 @@ RSpec.describe 'Support', type: :system do
     click_on 'Deactivate Zendesk integration'
   end
 
+  def when_i_press_sync_with_zendesk
+    click_on 'Sync from Zendesk'
+  end
+
   def and_i_visit_the_support_page
     visit support_interface_path
   end
@@ -51,6 +69,15 @@ RSpec.describe 'Support', type: :system do
 
   def then_i_see_the_feature_flags
     expect(page).to have_content('Features')
+  end
+
+  def then_i_see_the_completed_trn_request
+    expect(page).to have_content('Ticket')
+  end
+
+  def then_i_see_the_diff_with_zendesk
+    expect(page).to have_content('Diff')
+    expect(page).to have_content('{:name=>"Kevin E", :ni_number=>"AA123456A"}')
   end
 
   def then_the_zendesk_flag_is_on

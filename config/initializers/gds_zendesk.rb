@@ -11,6 +11,15 @@ module DummyTicketExtensions
 
     ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42)
   end
+
+  def find(id)
+    ticket = ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id:)
+    ticket.comments = [
+      ZendeskAPI::Ticket::Comment.new(GDS_ZENDESK_CLIENT, id: 1, body: 'Example'),
+      ZendeskAPI::Ticket::Comment.new(GDS_ZENDESK_CLIENT, id: 2, body: 'Your TRN is **2921020**')
+    ]
+    ticket
+  end
 end
 
 module GDSZendesk

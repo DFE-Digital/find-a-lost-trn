@@ -54,6 +54,28 @@
             end
           end
         end
+
+        if trn_request.zendesk_ticket_id
+          summary_list.row do |row|
+            row.key(text: 'Actions')
+            row.value do
+              govuk_button_to("Sync from Zendesk", [:support_interface, trn_request, :zendesk_sync], secondary: true)
+            end
+          end
+        end
+      end
+
+      if trn_request.trn_responses.any?
+        summary_list.row do |row|
+          row.key(text: 'Diff')
+          row.value do
+            if trn_request.trn_responses.last.diff.present?
+              tag.pre(trn_request.trn_responses.last.diff)
+            else
+              'No diff'
+            end
+          end
+        end
       end
     end
   end %>

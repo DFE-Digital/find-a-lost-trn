@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class TrnRequest < ApplicationRecord
+  has_many :trn_responses, dependent: :destroy
+
   def answers_checked=(value)
     return unless value
 
