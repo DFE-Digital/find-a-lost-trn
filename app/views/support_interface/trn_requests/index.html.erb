@@ -59,7 +59,7 @@
           summary_list.row do |row|
             row.key(text: 'Actions')
             row.value do
-              govuk_button_to("Sync from Zendesk", [:support_interface, trn_request, :zendesk_sync], secondary: true)
+              govuk_button_to("Sync from Zendesk", [:support_interface, trn_request, :zendesk_sync], secondary: true, class: 'govuk-!-margin-bottom-0')
             end
           end
         end
