@@ -76,8 +76,10 @@ RSpec.describe 'Support', type: :system do
   end
 
   def then_i_see_the_diff_with_zendesk
-    expect(page).to have_content('Diff')
-    expect(page).to have_content('{:name=>"Kevin E", :ni_number=>"AA123456A"}')
+    expect(page).to have_content('DQT Name')
+    expect(page).to have_content('Kevin E')
+    expect(page).to have_content('DQT National Insurance Number')
+    expect(page).to have_content('AA 12 34 56 A')
   end
 
   def then_the_zendesk_flag_is_on
