@@ -8,15 +8,20 @@ module SupportInterface
 
     private
 
+    def trn
+      @trn ||= zendesk_ticket.comments.last.body.scan(/\*\*(\d{7})\*\*/).flatten.first
+    end
+
     def trn_request
       @trn_request ||= TrnRequest.find(params[:trn_request_id])
     end
 
     def update_from_zendesk
-      trn = zendesk_ticket.comments.last.body.scan(/\*\*(\d+)\*\*/)&.flatten&.first
-      trn_request.update(trn:)
-      raw_result = DqtApi.find_teacher!(birthdate: trn_request.date_of_birth, trn:)
+      return if trn.blank?
+
+      raw_result = DqtApi.find_teacher!(date_of_birth: trn_request.date_of_birth, trn:)
       trn_request.trn_responses.create(raw_result:)
+      trn_request.update(trn: raw_result['trn'])
     end
 
     def zendesk_ticket

@@ -27,8 +27,8 @@ class DqtApi
     results.first
   end
 
-  def self.find_teacher!(birthdate:, trn:)
-    response = new.client.get("/v1/teachers/#{trn}", { birthdate: })
+  def self.find_teacher!(date_of_birth:, trn:)
+    response = new.client.get("/v1/teachers/#{trn}", { birthdate: date_of_birth })
     response.body
   end
 
