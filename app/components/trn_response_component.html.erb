@@ -1,0 +1,30 @@
+<%
+  rows = []
+
+  name_row = {
+    key: { text: 'DQT Name' },
+    value: { text: name },
+  }
+
+  ni_row = {
+    key: { text: 'DQT National Insurance Number' },
+    value: { text: ni_value },
+  }
+
+  awarded_qts_row = {
+    key: { text: 'DQT Have you been awarded QTS?' },
+    value: { text: awarded_qts_value },
+  }
+
+  itt_provider_row = {
+    key: { text: 'DQT ITT Provider enrolled?' },
+    value: { text: itt_provider_value },
+  }
+
+  rows.push(name_row) if name?
+  rows.push(ni_row) if ni?
+  rows.push(awarded_qts_row) if awarded_qts?
+  rows.push(itt_provider_row) if itt_provider?
+%>
+
+<%= govuk_summary_list(rows: rows) %>

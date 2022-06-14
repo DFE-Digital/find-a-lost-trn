@@ -45,6 +45,7 @@ RSpec/MultipleExpectations:
 RSpec/MultipleMemoizedHelpers:
   Exclude:
     - spec/components/trn_details_component_spec.rb
+    - spec/components/trn_response_component_spec.rb
 
 # This style is really nice and I like it, but unfortunately it breaks when
 # combined with rbprettier. For some reason, the `gem` version of
