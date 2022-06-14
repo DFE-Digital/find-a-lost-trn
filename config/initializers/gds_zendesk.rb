@@ -13,10 +13,10 @@ module DummyTicketExtensions
   end
 
   def find(id)
-    ticket = ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id:)
+    ticket = ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: id)
     ticket.comments = [
       ZendeskAPI::Ticket::Comment.new(GDS_ZENDESK_CLIENT, id: 1, body: 'Example'),
-      ZendeskAPI::Ticket::Comment.new(GDS_ZENDESK_CLIENT, id: 2, body: 'Your TRN is **2921020**')
+      ZendeskAPI::Ticket::Comment.new(GDS_ZENDESK_CLIENT, id: 2, body: 'Your TRN is **2921020**'),
     ]
     ticket
   end
