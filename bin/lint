@@ -1,4 +1,4 @@
 #!/bin/sh
 
-bin/bundle exec rbprettier --write --ignore-unknown --loglevel warn '**/*'
+yarn run prettier --write --ignore-unknown --loglevel warn .
 bin/bundle exec rubocop --auto-correct-all

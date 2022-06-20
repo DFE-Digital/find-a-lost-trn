@@ -50,7 +50,6 @@ end
 
 group :development do
   gem 'foreman', '~> 0.87.2'
-  gem 'prettier', '~> 2.0'
   gem 'rladr', '~> 1.2'
   gem 'web-console'
 
@@ -60,6 +59,11 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   gem 'spring'
   gem 'spring-commands-rspec'
+
+  gem 'prettier_print', '~> 0.1.0', require: false
+  gem 'syntax_tree', '~> 2.7', require: false
+  gem 'syntax_tree-haml', '~> 1.2', require: false
+  gem 'syntax_tree-rbs', '~> 0.4.0', require: false
 end
 
 group :test do

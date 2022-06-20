@@ -16,7 +16,8 @@ class NiNumberController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update # rubocop:disable Metrics/AbcSize
     if ni_number.update(ni_number_params)

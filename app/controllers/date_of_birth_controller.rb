@@ -2,7 +2,8 @@
 class DateOfBirthController < ApplicationController
   include EnforceQuestionOrder
 
-  def edit; end
+  def edit
+  end
 
   def update
     if date_of_birth_form.update(date_of_birth_params)
