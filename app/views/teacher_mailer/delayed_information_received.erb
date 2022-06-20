@@ -1,0 +1,20 @@
+Dear <%= @trn_request.name %>,
+
+You recently requested help with finding your teacher reference number (TRN). We’re sorry you did not get an acknowledgement at the time. This was due to a technical problem, which we’ve now resolved.
+
+We’ve received the information you submitted, and you’ll get an email with your TRN if we find a match.
+
+Otherwise, we’ll contact you for more information.
+
+We aim to respond in 5 working days.
+
+# If you need your TRN quickly
+
+Call the Teaching Regulation Agency and give the helpdesk your ticket number: <%= @trn_request.zendesk_ticket_id %>.
+
+Telephone: <%= t('tra.tel') %>
+Monday to Thursday, 9am to 5pm, Friday 9am to 4.30pm (except public holidays)
+
+# If you’ve already called our helpline
+
+Please ignore this message.
