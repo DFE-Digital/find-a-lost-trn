@@ -17,7 +17,7 @@ class ZendeskService
   end
 
   def self.find_ticket(id)
-    GDS_ZENDESK_CLIENT.ticket.find(id)
+    GDS_ZENDESK_CLIENT.ticket.find(id: id)
   end
 
   def self.ticket_template(trn_request)
