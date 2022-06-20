@@ -12,6 +12,11 @@ en:
   validation_errors:
     email_address_format: Enter an email address in the correct format, like name@example.com
 
+  support_interface:
+    zendesk_sync:
+      create:
+        warning: Failed to fetch TRN from Zendesk
+
   activemodel:
     errors:
       models:
