@@ -83,3 +83,25 @@ resource "cloudfoundry_app" "app" {
   }
 
 }
+
+resource "cloudfoundry_app" "worker" {
+  name         = "${var.flt_app_name}-worker"
+  space        = data.cloudfoundry_space.space.id
+  instances    = var.flt_instances
+  memory       = var.flt_memory
+  disk_quota   = var.flt_disk_quota
+  docker_image = var.flt_docker_image
+  command      = "bundle exec sidekiq -C ./config/sidekiq.yml"
+  strategy     = "standard"
+  environment  = local.app_environment_variables
+
+  health_check_type = "process"
+
+  service_binding {
+    service_instance = cloudfoundry_service_instance.postgres.id
+  }
+
+  service_binding {
+    service_instance = cloudfoundry_service_instance.redis.id
+  }
+}
