@@ -54,32 +54,30 @@ RSpec.describe ZendeskService do
 
         described_class.create_ticket!(trn_request)
 
-        expect(ticket_client).to have_received(:create!)
-          .once
-          .with(
-            {
-              subject: '[Find a lost TRN] Support request from Test User',
-              comment: {
-                value:
-                  'A user has submitted a request to find their lost ' \
-                    "TRN. Their information is:\n" \
-                    "\nName: Test User" \
-                    "\nEmail: test@example.com" \
-                    "\nPrevious name: Test Smith" \
-                    "\nDate of birth: #{20.years.ago.strftime('%d %B %Y')}" \
-                    "\nNI number: QC123456A" \
-                    "\nITT provider: Big SCITT\n",
-              },
-              requester: {
-                email: 'test@example.com',
-                name: 'Test User',
-              },
-              custom_fields: {
-                id: '4419328659089',
-                value: 'request_from_find_a_lost_trn_app',
-              },
+        expect(ticket_client).to have_received(:create!).once.with(
+          {
+            subject: '[Find a lost TRN] Support request from Test User',
+            comment: {
+              value:
+                'A user has submitted a request to find their lost ' \
+                  "TRN. Their information is:\n" \
+                  "\nName: Test User" \
+                  "\nEmail: test@example.com" \
+                  "\nPrevious name: Test Smith" \
+                  "\nDate of birth: #{20.years.ago.strftime('%d %B %Y')}" \
+                  "\nNI number: QC123456A" \
+                  "\nITT provider: Big SCITT\n",
             },
-          )
+            requester: {
+              email: 'test@example.com',
+              name: 'Test User',
+            },
+            custom_fields: {
+              id: '4419328659089',
+              value: 'request_from_find_a_lost_trn_app',
+            },
+          },
+        )
         expect(trn_request.zendesk_ticket_id).to eq(42)
       end
 

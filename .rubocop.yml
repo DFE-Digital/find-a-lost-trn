@@ -9,8 +9,8 @@
 #
 # See https://docs.rubocop.org/rubocop/configuration
 
-inherit_gem:
-  prettier: rubocop.yml
+inherit_from:
+  - node_modules/@prettier/plugin-ruby/rubocop.yml
 
 require:
   - rubocop-rails
@@ -21,6 +21,12 @@ AllCops:
 
 Style/Documentation:
   Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: single_quotes
 
 Metrics/AbcSize:
   Exclude:

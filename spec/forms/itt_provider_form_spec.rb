@@ -19,9 +19,9 @@ RSpec.describe IttProviderForm, type: :model do
 
     specify do
       form = described_class.new(itt_provider_enrolled: 'true')
-      expect(form).to validate_length_of(:itt_provider_name)
-        .is_at_most(255)
-        .with_message('Enter a school that is less than 255 letters long')
+      expect(form).to validate_length_of(:itt_provider_name).is_at_most(255).with_message(
+        'Enter a school that is less than 255 letters long',
+      )
     end
   end
 
