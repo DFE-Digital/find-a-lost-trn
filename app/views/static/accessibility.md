@@ -85,9 +85,9 @@ any changes we make to address any issues raised.
 ## Preparation of this accessibility statement
 
 This statement was prepared on Tuesday 5 April 2022. It was last reviewed on
-Tuesday 5 April 2022.
+Tuesday 21 June 2022.
 
-This service was last tested on Thursday 24 March 2022. The test was carried
-out by the TRA Digital team.
+This service was last tested on Monday 16 May 2022. The test was carried
+out by the DFE Accessibility team.
 
-Last updated: Tuesday 5 April 2022
+Last updated: Tuesday 21 June 2022
