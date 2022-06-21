@@ -13,23 +13,23 @@ RSpec.describe ValidForNotifyValidator do
   context 'when an email address has a valid format' do
     let(:model) { Validatable.new }
     let(:valid_emails) do
-      [
-        'email@domain.com',
-        'email@domain.COM',
-        'firstname.lastname@domain.com',
-        'firstname.o\'lastname@domain.com',
-        'email@subdomain.domain.com',
-        'firstname+lastname@domain.com',
-        '1234567890@domain.com',
-        'email@domain-one.com',
-        '_______@domain.com',
-        'email@domain.name',
-        'email@domain.superlongtld',
-        'email@domain.co.jp',
-        'firstname-lastname@domain.com',
-        'info@german-financial-services.vermögensberatung',
-        'info@german-financial-services.reallylongarbitrarytldthatiswaytoohugejustincase',
-        'japanese-info@例え.テスト',
+      %w[
+        email@domain.com
+        email@domain.COM
+        firstname.lastname@domain.com
+        firstname.o'lastname@domain.com
+        email@subdomain.domain.com
+        firstname+lastname@domain.com
+        1234567890@domain.com
+        email@domain-one.com
+        _______@domain.com
+        email@domain.name
+        email@domain.superlongtld
+        email@domain.co.jp
+        firstname-lastname@domain.com
+        info@german-financial-services.vermögensberatung
+        info@german-financial-services.reallylongarbitrarytldthatiswaytoohugejustincase
+        japanese-info@例え.テスト
       ]
     end
 
