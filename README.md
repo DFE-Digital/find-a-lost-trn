@@ -72,6 +72,7 @@ Install dependencies using your preferred method, using `asdf` or `rbenv` or `nv
 ```bash
 # The first time
 brew install asdf # Mac-specific
+asdf plugin add azure-cli
 asdf plugin add ruby
 asdf plugin add nodejs
 asdf plugin add yarn
