@@ -603,8 +603,8 @@ RSpec.describe 'TRN requests', type: :system do
 
   def then_i_see_the_no_trn_page
     expect(page).to have_current_path('/you-dont-have-a-trn')
-    expect(page.driver.browser.current_title).to start_with('You do not have a TRN')
-    expect(page).to have_content('You don’t have a TRN')
+    expect(page.driver.browser.current_title).to start_with('If you do not have a TRN')
+    expect(page).to have_content('If you do not have a TRN')
   end
 
   def then_i_see_the_taking_longer_page
