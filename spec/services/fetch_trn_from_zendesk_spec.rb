@@ -51,5 +51,24 @@ RSpec.describe FetchTrnFromZendesk, type: :model do
         expect { fetch }.to change(trn_request, :trn).from(nil).to('2921020')
       end
     end
+
+    context 'when there are multiple no matching comments on a ticket' do
+      let(:ticket) do
+        ZendeskAPI::Ticket
+          .new(GDS_ZENDESK_CLIENT, id: 1)
+          .tap do |ticket|
+            ticket.comments = [
+              ZendeskAPI::Ticket::Comment.new(GDS_ZENDESK_CLIENT, id: 1, body: 'Example'),
+              ZendeskAPI::Ticket::Comment.new(GDS_ZENDESK_CLIENT, id: 2, body: 'Thanks'),
+            ]
+          end
+      end
+
+      before { allow(GDS_ZENDESK_CLIENT.ticket).to receive(:find).and_return(ticket) }
+
+      it 'does not update the TrnRequest' do
+        expect { fetch }.not_to change(trn_request, :trn)
+      end
+    end
   end
 end

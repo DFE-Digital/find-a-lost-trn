@@ -21,12 +21,10 @@ class FetchTrnFromZendesk
 
   def trn
     @trn ||=
-      zendesk_ticket.comments[1..]
-        .find { |comment| comment.body.scan(TRN_REGEX).flatten.first }
-        .body
-        .scan(TRN_REGEX)
-        .flatten
-        .first
+      begin
+        ticket = zendesk_ticket.comments[1..].find { |comment| comment.body.scan(TRN_REGEX).flatten.first }
+        ticket ? ticket.body.scan(TRN_REGEX).flatten.first : nil
+      end
   end
 
   def update_from_zendesk
