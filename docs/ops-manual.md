@@ -52,6 +52,14 @@ $ cd /app
 **Note**: SSH access is monitored and logged as an event in the Events tab on
 the PaaS website.
 
+## Running a Rails console
+
+SSH into the machine and run:
+
+```bash
+$ /usr/local/bin/bundle exec rails console
+```
+
 ## Tailing logs
 
 SSH into the machine and run:
