@@ -57,3 +57,6 @@
 
 # Redis
 dump.rdb
+
+# Infra scripts
+bin/fetch_config.rb

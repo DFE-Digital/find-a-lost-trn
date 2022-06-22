@@ -37,7 +37,7 @@ ci:	## Run in automation environment
 .PHONY: read-keyvault-config
 read-keyvault-config:
 	$(eval KEY_VAULT_NAME=$(shell jq -r '.key_vault_name' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
-	$(eval KEY_VAULT_SECRET_NAME=$(shell jq -r '.key_vault_secret_name' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval KEY_VAULT_SECRET_NAME=INFRASTRUCTURE)
 
 read-deployment-config:
 	$(eval SPACE=$(shell jq -r '.paas_space' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
@@ -56,14 +56,14 @@ install-fetch-config: ## Install the fetch-config script, for viewing/editing se
 		&& chmod +x bin/fetch_config.rb \
 		|| true
 
-edit-infra-secrets: read-keyvault-config install-fetch-config set-azure-account
+edit-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} \
 		-e -d azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml -c
 
-print-infra-secrets: read-keyvault-config install-fetch-config set-azure-account
+print-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml
 
-validate-infra-secrets: read-keyvault-config install-fetch-config set-azure-account
+validate-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -d quiet \
 		&& echo Data in ${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} looks valid
 
