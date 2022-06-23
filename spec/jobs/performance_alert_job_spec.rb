@@ -13,7 +13,7 @@ RSpec.describe PerformanceAlertJob, type: :job do
       it 'sends the latest performance data as a Slack message' do
         perform
         expect(SlackClient).to have_received(:create_message).with(
-          'There have been 1 TRN request started in the last 7 days on https://find-a-lost-trn.education.gov.uk/performance',
+          'There have been 1 TRN request started in the last 7 days on http://test/performance',
         )
       end
     end
@@ -22,7 +22,7 @@ RSpec.describe PerformanceAlertJob, type: :job do
       it 'sends the latest performance data as a Slack message' do
         perform
         expect(SlackClient).to have_received(:create_message).with(
-          'There have been 0 TRN requests started in the last 7 days on https://find-a-lost-trn.education.gov.uk/performance',
+          'There have been 0 TRN requests started in the last 7 days on http://test/performance',
         )
       end
     end
