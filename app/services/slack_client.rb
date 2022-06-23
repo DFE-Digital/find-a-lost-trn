@@ -8,7 +8,7 @@ class SlackClient
   end
 
   def create_message(message)
-    response = client.post('/', { text: message })
+    response = client.post('', { text: message })
     return if response.success?
 
     raise Error, "Status code: #{response.status} - #{response.body}"
