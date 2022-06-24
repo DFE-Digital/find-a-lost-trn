@@ -92,7 +92,7 @@ resource "cloudfoundry_app" "worker" {
   disk_quota   = var.flt_disk_quota
   docker_image = var.flt_docker_image
   command      = "bundle exec sidekiq -C ./config/sidekiq.yml"
-  strategy     = "standard"
+  strategy     = "blue-green"
   environment  = local.app_environment_variables
 
   health_check_type = "process"
