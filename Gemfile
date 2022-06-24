@@ -64,6 +64,8 @@ group :development do
   gem 'syntax_tree', '~> 2.7', require: false
   gem 'syntax_tree-haml', '~> 1.2', require: false
   gem 'syntax_tree-rbs', '~> 0.4.0', require: false
+
+  gem 'rails-erd'
 end
 
 group :test do
