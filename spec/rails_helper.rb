@@ -8,9 +8,10 @@ require_relative '../config/environment'
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
-require 'view_component/test_helpers'
 require 'capybara/cuprite'
+require 'sidekiq/testing'
 require 'vcr'
+require 'view_component/test_helpers'
 
 Capybara.register_driver(:cuprite) do |app|
   Capybara::Cuprite::Driver.new(app, process_timeout: 30, window_size: [1200, 800])
@@ -78,11 +79,13 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.before(:each, type: :system) { driven_by(:cuprite) }
 
+  config.include ActiveSupport::Testing::TimeHelpers
+  config.include ActiveJob::TestHelper
+  config.include FactoryBot::Syntax::Methods
   config.include ViewComponent::TestHelpers, type: :component
 
-  config.include FactoryBot::Syntax::Methods
-
   config.before { Faker::UniqueGenerator.clear }
+  config.before { Sidekiq::Worker.clear_all }
 end
 
 Shoulda::Matchers.configure do |config|

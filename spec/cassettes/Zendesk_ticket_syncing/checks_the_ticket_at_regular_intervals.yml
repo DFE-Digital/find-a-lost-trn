@@ -1,0 +1,57 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v1/teachers/2921020?birthdate=1990-01-01
+      body:
+        encoding: US-ASCII
+        string: ''
+      headers:
+        User-Agent:
+          - Faraday v1.10.0
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - '*/*'
+    response:
+      status:
+        code: 401
+        message: Unauthorized
+      headers:
+        Content-Length:
+          - '0'
+        Connection:
+          - keep-alive
+        Date:
+          - Tue, 28 Jun 2022 09:45:59 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - '299'
+        X-Rate-Limit-Reset:
+          - '2022-06-28T09:46:00.0000000Z'
+        X-Vcap-Request-Id:
+          - 7f62397e-8158-4352-44fa-e80f546167a8
+        X-Xss-Protection:
+          - '0'
+        X-Cache:
+          - Error from cloudfront
+        Via:
+          - 1.1 f9e281a6bf2f092f94317867f8034cf8.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR62-C5
+        X-Amz-Cf-Id:
+          - CLhLg1-iKf8zTW-QF5stsRXD5LmIz9wwTetijpVHsFLkkVKBvEvRUA==
+      body:
+        encoding: UTF-8
+        string: ''
+    recorded_at: Thu, 30 Jun 2022 09:45:59 GMT
+recorded_with: VCR 6.1.0
