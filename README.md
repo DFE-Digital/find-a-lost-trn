@@ -49,6 +49,10 @@ You can use this user to test that matching works against the preprod
 - PostgreSQL 13.x
 - Redis 6.x
 
+## Local development dependencies
+
+- Graphviz 2.22+ (brew install graphviz) to generate the [domain model diagram](#domain-model)
+
 ## How the application works
 
 Find a lost TRN is a monolithic Rails app built with the GOVUK Design System and hosted on
@@ -162,6 +166,12 @@ To run the tests (requires Chrome due to
 ```bash
 bin/test
 ```
+
+### Domain model
+
+![The domain model for this application](docs/domain-model.png)
+
+Regenerate this diagram with `bundle exec rake erd`.
 
 ### Ops manual
 
