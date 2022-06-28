@@ -167,6 +167,25 @@ To run the tests (requires Chrome due to
 bin/test
 ```
 
+### Intellisense
+
+[solargraph](https://github.com/castwide/solargraph) is bundled as part of the
+development dependencies. You need to [set it up for your
+editor](https://github.com/castwide/solargraph#using-solargraph), and then run
+this command to index your local bundle (re-run if/when we install new
+dependencies and you want completion):
+
+```sh
+bin/bundle exec yard gems
+```
+
+You'll also need to configure your editor's `solargraph` plugin to
+`useBundler`:
+
+```diff
++  "solargraph.useBundler": true,
+```
+
 ### Domain model
 
 ![The domain model for this application](docs/domain-model.png)

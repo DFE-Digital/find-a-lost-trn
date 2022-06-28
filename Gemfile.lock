@@ -68,7 +68,12 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
+    annotate (3.2.0)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
     ast (2.4.2)
+    backport (1.2.0)
+    benchmark (0.2.0)
     bindex (0.8.1)
     bootsnap (1.12.0)
       msgpack (~> 1.2)
@@ -106,6 +111,7 @@ GEM
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
       railties (>= 3.2)
+    e2mmap (0.1.0)
     erubi (1.10.0)
     et-orbi (1.2.7)
       tzinfo
@@ -181,9 +187,14 @@ GEM
     io-console (0.5.11)
     irb (1.4.1)
       reline (>= 0.3.0)
+    jaro_winkler (1.5.4)
     jsbundling-rails (1.0.3)
       railties (>= 6.0.0)
     jwt (2.4.1)
+    kramdown (2.4.0)
+      rexml
+    kramdown-parser-gfm (1.1.0)
+      kramdown (~> 2.0)
     logstop (0.2.8)
     loofah (2.18.0)
       crass (~> 1.0.2)
@@ -280,6 +291,8 @@ GEM
     regexp_parser (2.5.0)
     reline (0.3.1)
       io-console (~> 0.5)
+    reverse_markdown (2.1.1)
+      nokogiri
     rexml (3.2.5)
     rladr (1.2.0)
     rspec (3.11.0)
@@ -338,6 +351,24 @@ GEM
     sidekiq-cron (1.5.1)
       fugit (~> 1)
       sidekiq (>= 4.2.1)
+    solargraph (0.45.0)
+      backport (~> 1.2)
+      benchmark
+      bundler (>= 1.17.2)
+      diff-lcs (~> 1.4)
+      e2mmap
+      jaro_winkler (~> 1.5)
+      kramdown (~> 2.3)
+      kramdown-parser-gfm (~> 1.1)
+      parser (~> 3.0)
+      reverse_markdown (>= 1.0.5, < 3)
+      rubocop (>= 0.52)
+      thor (~> 1.0)
+      tilt (~> 2.0)
+      yard (~> 0.9, >= 0.9.24)
+    solargraph-rails (0.3.1)
+      activesupport
+      solargraph (>= 0.41.1)
     spring (4.0.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -380,11 +411,14 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    webrick (1.7.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    yard (0.9.28)
+      webrick (~> 1.7.0)
     zeitwerk (2.6.0)
     zendesk_api (1.36.0)
       faraday (>= 0.9.0, < 2.0.0)
@@ -398,6 +432,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  annotate
   bootsnap
   capybara (~> 3.36)
   capybara-email
@@ -431,6 +466,8 @@ DEPENDENCIES
   shoulda-matchers (~> 5.1)
   sidekiq
   sidekiq-cron (~> 1.4)
+  solargraph
+  solargraph-rails
   spring
   spring-commands-rspec
   sprockets-rails
