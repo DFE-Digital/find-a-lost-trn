@@ -43,6 +43,29 @@
   <%= govuk_table(rows: @submission_data, classes: 'app-performance-table') %>
 </div>
 
+<div class="app-!-border-top-1 govuk-!-padding-top-2">
+  <%= govuk_table(classes: 'app-performance-table') do |table|
+      table.caption(size: 'm', text: 'How quickly did users get their TRN ' + @since_text)
+
+      table.head do |head|
+      head.row do |row|
+      row.cell(header: true, text: 'Date')
+      row.cell(header: true) { '90% of users<br>got their TRN within'.html_safe }
+      row.cell(header: true) { '75% of users<br>got their TRN within'.html_safe }
+      row.cell(header: true) { '50% of users<br>got their TRN within'.html_safe }
+
+      end; end; table.body do |body|
+        @duration_usage.each do |data_row|
+          body.row do |row|
+            row.cell { data_row[0] }
+            row.cell { data_row[1] }
+            row.cell { data_row[2] }
+            row.cell { data_row[3] }
+          end
+        end
+     end; end %>
+</div>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-heading-m">

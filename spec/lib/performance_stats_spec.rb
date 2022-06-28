@@ -6,9 +6,20 @@ RSpec.describe PerformanceStats do
 
   after { Timecop.return }
 
+  let(:last_day) { Time.zone.today.beginning_of_day..Time.zone.now }
+
   let(:last_7_days) { 6.days.ago.beginning_of_day..Time.zone.now }
 
   let(:longer_than_last_7_days) { 4.weeks.ago.beginning_of_day..Time.zone.now }
+
+  describe "without params" do
+    it "asks for a time_period parameter" do
+      expect { described_class.new(nil) }.to raise_error(
+        ArgumentError,
+        "time_period is not a Range"
+      )
+    end
+  end
 
   describe "#live_service_usage" do
     it "calculates live service usage" do
@@ -91,6 +102,28 @@ RSpec.describe PerformanceStats do
           ["04 May", 0, 0],
           ["03 May", 0, 0],
           ["02 May", 0, 0]
+        ]
+      )
+    end
+  end
+
+  describe "#duration_usage" do
+    it "calculates duration results" do
+      durations_in_seconds = [240, 180, 120, 120]
+      durations_in_seconds.each do |duration|
+        create(
+          :trn_request,
+          created_at: Time.zone.today.beginning_of_day,
+          checked_at: Time.zone.today.beginning_of_day + duration.seconds,
+          trn: "1234567"
+        )
+      end
+
+      data = described_class.new(last_day).duration_usage
+      expect(data.size).to eq 1
+      expect(data).to eq(
+        [
+          ["12 May", "4 minutes", "3 minutes", "2 minutes"]
         ]
       )
     end
