@@ -569,7 +569,7 @@ RSpec.describe 'TRN requests', type: :system do
 
   def then_i_see_the_home_page
     expect(page).to have_current_path(start_path)
-    expect(page).to have_content(I18n.t('tra.service_name'))
+    expect(page).to have_content(I18n.t('service.name'))
   end
 
   def then_i_see_the_itt_provider_page

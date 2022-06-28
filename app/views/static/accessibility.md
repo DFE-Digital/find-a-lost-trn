@@ -1,10 +1,10 @@
 <% content_for :page_title, 'Accessibility statement' %>
 
-# Accessibility statement for <%= t('tra.service_name') %>
+# Accessibility statement for <%= t('service.name') %>
 
-This page only contains information about the <%= t('tra.service_name') %>
-service, available at: <a href="<%= t('tra.url') %>" class="govuk-link
-govuk-link--no-visited-state"> <%= t('tra.url') %> </a>
+This page only contains information about the <%= t('service.name') %>
+service, available at: <a href="<%= t('service.url') %>" class="govuk-link
+govuk-link--no-visited-state"> <%= t('service.url') %> </a>
 
 ## Using this service
 
@@ -34,8 +34,8 @@ version 2.2 AA standard](https://www.w3.org/TR/WCAG22/).
 ## Feedback and contact information
 
 If you have difficulty using this service, email: <a href="mailto:<%=
-t('tra.email') %>" class="govuk-link govuk-link--no-visited-state"><%=
-t('tra.email') %></a>
+t('service.email') %>" class="govuk-link govuk-link--no-visited-state"><%=
+t('service.email') %></a>
 
 As part of providing this service, we may need to send you messages or
 documents. We'll ask you how you want us to send messages or documents to you,
@@ -47,8 +47,8 @@ audio recording or braille.
 We’re always looking to improve the accessibility of this service.
 
 If you find any problems that are not listed on this page or think we’re not
-meeting accessibility requirements, email: <a href="mailto:<%= t('tra.email')
-%>" class="govuk-link govuk-link--no-visited-state"><%= t('tra.email') %></a>
+meeting accessibility requirements, email: <a href="mailto:<%= t('service.email')
+%>" class="govuk-link govuk-link--no-visited-state"><%= t('service.email') %></a>
 
 ## Enforcement procedure
 
