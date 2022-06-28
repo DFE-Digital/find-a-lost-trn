@@ -1,63 +1,23 @@
-# The behavior of RuboCop can be controlled via the .rubocop.yml
-# configuration file. It makes it possible to enable/disable
-# certain cops (checks) and to alter their behavior if they accept
-# any parameters. The file can be placed either in your home
-# directory or in some project directory.
-#
-# RuboCop will start looking for the configuration file in the directory
-# where the inspected file is and continue its way up to the root directory.
-#
-# See https://docs.rubocop.org/rubocop/configuration
+inherit_gem:
+  rubocop-govuk:
+    - config/default.yml
+    - config/rails.yml
 
 inherit_from:
   - node_modules/@prettier/plugin-ruby/rubocop.yml
 
-require:
-  - rubocop-rails
-  - rubocop-rspec
+inherit_mode:
+  merge:
+    - Exclude
 
-AllCops:
-  NewCops: enable
-
-Style/Documentation:
-  Enabled: false
-
-Style/StringLiterals:
-  EnforcedStyle: single_quotes
-
-Style/StringLiteralsInInterpolation:
-  EnforcedStyle: single_quotes
-
-Metrics/AbcSize:
+Style/NumericLiterals:
   Exclude:
-    - spec/**/*
+    - db/schema.rb
 
-Metrics/BlockLength:
+Style/BlockDelimiters:
   Exclude:
-    - spec/**/*
-    - config/routes.rb
+    - app/services/feature_flag.rb
 
-Metrics/MethodLength:
-  Enabled: false
-
-RSpec/ExampleLength:
+Style/MethodCalledOnDoEndBlock:
   Exclude:
-    - spec/**/*
-
-RSpec/MultipleExpectations:
-  Exclude:
-    - spec/**/*
-
-RSpec/MultipleMemoizedHelpers:
-  Exclude:
-    - spec/components/trn_details_component_spec.rb
-    - spec/components/trn_response_component_spec.rb
-
-# This style is really nice and I like it, but unfortunately it breaks when
-# combined with rbprettier. For some reason, the `gem` version of
-# `@prettier/plugin-ruby` fails to correctly interpret the new hash style.
-# There is a node_modules version of `rbprettier`, but that one seems to
-# ignore `.prettierrc` and configuration that is passed into it via the CLI.
-# Easiest thing to do for now is to disable this syntax.
-Style/HashSyntax:
-  Enabled: false
+    - app/services/feature_flag.rb
