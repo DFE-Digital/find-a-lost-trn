@@ -44,9 +44,6 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'rubocop', require: false
-  gem 'rubocop-rails', require: false
-  gem 'rubocop-rspec', require: false
 end
 
 group :development do
@@ -63,6 +60,7 @@ group :development do
 
   gem 'annotate', require: false
   gem 'prettier_print', '~> 0.1.0', require: false
+  gem 'rubocop-govuk', require: false
   gem 'solargraph', require: false
   gem 'solargraph-rails', require: false
   gem 'syntax_tree', '~> 2.7', require: false

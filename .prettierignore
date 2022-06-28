@@ -4,9 +4,11 @@
 *.lock
 *.log
 *.png
+*.slim
 *.svg
 *.txt
 *.woff*
+.bundle
 .gitattributes
 .gitignore
 .keep
@@ -15,7 +17,6 @@
 .rspec
 .ruby-version
 .tool-versions
-.bundle
 Dockerfile
 LICENCE
 Procfile
