@@ -9,7 +9,7 @@ gem 'bootsnap', require: false
 gem 'cssbundling-rails'
 gem 'faraday', '~> 1.10'
 gem 'gds_zendesk'
-gem 'govuk-components', '~> 3.0.6'
+gem 'govuk-components', '~> 3.1.2'
 gem 'govuk_design_system_formbuilder'
 gem 'govuk_markdown', '~> 1.0'
 gem 'jsbundling-rails'
