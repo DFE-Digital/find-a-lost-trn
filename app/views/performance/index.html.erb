@@ -43,6 +43,12 @@
   <%= govuk_table(rows: @submission_data, classes: 'app-performance-table') %>
 </div>
 
+<div class="app-!-border-top-1 govuk-!-padding-top-2">
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-1">How quickly did users get their TRN <%= @since_text %></h2>
+
+  <%= govuk_table(rows: @duration_usage, classes: 'app-performance-table') %>
+</div>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-heading-m">

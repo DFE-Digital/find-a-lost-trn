@@ -10,6 +10,12 @@ RSpec.describe PerformanceStats do
 
   let(:longer_than_last_7_days) { 4.weeks.ago.beginning_of_day..Time.zone.now }
 
+  describe 'without params' do
+    it 'asks for a time_period parameter' do
+      expect { described_class.new(nil) }.to raise_error(ArgumentError, 'time_period is not a Range')
+    end
+  end
+
   describe '#live_service_usage' do
     it 'calculates live service usage' do
       given_there_are_a_few_trns
@@ -91,6 +97,13 @@ RSpec.describe PerformanceStats do
           ['02 May', 0, 0],
         ],
       )
+    end
+  end
+
+  describe '#duration_usage' do
+    it 'calculates duration results' do
+      data = described_class.new(last_7_days).duration_usage
+      expect(data.size).to eq 8
     end
   end
 

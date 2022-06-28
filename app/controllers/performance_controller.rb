@@ -16,6 +16,7 @@ class PerformanceController < ApplicationController
 
     @requests_over_last_n_days, @live_service_data = stats.live_service_usage
     @trns_found, @submission_data = stats.submission_results
+    @duration_usage = stats.duration_usage
   end
   # rubocop:enable Metrics/AbcSize
 end
