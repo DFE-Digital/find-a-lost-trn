@@ -24,12 +24,12 @@ RSpec.describe "Validation errors", type: :system do
 
     create(:trn_request).tap do |trn_request|
       trn_request.first_name = nil
-      NameForm.new(trn_request:).save!
+      NameForm.new(trn_request:).save # rubocop:disable Rails/SaveBang
     end
 
     create(:trn_request).tap do |trn_request|
       trn_request.last_name = nil
-      NameForm.new(trn_request:).save!
+      NameForm.new(trn_request:).save # rubocop:disable Rails/SaveBang
     end
 
     create(:trn_request).tap do |trn_request|

@@ -28,7 +28,7 @@ RSpec.describe NameForm, type: :model do
   end
 
   describe "#save" do
-    subject(:save) { name_form.save }
+    subject(:save!) { name_form.save }
 
     let(:last_name) { nil }
     let(:name_form) do
@@ -113,7 +113,7 @@ RSpec.describe NameForm, type: :model do
 
       it "logs a validation error" do
         FeatureFlag.activate(:log_validation_errors)
-        expect { save }.to change(ValidationError, :count).by(1)
+        expect { save! }.to change(ValidationError, :count).by(1)
       end
 
       it "records all the validation error messages" do
