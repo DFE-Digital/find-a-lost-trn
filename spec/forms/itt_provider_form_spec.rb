@@ -26,7 +26,7 @@ RSpec.describe IttProviderForm, type: :model do
   end
 
   describe "#save" do
-    subject(:save) { form.save }
+    subject(:save!) { form.save }
 
     context "when itt_provider_enrolled is missing" do
       let(:form) { described_class.new(trn_request: TrnRequest.new) }
@@ -35,7 +35,7 @@ RSpec.describe IttProviderForm, type: :model do
 
       it "logs a validation error" do
         FeatureFlag.activate(:log_validation_errors)
-        expect { save }.to change(ValidationError, :count).by(1)
+        expect { save! }.to change(ValidationError, :count).by(1)
       end
     end
 

@@ -13,12 +13,12 @@ RSpec.describe AwardedQtsForm, type: :model do
   end
 
   describe "#update" do
-    subject(:update) { awarded_qts_form.update(awarded_qts:) }
+    subject(:update!) { awarded_qts_form.update(awarded_qts:) }
 
     let(:awarded_qts) { true }
 
     it "updates the awarded_qts attribute on the trn_request" do
-      expect { update }.to change(trn_request, :awarded_qts).from(nil).to(true)
+      expect { update! }.to change(trn_request, :awarded_qts).from(nil).to(true)
     end
 
     context "when there are previous ITT provider details and awarded_qts is false" do

@@ -22,7 +22,7 @@ RSpec.describe EmailForm, type: :model do
   end
 
   describe "#save" do
-    subject(:save) { name_form.save }
+    subject(:save!) { name_form.save }
 
     let(:email) { "test@example.com" }
     let(:name_form) { described_class.new(email:, trn_request:) }
@@ -42,7 +42,7 @@ RSpec.describe EmailForm, type: :model do
 
       it "logs a validation error" do
         FeatureFlag.activate(:log_validation_errors)
-        expect { save }.to change(ValidationError, :count).by(1)
+        expect { save! }.to change(ValidationError, :count).by(1)
       end
     end
   end
