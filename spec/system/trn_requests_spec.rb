@@ -1,13 +1,13 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'TRN requests', type: :system do
+RSpec.describe "TRN requests", type: :system do
   before do
     given_the_service_is_open
     given_the_zendesk_integration_feature_is_enabled
   end
 
-  it 'completing a request' do
+  it "completing a request" do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
     then_i_see_the_check_trn_page
@@ -49,7 +49,7 @@ RSpec.describe 'TRN requests', type: :system do
     and_my_name_is_not_filled_in
   end
 
-  it 'trying to skip steps' do
+  it "trying to skip steps" do
     given_i_am_on_the_home_page
     when_i_try_to_go_straight_to_the_confirmation_page
     then_i_see_the_home_page
@@ -90,7 +90,7 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_email_page
   end
 
-  it 'entering the NI number' do
+  it "entering the NI number" do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
     when_i_confirm_i_have_a_trn_number
@@ -116,7 +116,7 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_awarded_qts_page
   end
 
-  it 'when the user has a NI number but says they do not remember it' do
+  it "when the user has a NI number but says they do not remember it" do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
     when_i_confirm_i_have_a_trn_number
@@ -131,7 +131,7 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_awarded_qts_page
   end
 
-  it 'changing my name' do
+  it "changing my name" do
     given_i_have_completed_a_trn_request
     when_i_press_change_name
     then_i_see_the_existing_name
@@ -140,7 +140,7 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_updated_name
   end
 
-  it 'changing my NI number' do
+  it "changing my NI number" do
     given_i_have_completed_a_trn_request
     when_i_press_change_ni_number
     then_no_should_be_checked
@@ -152,7 +152,7 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_updated_ni_number
   end
 
-  it 'changing my email address' do
+  it "changing my email address" do
     given_i_have_completed_a_trn_request
     when_i_press_change_email
     and_i_fill_in_my_new_email_address
@@ -160,7 +160,7 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_updated_email_address
   end
 
-  it 'changing my ITT provider' do
+  it "changing my ITT provider" do
     given_i_have_completed_a_trn_request
     when_i_press_change_awarded_qts
     then_no_should_be_checked
@@ -179,22 +179,22 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_no_qts_awarded
   end
 
-  it 'changing my date of birth' do
+  it "changing my date of birth" do
     given_i_have_completed_a_trn_request
     when_i_press_change_date_of_birth
     then_i_see_the_date_of_birth_page
     and_the_date_of_birth_is_prepopulated
   end
 
-  it 'pressing back' do
+  it "pressing back" do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
     when_i_press_back
     then_i_see_the_home_page
   end
 
-  context 'when the user has reached the date of birth question' do
-    it 'pressing back' do
+  context "when the user has reached the date of birth question" do
+    it "pressing back" do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
@@ -207,8 +207,8 @@ RSpec.describe 'TRN requests', type: :system do
     end
   end
 
-  context 'when the user has reached the have NI question' do
-    it 'pressing back' do
+  context "when the user has reached the have NI question" do
+    it "pressing back" do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
@@ -222,8 +222,8 @@ RSpec.describe 'TRN requests', type: :system do
     end
   end
 
-  context 'when the user has reached the email question' do
-    it 'pressing back' do
+  context "when the user has reached the email question" do
+    it "pressing back" do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
@@ -243,8 +243,8 @@ RSpec.describe 'TRN requests', type: :system do
     end
   end
 
-  context 'when the user has reached the ITT provider question' do
-    it 'pressing back' do
+  context "when the user has reached the ITT provider question" do
+    it "pressing back" do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
@@ -260,8 +260,8 @@ RSpec.describe 'TRN requests', type: :system do
     end
   end
 
-  context 'when the user has reached the check answers page' do
-    it 'pressing back' do
+  context "when the user has reached the check answers page" do
+    it "pressing back" do
       given_i_have_completed_a_trn_request
       when_i_press_change_email
       and_i_press_back
@@ -277,7 +277,7 @@ RSpec.describe 'TRN requests', type: :system do
     end
   end
 
-  it 'refreshing the page and pressing back' do
+  it "refreshing the page and pressing back" do
     given_i_have_completed_a_trn_request
     when_i_press_change_email
     then_i_see_the_email_page
@@ -287,7 +287,7 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_check_answers_page
   end
 
-  it 'ITT provider validations' do
+  it "ITT provider validations" do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
     when_i_confirm_i_have_a_trn_number
@@ -312,14 +312,14 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_a_validation_error
   end
 
-  it 'no TRN' do
+  it "no TRN" do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
     when_i_choose_no_trn
     then_i_see_the_no_trn_page
   end
 
-  it 'taking longer than usual' do
+  it "taking longer than usual" do
     given_it_is_taking_longer_than_usual
     when_i_am_on_the_home_page
     when_i_press_the_start_button
@@ -330,7 +330,7 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_see_the_name_page
   end
 
-  it 'service is closed' do
+  it "service is closed" do
     given_the_service_is_closed
     and_i_visit_the_home_page
     then_i_should_not_see_the_home_page
@@ -344,8 +344,8 @@ RSpec.describe 'TRN requests', type: :system do
     then_i_should_see_the_home_page
   end
 
-  context 'when the use_dqt_api feature is enabled' do
-    it 'displays the TRN returned by the DQT API', vcr: true do
+  context "when the use_dqt_api feature is enabled" do
+    it "displays the TRN returned by the DQT API", vcr: true do
       given_the_use_dqt_api_feature_is_enabled
       when_i_have_completed_a_trn_request
       and_i_press_the_submit_button
@@ -354,7 +354,8 @@ RSpec.describe 'TRN requests', type: :system do
       and_i_receive_an_email_with_the_trn_number
     end
 
-    it 'shows the no match page and opens a Zendesk ticket when there is no match', vcr: true do
+    it "shows the no match page and opens a Zendesk ticket when there is no match",
+       vcr: true do
       given_the_use_dqt_api_feature_is_enabled
       when_i_have_completed_a_trn_request_that_wont_match
       and_i_press_the_submit_button
@@ -377,7 +378,7 @@ RSpec.describe 'TRN requests', type: :system do
       and_i_receive_an_email_with_the_zendesk_ticket_number
     end
 
-    it 'matches eagerly', vcr: true do
+    it "matches eagerly", vcr: true do
       given_the_use_dqt_api_feature_is_enabled
       given_i_am_on_the_home_page
       when_i_press_the_start_button
@@ -410,24 +411,28 @@ RSpec.describe 'TRN requests', type: :system do
   private
 
   def and_i_receive_an_email_with_the_trn_number
-    open_email('kevin@kevin.com')
-    expect(current_email.subject).to eq('Your TRN is 1275362')
+    open_email("kevin@kevin.com")
+    expect(current_email.subject).to eq("Your TRN is 1275362")
   end
 
   def and_i_receive_an_email_with_the_zendesk_ticket_number
-    open_email('kevin@kevin.com')
-    expect(current_email.subject).to eq('We’ve received the information you submitted')
-    expect(current_email.body).to include('give the helpdesk your ticket number: 42')
+    open_email("kevin@kevin.com")
+    expect(current_email.subject).to eq(
+      "We’ve received the information you submitted"
+    )
+    expect(current_email.body).to include(
+      "give the helpdesk your ticket number: 42"
+    )
   end
 
   def and_the_date_of_birth_is_prepopulated
-    expect(page).to have_field('Day', with: '1')
-    expect(page).to have_field('Month', with: '1')
-    expect(page).to have_field('Year', with: '1990')
+    expect(page).to have_field("Day", with: "1")
+    expect(page).to have_field("Month", with: "1")
+    expect(page).to have_field("Year", with: "1990")
   end
 
   def and_my_name_is_not_filled_in
-    expect(page).not_to have_field('First name', with: 'Kevin')
+    expect(page).not_to have_field("First name", with: "Kevin")
   end
 
   def given_i_am_on_the_home_page
@@ -454,7 +459,8 @@ RSpec.describe 'TRN requests', type: :system do
     when_i_fill_in_my_email_address
     and_i_press_continue
   end
-  alias_method :when_i_have_completed_a_trn_request, :given_i_have_completed_a_trn_request
+  alias_method :when_i_have_completed_a_trn_request,
+               :given_i_have_completed_a_trn_request
 
   def when_i_have_completed_a_trn_request_that_wont_match
     given_i_have_completed_a_trn_request
@@ -483,180 +489,216 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def then_i_see_a_message_to_check_my_email
-    expect(page).to have_content('We’ve sent it to')
+    expect(page).to have_content("We’ve sent it to")
   end
 
   def then_i_see_a_missing_previous_name_error
-    expect(page).to have_content('Enter a previous first name or last name')
+    expect(page).to have_content("Enter a previous first name or last name")
   end
 
   def then_i_see_the_ask_questions_page
-    expect(page).to have_current_path('/ask-questions')
-    expect(page.driver.browser.current_title).to start_with('We’ll ask you some questions to help find your TRN')
-    expect(page).to have_content('We’ll ask you some questions to help find your TRN')
+    expect(page).to have_current_path("/ask-questions")
+    expect(page.driver.browser.current_title).to start_with(
+      "We’ll ask you some questions to help find your TRN"
+    )
+    expect(page).to have_content(
+      "We’ll ask you some questions to help find your TRN"
+    )
   end
 
   def then_i_see_the_awarded_qts_page
-    expect(page).to have_current_path('/awarded-qts')
-    expect(page.driver.browser.current_title).to start_with('Have you been awarded qualified teacher status (QTS)?')
-    expect(page).to have_content('Have you been awarded qualified teacher status (QTS)?')
+    expect(page).to have_current_path("/awarded-qts")
+    expect(page.driver.browser.current_title).to start_with(
+      "Have you been awarded qualified teacher status (QTS)?"
+    )
+    expect(page).to have_content(
+      "Have you been awarded qualified teacher status (QTS)?"
+    )
   end
 
   def then_i_see_the_check_answers_page
-    expect(page).to have_current_path('/check-answers')
-    expect(page.driver.browser.current_title).to start_with('Check your answers')
-    expect(page).to have_content('Check your answers')
-    expect(page).to have_content('Kevin E')
-    expect(page).to have_content('kevin­@kevin­.com') # NB: This is kevin&shy;@kevin&shy;.com
-    expect(page).to have_content('Date of birth')
-    expect(page).to have_content('1 January 1990')
+    expect(page).to have_current_path("/check-answers")
+    expect(page.driver.browser.current_title).to start_with(
+      "Check your answers"
+    )
+    expect(page).to have_content("Check your answers")
+    expect(page).to have_content("Kevin E")
+    expect(page).to have_content("kevin­@kevin­.com") # NB: This is kevin&shy;@kevin&shy;.com
+    expect(page).to have_content("Date of birth")
+    expect(page).to have_content("1 January 1990")
   end
 
   def then_i_see_the_check_answers_page_with_not_matching_details
-    expect(page).to have_current_path('/check-answers')
-    expect(page.driver.browser.current_title).to start_with('Check your answers')
-    expect(page).to have_content('Check your answers')
+    expect(page).to have_current_path("/check-answers")
+    expect(page.driver.browser.current_title).to start_with(
+      "Check your answers"
+    )
+    expect(page).to have_content("Check your answers")
     and_i_see_my_not_matching_details
   end
 
   def then_i_see_my_not_matching_details
-    expect(page).to have_content('Do not Match me')
-    expect(page).to have_content('kevin­@kevin­.com') # NB: This is kevin&shy;@kevin&shy;.com
-    expect(page).to have_content('Date of birth')
-    expect(page).to have_content('1 January 1990')
+    expect(page).to have_content("Do not Match me")
+    expect(page).to have_content("kevin­@kevin­.com") # NB: This is kevin&shy;@kevin&shy;.com
+    expect(page).to have_content("Date of birth")
+    expect(page).to have_content("1 January 1990")
   end
-  alias_method :and_i_see_my_not_matching_details, :then_i_see_my_not_matching_details
+  alias_method :and_i_see_my_not_matching_details,
+               :then_i_see_my_not_matching_details
 
   def then_i_see_the_ni_missing_error
-    expect(page).to have_content('Tell us if you have a National Insurance number')
+    expect(page).to have_content(
+      "Tell us if you have a National Insurance number"
+    )
   end
 
   def then_i_see_the_updated_itt_provider
-    expect(page).to have_current_path('/check-answers')
-    expect(page).to have_content('Where did you get your QTS?')
-    expect(page).to have_content('Test ITT Provider')
+    expect(page).to have_current_path("/check-answers")
+    expect(page).to have_content("Where did you get your QTS?")
+    expect(page).to have_content("Test ITT Provider")
   end
 
   def then_i_see_the_check_trn_page
-    expect(page).to have_current_path('/check-trn')
-    expect(page.driver.browser.current_title).to start_with('Check if you have a TRN')
-    expect(page).to have_content('Check if you have a TRN')
+    expect(page).to have_current_path("/check-trn")
+    expect(page.driver.browser.current_title).to start_with(
+      "Check if you have a TRN"
+    )
+    expect(page).to have_content("Check if you have a TRN")
   end
 
   def then_i_see_the_zendesk_confirmation_page
-    expect(page.driver.browser.current_title).to start_with('We’ve received your request')
-    expect(page).to have_content('We’ve received your request')
-    expect(page).to have_content('give the helpdesk your request number: 42')
+    expect(page.driver.browser.current_title).to start_with(
+      "We’ve received your request"
+    )
+    expect(page).to have_content("We’ve received your request")
+    expect(page).to have_content("give the helpdesk your request number: 42")
   end
 
   def then_i_see_the_date_of_birth_page
-    expect(page).to have_current_path('/date-of-birth')
-    expect(page.driver.browser.current_title).to start_with('Your date of birth')
-    expect(page).to have_content('Your date of birth')
+    expect(page).to have_current_path("/date-of-birth")
+    expect(page.driver.browser.current_title).to start_with(
+      "Your date of birth"
+    )
+    expect(page).to have_content("Your date of birth")
   end
-  alias_method :then_i_am_redirected_to_the_date_of_birth_page, :then_i_see_the_date_of_birth_page
+  alias_method :then_i_am_redirected_to_the_date_of_birth_page,
+               :then_i_see_the_date_of_birth_page
 
   def then_i_see_the_email_page
-    expect(page).to have_current_path('/email')
-    expect(page.driver.browser.current_title).to start_with('Your email address')
-    expect(page).to have_content('Your email address')
+    expect(page).to have_current_path("/email")
+    expect(page.driver.browser.current_title).to start_with(
+      "Your email address"
+    )
+    expect(page).to have_content("Your email address")
   end
 
   def then_i_see_the_existing_name
-    expect(page).to have_field('First name', with: 'Kevin')
-    expect(page).to have_field('Last name', with: 'E')
+    expect(page).to have_field("First name", with: "Kevin")
+    expect(page).to have_field("Last name", with: "E")
   end
 
   def then_i_see_the_home_page
     expect(page).to have_current_path(start_path)
-    expect(page).to have_content(I18n.t('service.name'))
+    expect(page).to have_content(I18n.t("service.name"))
   end
 
   def then_i_see_the_itt_provider_page
-    expect(page).to have_current_path('/itt-provider')
-    expect(page.driver.browser.current_title).to start_with('Did a university, SCITT or school award your QTS?')
-    expect(page).to have_content('Did a university, SCITT or school award your QTS?')
+    expect(page).to have_current_path("/itt-provider")
+    expect(page.driver.browser.current_title).to start_with(
+      "Did a university, SCITT or school award your QTS?"
+    )
+    expect(page).to have_content(
+      "Did a university, SCITT or school award your QTS?"
+    )
   end
 
   def then_i_see_the_have_ni_page
-    expect(page).to have_current_path('/have-ni-number')
-    expect(page.driver.browser.current_title).to start_with('Do you have a National Insurance number?')
-    expect(page).to have_content('Do you have a National Insurance number?')
+    expect(page).to have_current_path("/have-ni-number")
+    expect(page.driver.browser.current_title).to start_with(
+      "Do you have a National Insurance number?"
+    )
+    expect(page).to have_content("Do you have a National Insurance number?")
   end
 
   def then_i_see_the_name_page
-    expect(page).to have_current_path('/name')
-    expect(page.driver.browser.current_title).to start_with('Your name')
-    expect(page).to have_content('Your name')
+    expect(page).to have_current_path("/name")
+    expect(page.driver.browser.current_title).to start_with("Your name")
+    expect(page).to have_content("Your name")
   end
   alias_method :then_i_am_redirected_to_the_name_page, :then_i_see_the_name_page
 
   def then_i_see_the_ni_number_page
-    expect(page).to have_current_path('/ni-number')
-    expect(page.driver.browser.current_title).to start_with('What is your National Insurance number?')
-    expect(page).to have_content('What is your National Insurance number?')
+    expect(page).to have_current_path("/ni-number")
+    expect(page.driver.browser.current_title).to start_with(
+      "What is your National Insurance number?"
+    )
+    expect(page).to have_content("What is your National Insurance number?")
   end
 
   def then_i_see_the_ni_number_missing_error
-    expect(page).to have_content('Enter a National Insurance number')
+    expect(page).to have_content("Enter a National Insurance number")
   end
 
   def then_i_see_the_no_trn_page
-    expect(page).to have_current_path('/you-dont-have-a-trn')
-    expect(page.driver.browser.current_title).to start_with('If you do not have a TRN')
-    expect(page).to have_content('If you do not have a TRN')
+    expect(page).to have_current_path("/you-dont-have-a-trn")
+    expect(page.driver.browser.current_title).to start_with(
+      "If you do not have a TRN"
+    )
+    expect(page).to have_content("If you do not have a TRN")
   end
 
   def then_i_see_the_taking_longer_page
-    expect(page).to have_current_path('/longer-than-normal')
+    expect(page).to have_current_path("/longer-than-normal")
   end
 
   def then_i_see_the_updated_email_address
-    expect(page).to have_content('new@example.com')
+    expect(page).to have_content("new@example.com")
   end
 
   def then_i_see_the_updated_name
-    expect(page).to have_content('Kevin Smith')
+    expect(page).to have_content("Kevin Smith")
   end
 
   def then_i_see_the_updated_ni_number
-    expect(page).to have_content('QQ 12 34 56 C')
+    expect(page).to have_content("QQ 12 34 56 C")
   end
 
   def then_i_see_a_validation_error
-    expect(page).to have_content('There is a problem')
+    expect(page).to have_content("There is a problem")
   end
 
   def then_i_see_the_no_match_validation_error
-    expect(page).to have_content('There is a problem')
-    expect(page).to have_content('Choose if you want to try different details, or keep the current ones')
+    expect(page).to have_content("There is a problem")
+    expect(page).to have_content(
+      "Choose if you want to try different details, or keep the current ones"
+    )
   end
 
   def then_i_see_the_no_match_page
-    expect(page).to have_content('We could not find your TRN')
+    expect(page).to have_content("We could not find your TRN")
   end
 
   def then_i_see_no_qts_awarded
-    expect(page).to have_current_path('/check-answers')
-    expect(page).to have_content('Have you been awarded QTS?')
-    expect(page).to have_content('No')
-    expect(page).not_to have_content('Where did you get your QTS?')
+    expect(page).to have_current_path("/check-answers")
+    expect(page).to have_content("Have you been awarded QTS?")
+    expect(page).to have_content("No")
+    expect(page).not_to have_content("Where did you get your QTS?")
   end
 
   def then_i_should_see_the_home_page
-    expect(page).to have_content('Find a lost teacher reference number')
+    expect(page).to have_content("Find a lost teacher reference number")
   end
 
   def then_i_should_not_see_the_home_page
-    expect(page).not_to have_content('Find a lost teacher reference number')
+    expect(page).not_to have_content("Find a lost teacher reference number")
   end
 
   def then_no_should_be_checked
-    expect(find_field('No', checked: true, visible: false)).to be_truthy
+    expect(find_field("No", checked: true, visible: false)).to be_truthy
   end
 
   def then_yes_should_be_checked
-    expect(find_field('Yes', checked: true, visible: false)).to be_truthy
+    expect(find_field("Yes", checked: true, visible: false)).to be_truthy
   end
 
   def when_i_am_on_the_check_answers_page
@@ -684,142 +726,145 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def when_i_choose_no_itt_provider
-    choose 'No, I was awarded QTS another way', visible: false
+    choose "No, I was awarded QTS another way", visible: false
     when_i_press_continue
   end
 
   def when_i_choose_no_trn
-    choose 'No', visible: false
+    choose "No", visible: false
     when_i_press_continue
   end
 
   def when_i_confirm_i_have_a_trn_number
-    choose 'Yes', visible: false
+    choose "Yes", visible: false
     when_i_press_continue
   end
 
   def when_i_enter_a_new_name
-    fill_in 'First name', with: 'Kevin'
-    fill_in 'Last name', with: 'Smith'
-    check 'I’ve changed my name since I received my TRN', visible: false
+    fill_in "First name", with: "Kevin"
+    fill_in "Last name", with: "Smith"
+    check "I’ve changed my name since I received my TRN", visible: false
     when_i_press_continue
     then_i_see_a_missing_previous_name_error
-    fill_in 'Previous last name', with: 'Evans'
+    fill_in "Previous last name", with: "Evans"
     when_i_press_continue
   end
 
   def when_i_fill_in_the_name_form
-    fill_in 'First name', with: 'Kevin'
-    fill_in 'Last name', with: 'E'
+    fill_in "First name", with: "Kevin"
+    fill_in "Last name", with: "E"
     when_i_press_continue
   end
 
   def when_i_fill_in_the_name_form_with_data_that_will_not_match
-    fill_in 'First name', with: 'Do not'
-    fill_in 'Last name', with: 'Match me'
+    fill_in "First name", with: "Do not"
+    fill_in "Last name", with: "Match me"
     when_i_press_continue
   end
 
   def when_i_fill_in_my_itt_provider
-    choose 'Yes', visible: false
-    fill_in 'Where did you get your QTS?', with: 'Test ITT Provider', visible: false
+    choose "Yes", visible: false
+    fill_in "Where did you get your QTS?",
+            with: "Test ITT Provider",
+            visible: false
   end
   alias_method :and_i_fill_in_my_itt_provider, :when_i_fill_in_my_itt_provider
 
   def when_i_fill_in_my_ni_number
-    fill_in 'What is your National Insurance number?', with: 'QQ123456C'
+    fill_in "What is your National Insurance number?", with: "QQ123456C"
   end
   alias_method :and_i_fill_in_my_ni_number, :when_i_fill_in_my_ni_number
 
   def when_i_choose_no
-    choose 'No', visible: false
+    choose "No", visible: false
   end
   alias_method :and_i_choose_no, :when_i_choose_no
 
   def when_i_choose_yes
-    choose 'Yes', visible: false
+    choose "Yes", visible: false
   end
   alias_method :and_i_choose_yes, :when_i_choose_yes
 
   def when_i_press_continue
-    click_on 'Continue'
+    click_on "Continue"
   end
   alias_method :and_i_press_continue, :when_i_press_continue
 
   def when_i_choose_yes_to_ni_number
-    choose 'Yes', visible: false
-    click_on 'Continue'
+    choose "Yes", visible: false
+    click_on "Continue"
   end
 
   def when_i_choose_yes_i_have_different_details
-    choose 'Yes, I have different details I can try', visible: false
+    choose "Yes, I have different details I can try", visible: false
   end
 
   def when_i_choose_no_my_details_are_correct
-    choose 'No, submit these details, they are correct', visible: false
+    choose "No, submit these details, they are correct", visible: false
   end
 
   def when_i_enter_a_valid_ni_number
-    fill_in 'What is your National Insurance number?', with: 'QQ123456C'
-    click_on 'Continue'
+    fill_in "What is your National Insurance number?", with: "QQ123456C"
+    click_on "Continue"
   end
 
   def when_i_complete_my_date_of_birth
-    fill_in 'Day', with: '01'
-    fill_in 'Month', with: '01'
-    fill_in 'Year', with: '1990'
-    click_on 'Continue'
+    fill_in "Day", with: "01"
+    fill_in "Month", with: "01"
+    fill_in "Year", with: "1990"
+    click_on "Continue"
   end
 
   def when_i_press_back
-    click_on 'Back'
+    click_on "Back"
   end
   alias_method :and_i_press_back, :when_i_press_back
 
   def when_i_fill_in_my_email_address
-    fill_in 'Your email address', with: 'kevin@kevin.com'
+    fill_in "Your email address", with: "kevin@kevin.com"
   end
   alias_method :and_i_fill_in_my_email_address, :when_i_fill_in_my_email_address
 
   def when_i_fill_in_my_new_email_address
-    fill_in 'Your email address', with: 'new@example.com'
+    fill_in "Your email address", with: "new@example.com"
   end
-  alias_method :and_i_fill_in_my_new_email_address, :when_i_fill_in_my_new_email_address
+  alias_method :and_i_fill_in_my_new_email_address,
+               :when_i_fill_in_my_new_email_address
 
   def when_i_press_change_date_of_birth
-    click_on 'Change date of birth'
+    click_on "Change date of birth"
   end
 
   def when_i_press_change_email
-    click_on 'Change email address'
+    click_on "Change email address"
   end
 
   def when_i_press_change_awarded_qts
-    click_on 'Change awarded QTS'
+    click_on "Change awarded QTS"
   end
 
   def when_i_press_change_itt_provider
-    click_on 'Change teacher training provider'
+    click_on "Change teacher training provider"
   end
 
   def when_i_press_change_name
-    click_on 'Change name'
+    click_on "Change name"
   end
 
   def when_i_press_change_ni_number
-    click_on 'Change national insurance number'
+    click_on "Change national insurance number"
   end
 
   def when_i_press_continue
-    click_on 'Continue'
+    click_on "Continue"
   end
 
   def when_i_press_the_start_button
-    click_on 'Start now'
+    click_on "Start now"
   end
 
   def when_i_press_the_submit_button
-    click_on 'Submit'
+    click_on "Submit"
   end
   alias_method :and_i_press_the_submit_button, :when_i_press_the_submit_button
 
@@ -852,15 +897,18 @@ RSpec.describe 'TRN requests', type: :system do
   end
 
   def when_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize('test', 'test')
+    page.driver.basic_authorize("test", "test")
   end
 
   def when_i_click_on_the_forgotten_ni_number_link
-    find('.govuk-details__summary-text', text: 'I don’t know my National Insurance number').click
+    find(
+      ".govuk-details__summary-text",
+      text: "I don’t know my National Insurance number"
+    ).click
   end
 
   def and_i_press_continue_without_it
-    click_on 'Continue without it'
+    click_on "Continue without it"
   end
 
   def when_i_navigate_to_the_name_page

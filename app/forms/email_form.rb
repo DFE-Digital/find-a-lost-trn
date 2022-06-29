@@ -21,6 +21,6 @@ class EmailForm
     end
 
     trn_request.email = email
-    trn_request.save
+    trn_request.save!
   end
 end

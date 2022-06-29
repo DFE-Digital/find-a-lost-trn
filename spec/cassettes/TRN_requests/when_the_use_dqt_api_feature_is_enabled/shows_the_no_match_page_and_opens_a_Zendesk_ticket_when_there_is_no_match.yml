@@ -5,7 +5,7 @@ http_interactions:
       uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Do%20not&ittProviderName&lastName=Match%20me&nationalInsuranceNumber&previousFirstName&previousLastName
       body:
         encoding: US-ASCII
-        string: ''
+        string: ""
       headers:
         User-Agent:
           - Faraday v1.10.0
@@ -14,7 +14,7 @@ http_interactions:
         Accept-Encoding:
           - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
         Accept:
-          - '*/*'
+          - "*/*"
     response:
       status:
         code: 200
@@ -37,13 +37,13 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - '299'
+          - "299"
         X-Rate-Limit-Reset:
-          - '2022-04-14T12:55:00.0000000Z'
+          - "2022-04-14T12:55:00.0000000Z"
         X-Vcap-Request-Id:
           - bac61863-d3fa-495c-4174-9ba55a40f05d
         X-Xss-Protection:
-          - '0'
+          - "0"
         X-Cache:
           - Miss from cloudfront
         Via:
@@ -61,7 +61,7 @@ http_interactions:
       uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Do%20not&ittProviderName&lastName=Match%20me&nationalInsuranceNumber&previousFirstName&previousLastName
       body:
         encoding: US-ASCII
-        string: ''
+        string: ""
       headers:
         User-Agent:
           - Faraday v1.10.0
@@ -70,7 +70,7 @@ http_interactions:
         Accept-Encoding:
           - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
         Accept:
-          - '*/*'
+          - "*/*"
     response:
       status:
         code: 200
@@ -93,13 +93,13 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - '298'
+          - "298"
         X-Rate-Limit-Reset:
-          - '2022-04-14T12:55:00.0000000Z'
+          - "2022-04-14T12:55:00.0000000Z"
         X-Vcap-Request-Id:
           - 768fa711-9091-4c89-4a14-5d6367d75378
         X-Xss-Protection:
-          - '0'
+          - "0"
         X-Cache:
           - Miss from cloudfront
         Via:

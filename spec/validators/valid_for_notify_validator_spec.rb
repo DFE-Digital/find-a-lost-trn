@@ -1,16 +1,16 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ValidForNotifyValidator do
   before do
-    stub_const('Validatable', Class.new).class_eval do
+    stub_const("Validatable", Class.new).class_eval do
       include ActiveModel::Validations
       attr_accessor :email_address
       validates :email_address, valid_for_notify: true
     end
   end
 
-  context 'when an email address has a valid format' do
+  context "when an email address has a valid format" do
     let(:model) { Validatable.new }
     let(:valid_emails) do
       %w[
@@ -33,7 +33,7 @@ RSpec.describe ValidForNotifyValidator do
       ]
     end
 
-    it 'returns valid' do
+    it "returns valid" do
       valid_emails.each do |email|
         model.email_address = email
         model.validate(:no_context)
@@ -42,40 +42,40 @@ RSpec.describe ValidForNotifyValidator do
     end
   end
 
-  context 'when an email address is in an invalid format' do
+  context "when an email address is in an invalid format" do
     let(:model) { Validatable.new }
     let(:invalid_emails) do
       [
-        'email@[123.123.123.123]',
-        'plainaddress',
-        '@no-local-part.com',
-        'Outlook Contact <outlook-contact@domain.com>',
-        'no-at.domain.com',
-        'no-tld@domain',
-        ';beginning-semicolon@domain.co.uk',
-        'middle-semicolon@domain.co;uk',
-        'trailing-semicolon@domain.com;',
+        "email@[123.123.123.123]",
+        "plainaddress",
+        "@no-local-part.com",
+        "Outlook Contact <outlook-contact@domain.com>",
+        "no-at.domain.com",
+        "no-tld@domain",
+        ";beginning-semicolon@domain.co.uk",
+        "middle-semicolon@domain.co;uk",
+        "trailing-semicolon@domain.com;",
         '"email+leading-quotes@domain.com',
         'email+middle"-quotes@domain.com',
         '"quoted-local-part"@domain.com',
         '"quoted@domain.com"',
-        'lots-of-dots@domain..gov..uk',
-        'multiple@domains@domain.com',
-        'spaces in local@domain.com',
-        'spaces-in-domain@dom ain.com',
-        'underscores-in-domain@dom_ain.com',
-        'pipe-in-domain@example.com|gov.uk',
-        'comma,in-local@gov.uk',
-        'comma-in-domain@domain,gov.uk',
-        'pound-sign-in-local£@domain.com',
-        'local-with-’-apostrophe@domain.com',
-        'local-with-”-quotes@domain.com',
-        'domain-starts-with-a-dot@.domain.com',
-        'brackets(in)local@domain.com',
+        "lots-of-dots@domain..gov..uk",
+        "multiple@domains@domain.com",
+        "spaces in local@domain.com",
+        "spaces-in-domain@dom ain.com",
+        "underscores-in-domain@dom_ain.com",
+        "pipe-in-domain@example.com|gov.uk",
+        "comma,in-local@gov.uk",
+        "comma-in-domain@domain,gov.uk",
+        "pound-sign-in-local£@domain.com",
+        "local-with-’-apostrophe@domain.com",
+        "local-with-”-quotes@domain.com",
+        "domain-starts-with-a-dot@.domain.com",
+        "brackets(in)local@domain.com"
       ]
     end
 
-    it 'returns invalid' do
+    it "returns invalid" do
       invalid_emails.each do |email|
         model.email_address = email
         model.validate(:no_context)
@@ -83,11 +83,11 @@ RSpec.describe ValidForNotifyValidator do
       end
     end
 
-    it 'returns the correct error message' do
-      model.email_address = 'foo'
+    it "returns the correct error message" do
+      model.email_address = "foo"
       model.validate(:no_context)
       expect(model.errors[:email_address]).to include(
-        'Enter an email address in the correct format, like name@example.com',
+        "Enter an email address in the correct format, like name@example.com"
       )
     end
   end

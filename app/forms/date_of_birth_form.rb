@@ -14,11 +14,12 @@ class DateOfBirthForm
     @date_of_birth ||= trn_request&.date_of_birth
   end
 
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
   def update(params = {})
-    date_fields = [params['date_of_birth(1i)'], params['date_of_birth(2i)'], params['date_of_birth(3i)']]
+    date_fields = [
+      params["date_of_birth(1i)"],
+      params["date_of_birth(2i)"],
+      params["date_of_birth(3i)"]
+    ]
 
     date_fields.map! { |f| f.is_a?(String) ? f.strip : f }
 
@@ -30,39 +31,40 @@ class DateOfBirthForm
     year, month, day = date_fields.map { |f| word_to_number(f) }.map(&:to_i)
 
     if day.zero? && month.zero? && year.zero?
-      errors.add(:date_of_birth, t('blank'))
+      errors.add(:date_of_birth, t("blank"))
       log_errors
       return false
     end
 
     if day.zero?
-      errors.add(:date_of_birth, t('missing_day'))
+      errors.add(:date_of_birth, t("missing_day"))
       log_errors
       return false
     end
 
-    month = Date.parse(date_fields[1]).month if month.zero? && date_fields[1].length.positive?
+    month = Date.parse(date_fields[1]).month if month.zero? &&
+      date_fields[1].length.positive?
 
     if month.zero?
-      errors.add(:date_of_birth, t('missing_month'))
+      errors.add(:date_of_birth, t("missing_month"))
       log_errors
       return false
     end
 
     if year < 1000
-      errors.add(:date_of_birth, t('missing_year'))
+      errors.add(:date_of_birth, t("missing_year"))
       log_errors
       return false
     end
 
     if year < 1900
-      errors.add(:date_of_birth, t('born_after_1900'))
+      errors.add(:date_of_birth, t("born_after_1900"))
       log_errors
       return false
     end
 
     if year > Time.zone.today.year
-      errors.add(:date_of_birth, t('in_the_future'))
+      errors.add(:date_of_birth, t("in_the_future"))
       log_errors
       return false
     end
@@ -70,13 +72,13 @@ class DateOfBirthForm
     begin
       self.date_of_birth = Date.new(year, month, day)
     rescue Date::Error
-      errors.add(:date_of_birth, t('blank'))
+      errors.add(:date_of_birth, t("blank"))
       log_errors
       return false
     end
 
     if date_of_birth > 16.years.ago
-      errors.add(:date_of_birth, t('inclusion'))
+      errors.add(:date_of_birth, t("inclusion"))
       log_errors
       return false
     end
@@ -86,17 +88,15 @@ class DateOfBirthForm
       return false
     end
 
-    trn_request.update!(date_of_birth: date_of_birth)
+    trn_request.update!(date_of_birth:)
   end
-
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
 
   private
 
   def t(str)
-    I18n.t("activemodel.errors.models.date_of_birth_form.attributes.date_of_birth.#{str}")
+    I18n.t(
+      "activemodel.errors.models.date_of_birth_form.attributes.date_of_birth.#{str}"
+    )
   end
 
   def word_to_number(field)
@@ -114,7 +114,7 @@ class DateOfBirthForm
       nine: 9,
       ten: 10,
       eleven: 11,
-      twelve: 12,
+      twelve: 12
     }
 
     words[field.downcase.to_sym] || field

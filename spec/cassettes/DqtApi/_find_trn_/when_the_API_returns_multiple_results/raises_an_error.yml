@@ -5,7 +5,7 @@ http_interactions:
       uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=test@example.com&firstName=John&ittProviderName&lastName=Smith&nationalInsuranceNumber=QQ123456C&previousFirstName&previousLastName
       body:
         encoding: US-ASCII
-        string: ''
+        string: ""
       headers:
         User-Agent:
           - Faraday v1.10.0
@@ -14,7 +14,7 @@ http_interactions:
         Accept-Encoding:
           - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
         Accept:
-          - '*/*'
+          - "*/*"
     response:
       status:
         code: 200
@@ -37,13 +37,13 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - '299'
+          - "299"
         X-Rate-Limit-Reset:
-          - '2022-04-01T10:44:00.0000000Z'
+          - "2022-04-01T10:44:00.0000000Z"
         X-Vcap-Request-Id:
           - d1986d57-7b7f-4f34-58ac-fe7b6e8f24b0
         X-Xss-Protection:
-          - '0'
+          - "0"
         X-Cache:
           - Miss from cloudfront
         Via:

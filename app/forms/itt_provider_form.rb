@@ -6,7 +6,12 @@ class IttProviderForm
   attr_accessor :trn_request, :itt_provider_enrolled, :itt_provider_name
 
   validates :itt_provider_enrolled, inclusion: { in: %w[true false] }
-  validates :itt_provider_name, presence: true, length: { maximum: 255 }, if: -> { itt_provider_enrolled == 'true' }
+  validates :itt_provider_name,
+            presence: true,
+            length: {
+              maximum: 255
+            },
+            if: -> { itt_provider_enrolled == "true" }
 
   def save
     if invalid?
@@ -14,7 +19,7 @@ class IttProviderForm
       return false
     end
 
-    trn_request.update(itt_provider_enrolled: itt_provider_enrolled, itt_provider_name: itt_provider_name)
+    trn_request.update!(itt_provider_enrolled:, itt_provider_name:)
   end
 
   def assign_form_values

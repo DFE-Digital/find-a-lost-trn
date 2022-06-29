@@ -4,15 +4,15 @@ inputs:
   skip-ruby:
     description: Allows skipping Ruby setup for jobs where it isn't required
     required: false
-    default: 'false'
+    default: "false"
   skip-node:
     description: Allows skipping Node.js setup for jobs where it isn't required
     required: false
-    default: 'false'
+    default: "false"
   node-version:
     description: The version of Node.js to install
     required: false
-    default: '12.x'
+    default: "12.x"
 
 runs:
   using: composite

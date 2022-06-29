@@ -9,7 +9,7 @@ FactoryBot.define do
 
     trait :has_ni_number do
       has_ni_number { true }
-      ni_number { 'QQ123456C' }
+      ni_number { "QQ123456C" }
     end
 
     trait :has_itt_provider do

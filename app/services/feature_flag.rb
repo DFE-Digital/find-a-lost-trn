@@ -9,23 +9,37 @@ class FeatureFlag
   end
 
   def feature
-    Feature.find_or_initialize_by(name: name)
+    Feature.find_or_initialize_by(name:)
   end
 
   PERMANENT_SETTINGS = [].freeze
 
   TEMPORARY_FEATURE_FLAGS = [
-    [:dqt_api_always_timeout, 'Always time-out the DQT API', 'Felix Clack'],
-    [:log_validation_errors, 'Log validation errors', 'Felix Clack'],
-    [:processing_delays, 'Show users banners and interstitials warning them of increased waiting times', 'Felix Clack'],
-    [:service_open, 'Allow users to access the service and submit TRN Requests', 'Theodor Vararu'],
-    [:use_dqt_api, 'Use DQT API to find TRN', 'Felix Clack'],
-    [:zendesk_integration, 'Submit tickets to Zendesk on behalf of users at the end of the journey', 'Theodor Vararu'],
+    [:dqt_api_always_timeout, "Always time-out the DQT API", "Felix Clack"],
+    [:log_validation_errors, "Log validation errors", "Felix Clack"],
+    [
+      :processing_delays,
+      "Show users banners and interstitials warning them of increased waiting times",
+      "Felix Clack"
+    ],
+    [
+      :service_open,
+      "Allow users to access the service and submit TRN Requests",
+      "Theodor Vararu"
+    ],
+    [:use_dqt_api, "Use DQT API to find TRN", "Felix Clack"],
+    [
+      :zendesk_integration,
+      "Submit tickets to Zendesk on behalf of users at the end of the journey",
+      "Theodor Vararu"
+    ]
   ].freeze
 
   FEATURES =
     (PERMANENT_SETTINGS + TEMPORARY_FEATURE_FLAGS)
-      .to_h { |name, description, owner| [name, FeatureFlag.new(name: name, description: description, owner: owner)] }
+      .to_h do |name, description, owner|
+        [name, FeatureFlag.new(name:, description:, owner:)]
+      end
       .with_indifferent_access
       .freeze
 
@@ -55,6 +69,10 @@ class FeatureFlag
   end
 
   def self.feature_statuses
-    Feature.where(name: FEATURES.keys).pluck(:name, :active).to_h.with_indifferent_access
+    Feature
+      .where(name: FEATURES.keys)
+      .pluck(:name, :active)
+      .to_h
+      .with_indifferent_access
   end
 end

@@ -5,7 +5,7 @@ http_interactions:
       uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1999-05-05&emailAddress&firstName=Audrey&ittProviderName&lastName=Coady&nationalInsuranceNumber=JN123456A&previousFirstName&previousLastName
       body:
         encoding: US-ASCII
-        string: ''
+        string: ""
       headers:
         User-Agent:
           - Faraday v1.10.0
@@ -14,7 +14,7 @@ http_interactions:
         Accept-Encoding:
           - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
         Accept:
-          - '*/*'
+          - "*/*"
     response:
       status:
         code: 200
@@ -37,13 +37,13 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - '299'
+          - "299"
         X-Rate-Limit-Reset:
-          - '2022-05-04T08:48:00.0000000Z'
+          - "2022-05-04T08:48:00.0000000Z"
         X-Vcap-Request-Id:
           - 938fde74-a1f4-4171-4da6-2b3e1ad914e5
         X-Xss-Protection:
-          - '0'
+          - "0"
         X-Cache:
           - Miss from cloudfront
         Via:

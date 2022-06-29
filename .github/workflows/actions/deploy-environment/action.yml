@@ -2,21 +2,21 @@ name: Deploy PAAS environment
 
 inputs:
   environment_name:
-    description: 'The name of the environment'
+    description: "The name of the environment"
     required: true
   docker_image:
-    description: 'The Docker image to deploy to the environment'
+    description: "The Docker image to deploy to the environment"
     required: true
   azure_credentials:
-    description: 'JSON object containing a service principal that can read from Azure Key Vault'
+    description: "JSON object containing a service principal that can read from Azure Key Vault"
     required: true
   terraform_vars:
-    description: 'Path to the tfvars file for the environment'
+    description: "Path to the tfvars file for the environment"
     required: true
 
 outputs:
   environment_url:
-    description: 'The base URL for the deployed environment'
+    description: "The base URL for the deployed environment"
     value: ${{ steps.terraform.outputs.url }}
 
 runs:
@@ -54,7 +54,7 @@ runs:
       id: get_secrets
       with:
         keyvault: ${{ steps.config.outputs.key_vault_name }}
-        secrets: 'TFSTATE-CONTAINER-ACCESS-KEY,PAAS-USER,PAAS-PASSWORD'
+        secrets: "TFSTATE-CONTAINER-ACCESS-KEY,PAAS-USER,PAAS-PASSWORD"
 
     - uses: hashicorp/setup-terraform@v1
       with:

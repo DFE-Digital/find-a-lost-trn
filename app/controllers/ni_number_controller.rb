@@ -3,12 +3,14 @@ class NiNumberController < ApplicationController
   include EnforceQuestionOrder
 
   def new
-    @has_ni_number_form = HasNiNumberForm.new(trn_request: trn_request)
+    @has_ni_number_form = HasNiNumberForm.new(trn_request:)
   end
 
   def create
-    @has_ni_number_form = HasNiNumberForm.new(trn_request: trn_request)
-    if @has_ni_number_form.update(has_ni_number: params[:has_ni_number_form][:has_ni_number])
+    @has_ni_number_form = HasNiNumberForm.new(trn_request:)
+    if @has_ni_number_form.update(
+         has_ni_number: params[:has_ni_number_form][:has_ni_number]
+       )
       session[:trn_request_id] = trn_request.id
       redirect_to trn_request.has_ni_number? ? ni_number_url : awarded_qts_url
     else
@@ -19,7 +21,7 @@ class NiNumberController < ApplicationController
   def edit
   end
 
-  def update # rubocop:disable Metrics/AbcSize
+  def update
     if ni_number.update(ni_number_params)
       begin
         find_trn_using_api unless trn_request.trn
@@ -40,7 +42,7 @@ class NiNumberController < ApplicationController
   private
 
   def ni_number
-    @ni_number ||= NiNumberForm.new(trn_request: trn_request)
+    @ni_number ||= NiNumberForm.new(trn_request:)
   end
   helper_method :ni_number
 
@@ -50,7 +52,10 @@ class NiNumberController < ApplicationController
 
   def find_trn_using_api
     response = DqtApi.find_trn!(trn_request)
-    trn_request.update(trn: response['trn'], has_active_sanctions: response['hasActiveSanctions'])
+    trn_request.update!(
+      trn: response["trn"],
+      has_active_sanctions: response["hasActiveSanctions"]
+    )
   end
 
   def trn_request

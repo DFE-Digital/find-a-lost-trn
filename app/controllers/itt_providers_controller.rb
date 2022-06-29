@@ -3,11 +3,11 @@ class IttProvidersController < ApplicationController
   include EnforceQuestionOrder
 
   def new
-    @awarded_qts_form = AwardedQtsForm.new(trn_request: trn_request)
+    @awarded_qts_form = AwardedQtsForm.new(trn_request:)
   end
 
   def create
-    @awarded_qts_form = AwardedQtsForm.new(trn_request: trn_request)
+    @awarded_qts_form = AwardedQtsForm.new(trn_request:)
     if @awarded_qts_form.update(awarded_qts_params)
       next_url =
         if trn_request.reload.awarded_qts
@@ -22,7 +22,7 @@ class IttProvidersController < ApplicationController
   end
 
   def edit
-    @itt_provider_form = IttProviderForm.new(trn_request: trn_request).assign_form_values
+    @itt_provider_form = IttProviderForm.new(trn_request:).assign_form_values
   end
 
   def update
@@ -44,6 +44,6 @@ class IttProvidersController < ApplicationController
     params
       .require(:itt_provider_form)
       .permit(:itt_provider_enrolled, :itt_provider_name)
-      .merge(trn_request: trn_request)
+      .merge(trn_request:)
   end
 end
