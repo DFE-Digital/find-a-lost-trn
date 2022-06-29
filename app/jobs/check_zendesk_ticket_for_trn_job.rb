@@ -2,7 +2,7 @@
 class CheckZendeskTicketForTrnJob < ApplicationJob
   def perform(trn_request_id)
     trn_request = TrnRequest.find(trn_request_id)
-    return if FetchTrnFromZendesk.new(trn_request: trn_request).call
+    return if FetchTrnFromZendesk.new(trn_request:).call
 
     ticket = GDS_ZENDESK_CLIENT.ticket.find(id: trn_request.zendesk_ticket_id)
     return if %w[closed solved].include?(ticket.status)

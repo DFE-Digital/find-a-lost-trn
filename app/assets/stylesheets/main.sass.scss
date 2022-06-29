@@ -1,7 +1,7 @@
 $govuk-global-styles: true;
 $govuk-new-link-styles: true;
 
-@import 'govuk-frontend/govuk/all';
+@import "govuk-frontend/govuk/all";
 
 .app-\!-inherit-colour {
   color: inherit;

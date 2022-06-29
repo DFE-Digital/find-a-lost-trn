@@ -1,20 +1,26 @@
 # frozen_string_literal: true
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
-ENV['RAILS_ENV'] ||= 'test'
-require_relative '../config/environment'
+require "spec_helper"
+ENV["RAILS_ENV"] ||= "test"
+require_relative "../config/environment"
 # Prevent database truncation if the environment is production
-abort('The Rails environment is running in production mode!') if Rails.env.production?
-require 'rspec/rails'
+if Rails.env.production?
+  abort("The Rails environment is running in production mode!")
+end
+require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
-require 'capybara/cuprite'
-require 'sidekiq/testing'
-require 'vcr'
-require 'view_component/test_helpers'
+require "capybara/cuprite"
+require "sidekiq/testing"
+require "vcr"
+require "view_component/test_helpers"
 
 Capybara.register_driver(:cuprite) do |app|
-  Capybara::Cuprite::Driver.new(app, process_timeout: 30, window_size: [1200, 800])
+  Capybara::Cuprite::Driver.new(
+    app,
+    process_timeout: 30,
+    window_size: [1200, 800]
+  )
 end
 Capybara.default_driver = :cuprite
 Capybara.javascript_driver = :cuprite
@@ -43,7 +49,7 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
-Faker::Config.locale = 'en-GB'
+Faker::Config.locale = "en-GB"
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -96,18 +102,18 @@ Shoulda::Matchers.configure do |config|
 end
 
 VCR.configure do |config|
-  config.cassette_library_dir = 'spec/cassettes'
+  config.cassette_library_dir = "spec/cassettes"
   config.hook_into :webmock
   config.configure_rspec_metadata!
   config.ignore_localhost = true
   config.default_cassette_options = { record: :once, erb: true }
 
-  config.filter_sensitive_data('<BEARER_TOKEN_REDACTED>') do |interaction|
-    auths = interaction.request.headers['Authorization'].first
+  config.filter_sensitive_data("<BEARER_TOKEN_REDACTED>") do |interaction|
+    auths = interaction.request.headers["Authorization"].first
     if (match = auths.match(/^Bearer\s+([^,\s]+)/))
       match.captures.first
     end
   end
 end
 
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }

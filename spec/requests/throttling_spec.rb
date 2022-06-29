@@ -1,12 +1,14 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Throttling', rack_attack: true do
+RSpec.describe "Throttling", rack_attack: true do
   before { FeatureFlag.activate(:service_open) }
 
-  shared_examples 'throttled' do |path|
+  shared_examples "throttled" do |path|
     context path do
-      subject(:cache_count) { Rack::Attack.cache.count('requests by IP address:127.0.0.1', 1.minute) }
+      subject(:cache_count) do
+        Rack::Attack.cache.count("requests by IP address:127.0.0.1", 1.minute)
+      end
 
       before { get path }
 
@@ -25,5 +27,5 @@ RSpec.describe 'Throttling', rack_attack: true do
     /check-answers
     /check-trn
     /support
-  ].each { |path| include_examples 'throttled', path }
+  ].each { |path| include_examples "throttled", path }
 end

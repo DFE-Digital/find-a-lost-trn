@@ -1,12 +1,12 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Performance', type: :system do
+RSpec.describe "Performance", type: :system do
   before { Timecop.freeze(Date.new(2022, 5, 12)) }
 
   after { Timecop.return }
 
-  it 'using the performance dashboard' do
+  it "using the performance dashboard" do
     given_the_service_is_open
     given_there_are_a_few_trns
     when_i_visit_the_performance_page
@@ -23,7 +23,9 @@ RSpec.describe 'Performance', type: :system do
   end
 
   def given_there_are_a_few_trns
-    (0..8).each.with_index { |n, i| (i + 1).times { create(:trn_request, created_at: n.days.ago) } }
+    (0..8).each.with_index do |n, i|
+      (i + 1).times { create(:trn_request, created_at: n.days.ago) }
+    end
   end
 
   def when_i_visit_the_performance_page

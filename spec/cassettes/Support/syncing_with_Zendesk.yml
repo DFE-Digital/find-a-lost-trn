@@ -5,7 +5,7 @@ http_interactions:
       uri: https://preprod-teacher-qualifications-api.education.gov.uk/v1/teachers/2921020?birthdate=1990-01-01
       body:
         encoding: US-ASCII
-        string: ''
+        string: ""
       headers:
         User-Agent:
           - Faraday v1.10.0
@@ -14,7 +14,7 @@ http_interactions:
         Accept-Encoding:
           - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
         Accept:
-          - '*/*'
+          - "*/*"
     response:
       status:
         code: 200
@@ -37,13 +37,13 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - '299'
+          - "299"
         X-Rate-Limit-Reset:
-          - '2022-06-13T10:27:00.0000000Z'
+          - "2022-06-13T10:27:00.0000000Z"
         X-Vcap-Request-Id:
           - 83d63ae5-95c0-4dac-6deb-412fc002dfad
         X-Xss-Protection:
-          - '0'
+          - "0"
         X-Cache:
           - Miss from cloudfront
         Via:
@@ -54,7 +54,8 @@ http_interactions:
           - vRiNAe1RcFYznNfR40d3r-inlq0uC0dYYK8LH5dINyZaJBsydP2vUg==
       body:
         encoding: UTF-8
-        string: '{"trn":"2921020","ni_number":"AA123456A","qualified_teacher_status":{"name":"Trainee
+        string:
+          '{"trn":"2921020","ni_number":"AA123456A","qualified_teacher_status":{"name":"Trainee
           Teacher:DMS","state":"Active","state_name":"Active","qts_date":null},"induction":null,"initial_teacher_training":{"state":"Active","state_code":"Active","programme_start_date":"2020-04-01T00:00:00Z","programme_end_date":"2020-10-10T00:00:00Z","programme_type":"Graduate
           Teacher Programme","result":"In Training","subject1":"computer science","subject2":null,"subject3":null,"qualification":null,"subject1_code":"100366","subject2_code":null,"subject3_code":null},"qualifications":[{"name":"Higher
           Education","date_awarded":"2021-05-03T00:00:00Z","he_qualification_name":"First

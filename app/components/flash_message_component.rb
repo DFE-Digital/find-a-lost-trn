@@ -20,7 +20,7 @@ class FlashMessageComponent < ViewComponent::Base
   end
 
   def role
-    %i[warning success].include?(message_key) ? 'alert' : 'region'
+    %i[warning success].include?(message_key) ? "alert" : "region"
   end
 
   def heading
@@ -28,7 +28,9 @@ class FlashMessageComponent < ViewComponent::Base
   end
 
   def body
-    tag.p(messages[1], class: 'govuk-body') if messages.is_a?(Array) && messages.count >= 2
+    if messages.is_a?(Array) && messages.count >= 2
+      tag.p(messages[1], class: "govuk-body")
+    end
   end
 
   def render?

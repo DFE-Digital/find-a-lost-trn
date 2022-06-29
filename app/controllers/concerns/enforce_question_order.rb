@@ -4,7 +4,7 @@ module EnforceQuestionOrder
 
   included { before_action :redirect_by_status }
 
-  def redirect_by_status # rubocop:disable Metrics
+  def redirect_by_status
     redirect_to(start_url) and return if start_page_is_required?
     redirect_to(name_url) and return if trn_request.nil?
     return if current_page_is_allowed?
@@ -24,7 +24,7 @@ module EnforceQuestionOrder
   end
 
   def start_page_is_required?
-    trn_request.nil? && request.path == '/trn-request'
+    trn_request.nil? && request.path == "/trn-request"
   end
 
   def trn_request
@@ -39,7 +39,7 @@ module EnforceQuestionOrder
       ni_number: ni_number_url,
       awarded_qts: awarded_qts_url,
       itt_provider: itt_provider_url,
-      email: email_url,
+      email: email_url
     }
   end
 end

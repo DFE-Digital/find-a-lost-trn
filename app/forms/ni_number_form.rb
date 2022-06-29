@@ -5,12 +5,16 @@ class NiNumberForm
 
   attr_accessor :trn_request
 
-  validates :ni_number, presence: true, format: { with: /\A[a-z]{2}[0-9]{6}[a-d]{1}\Z/i }
+  validates :ni_number,
+            presence: true,
+            format: {
+              with: /\A[a-z]{2}[0-9]{6}[a-d]{1}\Z/i
+            }
 
   delegate :email?, :ni_number, to: :trn_request
 
   def ni_number=(value)
-    trn_request.ni_number = value&.gsub(/\s|-/, '')
+    trn_request.ni_number = value&.gsub(/\s|-/, "")
   end
 
   def update(params = {})

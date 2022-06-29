@@ -17,11 +17,14 @@ class TrnRequest < ApplicationRecord
   end
 
   def previous_name
-    [previous_first_name.presence || first_name, previous_last_name.presence || last_name].join(' ')
+    [
+      previous_first_name.presence || first_name,
+      previous_last_name.presence || last_name
+    ].join(" ")
   end
 
   def name
-    [first_name, last_name].compact.join(' ')
+    [first_name, last_name].compact.join(" ")
   end
 
   def ni_number_answered?
@@ -30,9 +33,12 @@ class TrnRequest < ApplicationRecord
     !has_ni_number.nil? && !has_ni_number_was.nil?
   end
 
-  def status # rubocop:disable Metrics
+  def status
     return :answers if email.present?
-    return :email if (!awarded_qts.nil? && !awarded_qts && itt_provider_enrolled.nil?) || !itt_provider_enrolled.nil?
+    if (!awarded_qts.nil? && !awarded_qts && itt_provider_enrolled.nil?) ||
+         !itt_provider_enrolled.nil?
+      return :email
+    end
     return :itt_provider if awarded_qts
     return :awarded_qts unless has_ni_number.nil?
     return :ni_number if has_ni_number

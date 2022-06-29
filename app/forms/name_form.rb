@@ -4,7 +4,11 @@ class NameForm
   include LogErrors
 
   attr_accessor :trn_request
-  attr_writer :first_name, :last_name, :name_changed, :previous_first_name, :previous_last_name
+  attr_writer :first_name,
+              :last_name,
+              :name_changed,
+              :previous_first_name,
+              :previous_last_name
 
   validates :first_name, presence: true, length: { maximum: 255 }
   validates :last_name, presence: true, length: { maximum: 255 }
@@ -21,7 +25,8 @@ class NameForm
   def name_changed
     return @name_changed unless @name_changed.nil?
 
-    @name_changed ||= previous_first_name.present? || previous_last_name.present?
+    @name_changed ||=
+      previous_first_name.present? || previous_last_name.present?
   end
 
   def no_previous_names?
@@ -54,6 +59,6 @@ class NameForm
     trn_request.last_name = last_name
     trn_request.previous_first_name = previous_first_name
     trn_request.previous_last_name = previous_last_name
-    trn_request.save
+    trn_request.save!
   end
 end

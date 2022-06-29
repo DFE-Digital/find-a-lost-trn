@@ -3,7 +3,7 @@ name: Backup Database to Azure Storage
 on:
   workflow_dispatch:
   schedule: # 01:00 UTC
-    - cron: '0 1 * * *'
+    - cron: "0 1 * * *"
 
 jobs:
   backup:
@@ -30,7 +30,7 @@ jobs:
         id: get_secrets
         with:
           keyvault: ${{ env.KEY_VAULT_NAME }}
-          secrets: 'BACKUP-STORAGE-CONNECTION-STRING,PAAS-USER,PAAS-PASSWORD'
+          secrets: "BACKUP-STORAGE-CONNECTION-STRING,PAAS-USER,PAAS-PASSWORD"
 
       - uses: DfE-Digital/keyvault-yaml-secret@v1
         id: keyvault-yaml-secret

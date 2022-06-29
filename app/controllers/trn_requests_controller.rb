@@ -10,7 +10,7 @@ class TrnRequestsController < ApplicationController
     session[:form_complete] = true
   end
 
-  def update # rubocop:disable Metrics/AbcSize
+  def update
     redirect_to root_url unless trn_request
     session[:form_complete] = false
 
@@ -25,7 +25,11 @@ class TrnRequestsController < ApplicationController
       redirect_to trn_found_path
     rescue DqtApi::NoResults
       redirect_to no_match_path
-    rescue DqtApi::ApiError, Faraday::ConnectionFailed, Faraday::TimeoutError, DqtApi::TooManyResults, TrnHasAlert
+    rescue DqtApi::ApiError,
+           Faraday::ConnectionFailed,
+           Faraday::TimeoutError,
+           DqtApi::TooManyResults,
+           TrnHasAlert
       create_zendesk_ticket
 
       redirect_to helpdesk_request_submitted_path
@@ -44,7 +48,10 @@ class TrnRequestsController < ApplicationController
 
   def find_trn_using_api
     response = DqtApi.find_trn!(trn_request)
-    trn_request.update(trn: response['trn'], has_active_sanctions: response['hasActiveSanctions'])
+    trn_request.update!(
+      trn: response["trn"],
+      has_active_sanctions: response["hasActiveSanctions"]
+    )
   end
 
   def create_zendesk_ticket
