@@ -1,0 +1,37 @@
+<% content_for :page_title, 'We’ve received your request' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= govuk_panel(
+      classes: %w[govuk-!-margin-bottom-6]
+    ) do %>
+      <h1 class='govuk-panel__title'>We’ve received your&nbsp;request</h1>
+      <p class='app-!-inherit-colour govuk-!-margin-bottom-0 govuk-!-font-size-24'>
+        We have not confirmed this by email yet because of a technical problem. We'll try again later.
+      </p>
+    <% end %>
+
+    <h2 class="govuk-heading-m">What happens next?</h2>
+    <p class='govuk-body'>
+      Once we’ve fixed the technical problem, you’ll get a confirmation email with your request number.
+    </p>
+
+    <h2 class="govuk-heading-m">If you need your TRN quickly</h2>
+    <p class="govuk-body">
+      Call the Teaching Regulation Agency and give the helpdesk 
+      your request number: <%= @trn_request.zendesk_ticket_id %>
+    </p>
+
+    <ul class="govuk-list">
+      <li>Telephone: <%= t('service.tel') %></li>
+      <li>Lines are open Monday to Thursday, 9am to 5pm, and on Friday from 9am to 4:30pm (except public holidays)</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">Give feedback</h2>
+    <p class="govuk-body">
+      <a class="govuk-link" href="https://forms.gle/3LGJXe9EFaeQbFgP7">
+        What did you think of this service?
+      </a> (takes 30 seconds)
+    </p>
+  </div>
+</div>

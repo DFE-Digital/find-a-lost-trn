@@ -30,9 +30,17 @@ class TrnRequestsController < ApplicationController
            Faraday::TimeoutError,
            DqtApi::TooManyResults,
            TrnHasAlert
-      create_zendesk_ticket
-
-      redirect_to helpdesk_request_submitted_path
+      begin
+        create_zendesk_ticket
+        redirect_to helpdesk_request_submitted_path
+      rescue ZendeskService::ConnectionError => exception
+        Sentry.capture_exception(exception)
+        CreateZendeskTicketJob.set(wait: 5.minutes).perform_later(
+          trn_request.id
+        )
+        TeacherMailer.delayed_information_received(trn_request).deliver_now
+        redirect_to helpdesk_request_delayed_path
+      end
     end
   end
 
