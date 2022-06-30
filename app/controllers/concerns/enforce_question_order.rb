@@ -28,7 +28,8 @@ module EnforceQuestionOrder
   end
 
   def trn_request
-    @trn_request ||= TrnRequest.find_by(id: session[:trn_request_id])
+    @trn_request ||=
+      TrnRequest.find_or_initialize_by(id: session[:trn_request_id])
   end
 
   def urls
