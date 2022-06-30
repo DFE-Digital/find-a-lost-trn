@@ -42,25 +42,25 @@ Rails.application.routes.draw do
   end
 
   get "/name", to: "name#edit"
-  patch "/name", to: "name#update"
+  post "/name", to: "name#update"
 
   get "/date-of-birth", to: "date_of_birth#edit"
-  patch "/date-of-birth", to: "date_of_birth#update"
+  post "/date-of-birth", to: "date_of_birth#update"
 
   get "/have-ni-number", to: "has_ni_number#edit"
-  patch "/have-ni-number", to: "has_ni_number#update"
   post "/have-ni-number", to: "has_ni_number#update"
 
   get "/ni-number", to: "ni_number#edit"
-  patch "/ni-number", to: "ni_number#update"
+  post "/ni-number", to: "ni_number#update"
 
   get "/awarded-qts", to: "awarded_qts#edit"
   post "/awarded-qts", to: "awarded_qts#update"
+
   get "/itt-provider", to: "itt_providers#edit"
-  patch "/itt-provider", to: "itt_providers#update"
+  post "/itt-provider", to: "itt_providers#update"
 
   get "/email", to: "email#edit"
-  patch "/email", to: "email#update"
+  post "/email", to: "email#update"
 
   resource :trn_request, path: "trn-request", only: %i[show update] do
     resource :email, controller: :email, only: %i[edit update]
