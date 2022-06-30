@@ -11,8 +11,8 @@ class NiNumberController < ApplicationController
     if @has_ni_number_form.update(
          has_ni_number: params[:has_ni_number_form][:has_ni_number]
        )
-      session[:trn_request_id] = trn_request.id
-      redirect_to trn_request.has_ni_number? ? ni_number_url : awarded_qts_url
+      session[:trn_request_id] = @trn_request.id
+      redirect_to @trn_request.has_ni_number? ? ni_number_url : awarded_qts_url
     else
       render :new
     end
@@ -24,7 +24,7 @@ class NiNumberController < ApplicationController
   def update
     if ni_number.update(ni_number_params)
       begin
-        find_trn_using_api unless trn_request.trn
+        find_trn_using_api unless @trn_request.trn
 
         redirect_to ni_number.email? ? check_answers_url : email_url
       rescue DqtApi::ApiError,
@@ -51,15 +51,10 @@ class NiNumberController < ApplicationController
   end
 
   def find_trn_using_api
-    response = DqtApi.find_trn!(trn_request)
-    trn_request.update!(
+    response = DqtApi.find_trn!(@trn_request)
+    @trn_request.update!(
       trn: response["trn"],
       has_active_sanctions: response["hasActiveSanctions"]
     )
   end
-
-  def trn_request
-    @trn_request ||= TrnRequest.find_by(id: session[:trn_request_id])
-  end
-  helper_method :trn_request
 end
