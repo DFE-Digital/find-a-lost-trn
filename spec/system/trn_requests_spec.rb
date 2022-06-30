@@ -55,7 +55,7 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_home_page
 
     when_i_try_to_go_to_the_check_answers_page
-    then_i_see_the_home_page
+    then_i_see_the_name_page
 
     when_i_am_on_the_name_page
     when_i_try_to_go_to_the_date_of_birth_page
