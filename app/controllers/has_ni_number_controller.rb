@@ -8,7 +8,7 @@ class HasNiNumberController < ApplicationController
   def update
     @has_ni_number_form = HasNiNumberForm.new(trn_request:)
     if @has_ni_number_form.update(has_ni_number_params)
-      redirect_to @trn_request.has_ni_number? ? ni_number_url : awarded_qts_url
+      next_question
     else
       render :edit
     end

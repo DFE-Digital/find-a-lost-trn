@@ -2,65 +2,99 @@
 module EnforceQuestionOrder
   extend ActiveSupport::Concern
 
-  included { before_action :redirect_by_status }
+  included { before_action :redirect_to_next_question }
 
-  def redirect_by_status
+  def redirect_to_next_question
     redirect_to(start_url) and return if start_page_is_required?
-    redirect_to(name_url) and return if trn_request.nil?
-    return if current_page_is_allowed?
+    return if last_question_answered?
+    return if previous_question_answered?
 
-    expected_url = urls[status]
-    redirect_to(expected_url) if expected_url && expected_url != request.url
+    redirect_to next_question_path if request.path != next_question_path
+  end
+
+  def next_question
+    session[:trn_request_id] ||= trn_request.reload.id
+
+    redirect_to next_question_path
   end
 
   private
-
-  def current_page_is_allowed?
-    return true if trn_request&.trn
-
-    order = urls.keys.index(status)
-    current_position = urls.values.index(request.url)
-    current_position && order && current_position <= order
-  end
-
-  def start_page_is_required?
-    trn_request.nil? && request.path == "/trn-request"
-  end
 
   def trn_request
     @trn_request ||=
       TrnRequest.find_or_initialize_by(id: session[:trn_request_id])
   end
 
-  def urls
-    {
-      name: name_url,
-      date_of_birth: date_of_birth_url,
-      has_ni_number: have_ni_number_url,
-      ni_number: ni_number_url,
-      awarded_qts: awarded_qts_url,
-      itt_provider: itt_provider_url,
-      email: email_url
-    }
+  def start_page_is_required?
+    trn_request.nil? && request.path == "/trn-request"
   end
 
-  def status
-    return nil unless @trn_request
+  def questions
+    [
+      { path: name_path, needs_answer: ask_for_name? },
+      { path: date_of_birth_path, needs_answer: ask_for_date_of_birth? },
+      { path: have_ni_number_path, needs_answer: ask_if_has_ni_number? },
+      { path: ni_number_path, needs_answer: ask_for_ni_number? },
+      { path: awarded_qts_path, needs_answer: ask_if_awarded_qts? },
+      { path: itt_provider_path, needs_answer: ask_for_itt_provider? },
+      { path: email_path, needs_answer: ask_for_email? }
+    ]
+  end
 
-    return :answers if @trn_request.email.present?
-    return :email if @trn_request.trn.present?
-    if (
-         !@trn_request.awarded_qts.nil? && !@trn_request.awarded_qts &&
-           @trn_request.itt_provider_enrolled.nil?
-       ) || !@trn_request.itt_provider_enrolled.nil?
-      return :email
-    end
-    return :itt_provider if @trn_request.awarded_qts
-    return :awarded_qts unless @trn_request.has_ni_number.nil?
-    return :ni_number if @trn_request.has_ni_number
-    return :has_ni_number if @trn_request.date_of_birth.present?
-    return :date_of_birth if @trn_request.first_name.present?
+  def next_question_path
+    questions.each { |q| return q[:path] if q[:needs_answer] }
 
-    :name
+    check_answers_path
+  end
+
+  def last_question_answered?
+    !questions.last[:needs_answer]
+  end
+
+  def previous_question_answered?
+    requested_question_index =
+      questions.find_index { |q| q[:path] == request.path }
+
+    path_is_not_a_question = requested_question_index.nil?
+    return false if path_is_not_a_question
+
+    is_first_question = requested_question_index.zero?
+    return true if is_first_question
+
+    previous_question = questions[requested_question_index - 1]
+
+    previous_question[:needs_answer] == false
+  end
+
+  def ask_for_name?
+    trn_request.first_name.nil?
+  end
+
+  def ask_for_date_of_birth?
+    trn_request.date_of_birth.nil?
+  end
+
+  def ask_if_has_ni_number?
+    trn_request.has_ni_number.nil?
+  end
+
+  def ask_for_ni_number?
+    return false if session[:ni_number_not_known]
+
+    trn_request.has_ni_number && trn_request.ni_number.nil?
+  end
+
+  def ask_if_awarded_qts?
+    return false if trn_request.trn
+
+    trn_request.awarded_qts.nil?
+  end
+
+  def ask_for_itt_provider?
+    trn_request.awarded_qts && trn_request.itt_provider_enrolled.nil?
+  end
+
+  def ask_for_email?
+    trn_request.email.nil?
   end
 end
