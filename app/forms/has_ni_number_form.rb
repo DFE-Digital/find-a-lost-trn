@@ -11,11 +11,16 @@ class HasNiNumberForm
 
   def update(params = {})
     self.has_ni_number = params[:has_ni_number]
+    clear_ni_number unless has_ni_number
     if invalid?
       log_errors
       return false
     end
 
     trn_request.save!
+  end
+
+  def clear_ni_number
+    trn_request.ni_number = nil
   end
 end
