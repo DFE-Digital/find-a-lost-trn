@@ -9,7 +9,7 @@ class EmailController < ApplicationController
   def update
     @email_form = EmailForm.new(email: email_params[:email], trn_request:)
     if @email_form.save
-      redirect_to check_answers_url
+      next_question
     else
       render :edit
     end

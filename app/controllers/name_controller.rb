@@ -9,8 +9,7 @@ class NameController < ApplicationController
   def update
     @name_form = NameForm.new(name_params.merge(trn_request:))
     if @name_form.save
-      session[:trn_request_id] = @name_form.trn_request.id
-      redirect_to trn_request.email? ? check_answers_path : date_of_birth_path
+      next_question
     else
       render :edit
     end

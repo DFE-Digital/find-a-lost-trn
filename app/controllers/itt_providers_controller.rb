@@ -9,7 +9,7 @@ class IttProvidersController < ApplicationController
   def update
     @itt_provider_form = IttProviderForm.new(itt_provider_params)
     if @itt_provider_form.save
-      redirect_to trn_request.email.blank? ? email_url : check_answers_url
+      next_question
     else
       render :edit
     end
