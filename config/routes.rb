@@ -47,9 +47,9 @@ Rails.application.routes.draw do
   get "/date-of-birth", to: "date_of_birth#edit"
   patch "/date-of-birth", to: "date_of_birth#update"
 
-  get "/have-ni-number", to: "ni_number#new"
-  patch "/have-ni-number", to: "ni_number#create"
-  post "/have-ni-number", to: "ni_number#create"
+  get "/have-ni-number", to: "has_ni_number#edit"
+  patch "/have-ni-number", to: "has_ni_number#update"
+  post "/have-ni-number", to: "has_ni_number#update"
 
   get "/ni-number", to: "ni_number#edit"
   patch "/ni-number", to: "ni_number#update"
