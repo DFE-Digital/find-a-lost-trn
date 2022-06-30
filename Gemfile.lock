@@ -249,7 +249,7 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.6.0)
-    rack (2.2.3.1)
+    rack (2.2.4)
     rack-attack (6.6.1)
       rack (>= 1.0, < 3)
     rack-test (2.0.1)
@@ -358,7 +358,7 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    sidekiq-cron (1.5.1)
+    sidekiq-cron (1.6.0)
       fugit (~> 1)
       sidekiq (>= 4.2.1)
     solargraph (0.45.0)
@@ -474,7 +474,7 @@ DEPENDENCIES
   sentry-rails
   shoulda-matchers (~> 5.1)
   sidekiq
-  sidekiq-cron (~> 1.4)
+  sidekiq-cron (~> 1.6)
   solargraph
   solargraph-rails
   spring
