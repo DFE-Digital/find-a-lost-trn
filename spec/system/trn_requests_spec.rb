@@ -408,7 +408,37 @@ RSpec.describe "TRN requests", type: :system do
     end
   end
 
+  context "when the Zendesk API is unavailable" do
+    before { allow(Sentry).to receive(:capture_exception) }
+
+    it "handles the failure gracefully" do
+      given_the_zendesk_connection_is_unavailable
+      when_i_have_completed_a_trn_request_that_wont_match
+      when_i_press_the_submit_button
+      then_i_see_the_delayed_information_page
+      and_a_job_gets_queued_to_retry_the_zendesk_ticket_creation
+      and_i_receive_an_email_about_the_delay
+      and_sentry_receives_a_warning_about_the_failure
+    end
+  end
+
   private
+
+  def and_a_job_gets_queued_to_retry_the_zendesk_ticket_creation
+    expect(CreateZendeskTicketJob).to have_been_enqueued.with(
+      TrnRequest.last.id
+    )
+  end
+
+  def and_i_receive_an_email_about_the_delay
+    open_email("kevin@kevin.com")
+    expect(current_email.subject).to eq(
+      "We’ve received the information you submitted"
+    )
+    expect(current_email.body).to include(
+      "We’ve received the information you submitted, and you’ll get an email with your TRN if we find a match."
+    )
+  end
 
   def and_i_receive_an_email_with_the_trn_number
     open_email("kevin@kevin.com")
@@ -423,6 +453,10 @@ RSpec.describe "TRN requests", type: :system do
     expect(current_email.body).to include(
       "give the helpdesk your ticket number: 42"
     )
+  end
+
+  def and_sentry_receives_a_warning_about_the_failure
+    expect(Sentry).to have_received(:capture_exception)
   end
 
   def and_the_date_of_birth_is_prepopulated
@@ -486,6 +520,12 @@ RSpec.describe "TRN requests", type: :system do
 
   def given_the_zendesk_integration_feature_is_enabled
     FeatureFlag.activate(:zendesk_integration)
+  end
+
+  def given_the_zendesk_connection_is_unavailable
+    allow(ZendeskService).to receive(:create_ticket!).and_raise(
+      ZendeskService::ConnectionError
+    )
   end
 
   def then_i_see_a_message_to_check_my_email
@@ -564,6 +604,16 @@ RSpec.describe "TRN requests", type: :system do
       "Check if you have a TRN"
     )
     expect(page).to have_content("Check if you have a TRN")
+  end
+
+  def then_i_see_the_delayed_information_page
+    expect(page.driver.browser.current_title).to start_with(
+      "We’ve received your request"
+    )
+    expect(page).to have_content("We’ve received your request")
+    expect(page).to have_content(
+      "We have not confirmed this by email yet because of a technical problem. We'll try again later."
+    )
   end
 
   def then_i_see_the_zendesk_confirmation_page

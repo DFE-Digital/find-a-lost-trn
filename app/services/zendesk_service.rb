@@ -13,6 +13,8 @@ class ZendeskService
       trn_request.update!(zendesk_ticket_id: ticket.id)
     rescue ZendeskAPI::Error::RecordInvalid
       raise CreateError, "Could not create Zendesk ticket"
+    rescue ZendeskAPI::Error::NetworkError
+      raise ConnectionError, "Could not connect to Zendesk"
     end
   end
 
@@ -43,6 +45,9 @@ class ZendeskService
         value: "request_from_find_a_lost_trn_app"
       }
     }
+  end
+
+  class ConnectionError < StandardError
   end
 
   class CreateError < StandardError
