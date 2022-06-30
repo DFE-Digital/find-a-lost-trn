@@ -3,7 +3,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @name_form, url: name_path, method: :patch do |f| %>
+    <%= form_with model: @name_form, url: name_path do |f| %>
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-xl">
