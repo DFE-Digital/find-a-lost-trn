@@ -54,8 +54,8 @@ Rails.application.routes.draw do
   get "/ni-number", to: "ni_number#edit"
   patch "/ni-number", to: "ni_number#update"
 
-  get "/awarded-qts", to: "itt_providers#new"
-  post "/awarded-qts", to: "itt_providers#create"
+  get "/awarded-qts", to: "awarded_qts#edit"
+  post "/awarded-qts", to: "awarded_qts#update"
   get "/itt-provider", to: "itt_providers#edit"
   patch "/itt-provider", to: "itt_providers#update"
 
