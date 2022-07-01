@@ -88,8 +88,6 @@ Rails.application.routes.draw do
 
   get "/performance", to: "performance#index"
 
-  get "/health", to: proc { [200, {}, ["success"]] }
-
   scope via: :all do
     get "/404", to: "errors#not_found"
     get "/422", to: "errors#unprocessable_entity"
