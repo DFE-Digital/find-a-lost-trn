@@ -12,7 +12,9 @@ class FeatureFlag
     Feature.find_or_initialize_by(name:)
   end
 
-  PERMANENT_SETTINGS = [].freeze
+  PERMANENT_SETTINGS = [
+    [:zendesk_health_check, "Check Zendesk health", "Felix Clack"]
+  ].freeze
 
   TEMPORARY_FEATURE_FLAGS = [
     [:dqt_api_always_timeout, "Always time-out the DQT API", "Felix Clack"],
