@@ -2,6 +2,8 @@
 class TrnRequest < ApplicationRecord
   has_many :trn_responses, dependent: :destroy
 
+  scope :with_zendesk_ticket, -> { where.not(zendesk_ticket_id: nil) }
+
   def answers_checked=(value)
     return unless value
 
