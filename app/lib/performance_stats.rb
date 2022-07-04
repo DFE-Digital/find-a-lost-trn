@@ -69,6 +69,7 @@ class PerformanceStats
     percentiles_by_day =
       @trn_requests
         .where.not(checked_at: nil)
+        .where.not(trn: nil)
         .group("1")
         .pluck(
           Arel.sql("date_trunc('day', created_at) AS day"),
@@ -87,6 +88,7 @@ class PerformanceStats
     average_percentiles =
       @trn_requests
         .where.not(checked_at: nil)
+        .where.not(trn: nil)
         .pick(
           Arel.sql(
             "percentile_disc(0.90) within group (order by (checked_at - created_at) asc) as percentile_90"
