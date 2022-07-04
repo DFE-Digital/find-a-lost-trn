@@ -30,7 +30,7 @@ class PerformanceStats
   end
 
   def duration_usage
-    @duration_data
+    [@duration_averages, @duration_data]
   end
 
   private
@@ -84,6 +84,21 @@ class PerformanceStats
         )
         .each_with_object({}) { |row, hash| hash[row[0]] = row.slice(1, 3) }
 
+    average_percentiles =
+      @trn_requests
+        .where.not(checked_at: nil)
+        .pick(
+          Arel.sql(
+            "percentile_disc(0.90) within group (order by (checked_at - created_at) asc) as percentile_90"
+          ),
+          Arel.sql(
+            "percentile_disc(0.75) within group (order by (checked_at - created_at) asc) as percentile_75"
+          ),
+          Arel.sql(
+            "percentile_disc(0.50) within group (order by (checked_at - created_at) asc) as percentile_50"
+          )
+        )
+
     @duration_data =
       @last_n_days.map do |day|
         percentiles = percentiles_by_day[day] || [0, 0, 0]
@@ -91,6 +106,11 @@ class PerformanceStats
           percentiles.map do |value|
             ActiveSupport::Duration.build(value.to_i).inspect
           end
+      end
+
+    @duration_averages =
+      (average_percentiles || [0, 0, 0]).map do |value|
+        ActiveSupport::Duration.build(value.to_i).inspect
       end
   end
 end

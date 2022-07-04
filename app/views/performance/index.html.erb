@@ -63,6 +63,12 @@
             row.cell { data_row[3] }
           end
         end
+        body.row(classes: 'app-performance-table-total-row') do |row|
+          row.cell(header: true) { 'Average over last '+ @since_text }
+          row.cell { @duration_averages[0] }
+          row.cell { @duration_averages[1] }
+          row.cell { @duration_averages[2] }
+        end
      end; end %>
 </div>
 

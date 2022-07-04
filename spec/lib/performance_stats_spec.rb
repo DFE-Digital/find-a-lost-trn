@@ -119,13 +119,10 @@ RSpec.describe PerformanceStats do
         )
       end
 
-      data = described_class.new(last_day).duration_usage
+      averages, data = described_class.new(last_day).duration_usage
       expect(data.size).to eq 1
-      expect(data).to eq(
-        [
-          ["12 May", "4 minutes", "3 minutes", "2 minutes"]
-        ]
-      )
+      expect(data).to eq([["12 May", "4 minutes", "3 minutes", "2 minutes"]])
+      expect(averages).to eq(["4 minutes", "3 minutes", "2 minutes"])
     end
   end
 
