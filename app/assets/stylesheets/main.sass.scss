@@ -51,6 +51,14 @@ $govuk-new-link-styles: true;
   }
 }
 
+.app-performance-table-total-row {
+  td,
+  th {
+    border-top: 2px solid $govuk-border-colour;
+    border-bottom: none;
+  }
+}
+
 .app-p0 {
   padding: 0;
 }
