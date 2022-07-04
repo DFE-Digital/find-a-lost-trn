@@ -31,13 +31,13 @@ module EnforceQuestionOrder
 
   def questions
     [
+      { path: email_path, needs_answer: ask_for_email? },
       { path: name_path, needs_answer: ask_for_name? },
       { path: date_of_birth_path, needs_answer: ask_for_date_of_birth? },
       { path: have_ni_number_path, needs_answer: ask_if_has_ni_number? },
       { path: ni_number_path, needs_answer: ask_for_ni_number? },
       { path: awarded_qts_path, needs_answer: ask_if_awarded_qts? },
-      { path: itt_provider_path, needs_answer: ask_for_itt_provider? },
-      { path: email_path, needs_answer: ask_for_email? }
+      { path: itt_provider_path, needs_answer: ask_for_itt_provider? }
     ]
   end
 

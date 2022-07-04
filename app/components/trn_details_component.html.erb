@@ -1,6 +1,12 @@
 <%
   rows = []
 
+  email_row = {
+    key: { text: 'Email address' },
+    value: { text: email },
+    actions: [{ href: email_path, visually_hidden_text: 'email address' }]
+  }
+
   name_row = {
     key: { text: 'Name' },
     value: { text: name },
@@ -37,19 +43,13 @@
     actions: [{ href: itt_provider_path, visually_hidden_text: 'teacher training provider' }]
   }
 
-  email_row = {
-    key: { text: 'Email address' },
-    value: { text: email },
-    actions: [{ href: email_path, visually_hidden_text: 'email address' }]
-  }
-
+  rows.push(email_row)
   rows.push(name_row)
   rows.push(previous_name_row) if @trn_request.previous_name?
   rows.push(date_of_birth_row)
   rows.push(ni_row)
   rows.push(awarded_qts_row) unless @trn_request.awarded_qts.nil?
   rows.push(itt_provider_row) unless @trn_request.itt_provider_enrolled.nil?
-  rows.push(email_row)
 
   rows.map! {|r| r.except(:actions)} unless @actions
 %>

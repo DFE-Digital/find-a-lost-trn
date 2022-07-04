@@ -13,14 +13,14 @@ RSpec.describe "TRN requests", type: :system do
     when_i_press_the_start_button
     when_i_confirm_i_have_a_trn_number
     when_i_press_continue
+    when_i_fill_in_my_email_address
+    and_i_press_continue
     when_i_fill_in_the_name_form
     when_i_complete_my_date_of_birth
     when_i_choose_yes
     when_i_press_continue
     when_i_fill_in_my_ni_number
     when_i_press_continue
-    when_i_fill_in_my_email_address
-    and_i_press_continue
     then_i_see_the_check_answers_page
 
     when_i_press_the_submit_button
