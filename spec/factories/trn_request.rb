@@ -24,7 +24,7 @@ FactoryBot.define do
 
     trait :has_trn do
       checked_at { Faker::Date.backward(days: 14) }
-      trn { Faker::Number.number(7) }
+      trn { Faker::Number.number(digits: 7) }
     end
 
     trait :has_zendesk_ticket do

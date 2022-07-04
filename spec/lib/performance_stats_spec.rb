@@ -108,16 +108,25 @@ RSpec.describe PerformanceStats do
   end
 
   describe "#duration_usage" do
-    it "calculates duration results" do
+    it "calculates duration results for requests that returned TRNs" do
+      # requests where the user found TRNs
       durations_in_seconds = [240, 180, 120, 120]
       durations_in_seconds.each do |duration|
         create(
           :trn_request,
+          :has_trn,
           created_at: Time.zone.today.beginning_of_day,
-          checked_at: Time.zone.today.beginning_of_day + duration.seconds,
-          trn: "1234567"
+          checked_at: Time.zone.today.beginning_of_day + duration.seconds
         )
       end
+
+      # requests where the TRN wasn't found
+      create(
+        :trn_request,
+        created_at: Time.zone.today.beginning_of_day,
+        checked_at: Time.zone.today.beginning_of_day + 6.minutes,
+        trn: nil
+      )
 
       averages, data = described_class.new(last_day).duration_usage
       expect(data.size).to eq 1
