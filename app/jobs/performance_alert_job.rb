@@ -4,6 +4,8 @@ class PerformanceAlertJob < ApplicationJob
   include Rails.application.routes.url_helpers
 
   def perform
+    return unless FeatureFlag.active?(:slack_alerts)
+
     count =
       TrnRequest.where(
         created_at: 1.week.ago.beginning_of_day..Time.zone.now

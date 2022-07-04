@@ -8,9 +8,8 @@ RSpec.describe ZendeskHealthJob, type: :job do
     before { allow(SlackClient).to receive(:create_message) }
 
     context "when the feature flag is active" do
-      before { FeatureFlag.activate(:zendesk_health_check) }
-
-      after { FeatureFlag.deactivate(:zendesk_health_check) }
+      before { FeatureFlag.activate(:slack_alerts) }
+      after { FeatureFlag.deactivate(:slack_alerts) }
 
       context "when there have been no TRN requests with a Zendesk ticket ID in the last 24 hours" do
         it "sends an alert about no Zendesk tickets as a Slack message" do
@@ -34,7 +33,7 @@ RSpec.describe ZendeskHealthJob, type: :job do
     end
 
     context "when the feature flag is inactive" do
-      before { FeatureFlag.deactivate(:zendesk_health_check) }
+      before { FeatureFlag.deactivate(:slack_alerts) }
 
       it "no-ops" do
         perform

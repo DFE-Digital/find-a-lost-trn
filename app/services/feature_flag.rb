@@ -13,7 +13,7 @@ class FeatureFlag
   end
 
   PERMANENT_SETTINGS = [
-    [:zendesk_health_check, "Check Zendesk health", "Felix Clack"]
+    [:slack_alerts, "Allow sending alerts to Slack", "Felix Clack"]
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = [
