@@ -13,7 +13,11 @@ class FeatureFlag
   end
 
   PERMANENT_SETTINGS = [
-    [:slack_alerts, "Allow sending alerts to Slack", "Felix Clack"]
+    [
+      :slack_alerts,
+      "Enable Slack alerts and notifications for this environment",
+      "Felix Clack"
+    ]
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = [
