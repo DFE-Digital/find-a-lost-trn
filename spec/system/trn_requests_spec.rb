@@ -16,6 +16,10 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_ask_questions_page
 
     when_i_press_continue
+    then_i_see_the_email_page
+
+    when_i_fill_in_my_email_address
+    and_i_press_continue
     then_i_see_the_name_page
 
     when_i_fill_in_the_name_form
@@ -34,19 +38,15 @@ RSpec.describe "TRN requests", type: :system do
 
     when_i_fill_in_my_itt_provider
     and_i_press_continue
-    then_i_see_the_email_page
-
-    when_i_fill_in_my_email_address
-    and_i_press_continue
     then_i_see_the_check_answers_page
 
     when_i_press_the_submit_button
     then_i_see_the_zendesk_confirmation_page
     and_i_receive_an_email_with_the_zendesk_ticket_number
 
-    when_i_navigate_to_the_name_page
-    then_i_see_the_name_page
-    and_my_name_is_not_filled_in
+    when_i_navigate_to_the_email_page
+    then_i_see_the_email_page
+    and_my_email_is_not_filled_in
   end
 
   it "trying to skip steps" do
@@ -55,9 +55,15 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_home_page
 
     when_i_try_to_go_to_the_check_answers_page
+    then_i_see_the_email_page
+
+    when_i_try_to_go_to_the_name_page
+    then_i_see_the_email_page
+
+    when_i_fill_in_my_email_address
+    and_i_press_continue
     then_i_see_the_name_page
 
-    when_i_am_on_the_name_page
     when_i_try_to_go_to_the_date_of_birth_page
     then_i_see_the_name_page
 
@@ -79,15 +85,9 @@ RSpec.describe "TRN requests", type: :system do
     and_i_press_continue
     then_i_see_the_awarded_qts_page
 
-    when_i_try_to_go_to_the_email_page
-    then_i_see_the_awarded_qts_page
-
     when_i_choose_no
     and_i_press_continue
-    then_i_see_the_email_page
-
-    when_i_try_to_go_to_the_check_answers_page
-    then_i_see_the_email_page
+    then_i_see_the_check_answers_page
   end
 
   it "entering the NI number" do
@@ -95,6 +95,10 @@ RSpec.describe "TRN requests", type: :system do
     when_i_press_the_start_button
     when_i_confirm_i_have_a_trn_number
     when_i_press_continue
+    then_i_see_the_email_page
+
+    when_i_fill_in_my_email_address
+    and_i_press_continue
     then_i_see_the_name_page
 
     when_i_fill_in_the_name_form
@@ -121,6 +125,7 @@ RSpec.describe "TRN requests", type: :system do
     when_i_press_the_start_button
     when_i_confirm_i_have_a_trn_number
     when_i_press_continue
+    when_i_fill_in_the_email_form
     when_i_fill_in_the_name_form
     when_i_complete_my_date_of_birth
     when_i_choose_yes_to_ni_number
@@ -193,17 +198,17 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_home_page
   end
 
-  context "when the user has reached the date of birth question" do
+  context "when the user has reached the name question" do
     it "pressing back" do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
       when_i_press_continue
-      when_i_fill_in_the_name_form
-      then_i_see_the_date_of_birth_page
+      when_i_fill_in_the_email_form
+      then_i_see_the_name_page
 
       when_i_press_back
-      then_i_see_the_name_page
+      then_i_see_the_email_page
     end
   end
 
@@ -213,6 +218,7 @@ RSpec.describe "TRN requests", type: :system do
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
       when_i_press_continue
+      when_i_fill_in_the_email_form
       when_i_fill_in_the_name_form
       when_i_complete_my_date_of_birth
       then_i_see_the_have_ni_page
@@ -222,33 +228,13 @@ RSpec.describe "TRN requests", type: :system do
     end
   end
 
-  context "when the user has reached the email question" do
-    it "pressing back" do
-      given_i_am_on_the_home_page
-      when_i_press_the_start_button
-      when_i_confirm_i_have_a_trn_number
-      when_i_press_continue
-      when_i_fill_in_the_name_form
-      when_i_complete_my_date_of_birth
-      and_i_choose_no
-      and_i_press_continue
-      then_i_see_the_awarded_qts_page
-
-      when_i_choose_no
-      and_i_press_continue
-      then_i_see_the_email_page
-
-      when_i_press_back
-      then_i_see_the_awarded_qts_page
-    end
-  end
-
   context "when the user has reached the ITT provider question" do
     it "pressing back" do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
       when_i_press_continue
+      when_i_fill_in_the_email_form
       when_i_fill_in_the_name_form
       when_i_complete_my_date_of_birth
       and_i_choose_no
@@ -292,6 +278,7 @@ RSpec.describe "TRN requests", type: :system do
     when_i_press_the_start_button
     when_i_confirm_i_have_a_trn_number
     when_i_press_continue
+    when_i_fill_in_the_email_form
     when_i_fill_in_the_name_form
     when_i_complete_my_date_of_birth
     then_i_see_the_have_ni_page
@@ -327,7 +314,7 @@ RSpec.describe "TRN requests", type: :system do
     when_i_press_continue
     then_i_see_the_taking_longer_page
     when_i_press_continue
-    then_i_see_the_name_page
+    then_i_see_the_email_page
   end
 
   it "service is closed" do
@@ -384,22 +371,19 @@ RSpec.describe "TRN requests", type: :system do
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
       when_i_press_continue
+      when_i_fill_in_the_email_form
       when_i_fill_in_the_name_form
       when_i_complete_my_date_of_birth
       when_i_choose_yes
       when_i_press_continue
       when_i_fill_in_my_ni_number
       when_i_press_continue
-      then_i_see_the_email_page
+      then_i_see_the_check_answers_page
 
       when_i_press_back
       then_i_see_the_ni_number_page
 
       when_i_press_continue
-      then_i_see_the_email_page
-
-      when_i_fill_in_my_email_address
-      and_i_press_continue
       then_i_see_the_check_answers_page
 
       when_i_press_the_submit_button
@@ -469,6 +453,10 @@ RSpec.describe "TRN requests", type: :system do
     expect(page).not_to have_field("First name", with: "Kevin")
   end
 
+  def and_my_email_is_not_filled_in
+    expect(page).not_to have_field("Email", with: "kevin@kevin.com")
+  end
+
   def given_i_am_on_the_home_page
     visit root_path
   end
@@ -480,6 +468,10 @@ RSpec.describe "TRN requests", type: :system do
     when_i_press_the_start_button
     when_i_confirm_i_have_a_trn_number
     when_i_press_continue
+    then_i_see_the_email_page
+
+    when_i_fill_in_my_email_address
+    and_i_press_continue
     when_i_fill_in_the_name_form
     when_i_complete_my_date_of_birth
     when_i_choose_no
@@ -487,10 +479,6 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_awarded_qts_page
 
     when_i_choose_no
-    and_i_press_continue
-    then_i_see_the_email_page
-
-    when_i_fill_in_my_email_address
     and_i_press_continue
   end
   alias_method :when_i_have_completed_a_trn_request,
@@ -677,6 +665,10 @@ RSpec.describe "TRN requests", type: :system do
   end
   alias_method :then_i_am_redirected_to_the_name_page, :then_i_see_the_name_page
 
+  def then_i_see_the_email_page
+    expect(page).to have_current_path("/email")
+  end
+
   def then_i_see_the_ni_number_page
     expect(page).to have_current_path("/ni-number")
     expect(page.driver.browser.current_title).to start_with(
@@ -803,6 +795,11 @@ RSpec.describe "TRN requests", type: :system do
   def when_i_fill_in_the_name_form
     fill_in "First name", with: "Kevin"
     fill_in "Last name", with: "E"
+    when_i_press_continue
+  end
+
+  def when_i_fill_in_the_email_form
+    when_i_fill_in_my_email_address
     when_i_press_continue
   end
 
@@ -963,5 +960,11 @@ RSpec.describe "TRN requests", type: :system do
 
   def when_i_navigate_to_the_name_page
     visit name_path
+  end
+  alias_method :when_i_try_to_go_to_the_name_page,
+               :when_i_navigate_to_the_name_page
+
+  def when_i_navigate_to_the_email_page
+    visit email_path
   end
 end

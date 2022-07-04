@@ -1,59 +1,59 @@
 ---
 http_interactions:
-- request:
-    method: get
-    uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Kevin&ittProviderName&lastName=E&nationalInsuranceNumber=AA123456A&previousFirstName&previousLastName
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.10.0
-      Authorization:
-      - Bearer <BEARER_TOKEN_REDACTED>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Date:
-      - Tue, 05 Jul 2022 16:07:25 GMT
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - deny
-      X-Rate-Limit-Limit:
-      - 60s
-      X-Rate-Limit-Remaining:
-      - '299'
-      X-Rate-Limit-Reset:
-      - '2022-07-05T16:08:00.0000000Z'
-      X-Vcap-Request-Id:
-      - a2b8668d-45fd-4d76-779f-648b43318fd1
-      X-Xss-Protection:
-      - '0'
-      X-Cache:
-      - Miss from cloudfront
-      Via:
-      - 1.1 7d4502925a4a466598af9dc0cff9e994.cloudfront.net (CloudFront)
-      X-Amz-Cf-Pop:
-      - LHR62-C5
-      X-Amz-Cf-Id:
-      - EdjUgFoz2yYtAmmbpG9NcLaTJsSHOq66jlLeCx9_hdx7AI2bdi3kbA==
-    body:
-      encoding: UTF-8
-      string: '{"results":[{"trn":"2921020","emailAddresses":["kevin.e@example.com"],"firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","uid":"1bf8803f-3924-417c-9603-1ed6489dae0d","hasActiveSanctions":false}]}'
-  recorded_at: Tue, 05 Jul 2022 16:07:25 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Kevin&ittProviderName&lastName=E&nationalInsuranceNumber=AA123456A&previousFirstName&previousLastName
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.0
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Tue, 05 Jul 2022 16:07:25 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-07-05T16:08:00.0000000Z"
+        X-Vcap-Request-Id:
+          - a2b8668d-45fd-4d76-779f-648b43318fd1
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 7d4502925a4a466598af9dc0cff9e994.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR62-C5
+        X-Amz-Cf-Id:
+          - EdjUgFoz2yYtAmmbpG9NcLaTJsSHOq66jlLeCx9_hdx7AI2bdi3kbA==
+      body:
+        encoding: UTF-8
+        string: '{"results":[{"trn":"2921020","emailAddresses":["kevin.e@example.com"],"firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","uid":"1bf8803f-3924-417c-9603-1ed6489dae0d","hasActiveSanctions":false}]}'
+    recorded_at: Tue, 05 Jul 2022 16:07:25 GMT
 recorded_with: VCR 6.1.0

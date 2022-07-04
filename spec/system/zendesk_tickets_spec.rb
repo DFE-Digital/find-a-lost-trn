@@ -91,6 +91,9 @@ RSpec.describe "Zendesk ticket syncing", type: :system do
     click_on "Continue"
     click_on "Continue"
 
+    fill_in "Your email address", with: "kevin@kevin.com"
+    click_on "Continue"
+
     fill_in "First name", with: "Not"
     fill_in "Last name", with: "Valid"
     click_on "Continue"
@@ -104,9 +107,6 @@ RSpec.describe "Zendesk ticket syncing", type: :system do
     click_on "Continue"
 
     choose "No", visible: false
-    click_on "Continue"
-
-    fill_in "Your email address", with: "kevin@kevin.com"
     click_on "Continue"
   end
 
