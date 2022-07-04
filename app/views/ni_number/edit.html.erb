@@ -12,6 +12,8 @@
             required: true
           ) %>
 
+      <%= f.govuk_submit 'Submit', prevent_double_click: false, class: 'govuk-visually-hidden', name: 'submit', value: 'hidden_submit', tabindex: '-1' %>
+
       <%= govuk_details(summary_text: "I don’t know my National Insurance number") do %>
         <p class="govuk-body">
           You can <a class="govuk-link" target="_blank" rel="noopener noreferrer" href="https://www.gov.uk/lost-national-insurance-number">find a lost National Insurance number</a>.
@@ -21,10 +23,10 @@
           Or you can continue without it, but we are less likely to find your TRN.
         </p>
 
-        <%= govuk_button_link_to 'Continue without it', session[:form_complete] ? check_answers_path : itt_provider_path, secondary: true %>
+        <%= f.govuk_submit 'Continue without it', prevent_double_click: false, secondary: true, name: 'submit', value: 'ni_number_not_known' %>
       <% end %>
 
-      <%= f.govuk_submit prevent_double_click: false %>
+      <%= f.govuk_submit prevent_double_click: false, name: 'submit', value: 'submit' %>
     <% end %>
   </div>
 </div>

@@ -8,7 +8,11 @@ class NiNumberController < ApplicationController
 
   def update
     @ni_number = NiNumberForm.new(trn_request:)
-    if @ni_number.update(ni_number_params)
+    if ni_number_not_known?
+      redirect_to(
+        (session[:form_complete] ? check_answers_path : itt_provider_path)
+      )
+    elsif @ni_number.update(ni_number_params)
       begin
         find_trn_using_api unless @trn_request.trn
 
@@ -29,6 +33,10 @@ class NiNumberController < ApplicationController
 
   def ni_number_params
     params.require(:ni_number_form).permit(:ni_number)
+  end
+
+  def ni_number_not_known?
+    params.require(:submit) == "ni_number_not_known"
   end
 
   def find_trn_using_api
