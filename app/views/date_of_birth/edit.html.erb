@@ -3,7 +3,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: date_of_birth_form, url: date_of_birth_path, method: :patch do |f| %>
+    <%= form_with model: date_of_birth_form, url: date_of_birth_path do |f| %>
       <%= f.govuk_error_summary %>
       <%= f.govuk_date_field(
             :date_of_birth,

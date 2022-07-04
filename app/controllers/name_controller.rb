@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class NameController < ApplicationController
+  include EnforceQuestionOrder
+
   def edit
     @name_form = NameForm.new(trn_request:)
   end
@@ -24,10 +26,5 @@ class NameController < ApplicationController
       :previous_first_name,
       :previous_last_name
     )
-  end
-
-  def trn_request
-    @trn_request ||=
-      TrnRequest.find_or_initialize_by(id: session[:trn_request_id])
   end
 end

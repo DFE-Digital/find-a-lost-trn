@@ -3,7 +3,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @itt_provider_form, url: itt_provider_path, method: :patch do |f| %>
+    <%= form_with model: @itt_provider_form, url: itt_provider_path do |f| %>
       <%= f.govuk_error_summary %>
       <%= f.govuk_radio_buttons_fieldset(:itt_provider_enrolled, legend: { tag: 'h1', size: 'xl', text: 'Did a university, SCITT or school award your QTS?' }) do %>
         <%= f.govuk_radio_button :itt_provider_enrolled, true, label: { text: 'Yes' }, link_errors: true do %>
