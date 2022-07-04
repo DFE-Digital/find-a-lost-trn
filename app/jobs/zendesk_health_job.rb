@@ -2,7 +2,7 @@ class ZendeskHealthJob < ApplicationJob
   include Rails.application.routes.url_helpers
 
   def perform
-    return unless FeatureFlag.active?(:zendesk_health_check)
+    return unless FeatureFlag.active?(:slack_alerts)
 
     tickets_created =
       TrnRequest.with_zendesk_ticket.where(checked_at: 24.hours.ago...).count
