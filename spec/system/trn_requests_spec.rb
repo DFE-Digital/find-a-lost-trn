@@ -442,7 +442,7 @@ RSpec.describe "TRN requests", type: :system do
 
   def and_i_receive_an_email_with_the_trn_number
     open_email("kevin@kevin.com")
-    expect(current_email.subject).to eq("Your TRN is 1275362")
+    expect(current_email.subject).to eq("Your TRN is 2921020")
   end
 
   def and_i_receive_an_email_with_the_zendesk_ticket_number

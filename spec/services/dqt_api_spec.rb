@@ -18,7 +18,7 @@ RSpec.describe DqtApi do
     end
 
     context "with a matching TRN request", vcr: true do
-      it { is_expected.to match(hash_including("trn" => "1275362")) }
+      it { is_expected.to match(hash_including("trn" => "2921020")) }
       it do
         is_expected.to match(
           hash_including(
