@@ -6,7 +6,7 @@ module EnforceQuestionOrder
 
   def redirect_to_next_question
     redirect_to(start_url) and return if start_page_is_required?
-    return if last_question_answered?
+    return if all_questions_answered?
     return if previous_question_answered?
 
     redirect_to next_question_path if request.path != next_question_path
@@ -47,8 +47,8 @@ module EnforceQuestionOrder
     check_answers_path
   end
 
-  def last_question_answered?
-    !questions.last[:needs_answer]
+  def all_questions_answered?
+    questions.none? { |q| q[:needs_answer] }
   end
 
   def previous_question_answered?
