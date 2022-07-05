@@ -710,7 +710,7 @@ RSpec.describe "TRN requests", type: :system do
   end
 
   def then_i_see_the_updated_ni_number
-    expect(page).to have_content("QQ 12 34 56 C")
+    expect(page).to have_content("AA 12 34 56 A")
   end
 
   def then_i_see_a_validation_error
@@ -821,7 +821,7 @@ RSpec.describe "TRN requests", type: :system do
   alias_method :and_i_fill_in_my_itt_provider, :when_i_fill_in_my_itt_provider
 
   def when_i_fill_in_my_ni_number
-    fill_in "What is your National Insurance number?", with: "QQ123456C"
+    fill_in "What is your National Insurance number?", with: "AA123456A"
   end
   alias_method :and_i_fill_in_my_ni_number, :when_i_fill_in_my_ni_number
 
@@ -854,7 +854,7 @@ RSpec.describe "TRN requests", type: :system do
   end
 
   def when_i_enter_a_valid_ni_number
-    fill_in "What is your National Insurance number?", with: "QQ123456C"
+    fill_in "What is your National Insurance number?", with: "AA123456A"
     click_on "Continue"
   end
 
