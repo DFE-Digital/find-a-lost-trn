@@ -42,8 +42,8 @@ class DateOfBirthForm
       return false
     end
 
-    month = Date.parse(date_fields[1]).month if month.zero? &&
-      date_fields[1].length.positive?
+    month_is_a_word = month.zero? && date_fields[1].length.positive?
+    month = word_to_month(date_fields[1]) if month_is_a_word
 
     if month.zero?
       errors.add(:date_of_birth, t("missing_month"))
@@ -118,5 +118,15 @@ class DateOfBirthForm
     }
 
     words[field.downcase.to_sym] || field
+  end
+
+  # Attempts to convert Jan, Feb, etc to month numbers. Returns 0 otherwise.
+  def word_to_month(raw_month)
+    begin
+      month = Date.parse(raw_month).month
+    rescue Date::Error
+      month = 0
+    end
+    month
   end
 end
