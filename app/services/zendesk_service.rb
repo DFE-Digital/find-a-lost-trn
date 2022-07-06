@@ -11,9 +11,11 @@ class ZendeskService
     begin
       ticket = GDS_ZENDESK_CLIENT.ticket.create!(ticket_template(trn_request))
       trn_request.update!(zendesk_ticket_id: ticket.id)
-    rescue ZendeskAPI::Error::RecordInvalid
+    rescue ZendeskAPI::Error::RecordInvalid => e
+      Sentry.capture_exception(e, contexts: { errors: e.errors })
       raise CreateError, "Could not create Zendesk ticket"
-    rescue ZendeskAPI::Error::NetworkError
+    rescue ZendeskAPI::Error::NetworkError => e
+      Sentry.capture_exception(e, contexts: { errors: e.errors })
       raise ConnectionError, "Could not connect to Zendesk"
     end
   end

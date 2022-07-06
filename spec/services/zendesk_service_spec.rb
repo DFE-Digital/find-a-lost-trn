@@ -42,25 +42,29 @@ RSpec.describe ZendeskService do
     before { FeatureFlag.activate(:zendesk_integration) }
 
     describe ".create_ticket!" do
+      subject(:create_ticket!) { described_class.create_ticket!(trn_request) }
+
+      let(:trn_request) do
+        build(
+          :trn_request,
+          date_of_birth: 20.years.ago,
+          email: "test@example.com",
+          first_name: "Test",
+          has_ni_number: true,
+          itt_provider_enrolled: true,
+          itt_provider_name: "Big SCITT",
+          last_name: "User",
+          ni_number: "QC123456A",
+          previous_last_name: "Smith"
+        )
+      end
+
       it "creates a ticket" do
         allow(ticket_client).to receive(:create!).and_return(
           ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42)
         )
 
-        trn_request =
-          TrnRequest.new(
-            date_of_birth: 20.years.ago,
-            email: "test@example.com",
-            first_name: "Test",
-            has_ni_number: true,
-            itt_provider_enrolled: true,
-            itt_provider_name: "Big SCITT",
-            last_name: "User",
-            ni_number: "QC123456A",
-            previous_last_name: "Smith"
-          )
-
-        described_class.create_ticket!(trn_request)
+        create_ticket!
 
         expect(ticket_client).to have_received(:create!).once.with(
           {
@@ -89,22 +93,15 @@ RSpec.describe ZendeskService do
         expect(trn_request.zendesk_ticket_id).to eq(42)
       end
 
-      it "throws an error when it fails to create a ticket" do
-        trn_request =
-          TrnRequest.new(
-            date_of_birth: 20.years.ago,
-            email: "test@example.com",
-            has_ni_number: true,
-            itt_provider_enrolled: true,
-            itt_provider_name: "Big SCITT",
-            first_name: "break_zendesk",
-            last_name: "User",
-            ni_number: "QC123456A"
-          )
+      context "with a TRN Request that breaks Zendesk" do
+        let(:trn_request) do
+          build(:trn_request, :has_itt_provider, first_name: "break_zendesk")
+        end
 
-        expect { described_class.create_ticket!(trn_request) }.to raise_error(
-          ZendeskService::CreateError
-        )
+        it "throws an error when it fails to create a ticket" do
+          expect(Sentry).to receive(:capture_exception)
+          expect { create_ticket! }.to raise_error(ZendeskService::CreateError)
+        end
       end
     end
 
