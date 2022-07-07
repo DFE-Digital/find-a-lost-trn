@@ -13,6 +13,9 @@ inputs:
   terraform_vars:
     description: "Path to the tfvars file for the environment"
     required: true
+  pr_id:
+    description: "Pull Request number"
+    required: false
 
 outputs:
   environment_url:
@@ -61,13 +64,6 @@ runs:
         terraform_version: 1.0.10
         terraform_wrapper: false
 
-    - uses: DFE-Digital/github-actions/setup-cf-cli@master
-      with:
-        CF_USERNAME: ${{ steps.get_secrets.outputs.PAAS-USER }}
-        CF_PASSWORD: ${{ steps.get_secrets.outputs.PAAS-PASSWORD }}
-        CF_SPACE_NAME: ${{ steps.config.outputs.paas_space }}
-        INSTALL_CONDUIT: true
-
     - name: Terraform
       id: terraform
       run: |
@@ -77,4 +73,5 @@ runs:
         ARM_ACCESS_KEY: ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }}
         TF_VAR_azure_sp_credentials_json: ${{ inputs.azure_credentials }}
         TF_VAR_flt_docker_image: ${{ inputs.docker_image }}
+        pr_id: ${{ inputs.pr_id }}
       shell: bash
