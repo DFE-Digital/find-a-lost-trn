@@ -1,0 +1,89 @@
+name: Smoke Test workflow
+
+on:
+  # schedule:
+  #   - cron: '*/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Deploy environment ( dev, test, preprod or production )"
+        required: true
+        default: dev
+        type: environment
+        options:
+          - dev
+          - test
+          - preprod
+          - production
+
+jobs:
+  smoke-test:
+    name: Run Smoke Test
+    env:
+      RAILS_ENV: test
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+
+      - name: Extract configuration from tfvars
+        id: config
+        run: |
+          KEY_VAULT_NAME=$(jq -r '.key_vault_name' $TFVARS)
+          PAAS_SPACE=$(jq -r '.paas_space' $TFVARS)
+
+          if [ -z "$KEY_VAULT_NAME" ]; then
+            echo "::error ::Failed to extract key_vault_name from $TFVARS"
+            exit 1
+          fi
+
+          if [ -z "$PAAS_SPACE" ]; then
+            echo "::error ::Failed to extract paas_space from $TFVARS"
+            exit 1
+          fi
+
+          echo ::set-output name=key_vault_name::$KEY_VAULT_NAME
+          echo ::set-output name=paas_space::$PAAS_SPACE
+        shell: bash
+        env:
+          TFVARS: workspace_variables/${{ github.event.inputs.environment }}.tfvars.json
+        working-directory: terraform
+
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.azure_credentials }}
+
+      - uses: DfE-Digital/keyvault-yaml-secret@v1
+        id: keyvault-yaml-secret
+        with:
+          keyvault: ${{ env.KEY_VAULT_NAME }}
+          secret: INFRASTRUCTURE
+          key: HOSTING_DOMAIN
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # - name: set environment (scheduled smoke test)
+      #   shell: bash
+      #   if: ${{ inputs.event_name == 'schedule' }}
+      #   run: echo "PAAS_ENVIRONMENT=production" >> $GITHUB_ENV
+
+      # - name: set environment
+      #   shell: bash
+      #   if: ${{ inputs.event_name != 'schedule' }}
+      #   run: |
+      #     echo "PAAS_ENVIRONMENT=${{ inputs.paas_environment }}" >> $GITHUB_ENV
+
+      - name: Run deployment smoke test
+        shell: bash
+        run: bundle exec rspec --tags smoke_test
+        env:
+          HOSTING_DOMAIN: ${{ steps.keyvault-yaml-secret.outputs.HOSTING_DOMAIN }}
+
+      # - name: print environment
+      #   shell: bash
+      #   run: echo ${{ env.PAAS_ENVIRONMENT}}
