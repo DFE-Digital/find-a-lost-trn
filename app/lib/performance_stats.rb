@@ -43,7 +43,7 @@ class PerformanceStats
     @live_service_data = [%w[Date Requests]]
     @live_service_data +=
       @last_n_days.map do |day|
-        [day.strftime("%d %B"), trn_requests_total[day] || 0]
+        [day.strftime("%-d %B"), trn_requests_total[day] || 0]
       end
   end
 
@@ -58,7 +58,7 @@ class PerformanceStats
     @submission_data +=
       @last_n_days.map do |day|
         [
-          day.strftime("%d %B"),
+          day.strftime("%-d %B"),
           trn_requests_with_trn[day] || 0,
           trn_requests_with_zendesk_ticket[day] || 0
         ]
@@ -105,7 +105,7 @@ class PerformanceStats
     @duration_data =
       @last_n_days.map do |day|
         percentiles = percentiles_by_day[day] || [0, 0, 0]
-        [day.strftime("%d %B")] +
+        [day.strftime("%-d %B")] +
           percentiles.map do |value|
             ActiveSupport::Duration.build(value.to_i).inspect
           end

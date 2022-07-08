@@ -34,10 +34,10 @@ RSpec.describe PerformanceStats do
           ["12 May", 1],
           ["11 May", 2],
           ["10 May", 3],
-          ["09 May", 4],
-          ["08 May", 5],
-          ["07 May", 6],
-          ["06 May", 7]
+          ["9 May", 4],
+          ["8 May", 5],
+          ["7 May", 6],
+          ["6 May", 7]
         ]
       )
 
@@ -51,14 +51,14 @@ RSpec.describe PerformanceStats do
           ["12 May", 1],
           ["11 May", 2],
           ["10 May", 3],
-          ["09 May", 4],
-          ["08 May", 5],
-          ["07 May", 6],
-          ["06 May", 7],
-          ["05 May", 8],
-          ["04 May", 9],
-          ["03 May", 0],
-          ["02 May", 0]
+          ["9 May", 4],
+          ["8 May", 5],
+          ["7 May", 6],
+          ["6 May", 7],
+          ["5 May", 8],
+          ["4 May", 9],
+          ["3 May", 0],
+          ["2 May", 0]
         ]
       )
     end
@@ -77,10 +77,10 @@ RSpec.describe PerformanceStats do
           ["12 May", 0, 0],
           ["11 May", 2, 0],
           ["10 May", 0, 0],
-          ["09 May", 4, 0],
-          ["08 May", 0, 0],
-          ["07 May", 6, 0],
-          ["06 May", 0, 0]
+          ["9 May", 4, 0],
+          ["8 May", 0, 0],
+          ["7 May", 6, 0],
+          ["6 May", 0, 0]
         ]
       )
 
@@ -94,14 +94,14 @@ RSpec.describe PerformanceStats do
           ["12 May", 0, 0],
           ["11 May", 2, 0],
           ["10 May", 0, 0],
-          ["09 May", 4, 0],
-          ["08 May", 0, 0],
-          ["07 May", 6, 0],
-          ["06 May", 0, 0],
-          ["05 May", 8, 0],
-          ["04 May", 0, 0],
-          ["03 May", 0, 0],
-          ["02 May", 0, 0]
+          ["9 May", 4, 0],
+          ["8 May", 0, 0],
+          ["7 May", 6, 0],
+          ["6 May", 0, 0],
+          ["5 May", 8, 0],
+          ["4 May", 0, 0],
+          ["3 May", 0, 0],
+          ["2 May", 0, 0]
         ]
       )
     end
