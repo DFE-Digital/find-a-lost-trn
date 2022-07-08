@@ -1,0 +1,24 @@
+.app-performance-table td {
+  @include govuk-font($size: false, $tabular: true);
+}
+
+.app-performance-table-total-row {
+  td,
+  th {
+    border-top: 2px solid $govuk-border-colour;
+    border-bottom: none;
+  }
+}
+
+.app-performance-table-column-divider {
+  border-right: 2px solid $govuk-border-colour;
+
+  + td,
+  + th {
+    padding-left: govuk-spacing(2);
+  }
+}
+
+.app-performance-table-date-column {
+  width: 25%;
+}

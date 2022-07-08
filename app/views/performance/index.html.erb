@@ -40,9 +40,9 @@
   <%= govuk_table(rows: @submission_data, classes: 'app-performance-table') %>
 </div>
 
-<div class="app-!-border-top-1 govuk-!-padding-top-2">
+<div class="govuk-!-margin-top-7">
   <%= govuk_table(classes: 'app-performance-table') do |table|
-      table.caption(size: 'm', text: 'How quickly did users get their TRN ' + @since_text)
+      table.caption(size: 'm', text: "How quickly did users get their TRN (#{@short_since_text})")
 
       table.head do |head|
       head.row do |row|
