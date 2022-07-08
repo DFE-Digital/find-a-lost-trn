@@ -11,21 +11,18 @@
   </div>
 </div>
 
-<div class="app-!-border-top-1 govuk-!-padding-top-2">
-  <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Live service usage</h2>
-  <p class="govuk-!-font-size-16">
-    Number of TRN requests started daily <%= @since_text %>
-  </p>
+<h2 class="govuk-heading-m"><%= @short_since_text.capitalize %></h2>
 
-  <div class="govuk-!-text-align-right">
-    <div style="display: inline-block">
-      <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@requests_over_last_n_days) %></p>
-      <p>requests <%= @since_text %></p>
-    </div>
+<div class="govuk-!-margin-bottom-4">
+  <div class="app-card app-card--blue">
+    <span class="app-card__count"><%= number_with_delimiter(@requests_over_last_n_days) %></span>
+    requests <%= @since_text %>
   </div>
-
-  <%= govuk_table(rows: @live_service_data, classes: 'app-performance-table') %>
 </div>
+
+<h2 class="govuk-heading-m govuk-!-margin-top-7">TRN requests by day (<%= @short_since_text %>)</h2>
+
+<%= govuk_table(rows: @live_service_data, classes: 'app-performance-table') %>
 
 <div class="app-!-border-top-1 govuk-!-padding-top-2">
   <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Submission results</h2>
