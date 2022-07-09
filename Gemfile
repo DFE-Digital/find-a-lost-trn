@@ -25,6 +25,7 @@ gem "sidekiq"
 gem "sidekiq-cron", "~> 1.6"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "view_component"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
