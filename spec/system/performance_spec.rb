@@ -51,7 +51,7 @@ RSpec.describe "Performance", type: :system do
     expect(page).to have_content("12 May\t3 minutes\t3 minutes\t3 minutes")
     expect(page).to have_content("6 May\t3 minutes\t3 minutes\t3 minutes")
     expect(page).to have_content(
-      "Average over the last 7 days\t3 minutes\t3 minutes\t3 minutes"
+      "Average (last 7 days)\t3 minutes\t3 minutes\t3 minutes"
     )
   end
 
@@ -69,7 +69,7 @@ RSpec.describe "Performance", type: :system do
     expect(page).to have_content("12 May\t3 minutes\t3 minutes\t3 minutes")
     expect(page).to have_content("4 May\t3 minutes\t3 minutes\t3 minutes")
     expect(page).to have_content(
-      "Average since launch\t3 minutes\t3 minutes\t3 minutes"
+      "Average (since launch)\t3 minutes\t3 minutes\t3 minutes"
     )
   end
 end
