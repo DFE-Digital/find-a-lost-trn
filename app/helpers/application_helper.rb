@@ -32,4 +32,17 @@ module ApplicationHelper
   def number_with_delimiter(number)
     number.to_s.chars.reverse.each_slice(3).map(&:join).join(",").reverse
   end
+
+  def trn_request_count_percent(attributes, numerator_key)
+    if attributes[:total].zero?
+      ""
+    else
+      percentage =
+        number_to_percentage(
+          100 * attributes[numerator_key].fdiv(attributes[:total]),
+          precision: 0
+        )
+      "(#{percentage})"
+    end
+  end
 end
