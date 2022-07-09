@@ -19,7 +19,6 @@ class PerformanceStats
       (0..number_of_days_in_period).map { |n| n.days.ago.beginning_of_day.utc }
 
     calculate_request_counts_by_day
-    calculate_live_service_usage
     calculate_duration_usage
   end
 
@@ -36,10 +35,6 @@ class PerformanceStats
   end
 
   private
-
-  def calculate_live_service_usage
-    @requests_over_last_n_days = @trn_requests.count.values.reduce(&:+)
-  end
 
   def calculate_request_counts_by_day
     sparse_request_counts_by_day =

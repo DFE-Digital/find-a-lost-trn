@@ -21,18 +21,6 @@ RSpec.describe PerformanceStats do
     end
   end
 
-  describe "#live_service_usage" do
-    it "calculates live service usage" do
-      given_there_are_a_few_trns
-
-      count = described_class.new(last_7_days).live_service_usage
-      expect(count).to eq 28
-
-      count = described_class.new(longer_than_last_7_days).live_service_usage
-      expect(count).to eq 45
-    end
-  end
-
   describe "#request_counts_by_day" do
     it "calculates found, not found and abandoned requests by day" do
       given_there_are_a_few_trns

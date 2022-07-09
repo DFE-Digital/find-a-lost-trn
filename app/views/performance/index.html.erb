@@ -15,8 +15,34 @@
 
 <div class="govuk-!-margin-bottom-4">
   <div class="app-card app-card--blue">
-    <span class="app-card__count"><%= number_with_delimiter(@requests_over_last_n_days) %></span>
+    <span class="app-card__count"><%= number_with_delimiter(@total_requests_by_day[:total]) %></span>
     requests <%= @since_text %>
+  </div>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-third">
+    <div class="app-card app-card--green">
+      <span class="app-card__count"><%= number_to_percentage(100 * @total_requests_by_day[:cnt_trn_found].fdiv(@total_requests_by_day[:total]), precision: 0) %></span>
+      found their TRN<br />straight away<br />
+      (<%= number_with_delimiter(@total_requests_by_day[:cnt_trn_found]) %> out of <%= number_with_delimiter(@total_requests_by_day[:total]) %>)
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="app-card app-card--light-blue">
+      <span class="app-card__count"><%= number_to_percentage(100 * @total_requests_by_day[:cnt_no_match].fdiv(@total_requests_by_day[:total]), precision: 0) %></span>
+      generated a support ticket<br />
+      after we could not match<br />
+      (<%= number_with_delimiter(@total_requests_by_day[:cnt_no_match]) %> out of <%= number_with_delimiter(@total_requests_by_day[:total]) %>)
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="app-card app-card--grey">
+      <span class="app-card__count"><%= number_to_percentage(100 * @total_requests_by_day[:cnt_did_not_finish].fdiv(@total_requests_by_day[:total]), precision: 0) %></span>
+      did not complete their journey<br />
+      <br />
+      (<%= number_with_delimiter(@total_requests_by_day[:cnt_did_not_finish]) %> out of <%= number_with_delimiter(@total_requests_by_day[:total]) %>)
+    </div>
   </div>
 </div>
 
