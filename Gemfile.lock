@@ -488,6 +488,7 @@ DEPENDENCIES
   timecop
   tzinfo-data
   vcr (~> 6.1)
+  view_component
   web-console
   webmock (~> 3.14)
 
