@@ -87,6 +87,7 @@ class PerformanceStats
 
     average_percentiles =
       @trn_requests
+        .unscope(:group)
         .where.not(checked_at: nil)
         .where.not(trn: nil)
         .pick(
