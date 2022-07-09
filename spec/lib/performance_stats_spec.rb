@@ -25,83 +25,138 @@ RSpec.describe PerformanceStats do
     it "calculates live service usage" do
       given_there_are_a_few_trns
 
-      count, data = described_class.new(last_7_days).live_service_usage
+      count = described_class.new(last_7_days).live_service_usage
       expect(count).to eq 28
-      expect(data.size).to eq 8
-      expect(data).to eq(
-        [
-          %w[Date Requests],
-          ["12 May", 1],
-          ["11 May", 2],
-          ["10 May", 3],
-          ["9 May", 4],
-          ["8 May", 5],
-          ["7 May", 6],
-          ["6 May", 7]
-        ]
-      )
 
-      count, data =
-        described_class.new(longer_than_last_7_days).live_service_usage
+      count = described_class.new(longer_than_last_7_days).live_service_usage
       expect(count).to eq 45
-      expect(data.size).to eq 30
-      expect(data.take(12)).to eq(
-        [
-          %w[Date Requests],
-          ["12 May", 1],
-          ["11 May", 2],
-          ["10 May", 3],
-          ["9 May", 4],
-          ["8 May", 5],
-          ["7 May", 6],
-          ["6 May", 7],
-          ["5 May", 8],
-          ["4 May", 9],
-          ["3 May", 0],
-          ["2 May", 0]
-        ]
-      )
     end
   end
 
-  describe "#submission results" do
-    it "calculates submission stats" do
+  describe "#request_counts_by_day" do
+    it "calculates found, not found and abandoned requests by day" do
       given_there_are_a_few_trns
 
-      count, data = described_class.new(last_7_days).submission_results
-      expect(count).to eq 12
-      expect(data.size).to eq 8
-      expect(data).to eq(
+      totals, counts_by_day =
+        described_class.new(last_7_days).request_counts_by_day
+      expect(totals).to eq(
+        {
+          total: 28,
+          cnt_did_not_finish: 12,
+          cnt_no_match: 0,
+          cnt_trn_found: 16
+        }
+      )
+      expect(counts_by_day.size).to eq 7
+      expect(counts_by_day).to eq(
         [
-          ["Date", "TRNs found", "Zendesk tickets opened"],
-          ["12 May", 0, 0],
-          ["11 May", 2, 0],
-          ["10 May", 0, 0],
-          ["9 May", 4, 0],
-          ["8 May", 0, 0],
-          ["7 May", 6, 0],
-          ["6 May", 0, 0]
+          [
+            "12 May",
+            {
+              cnt_trn_found: 1,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 1
+            }
+          ],
+          [
+            "11 May",
+            {
+              cnt_trn_found: 0,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 2,
+              total: 2
+            }
+          ],
+          [
+            "10 May",
+            {
+              cnt_trn_found: 3,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 3
+            }
+          ],
+          [
+            "9 May",
+            {
+              cnt_trn_found: 0,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 4,
+              total: 4
+            }
+          ],
+          [
+            "8 May",
+            {
+              cnt_trn_found: 5,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 5
+            }
+          ],
+          [
+            "7 May",
+            {
+              cnt_trn_found: 0,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 6,
+              total: 6
+            }
+          ],
+          [
+            "6 May",
+            {
+              cnt_trn_found: 7,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 7
+            }
+          ]
         ]
       )
 
-      count, data =
-        described_class.new(longer_than_last_7_days).submission_results
-      expect(count).to eq 20
-      expect(data.size).to eq 30
-      expect(data.take(12)).to eq(
+      totals, counts_by_day =
+        described_class.new(longer_than_last_7_days).request_counts_by_day
+      expect(totals).to eq(
+        {
+          total: 45,
+          cnt_did_not_finish: 20,
+          cnt_no_match: 0,
+          cnt_trn_found: 25
+        }
+      )
+
+      expect(counts_by_day.size).to eq 29
+      expect(counts_by_day.slice(8, 3)).to eq(
         [
-          ["Date", "TRNs found", "Zendesk tickets opened"],
-          ["12 May", 0, 0],
-          ["11 May", 2, 0],
-          ["10 May", 0, 0],
-          ["9 May", 4, 0],
-          ["8 May", 0, 0],
-          ["7 May", 6, 0],
-          ["6 May", 0, 0],
-          ["5 May", 8, 0],
-          ["4 May", 0, 0],
-          ["3 May", 0, 0],
-          ["2 May", 0, 0]
+          [
+            "4 May",
+            {
+              cnt_trn_found: 9,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 9
+            }
+          ],
+          [
+            "3 May",
+            {
+              cnt_trn_found: 0,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 0
+            }
+          ],
+          [
+            "2 May",
+            {
+              cnt_trn_found: 0,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 0
+            }
+          ]
         ]
       )
     end
@@ -143,7 +198,8 @@ RSpec.describe PerformanceStats do
         create(
           :trn_request,
           created_at: n.days.ago.beginning_of_day,
-          trn: n.odd? ? "1234567" : nil
+          trn: n.even? ? "1234567" : nil,
+          checked_at: n.even? ? n.days.ago.beginning_of_day + 2.minutes : nil
         )
       end
     end

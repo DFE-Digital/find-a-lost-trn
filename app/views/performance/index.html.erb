@@ -22,23 +22,33 @@
 
 <h2 class="govuk-heading-m govuk-!-margin-top-7">TRN requests by day (<%= @short_since_text %>)</h2>
 
-<%= govuk_table(rows: @live_service_data, classes: 'app-performance-table') %>
+<%= govuk_table(classes: 'app-performance-table') do |table|
+    table.head do |head|
+    head.row do |row|
+    row.cell(header: true, text: 'Date', classes: 'app-performance-table-column-divider app-performance-table-date-column')
+    row.cell(header: true, text: 'TRN found')
+    row.cell(header: true, text: 'No match')
+    row.cell(header: true, text: 'Did not finish', classes: 'app-performance-table-column-divider')
+    row.cell(header: true, text: 'Total')
 
-<div class="app-!-border-top-1 govuk-!-padding-top-2">
-  <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Submission results</h2>
-  <p class="govuk-!-font-size-16">
-    Number of TRNs found versus number of Zendesk tickets opened <%= @since_text %>
-  </p>
-
-  <div class="govuk-!-text-align-right">
-    <div style="display: inline-block">
-      <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@trns_found) %></p>
-      <p>TRNs found <%= @since_text %></p>
-    </div>
-  </div>
-
-  <%= govuk_table(rows: @submission_data, classes: 'app-performance-table') %>
-</div>
+    end; end; table.body do |body|
+      @request_counts_by_day.each do |data_row|
+        body.row do |row|
+          row.cell(classes: 'app-performance-table-column-divider') { data_row.first }
+          row.cell { number_with_delimiter(data_row.last[:cnt_trn_found]) }
+          row.cell { number_with_delimiter(data_row.last[:cnt_no_match]) }
+          row.cell(classes: 'app-performance-table-column-divider') { number_with_delimiter(data_row.last[:cnt_did_not_finish]) }
+          row.cell { number_with_delimiter(data_row.last[:total]) + " requests" }
+        end
+      end
+      body.row(classes: 'app-performance-table-total-row') do |row|
+        row.cell(header: true, classes: 'app-performance-table-column-divider') { "Total (#{@short_since_text})" }
+        row.cell { number_with_delimiter(@total_requests_by_day[:cnt_trn_found]) }
+        row.cell { number_with_delimiter(@total_requests_by_day[:cnt_no_match]) }
+        row.cell(classes: 'app-performance-table-column-divider') { number_with_delimiter(@total_requests_by_day[:cnt_did_not_finish]) }
+        row.cell { number_with_delimiter(@total_requests_by_day[:total]) + " requests" }
+      end
+    end; end %>
 
 <div class="govuk-!-margin-top-7">
   <%= govuk_table(classes: 'app-performance-table') do |table|

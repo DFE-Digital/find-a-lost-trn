@@ -15,8 +15,8 @@ class PerformanceController < ApplicationController
 
     stats = PerformanceStats.new(time_period)
 
-    @requests_over_last_n_days, @live_service_data = stats.live_service_usage
-    @trns_found, @submission_data = stats.submission_results
+    @requests_over_last_n_days = stats.live_service_usage
     @duration_averages, @duration_usage = stats.duration_usage
+    @total_requests_by_day, @request_counts_by_day = stats.request_counts_by_day
   end
 end
