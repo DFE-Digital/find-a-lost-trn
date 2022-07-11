@@ -11,12 +11,12 @@
   </div>
 </div>
 
-<h2 class="govuk-heading-m"><%= @short_since_text.capitalize %></h2>
+<h2 class="govuk-heading-m">Last 7 days</h2>
 
 <div class="govuk-!-margin-bottom-4">
   <%= render TileComponent.new(
                count: @total_requests_by_day[:total],
-               label: "requests #{@since_text}",
+               label: "requests in the last 7 days",
                colour: :blue) %>
 </div>
 
@@ -53,13 +53,13 @@
   </div>
 </div>
 
-<h2 class="govuk-heading-m govuk-!-margin-top-7">TRN requests by day (<%= @short_since_text %>)</h2>
+<h2 class="govuk-heading-m govuk-!-margin-top-7">TRN requests by day (last 7 days)</h2>
 
-<%= render TrnRequestsPerformanceTableComponent.new(grouped_request_counts: @request_counts_by_day, total_grouped_requests: @total_requests_by_day, since: @short_since_text) %>
+<%= render TrnRequestsPerformanceTableComponent.new(grouped_request_counts: @request_counts_by_day, total_grouped_requests: @total_requests_by_day, since: "last 7 days") %>
 
 <div class="govuk-!-margin-top-7">
   <%= govuk_table(classes: 'app-performance-table') do |table|
-      table.caption(size: 'm', text: "How quickly did users get their TRN (#{@short_since_text})")
+      table.caption(size: 'm', text: "How quickly did users get their TRN (last 7 days)")
 
       table.head do |head|
       head.row do |row|
@@ -78,7 +78,7 @@
           end
         end
         body.row(classes: 'app-performance-table-total-row') do |row|
-          row.cell(header: true) { 'Average ('+ @short_since_text + ')' }
+          row.cell(header: true) { 'Average (last 7 days)' }
           row.cell { @duration_averages[0] }
           row.cell { @duration_averages[1] }
           row.cell { @duration_averages[2] }

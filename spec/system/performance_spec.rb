@@ -12,10 +12,6 @@ RSpec.describe "Performance", type: :system do
     when_i_visit_the_performance_page
     then_i_see_the_live_stats
     and_i_see_the_usage_duration
-
-    when_i_visit_the_performance_page_since_launch
-    then_i_see_the_live_stats_since_launch
-    and_i_see_the_usage_duration_since_launch
   end
 
   private
@@ -42,7 +38,7 @@ RSpec.describe "Performance", type: :system do
   end
 
   def then_i_see_the_live_stats
-    expect(page).to have_content("36\nrequests over the last 7 days")
+    expect(page).to have_content("36\nrequests in the last 7 days")
     expect(page).to have_content("12 May\t1")
     expect(page).to have_content("6 May\t7")
   end
@@ -52,24 +48,6 @@ RSpec.describe "Performance", type: :system do
     expect(page).to have_content("6 May\t3 minutes\t3 minutes\t3 minutes")
     expect(page).to have_content(
       "Average (last 7 days)\t3 minutes\t3 minutes\t3 minutes"
-    )
-  end
-
-  def when_i_visit_the_performance_page_since_launch
-    visit performance_path(since_launch: true)
-  end
-
-  def then_i_see_the_live_stats_since_launch
-    expect(page).to have_content("45\nrequests since launch")
-    expect(page).to have_content("12 May\t1")
-    expect(page).to have_content("4 May\t9")
-  end
-
-  def and_i_see_the_usage_duration_since_launch
-    expect(page).to have_content("12 May\t3 minutes\t3 minutes\t3 minutes")
-    expect(page).to have_content("4 May\t3 minutes\t3 minutes\t3 minutes")
-    expect(page).to have_content(
-      "Average (since launch)\t3 minutes\t3 minutes\t3 minutes"
     )
   end
 end
