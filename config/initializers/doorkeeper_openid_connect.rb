@@ -37,8 +37,7 @@ Doorkeeper::OpenidConnect.configure do
   subject_types_supported [:public]
 
   resource_owner_from_access_token do |access_token|
-    # Example implementation:
-    # User.find_by(id: access_token.resource_owner_id)
+    User.find_by(id: access_token.resource_owner_id)
   end
 
   auth_time_from_resource_owner do |resource_owner|
