@@ -6,17 +6,6 @@ RSpec.describe PerformanceStats do
 
   after { Timecop.return }
 
-  let(:last_7_days_and_today) { 1.week.ago.beginning_of_day..Time.zone.now }
-
-  describe "without params" do
-    it "asks for a time_period parameter" do
-      expect { described_class.new(nil) }.to raise_error(
-        ArgumentError,
-        "time_period is not a Range"
-      )
-    end
-  end
-
   describe "#request_counts_by_day" do
     it "calculates found, not found and abandoned requests by day" do
       create_list(:trn_request, 2, :has_trn, created_at: 2.hours.ago) # counts against 12 May
@@ -41,8 +30,7 @@ RSpec.describe PerformanceStats do
         created_at: 1.month.ago + 2.hours
       ) # counts against April, should not affect the counts as it falls outside the window
 
-      totals, counts_by_day =
-        described_class.new(last_7_days_and_today).request_counts_by_day
+      totals, counts_by_day = described_class.new.request_counts_by_day
       expect(totals).to eq(
         { total: 9, cnt_did_not_finish: 4, cnt_no_match: 3, cnt_trn_found: 2 }
       )
@@ -133,7 +121,7 @@ RSpec.describe PerformanceStats do
         zendesk_ticket_id: nil
       )
 
-      totals, = described_class.new(last_7_days_and_today).request_counts_by_day
+      totals, = described_class.new.request_counts_by_day
 
       expect(totals).to eq(
         { total: 1, cnt_did_not_finish: 1, cnt_no_match: 0, cnt_trn_found: 0 }
@@ -162,7 +150,7 @@ RSpec.describe PerformanceStats do
         trn: nil
       )
 
-      averages, data = described_class.new(last_7_days_and_today).duration_usage
+      averages, data = described_class.new.duration_usage
       expect(data.first).to eq(
         ["12 May", "4 minutes", "3 minutes", "2 minutes"]
       )

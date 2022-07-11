@@ -2,21 +2,15 @@
 class PerformanceStats
   include ActionView::Helpers::NumberHelper
 
-  def initialize(time_period)
-    unless time_period.is_a? Range
-      raise ArgumentError, "time_period is not a Range"
-    end
-
-    number_of_days_in_period =
-      ((Time.zone.now.beginning_of_day - time_period.first) / 1.day).to_i
+  def initialize
+    time_period = (1.week.ago.beginning_of_day..Time.zone.now)
 
     @trn_requests =
       TrnRequest.where(created_at: time_period).group(
         "date_trunc('day', created_at)"
       )
 
-    @last_n_days =
-      (0..number_of_days_in_period).map { |n| n.days.ago.beginning_of_day.utc }
+    @last_n_days = (0..7).map { |n| n.days.ago.beginning_of_day.utc }
 
     calculate_request_counts_by_day
     calculate_duration_usage
