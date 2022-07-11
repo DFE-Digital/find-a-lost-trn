@@ -42,13 +42,13 @@ class PerformanceStats
         .select(
           Arel.sql("date_trunc('day', created_at) AS day"),
           Arel.sql(
-            "sum(case when checked_at is not null and trn is not null then 1 else 0 end) as cnt_trn_found"
+            "sum(case when trn is not null then 1 else 0 end) as cnt_trn_found"
           ),
           Arel.sql(
-            "sum(case when checked_at is not null and trn is null then 1 else 0 end) as cnt_no_match"
+            "sum(case when zendesk_ticket_id is not null then 1 else 0 end) as cnt_no_match"
           ),
           Arel.sql(
-            "sum(case when checked_at is null then 1 else 0 end) as cnt_did_not_finish"
+            "sum(case when trn is null and zendesk_ticket_id is null then 1 else 0 end) as cnt_did_not_finish"
           ),
           Arel.sql("count(*) as total")
         )
