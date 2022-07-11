@@ -57,6 +57,10 @@
 
 <%= render TrnRequestsPerformanceTableComponent.new(grouped_request_counts: @request_counts_by_day, total_grouped_requests: @total_requests_by_day, since: "last 7 days") %>
 
+<h2 class="govuk-heading-m govuk-!-margin-top-7">TRN requests by month (last 12 months)</h2>
+
+<%= render TrnRequestsPerformanceTableComponent.new(grouped_request_counts: @request_counts_by_month, total_grouped_requests: @total_requests_by_month, since: "last 12 months") %>
+
 <div class="govuk-!-margin-top-7">
   <%= govuk_table(classes: 'app-performance-table') do |table|
       table.caption(size: 'm', text: "How quickly did users get their TRN (last 7 days)")

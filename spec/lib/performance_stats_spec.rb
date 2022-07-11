@@ -129,6 +129,105 @@ RSpec.describe PerformanceStats do
     end
   end
 
+  describe "#request_counts_by_month" do
+    it "calculates found, not found and abandoned requests by month" do
+      Timecop.freeze(Time.zone.local(2022, 6, 1, 12, 0, 0))
+
+      create_list(:trn_request, 2, :has_trn, created_at: Date.new(2022, 6, 1))
+      create_list(
+        :trn_request,
+        3,
+        :has_zendesk_ticket,
+        created_at: Date.new(2022, 5, 12)
+      )
+
+      # shouldn't appear as they're prior to service launch on 4 May 2022
+      create_list(
+        :trn_request,
+        5,
+        trn: nil,
+        zendesk_ticket_id: nil,
+        created_at: Date.new(2022, 5, 1)
+      )
+
+      totals, counts_by_month = described_class.new.request_counts_by_month
+      expect(totals).to eq(
+        { total: 5, cnt_did_not_finish: 0, cnt_no_match: 3, cnt_trn_found: 2 }
+      )
+      expect(counts_by_month.size).to eq 2
+      expect(counts_by_month).to eq(
+        [
+          [
+            "June 2022",
+            {
+              cnt_trn_found: 2,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 2
+            }
+          ],
+          [
+            "May 2022",
+            {
+              cnt_trn_found: 0,
+              cnt_no_match: 3,
+              cnt_did_not_finish: 0,
+              total: 3
+            }
+          ]
+        ]
+      )
+    end
+
+    it "calculates requests only for a rolling 12-month window including the current month" do
+      Timecop.freeze(Time.zone.local(2023, 7, 12, 12, 0, 0))
+
+      create_list(:trn_request, 2, :has_trn, created_at: Time.zone.now) # against July 2023
+      create_list(:trn_request, 3, :has_trn, created_at: 1.month.ago) # against June 2023
+      create_list(:trn_request, 4, :has_trn, created_at: 12.months.ago) # against July 2022
+
+      # shouldn't appear as it's outside the rolling window
+      create_list(:trn_request, 5, :has_trn, created_at: 13.months.ago) # against June 2022
+
+      totals, counts_by_month = described_class.new.request_counts_by_month
+      expect(totals).to eq(
+        { total: 9, cnt_did_not_finish: 0, cnt_no_match: 0, cnt_trn_found: 9 }
+      )
+      expect(counts_by_month.size).to eq 3
+      expect(counts_by_month).to eq(
+        [
+          [
+            "July 2023",
+            {
+              cnt_trn_found: 2,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 2
+            }
+          ],
+          [
+            "June 2023",
+            {
+              cnt_trn_found: 3,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 3
+            }
+          ],
+          [
+            "July 2022",
+            {
+              cnt_trn_found: 4,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 4
+            }
+          ]
+        ]
+      )
+    end
+  end
+
   describe "#duration_usage" do
     it "calculates duration results for requests that returned TRNs" do
       # requests where the user found TRNs
