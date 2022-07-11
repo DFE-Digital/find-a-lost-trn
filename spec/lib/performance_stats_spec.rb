@@ -6,11 +6,7 @@ RSpec.describe PerformanceStats do
 
   after { Timecop.return }
 
-  let(:last_day) { Time.zone.today.beginning_of_day..Time.zone.now }
-
-  let(:last_7_days) { 6.days.ago.beginning_of_day..Time.zone.now }
-
-  let(:longer_than_last_7_days) { 4.weeks.ago.beginning_of_day..Time.zone.now }
+  let(:last_7_days_and_today) { 1.week.ago.beginning_of_day..Time.zone.now }
 
   describe "without params" do
     it "asks for a time_period parameter" do
@@ -23,112 +19,65 @@ RSpec.describe PerformanceStats do
 
   describe "#request_counts_by_day" do
     it "calculates found, not found and abandoned requests by day" do
-      given_there_are_a_few_trns
+      create_list(:trn_request, 2, :has_trn, created_at: 2.hours.ago) # counts against 12 May
+      create_list(
+        :trn_request,
+        3,
+        :has_zendesk_ticket,
+        created_at: 1.day.ago + 2.hours
+      ) # counts against 11 May
+      create_list(
+        :trn_request,
+        4,
+        trn: nil,
+        zendesk_ticket_id: nil,
+        created_at: 2.days.ago + 2.hours
+      ) # counts against 10 May
+      create_list(
+        :trn_request,
+        5,
+        trn: nil,
+        zendesk_ticket_id: nil,
+        created_at: 1.month.ago + 2.hours
+      ) # counts against April, should not affect the counts as it falls outside the window
 
       totals, counts_by_day =
-        described_class.new(last_7_days).request_counts_by_day
+        described_class.new(last_7_days_and_today).request_counts_by_day
       expect(totals).to eq(
-        {
-          total: 28,
-          cnt_did_not_finish: 0,
-          cnt_no_match: 12,
-          cnt_trn_found: 16
-        }
+        { total: 9, cnt_did_not_finish: 4, cnt_no_match: 3, cnt_trn_found: 2 }
       )
-      expect(counts_by_day.size).to eq 7
+      expect(counts_by_day.size).to eq 8
       expect(counts_by_day).to eq(
         [
           [
             "12 May",
             {
-              cnt_trn_found: 1,
+              cnt_trn_found: 2,
               cnt_no_match: 0,
               cnt_did_not_finish: 0,
-              total: 1
+              total: 2
             }
           ],
           [
             "11 May",
             {
               cnt_trn_found: 0,
-              cnt_no_match: 2,
-              cnt_did_not_finish: 0,
-              total: 2
-            }
-          ],
-          [
-            "10 May",
-            {
-              cnt_trn_found: 3,
-              cnt_no_match: 0,
+              cnt_no_match: 3,
               cnt_did_not_finish: 0,
               total: 3
             }
           ],
           [
-            "9 May",
+            "10 May",
             {
               cnt_trn_found: 0,
-              cnt_no_match: 4,
-              cnt_did_not_finish: 0,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 4,
               total: 4
             }
           ],
           [
-            "8 May",
-            {
-              cnt_trn_found: 5,
-              cnt_no_match: 0,
-              cnt_did_not_finish: 0,
-              total: 5
-            }
-          ],
-          [
-            "7 May",
-            {
-              cnt_trn_found: 0,
-              cnt_no_match: 6,
-              cnt_did_not_finish: 0,
-              total: 6
-            }
-          ],
-          [
-            "6 May",
-            {
-              cnt_trn_found: 7,
-              cnt_no_match: 0,
-              cnt_did_not_finish: 0,
-              total: 7
-            }
-          ]
-        ]
-      )
-
-      totals, counts_by_day =
-        described_class.new(longer_than_last_7_days).request_counts_by_day
-      expect(totals).to eq(
-        {
-          total: 45,
-          cnt_did_not_finish: 0,
-          cnt_no_match: 20,
-          cnt_trn_found: 25
-        }
-      )
-
-      expect(counts_by_day.size).to eq 29
-      expect(counts_by_day.slice(8, 3)).to eq(
-        [
-          [
-            "4 May",
-            {
-              cnt_trn_found: 9,
-              cnt_no_match: 0,
-              cnt_did_not_finish: 0,
-              total: 9
-            }
-          ],
-          [
-            "3 May",
+            "9 May",
             {
               cnt_trn_found: 0,
               cnt_no_match: 0,
@@ -137,7 +86,34 @@ RSpec.describe PerformanceStats do
             }
           ],
           [
-            "2 May",
+            "8 May",
+            {
+              cnt_trn_found: 0,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 0
+            }
+          ],
+          [
+            "7 May",
+            {
+              cnt_trn_found: 0,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 0
+            }
+          ],
+          [
+            "6 May",
+            {
+              cnt_trn_found: 0,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0,
+              total: 0
+            }
+          ],
+          [
+            "5 May",
             {
               cnt_trn_found: 0,
               cnt_no_match: 0,
@@ -157,7 +133,7 @@ RSpec.describe PerformanceStats do
         zendesk_ticket_id: nil
       )
 
-      totals, = described_class.new(last_7_days).request_counts_by_day
+      totals, = described_class.new(last_7_days_and_today).request_counts_by_day
 
       expect(totals).to eq(
         { total: 1, cnt_did_not_finish: 1, cnt_no_match: 0, cnt_trn_found: 0 }
@@ -186,31 +162,11 @@ RSpec.describe PerformanceStats do
         trn: nil
       )
 
-      averages, data = described_class.new(last_day).duration_usage
-      expect(data.size).to eq 1
-      expect(data).to eq([["12 May", "4 minutes", "3 minutes", "2 minutes"]])
+      averages, data = described_class.new(last_7_days_and_today).duration_usage
+      expect(data.first).to eq(
+        ["12 May", "4 minutes", "3 minutes", "2 minutes"]
+      )
       expect(averages).to eq(["4 minutes", "3 minutes", "2 minutes"])
-    end
-  end
-
-  private
-
-  def given_there_are_a_few_trns
-    (0..8).each.with_index do |n, i|
-      (i + 1).times do
-        request_type = n.even? ? :has_trn : :has_zendesk_ticket
-        create(
-          :trn_request,
-          request_type,
-          created_at: n.days.ago.beginning_of_day,
-          checked_at:
-            (
-              if request_type == :has_trn
-                n.days.ago.beginning_of_day + 2.minutes
-              end
-            )
-        )
-      end
     end
   end
 end
