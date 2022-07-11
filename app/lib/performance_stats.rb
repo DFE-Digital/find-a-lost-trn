@@ -2,6 +2,8 @@
 class PerformanceStats
   include ActionView::Helpers::NumberHelper
 
+  LAUNCH_DATE = Date.new(2022, 5, 4).beginning_of_day.freeze
+
   def initialize
     time_period = (1.week.ago.beginning_of_day..Time.zone.now)
 
@@ -13,6 +15,7 @@ class PerformanceStats
     @last_n_days = (0..7).map { |n| n.days.ago.beginning_of_day.utc }
 
     calculate_request_counts_by_day
+    calculate_request_counts_by_month
     calculate_duration_usage
   end
 
@@ -26,6 +29,10 @@ class PerformanceStats
 
   def request_counts_by_day
     [@total_requests_by_day, @request_counts_by_day]
+  end
+
+  def request_counts_by_month
+    [@total_requests_by_month, @request_counts_by_month]
   end
 
   private
@@ -71,6 +78,55 @@ class PerformanceStats
         cnt_did_not_finish
       ].index_with do |key|
         sparse_request_counts_by_day
+          .map(&:last)
+          .collect { |attr| attr[key] }
+          .reduce(&:+)
+      end
+  end
+
+  def calculate_request_counts_by_month
+    start_date = [
+      LAUNCH_DATE,
+      12.months.ago.beginning_of_month.beginning_of_day
+    ].max
+    sparse_request_counts_by_month =
+      TrnRequest
+        .where(created_at: (start_date..Time.zone.now))
+        .group("date_trunc('month', created_at)")
+        .select(
+          Arel.sql("date_trunc('month', created_at) AS month"),
+          Arel.sql(
+            "sum(case when trn is not null then 1 else 0 end) as cnt_trn_found"
+          ),
+          Arel.sql(
+            "sum(case when zendesk_ticket_id is not null then 1 else 0 end) as cnt_no_match"
+          ),
+          Arel.sql(
+            "sum(case when trn is null and zendesk_ticket_id is null then 1 else 0 end) as cnt_did_not_finish"
+          ),
+          Arel.sql("count(*) as total")
+        )
+        .order(Arel.sql("date_trunc('month', created_at) desc"))
+        .each_with_object({}) do |row, hash|
+          hash[row["month"]] = row
+            .attributes
+            .except("id", "month")
+            .symbolize_keys
+        end
+
+    @request_counts_by_month =
+      sparse_request_counts_by_month.map do |month, counts|
+        [month.to_fs(:month_and_year), counts]
+      end
+
+    @total_requests_by_month =
+      %i[
+        total
+        cnt_trn_found
+        cnt_no_match
+        cnt_did_not_finish
+      ].index_with do |key|
+        sparse_request_counts_by_month
           .map(&:last)
           .collect { |attr| attr[key] }
           .reduce(&:+)
