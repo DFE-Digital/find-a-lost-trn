@@ -30,8 +30,8 @@ RSpec.describe PerformanceStats do
       expect(totals).to eq(
         {
           total: 28,
-          cnt_did_not_finish: 12,
-          cnt_no_match: 0,
+          cnt_did_not_finish: 0,
+          cnt_no_match: 12,
           cnt_trn_found: 16
         }
       )
@@ -51,8 +51,8 @@ RSpec.describe PerformanceStats do
             "11 May",
             {
               cnt_trn_found: 0,
-              cnt_no_match: 0,
-              cnt_did_not_finish: 2,
+              cnt_no_match: 2,
+              cnt_did_not_finish: 0,
               total: 2
             }
           ],
@@ -69,8 +69,8 @@ RSpec.describe PerformanceStats do
             "9 May",
             {
               cnt_trn_found: 0,
-              cnt_no_match: 0,
-              cnt_did_not_finish: 4,
+              cnt_no_match: 4,
+              cnt_did_not_finish: 0,
               total: 4
             }
           ],
@@ -87,8 +87,8 @@ RSpec.describe PerformanceStats do
             "7 May",
             {
               cnt_trn_found: 0,
-              cnt_no_match: 0,
-              cnt_did_not_finish: 6,
+              cnt_no_match: 6,
+              cnt_did_not_finish: 0,
               total: 6
             }
           ],
@@ -109,8 +109,8 @@ RSpec.describe PerformanceStats do
       expect(totals).to eq(
         {
           total: 45,
-          cnt_did_not_finish: 20,
-          cnt_no_match: 0,
+          cnt_did_not_finish: 0,
+          cnt_no_match: 20,
           cnt_trn_found: 25
         }
       )
@@ -148,6 +148,21 @@ RSpec.describe PerformanceStats do
         ]
       )
     end
+
+    it "counts a user who got to the end but didn't raise a zendesk ticket as an abandonment" do
+      create(
+        :trn_request,
+        created_at: Time.zone.today.beginning_of_day,
+        checked_at: Time.zone.today.beginning_of_day + 2.minutes,
+        zendesk_ticket_id: nil
+      )
+
+      totals, = described_class.new(last_7_days).request_counts_by_day
+
+      expect(totals).to eq(
+        { total: 1, cnt_did_not_finish: 1, cnt_no_match: 0, cnt_trn_found: 0 }
+      )
+    end
   end
 
   describe "#duration_usage" do
@@ -183,11 +198,17 @@ RSpec.describe PerformanceStats do
   def given_there_are_a_few_trns
     (0..8).each.with_index do |n, i|
       (i + 1).times do
+        request_type = n.even? ? :has_trn : :has_zendesk_ticket
         create(
           :trn_request,
+          request_type,
           created_at: n.days.ago.beginning_of_day,
-          trn: n.even? ? "1234567" : nil,
-          checked_at: n.even? ? n.days.ago.beginning_of_day + 2.minutes : nil
+          checked_at:
+            (
+              if request_type == :has_trn
+                n.days.ago.beginning_of_day + 2.minutes
+              end
+            )
         )
       end
     end
