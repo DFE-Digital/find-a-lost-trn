@@ -9,7 +9,7 @@ gem "bootsnap", require: false
 gem "cssbundling-rails"
 gem "faraday", "~> 1.10"
 gem "gds_zendesk"
-gem "govuk-components", "~> 3.1.3"
+gem "govuk-components", "~> 3.1.4"
 gem "govuk_design_system_formbuilder"
 gem "govuk_markdown", "~> 1.0"
 gem "jsbundling-rails"
@@ -25,6 +25,7 @@ gem "sidekiq"
 gem "sidekiq-cron", "~> 1.6"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "view_component"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -66,7 +67,7 @@ group :development do
   gem "solargraph-rails", require: false
   gem "syntax_tree", "~> 3.0", require: false
   gem "syntax_tree-haml", "~> 1.2", require: false
-  gem "syntax_tree-rbs", "~> 0.4.0", require: false
+  gem "syntax_tree-rbs", "~> 0.5.0", require: false
 
   gem "rails-erd"
 end

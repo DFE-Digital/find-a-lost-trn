@@ -29,6 +29,16 @@ production:
 	$(eval AZURE_BACKUP_STORAGE_ACCOUNT_NAME=s165p01dbbackup)
 	$(eval AZURE_BACKUP_STORAGE_CONTAINER_NAME=find-a-lost-trn)
 
+.PHONY: review
+review:
+	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
+	$(eval DEPLOY_ENV=review)
+	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
+	$(eval env=-pr-$(pr_id))
+	$(eval backend_config=-backend-config="key=review/review$(env).tfstate")
+	$(eval export TF_VAR_app_suffix=$(env))
+
+
 ci:	## Run in automation environment
 	$(eval DISABLE_PASSCODE=true)
 	$(eval AUTO_APPROVE=-auto-approve)
@@ -115,7 +125,7 @@ restore-data-from-backup: read-deployment-config # make production restore-data-
 terraform-init:
 	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	[[ "${SP_AUTH}" != "true" ]] && az account set -s $(AZURE_SUBSCRIPTION) || true
-	terraform -chdir=terraform init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars -upgrade -reconfigure
+	terraform -chdir=terraform init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars $(backend_config) -upgrade -reconfigure
 
 terraform-plan: terraform-init
 	terraform -chdir=terraform plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json

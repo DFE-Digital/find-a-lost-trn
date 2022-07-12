@@ -11,41 +11,55 @@
   </div>
 </div>
 
-<div class="app-!-border-top-1 govuk-!-padding-top-2">
-  <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Live service usage</h2>
-  <p class="govuk-!-font-size-16">
-    Number of TRN requests started daily <%= @since_text %>
-  </p>
+<h2 class="govuk-heading-m"><%= @short_since_text.capitalize %></h2>
 
-  <div class="govuk-!-text-align-right">
-    <div style="display: inline-block">
-      <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@requests_over_last_n_days) %></p>
-      <p>requests <%= @since_text %></p>
-    </div>
-  </div>
-
-  <%= govuk_table(rows: @live_service_data, classes: 'app-performance-table') %>
+<div class="govuk-!-margin-bottom-4">
+  <%= render TileComponent.new(
+               count: @total_requests_by_day[:total],
+               label: "requests #{@since_text}",
+               colour: :blue) %>
 </div>
 
-<div class="app-!-border-top-1 govuk-!-padding-top-2">
-  <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Submission results</h2>
-  <p class="govuk-!-font-size-16">
-    Number of TRNs found versus number of Zendesk tickets opened <%= @since_text %>
-  </p>
-
-  <div class="govuk-!-text-align-right">
-    <div style="display: inline-block">
-      <p class="govuk-!-font-size-48 govuk-!-margin-bottom-0 govuk-!-text-align-left govuk-!-font-weight-bold app-!-colour--link"><%= number_with_delimiter(@trns_found) %></p>
-      <p>TRNs found <%= @since_text %></p>
-    </div>
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+  <div class="govuk-grid-column-one-third">
+    <%= render TileComponent.new(
+                 count: number_to_percentage(100 * @total_requests_by_day[:cnt_trn_found].fdiv(@total_requests_by_day[:total]), precision: 0),
+                 label: [
+                    "found their TRN",
+                    "straight away",
+                    "(#{number_with_delimiter(@total_requests_by_day[:cnt_trn_found])} out of #{number_with_delimiter(@total_requests_by_day[:total])})"
+                  ].join("<br />").html_safe,
+                 colour: :green) %>
   </div>
-
-  <%= govuk_table(rows: @submission_data, classes: 'app-performance-table') %>
+  <div class="govuk-grid-column-one-third">
+    <%= render TileComponent.new(
+                 count: number_to_percentage(100 * @total_requests_by_day[:cnt_no_match].fdiv(@total_requests_by_day[:total]), precision: 0),
+                 label: [
+                    "generated a support ticket",
+                    "after we could not match",
+                    "(#{number_with_delimiter(@total_requests_by_day[:cnt_no_match])} out of #{number_with_delimiter(@total_requests_by_day[:total])})"
+                  ].join("<br />").html_safe,
+                 colour: :"light-blue") %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render TileComponent.new(
+                 count: number_to_percentage(100 * @total_requests_by_day[:cnt_did_not_finish].fdiv(@total_requests_by_day[:total]), precision: 0),
+                 label: [
+                    "did not complete their journey",
+                    "",
+                    "(#{number_with_delimiter(@total_requests_by_day[:cnt_did_not_finish])} out of #{number_with_delimiter(@total_requests_by_day[:total])})"
+                  ].join("<br />").html_safe,
+                 colour: :grey) %>
+  </div>
 </div>
 
-<div class="app-!-border-top-1 govuk-!-padding-top-2">
+<h2 class="govuk-heading-m govuk-!-margin-top-7">TRN requests by day (<%= @short_since_text %>)</h2>
+
+<%= render TrnRequestsPerformanceTableComponent.new(grouped_request_counts: @request_counts_by_day, total_grouped_requests: @total_requests_by_day, since: @short_since_text) %>
+
+<div class="govuk-!-margin-top-7">
   <%= govuk_table(classes: 'app-performance-table') do |table|
-      table.caption(size: 'm', text: 'How quickly did users get their TRN ' + @since_text)
+      table.caption(size: 'm', text: "How quickly did users get their TRN (#{@short_since_text})")
 
       table.head do |head|
       head.row do |row|
@@ -64,7 +78,7 @@
           end
         end
         body.row(classes: 'app-performance-table-total-row') do |row|
-          row.cell(header: true) { 'Average '+ @since_text }
+          row.cell(header: true) { 'Average ('+ @short_since_text + ')' }
           row.cell { @duration_averages[0] }
           row.cell { @duration_averages[1] }
           row.cell { @duration_averages[2] }
@@ -72,28 +86,29 @@
      end; end %>
 </div>
 
+<h2 class="govuk-heading-m govuk-!-margin-top-7">About this service</h2>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <p class="govuk-heading-m">
-      This service is used to securely retrieve a <a class="govuk_link" href="https://www.gov.uk/guidance/teacher-reference-number-trn">teacher reference number (TRN)</a>. TRN holders need it to view their record on the Teaching Regulation Agency (TRA), give to employers for status checks, manage Teachers' Pensions contributions, or to begin early career teacher induction.
+    <p>
+      This service is used to securely retrieve a <a class="govuk_link" href="https://www.gov.uk/guidance/teacher-reference-number-trn">teacher reference number (TRN)</a>. TRN holders need it to view their record on the Teaching Regulation Agency (TRA), give to employers for status checks, manage Teachers’ Pensions contributions, or to begin early career teacher induction.
     </p>
 
-    <h2 class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">Visit this service</h2>
+    <h2 class="govuk-body govuk-!-margin-0">Visit this service</h2>
     <p class="govuk-heading-m">
       <%= govuk_link_to t('service.name'), start_path %>
     </p>
 
-    <h2 class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">Ministerial department:</h3>
+    <h2 class="govuk-body govuk-!-margin-0">Ministerial department:</h2>
     <p class="govuk-heading-m">
       Department for Education
     </p>
 
-    <h2 class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">User:</h3>
+    <h2 class="govuk-body govuk-!-margin-0">User:</h2>
     <p class="govuk-heading-m">
       Individuals
     </p>
 
-    <h2 class="govuk-body govuk-!-font-size-16 govuk-!-margin-0">Service costs paid by:</h3>
+    <h2 class="govuk-body govuk-!-margin-0">Service costs paid by:</h2>
     <p class="govuk-heading-m">
       Department budget
     </p>

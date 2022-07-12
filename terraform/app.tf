@@ -9,7 +9,7 @@ locals {
 
 resource "cloudfoundry_route" "flt_public" {
   domain   = data.cloudfoundry_domain.cloudapps.id
-  hostname = var.flt_app_name
+  hostname = local.flt_app_name
   space    = data.cloudfoundry_space.space.id
 }
 
@@ -17,7 +17,7 @@ resource "cloudfoundry_route" "flt_internal" {
   count    = local.configure_prometheus_network_policy
   domain   = data.cloudfoundry_domain.internal.id
   space    = data.cloudfoundry_space.space.id
-  hostname = var.flt_app_name
+  hostname = local.flt_app_name
 }
 
 resource "cloudfoundry_route" "flt_education" {
@@ -33,7 +33,7 @@ resource "cloudfoundry_user_provided_service" "logging" {
   syslog_drain_url = "syslog-tls://${local.logstash_endpoint}"
 }
 resource "cloudfoundry_service_instance" "postgres" {
-  name         = var.postgres_database_name
+  name         = local.postgres_database_name
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.postgres.service_plans[var.postgres_database_service_plan]
   json_params  = jsonencode(local.restore_db_backup_params)
@@ -44,17 +44,17 @@ resource "cloudfoundry_service_instance" "postgres" {
 }
 
 resource "cloudfoundry_service_instance" "redis" {
-  name         = var.redis_name
+  name         = local.redis_name
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_service_plan]
 }
 
 resource "cloudfoundry_service_key" "redis_key" {
-  name             = "${var.redis_name}_key"
+  name             = "${local.redis_name}_key"
   service_instance = cloudfoundry_service_instance.redis.id
 }
 resource "cloudfoundry_app" "app" {
-  name                       = var.flt_app_name
+  name                       = local.flt_app_name
   space                      = data.cloudfoundry_space.space.id
   instances                  = var.flt_instances
   memory                     = var.flt_memory
@@ -85,7 +85,7 @@ resource "cloudfoundry_app" "app" {
 }
 
 resource "cloudfoundry_app" "worker" {
-  name         = "${var.flt_app_name}-worker"
+  name         = "${local.flt_app_name}-worker"
   space        = data.cloudfoundry_space.space.id
   instances    = var.flt_instances
   memory       = var.flt_memory

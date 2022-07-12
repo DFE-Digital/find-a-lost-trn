@@ -28,10 +28,10 @@ variable "paas_space" {
   type = string
 }
 
-variable "flt_app_name" {
-  type = string
+variable "app_suffix" {
+  type    = string
+  default = ""
 }
-
 variable "flt_docker_image" {
   type = string
 }
@@ -52,10 +52,6 @@ variable "logging_service_name" {
   type = string
 }
 
-variable "postgres_database_name" {
-  type = string
-}
-
 variable "postgres_database_service_plan" {
   type    = string
   default = "small-13"
@@ -67,9 +63,6 @@ variable "paas_restore_db_from_db_instance" {
 
 variable "paas_restore_db_from_point_in_time_before" {
   default = ""
-}
-variable "redis_name" {
-  type = string
 }
 
 variable "redis_service_plan" {
@@ -90,6 +83,10 @@ variable "prometheus_app" {
   default = null
 }
 locals {
+  flt_app_name           = "find-a-lost-trn-${var.environment_name}${var.app_suffix}"
+  postgres_database_name = "find-a-lost-trn-${var.environment_name}${var.app_suffix}-pg-svc"
+  redis_name             = "find-a-lost-trn-${var.environment_name}${var.app_suffix}-redis-svc"
+
   flt_routes = flatten([
     cloudfoundry_route.flt_public,
     cloudfoundry_route.flt_internal,
@@ -99,4 +96,5 @@ locals {
     restore_from_point_in_time_of     = var.paas_restore_db_from_db_instance
     restore_from_point_in_time_before = var.paas_restore_db_from_point_in_time_before
   } : {}
+
 }

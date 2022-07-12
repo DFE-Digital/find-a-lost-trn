@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class PerformanceStats
+  include ActionView::Helpers::NumberHelper
+
   def initialize(time_period)
     unless time_period.is_a? Range
       raise ArgumentError, "time_period is not a Range"
@@ -16,52 +18,68 @@ class PerformanceStats
     @last_n_days =
       (0..number_of_days_in_period).map { |n| n.days.ago.beginning_of_day.utc }
 
-    calculate_live_service_usage
-    calculate_submission_results
+    calculate_request_counts_by_day
     calculate_duration_usage
   end
 
   def live_service_usage
-    [@requests_over_last_n_days, @live_service_data]
-  end
-
-  def submission_results
-    [@trns_found, @submission_data]
+    @requests_over_last_n_days
   end
 
   def duration_usage
     [@duration_averages, @duration_data]
   end
 
-  private
-
-  def calculate_live_service_usage
-    trn_requests_total = @trn_requests.count
-
-    @requests_over_last_n_days = trn_requests_total.values.reduce(&:+)
-
-    @live_service_data = [%w[Date Requests]]
-    @live_service_data +=
-      @last_n_days.map do |day|
-        [day.strftime("%d %B"), trn_requests_total[day] || 0]
-      end
+  def request_counts_by_day
+    [@total_requests_by_day, @request_counts_by_day]
   end
 
-  def calculate_submission_results
-    trn_requests_with_trn = @trn_requests.where.not(trn: nil).count
-    trn_requests_with_zendesk_ticket =
-      @trn_requests.where.not(zendesk_ticket_id: nil).count
+  private
 
-    @trns_found = trn_requests_with_trn.values.reduce(&:+)
+  def calculate_request_counts_by_day
+    sparse_request_counts_by_day =
+      @trn_requests
+        .select(
+          Arel.sql("date_trunc('day', created_at) AS day"),
+          Arel.sql(
+            "sum(case when trn is not null then 1 else 0 end) as cnt_trn_found"
+          ),
+          Arel.sql(
+            "sum(case when zendesk_ticket_id is not null then 1 else 0 end) as cnt_no_match"
+          ),
+          Arel.sql(
+            "sum(case when trn is null and zendesk_ticket_id is null then 1 else 0 end) as cnt_did_not_finish"
+          ),
+          Arel.sql("count(*) as total")
+        )
+        .each_with_object({}) do |row, hash|
+          hash[row["day"]] = row.attributes.except("id", "day").symbolize_keys
+        end
 
-    @submission_data = [["Date", "TRNs found", "Zendesk tickets opened"]]
-    @submission_data +=
+    @request_counts_by_day =
       @last_n_days.map do |day|
-        [
-          day.strftime("%d %B"),
-          trn_requests_with_trn[day] || 0,
-          trn_requests_with_zendesk_ticket[day] || 0
-        ]
+        requests =
+          sparse_request_counts_by_day[day] ||
+            {
+              total: 0,
+              cnt_trn_found: 0,
+              cnt_no_match: 0,
+              cnt_did_not_finish: 0
+            }
+        [day.to_fs(:day_and_month), requests]
+      end
+
+    @total_requests_by_day =
+      %i[
+        total
+        cnt_trn_found
+        cnt_no_match
+        cnt_did_not_finish
+      ].index_with do |key|
+        sparse_request_counts_by_day
+          .map(&:last)
+          .collect { |attr| attr[key] }
+          .reduce(&:+)
       end
   end
 
@@ -87,6 +105,7 @@ class PerformanceStats
 
     average_percentiles =
       @trn_requests
+        .unscope(:group)
         .where.not(checked_at: nil)
         .where.not(trn: nil)
         .pick(
@@ -104,7 +123,7 @@ class PerformanceStats
     @duration_data =
       @last_n_days.map do |day|
         percentiles = percentiles_by_day[day] || [0, 0, 0]
-        [day.strftime("%d %B")] +
+        [day.to_fs(:day_and_month)] +
           percentiles.map do |value|
             ActiveSupport::Duration.build(value.to_i).inspect
           end

@@ -2,6 +2,8 @@ $govuk-global-styles: true;
 $govuk-new-link-styles: true;
 
 @import "govuk-frontend/govuk/all";
+@import "_card";
+@import "_performance-table";
 
 .app-\!-inherit-colour {
   color: inherit;
@@ -41,21 +43,6 @@ $govuk-new-link-styles: true;
     @include govuk-media-query($from: tablet) {
       line-height: 1.28;
     }
-  }
-}
-
-.app-performance-table {
-  .govuk-table__header:nth-child(n + 2),
-  .govuk-table__cell:nth-child(n + 2) {
-    text-align: right;
-  }
-}
-
-.app-performance-table-total-row {
-  td,
-  th {
-    border-top: 2px solid $govuk-border-colour;
-    border-bottom: none;
   }
 }
 
