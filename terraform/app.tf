@@ -28,7 +28,7 @@ resource "cloudfoundry_route" "flt_education" {
 }
 
 resource "cloudfoundry_user_provided_service" "logging" {
-  name             = var.logging_service_name
+  name             = "${var.logging_service_name}${var.app_suffix}"
   space            = data.cloudfoundry_space.space.id
   syslog_drain_url = "syslog-tls://${local.logstash_endpoint}"
 }
