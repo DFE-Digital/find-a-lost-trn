@@ -25,6 +25,7 @@ on:
       - synchronize
       - reopened
       - opened
+      - converted_to_draft
 env:
   CONTAINER_REGISTRY: ghcr.io
 
