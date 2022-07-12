@@ -28,7 +28,7 @@ resource "cloudfoundry_route" "flt_education" {
 }
 
 resource "cloudfoundry_user_provided_service" "logging" {
-  name             = var.logging_service_name
+  name             = "${var.logging_service_name}${var.app_suffix}"
   space            = data.cloudfoundry_space.space.id
   syslog_drain_url = "syslog-tls://${local.logstash_endpoint}"
 }
@@ -71,17 +71,12 @@ resource "cloudfoundry_app" "app" {
     }
   }
 
-  service_binding {
-    service_instance = cloudfoundry_user_provided_service.logging.id
+  dynamic "service_binding" {
+    for_each = local.app_service_bindings
+    content {
+      service_instance = service_binding.value
+    }
   }
-  service_binding {
-    service_instance = cloudfoundry_service_instance.postgres.id
-  }
-
-  service_binding {
-    service_instance = cloudfoundry_service_instance.redis.id
-  }
-
 }
 
 resource "cloudfoundry_app" "worker" {
