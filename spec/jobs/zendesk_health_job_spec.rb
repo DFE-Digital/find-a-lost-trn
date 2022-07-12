@@ -15,7 +15,7 @@ RSpec.describe ZendeskHealthJob, type: :job do
         it "sends an alert about no Zendesk tickets as a Slack message" do
           perform
           expect(SlackClient).to have_received(:create_message).with(
-            "No Zendesk tickets created in the last 24 hours on http://test/"
+            "No Zendesk tickets created in the last 24 hours on http://localhost:3000/"
           )
         end
       end
