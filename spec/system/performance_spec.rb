@@ -38,7 +38,7 @@ RSpec.describe "Performance", type: :system do
   end
 
   def then_i_see_the_live_stats
-    expect(page).to have_content("36\nrequests in the last 7 days")
+    expect(page).to have_content("36\nrequests today and the previous 7 days")
     expect(page).to have_content("12 May\t1")
     expect(page).to have_content("6 May\t7")
   end
@@ -47,7 +47,7 @@ RSpec.describe "Performance", type: :system do
     expect(page).to have_content("12 May\t3 minutes\t3 minutes\t3 minutes")
     expect(page).to have_content("6 May\t3 minutes\t3 minutes\t3 minutes")
     expect(page).to have_content(
-      "Average (last 7 days)\t3 minutes\t3 minutes\t3 minutes"
+      "Average (today and the last 7 days)\t3 minutes\t3 minutes\t3 minutes"
     )
   end
 end
