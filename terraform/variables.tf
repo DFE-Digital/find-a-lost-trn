@@ -57,6 +57,11 @@ variable "enable_external_logging" {
   default = true
 }
 
+variable "hosting_environment_name" {
+  type    = string
+  default = ""
+}
+
 variable "postgres_database_service_plan" {
   type    = string
   default = "small-13"
