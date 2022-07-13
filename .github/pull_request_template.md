@@ -14,6 +14,6 @@ Include any dependencies that are required for this change.
 ### Checklist
 
 - [ ] Attach to Trello card
-- [ ] Rebased master
+- [ ] Rebased main
 - [ ] Cleaned commit history
 - [ ] Tested by running locally
