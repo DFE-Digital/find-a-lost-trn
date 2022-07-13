@@ -476,4 +476,5 @@ Doorkeeper.configure do
   # WWW-Authenticate Realm (default: "Doorkeeper").
   #
   # realm "Doorkeeper"
+  default_scopes :openid, :trn
 end
