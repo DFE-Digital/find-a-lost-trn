@@ -67,7 +67,7 @@ class PerformanceStats
               cnt_no_match: 0,
               cnt_did_not_finish: 0
             }
-        [day.to_fs(:day_and_month), requests]
+        [day.to_fs(:weekday_day_and_month), requests]
       end
 
     @total_requests_by_day =
@@ -173,7 +173,7 @@ class PerformanceStats
     @duration_data =
       @last_n_days.map do |day|
         percentiles = percentiles_by_day[day] || [0, 0, 0]
-        [day.to_fs(:day_and_month)] +
+        [day.to_fs(:weekday_day_and_month)] +
           percentiles.map do |value|
             ActiveSupport::Duration.build(value.to_i).inspect
           end
