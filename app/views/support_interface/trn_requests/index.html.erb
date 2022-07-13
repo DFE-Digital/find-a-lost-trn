@@ -43,19 +43,24 @@
         end
       end
 
-      unless trn_request.trn
+      if !trn_request.zendesk_ticket_id && !trn_request.trn
         summary_list.row do |row|
           row.key(text: 'Zendesk ticket')
           row.value do
-            if trn_request.zendesk_ticket_id
-              tag.a "Ticket #{trn_request.zendesk_ticket_id}", class: 'govuk-link', href: "https://teachingregulationagency.zendesk.com/agent/tickets/#{trn_request.zendesk_ticket_id}"
-            else
-              govuk_tag(colour: 'grey', text: 'Not submitted')
-            end
+            govuk_tag(colour: 'grey', text: 'Not submitted')
+          end
+        end
+      end
+
+      if trn_request.zendesk_ticket_id
+        summary_list.row do |row|
+          row.key(text: 'Zendesk ticket')
+          row.value do
+            tag.a "Ticket #{trn_request.zendesk_ticket_id}", class: 'govuk-link', href: "https://teachingregulationagency.zendesk.com/agent/tickets/#{trn_request.zendesk_ticket_id}"
           end
         end
 
-        if trn_request.zendesk_ticket_id
+        unless trn_request.trn
           summary_list.row do |row|
             row.key(text: 'Actions')
             row.value do
