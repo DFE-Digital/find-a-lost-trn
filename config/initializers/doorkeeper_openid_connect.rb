@@ -64,13 +64,7 @@ Doorkeeper::OpenidConnect.configure do
     # redirect_to account_select_url
   end
 
-  subject do |resource_owner, application|
-    # Example implementation:
-    # resource_owner.id
-
-    # or if you need pairwise subject identifier, implement like below:
-    # Digest::SHA256.hexdigest("#{resource_owner.id}#{URI.parse(application.redirect_uri).host}#{'your_secret_salt'}")
-  end
+  subject { |resource_owner| resource_owner.id }
 
   # Protocol to use when generating URIs for the discovery endpoint,
   # for example if you also use HTTPS in development
