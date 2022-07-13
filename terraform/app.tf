@@ -1,7 +1,8 @@
 locals {
   app_environment_variables = merge(try(local.infrastructure_secrets, null),
     {
-      REDIS_URL = cloudfoundry_service_key.redis_key.credentials.uri
+      REDIS_URL                = cloudfoundry_service_key.redis_key.credentials.uri
+      HOSTING_ENVIRONMENT_NAME = var.hosting_environment_name
     }
   )
   logstash_endpoint = data.azurerm_key_vault_secret.secrets["LOGSTASH-ENDPOINT"].value
