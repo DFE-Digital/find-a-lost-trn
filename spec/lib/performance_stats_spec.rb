@@ -38,7 +38,7 @@ RSpec.describe PerformanceStats do
       expect(counts_by_day).to eq(
         [
           [
-            "12 May",
+            "Thursday 12 May",
             {
               cnt_trn_found: 2,
               cnt_no_match: 0,
@@ -47,7 +47,7 @@ RSpec.describe PerformanceStats do
             }
           ],
           [
-            "11 May",
+            "Wednesday 11 May",
             {
               cnt_trn_found: 0,
               cnt_no_match: 3,
@@ -56,7 +56,7 @@ RSpec.describe PerformanceStats do
             }
           ],
           [
-            "10 May",
+            "Tuesday 10 May",
             {
               cnt_trn_found: 0,
               cnt_no_match: 0,
@@ -65,7 +65,7 @@ RSpec.describe PerformanceStats do
             }
           ],
           [
-            "9 May",
+            "Monday 9 May",
             {
               cnt_trn_found: 0,
               cnt_no_match: 0,
@@ -74,7 +74,7 @@ RSpec.describe PerformanceStats do
             }
           ],
           [
-            "8 May",
+            "Sunday 8 May",
             {
               cnt_trn_found: 0,
               cnt_no_match: 0,
@@ -83,7 +83,7 @@ RSpec.describe PerformanceStats do
             }
           ],
           [
-            "7 May",
+            "Saturday 7 May",
             {
               cnt_trn_found: 0,
               cnt_no_match: 0,
@@ -92,7 +92,7 @@ RSpec.describe PerformanceStats do
             }
           ],
           [
-            "6 May",
+            "Friday 6 May",
             {
               cnt_trn_found: 0,
               cnt_no_match: 0,
@@ -101,7 +101,7 @@ RSpec.describe PerformanceStats do
             }
           ],
           [
-            "5 May",
+            "Thursday 5 May",
             {
               cnt_trn_found: 0,
               cnt_no_match: 0,
@@ -251,7 +251,7 @@ RSpec.describe PerformanceStats do
 
       averages, data = described_class.new.duration_usage
       expect(data.first).to eq(
-        ["12 May", "4 minutes", "3 minutes", "2 minutes"]
+        ["Thursday 12 May", "4 minutes", "3 minutes", "2 minutes"]
       )
       expect(averages).to eq(["4 minutes", "3 minutes", "2 minutes"])
     end
