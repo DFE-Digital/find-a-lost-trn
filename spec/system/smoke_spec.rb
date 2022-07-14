@@ -1,9 +1,11 @@
 # frozen_string_literal: true
-require "faker"
-require "shoulda-matchers"
-require "rails_helper"
+require "spec_helper"
+require "capybara/rspec"
+require "capybara/cuprite"
 
-RSpec.describe "Smoke test", type: :system, smoke_test: true do
+Capybara.javascript_driver = :cuprite
+
+RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
   it "works as expected" do
     when_i_am_authorized_as_a_support_user
     when_i_visit_the_start_page
@@ -94,10 +96,9 @@ RSpec.describe "Smoke test", type: :system, smoke_test: true do
   end
 
   def when_i_am_authorized_as_a_support_user
-    page.driver.browser.network.authorize(
-      user: ENV["SUPPORT_USERNAME"],
-      password: ENV["SUPPORT_PASSWORD"],
-      &:continue
+    page.driver.basic_authorize(
+      ENV["SUPPORT_USERNAME"],
+      ENV["SUPPORT_PASSWORD"]
     )
   end
 
@@ -147,6 +148,6 @@ RSpec.describe "Smoke test", type: :system, smoke_test: true do
   end
 
   def when_i_visit_the_start_page
-    page.driver.browser.go_to(root_url(host: ENV["HOSTING_DOMAIN"]))
+    page.visit("#{ENV["HOSTING_DOMAIN"]}/start")
   end
 end
