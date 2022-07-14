@@ -28,5 +28,6 @@ class NoMatchController < ApplicationController
   def create_zendesk_ticket
     ZendeskService.create_ticket!(trn_request)
     TeacherMailer.information_received(trn_request).deliver_now
+    CheckZendeskTicketForTrnJob.set(wait: 2.days).perform_later(trn_request.id)
   end
 end
