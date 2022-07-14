@@ -363,6 +363,7 @@ RSpec.describe "TRN requests", type: :system do
       and_i_press_continue
       then_i_see_the_zendesk_confirmation_page
       and_i_receive_an_email_with_the_zendesk_ticket_number
+      and_a_job_to_check_zendesk_is_queued
     end
 
     it "matches eagerly", vcr: true do
@@ -410,6 +411,12 @@ RSpec.describe "TRN requests", type: :system do
 
   def and_a_job_gets_queued_to_retry_the_zendesk_ticket_creation
     expect(CreateZendeskTicketJob).to have_been_enqueued.with(
+      TrnRequest.last.id
+    )
+  end
+
+  def and_a_job_to_check_zendesk_is_queued
+    expect(CheckZendeskTicketForTrnJob).to have_been_enqueued.with(
       TrnRequest.last.id
     )
   end
