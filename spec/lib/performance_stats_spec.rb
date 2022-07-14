@@ -127,6 +127,16 @@ RSpec.describe PerformanceStats do
         { total: 1, cnt_did_not_finish: 1, cnt_no_match: 0, cnt_trn_found: 0 }
       )
     end
+
+    it "counts a user who raised a zendesk ticket at the end and the helpdesk found their TRN as a 'no match'" do
+      create(:trn_request, :has_trn, zendesk_ticket_id: 42)
+
+      totals, = described_class.new.request_counts_by_day
+
+      expect(totals).to eq(
+        { total: 1, cnt_did_not_finish: 0, cnt_no_match: 1, cnt_trn_found: 0 }
+      )
+    end
   end
 
   describe "#request_counts_by_month" do
@@ -224,6 +234,16 @@ RSpec.describe PerformanceStats do
             }
           ]
         ]
+      )
+    end
+
+    it "counts a user who raised a zendesk ticket at the end and the helpdesk found their TRN as a 'no match'" do
+      create(:trn_request, :has_trn, zendesk_ticket_id: 42)
+
+      totals, = described_class.new.request_counts_by_month
+
+      expect(totals).to eq(
+        { total: 1, cnt_did_not_finish: 0, cnt_no_match: 1, cnt_trn_found: 0 }
       )
     end
   end
