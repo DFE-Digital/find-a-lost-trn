@@ -27,9 +27,4 @@ module ApplicationHelper
   def shy_email(email)
     sanitize(email).scan(/\W?\w+/).join("&shy;").html_safe
   end
-
-  # 1234567 -> '1,234,567'
-  def number_with_delimiter(number)
-    number.to_s.chars.reverse.each_slice(3).map(&:join).join(",").reverse
-  end
 end
