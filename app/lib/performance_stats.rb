@@ -17,6 +17,7 @@ class PerformanceStats
     calculate_request_counts_by_day
     calculate_request_counts_by_month
     calculate_duration_usage
+    calculate_journeys
   end
 
   def live_service_usage
@@ -34,6 +35,8 @@ class PerformanceStats
   def request_counts_by_month
     [@total_requests_by_month, @request_counts_by_month]
   end
+
+  attr_reader :journeys
 
   private
 
@@ -183,5 +186,33 @@ class PerformanceStats
       (average_percentiles || [0, 0, 0]).map do |value|
         ActiveSupport::Duration.build(value.to_i).inspect
       end
+  end
+
+  def calculate_journeys
+    @journeys =
+      @trn_requests
+        .unscope(:group)
+        .where(
+          "trn is not null or zendesk_ticket_id is not null"
+        ) # filter out all abandonments
+        .select(
+          Arel.sql(
+            "sum(case when trn is not null and zendesk_ticket_id is null and has_ni_number is null then 1 else 0 end) as three_questions" # rubocop:disable Layout/LineLength
+          ),
+          Arel.sql(
+            "sum(case when trn is not null and zendesk_ticket_id is null and has_ni_number is not null and awarded_qts is null then 1 else 0 end) as four_questions" # rubocop:disable Layout/LineLength
+          ),
+          Arel.sql(
+            "sum(case when trn is not null and zendesk_ticket_id is null and awarded_qts is not null then 1 else 0 end) as five_questions_matched" # rubocop:disable Layout/LineLength
+          ),
+          Arel.sql(
+            "sum(case when zendesk_ticket_id is not null and awarded_qts is not null then 1 else 0 end) as five_questions_nomatch" # rubocop:disable Layout/LineLength
+          ),
+          Arel.sql("count(*) as total")
+        )
+        .map(&:attributes)
+        .first
+        .except("id")
+        .symbolize_keys
   end
 end

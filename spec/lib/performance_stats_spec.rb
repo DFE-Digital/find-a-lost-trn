@@ -256,4 +256,28 @@ RSpec.describe PerformanceStats do
       expect(averages).to eq(["4 minutes", "3 minutes", "2 minutes"])
     end
   end
+
+  describe "#journeys" do
+    it "buckets complete journeys through the service" do
+      create(:trn_request, trn: nil, zendesk_ticket_id: nil) # drop out, should not be counted
+      create(:trn_request, :has_trn, has_ni_number: nil) # success after 3 questions
+      create(:trn_request, :has_trn, has_ni_number: true, awarded_qts: nil) # success after 4 questions
+      create(
+        :trn_request,
+        :has_trn,
+        has_ni_number: true,
+        awarded_qts: true,
+        zendesk_ticket_id: nil
+      ) # success after 5 questions
+      create(:trn_request, :has_zendesk_ticket, awarded_qts: true) # zendesk after 5 questions
+
+      expect(described_class.new.journeys).to eq(
+        total: 4,
+        three_questions: 1,
+        four_questions: 1,
+        five_questions_matched: 1,
+        five_questions_nomatch: 1
+      )
+    end
+  end
 end
