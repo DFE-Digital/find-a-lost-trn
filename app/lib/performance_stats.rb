@@ -40,21 +40,27 @@ class PerformanceStats
 
   private
 
+  def arel_columns_for_request_counts
+    [
+      Arel.sql(
+        "sum(case when trn is not null and zendesk_ticket_id is null then 1 else 0 end) as cnt_trn_found"
+      ),
+      Arel.sql(
+        "sum(case when zendesk_ticket_id is not null then 1 else 0 end) as cnt_no_match"
+      ),
+      Arel.sql(
+        "sum(case when trn is null and zendesk_ticket_id is null then 1 else 0 end) as cnt_did_not_finish"
+      ),
+      Arel.sql("count(*) as total")
+    ]
+  end
+
   def calculate_request_counts_by_day
     sparse_request_counts_by_day =
       @trn_requests
         .select(
           Arel.sql("date_trunc('day', created_at) AS day"),
-          Arel.sql(
-            "sum(case when trn is not null then 1 else 0 end) as cnt_trn_found"
-          ),
-          Arel.sql(
-            "sum(case when zendesk_ticket_id is not null then 1 else 0 end) as cnt_no_match"
-          ),
-          Arel.sql(
-            "sum(case when trn is null and zendesk_ticket_id is null then 1 else 0 end) as cnt_did_not_finish"
-          ),
-          Arel.sql("count(*) as total")
+          *arel_columns_for_request_counts
         )
         .each_with_object({}) do |row, hash|
           hash[row["day"]] = row.attributes.except("id", "day").symbolize_keys
@@ -100,16 +106,7 @@ class PerformanceStats
         .group("date_trunc('month', created_at)")
         .select(
           Arel.sql("date_trunc('month', created_at) AS month"),
-          Arel.sql(
-            "sum(case when trn is not null then 1 else 0 end) as cnt_trn_found"
-          ),
-          Arel.sql(
-            "sum(case when zendesk_ticket_id is not null then 1 else 0 end) as cnt_no_match"
-          ),
-          Arel.sql(
-            "sum(case when trn is null and zendesk_ticket_id is null then 1 else 0 end) as cnt_did_not_finish"
-          ),
-          Arel.sql("count(*) as total")
+          *arel_columns_for_request_counts
         )
         .order(Arel.sql("date_trunc('month', created_at) desc"))
         .each_with_object({}) do |row, hash|
