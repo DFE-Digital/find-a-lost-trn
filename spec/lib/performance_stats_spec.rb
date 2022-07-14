@@ -38,7 +38,7 @@ RSpec.describe PerformanceStats do
       expect(counts_by_day).to eq(
         [
           [
-            "Thursday 12 May",
+            "Today",
             {
               cnt_trn_found: 2,
               cnt_no_match: 0,
@@ -250,9 +250,7 @@ RSpec.describe PerformanceStats do
       )
 
       averages, data = described_class.new.duration_usage
-      expect(data.first).to eq(
-        ["Thursday 12 May", "4 minutes", "3 minutes", "2 minutes"]
-      )
+      expect(data.first).to eq(["Today", "4 minutes", "3 minutes", "2 minutes"])
       expect(averages).to eq(["4 minutes", "3 minutes", "2 minutes"])
     end
   end
