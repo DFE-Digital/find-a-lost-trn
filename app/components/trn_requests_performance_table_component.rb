@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class TrnRequestsPerformanceTableComponent < ViewComponent::Base
+  include PerformanceTableHelpers
+
   def initialize(grouped_request_counts:, total_grouped_requests:, since:)
     super
     @grouped_request_counts = grouped_request_counts
@@ -68,26 +70,5 @@ class TrnRequestsPerformanceTableComponent < ViewComponent::Base
         end
       end
     end
-  end
-
-  private
-
-  def trn_request_count_percent(attributes, numerator_key)
-    if attributes[:total].zero?
-      ""
-    else
-      percentage =
-        number_to_percentage(
-          100 * attributes[numerator_key].fdiv(attributes[:total]),
-          precision: 0
-        )
-      "(#{percentage})"
-    end
-  end
-
-  def number_with_percentage_cell(counts, key)
-    "#{number_with_delimiter(counts[key])} <span class=\"govuk-hint govuk-!-font-size-16\">#{
-      trn_request_count_percent(counts, key)
-    }</span>".html_safe
   end
 end

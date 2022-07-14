@@ -27,16 +27,16 @@ RSpec.describe TrnRequestsPerformanceTableComponent, type: :component do
 
   it "renders a row per period" do
     expect(rendered_result_text).to include(
-      "2 June\n    1 (33%)\n    1 (33%)\n    1 (33%)\n    3 requests"
+      "2 June\n    1  (33%) \n    1  (33%) \n    1  (33%) \n    3 requests"
     )
     expect(rendered_result_text).to include(
-      "1 June\n    1 (33%)\n    1 (33%)\n    1 (33%)\n    3 requests"
+      "1 June\n    1  (33%) \n    1  (33%) \n    1  (33%) \n    3 requests"
     )
   end
 
   it "renders the totals row" do
     expect(rendered_result_text).to include(
-      "Total (last 7 days)\n    2 (33%)\n    2 (33%)\n    2 (33%)\n    6 requests"
+      "Total (last 7 days)\n    2  (33%) \n    2  (33%) \n    2  (33%) \n    6 requests"
     )
   end
 
