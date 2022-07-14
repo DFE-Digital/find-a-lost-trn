@@ -52,6 +52,16 @@ variable "logging_service_name" {
   type = string
 }
 
+variable "enable_external_logging" {
+  type    = bool
+  default = true
+}
+
+variable "hosting_environment_name" {
+  type    = string
+  default = ""
+}
+
 variable "postgres_database_service_plan" {
   type    = string
   default = "small-13"
@@ -86,7 +96,12 @@ locals {
   flt_app_name           = "find-a-lost-trn-${var.environment_name}${var.app_suffix}"
   postgres_database_name = "find-a-lost-trn-${var.environment_name}${var.app_suffix}-pg-svc"
   redis_name             = "find-a-lost-trn-${var.environment_name}${var.app_suffix}-redis-svc"
-
+  app_cloudfoundry_service_instances = [
+    cloudfoundry_service_instance.postgres.id,
+    cloudfoundry_service_instance.redis.id,
+  ]
+  app_user_provided_service_bindings = var.enable_external_logging ? [cloudfoundry_user_provided_service.logging.id] : []
+  app_service_bindings               = concat(local.app_cloudfoundry_service_instances, local.app_user_provided_service_bindings)
   flt_routes = flatten([
     cloudfoundry_route.flt_public,
     cloudfoundry_route.flt_internal,
