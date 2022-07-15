@@ -38,7 +38,7 @@ RSpec.describe PerformanceStats do
       expect(counts_by_day).to eq(
         [
           [
-            "Thursday 12 May",
+            "Today",
             {
               cnt_trn_found: 2,
               cnt_no_match: 0,
@@ -125,6 +125,16 @@ RSpec.describe PerformanceStats do
 
       expect(totals).to eq(
         { total: 1, cnt_did_not_finish: 1, cnt_no_match: 0, cnt_trn_found: 0 }
+      )
+    end
+
+    it "counts a user who raised a zendesk ticket at the end and the helpdesk found their TRN as a 'no match'" do
+      create(:trn_request, :has_trn, zendesk_ticket_id: 42)
+
+      totals, = described_class.new.request_counts_by_day
+
+      expect(totals).to eq(
+        { total: 1, cnt_did_not_finish: 0, cnt_no_match: 1, cnt_trn_found: 0 }
       )
     end
   end
@@ -226,6 +236,16 @@ RSpec.describe PerformanceStats do
         ]
       )
     end
+
+    it "counts a user who raised a zendesk ticket at the end and the helpdesk found their TRN as a 'no match'" do
+      create(:trn_request, :has_trn, zendesk_ticket_id: 42)
+
+      totals, = described_class.new.request_counts_by_month
+
+      expect(totals).to eq(
+        { total: 1, cnt_did_not_finish: 0, cnt_no_match: 1, cnt_trn_found: 0 }
+      )
+    end
   end
 
   describe "#duration_usage" do
@@ -250,10 +270,32 @@ RSpec.describe PerformanceStats do
       )
 
       averages, data = described_class.new.duration_usage
-      expect(data.first).to eq(
-        ["Thursday 12 May", "4 minutes", "3 minutes", "2 minutes"]
-      )
+      expect(data.first).to eq(["Today", "4 minutes", "3 minutes", "2 minutes"])
       expect(averages).to eq(["4 minutes", "3 minutes", "2 minutes"])
+    end
+  end
+
+  describe "#journeys" do
+    it "buckets complete journeys through the service" do
+      create(:trn_request, trn: nil, zendesk_ticket_id: nil) # drop out, should not be counted
+      create(:trn_request, :has_trn, has_ni_number: nil) # success after 3 questions
+      create(:trn_request, :has_trn, has_ni_number: true, awarded_qts: nil) # success after 4 questions
+      create(
+        :trn_request,
+        :has_trn,
+        has_ni_number: true,
+        awarded_qts: true,
+        zendesk_ticket_id: nil
+      ) # success after 5 questions
+      create(:trn_request, :has_zendesk_ticket, awarded_qts: true) # zendesk after 5 questions
+
+      expect(described_class.new.journeys).to eq(
+        total: 4,
+        three_questions: 1,
+        four_questions: 1,
+        five_questions_matched: 1,
+        five_questions_nomatch: 1
+      )
     end
   end
 end

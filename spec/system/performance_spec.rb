@@ -12,6 +12,7 @@ RSpec.describe "Performance", type: :system do
     when_i_visit_the_performance_page
     then_i_see_the_live_stats
     and_i_see_the_usage_duration
+    and_i_see_journeys_through_the_service
   end
 
   private
@@ -27,7 +28,9 @@ RSpec.describe "Performance", type: :system do
           :trn_request,
           :has_trn,
           created_at: n.days.ago,
-          checked_at: n.days.ago + 3.minutes
+          checked_at: n.days.ago + 3.minutes,
+          has_ni_number: true,
+          awarded_qts: nil
         )
       end
     end
@@ -39,15 +42,23 @@ RSpec.describe "Performance", type: :system do
 
   def then_i_see_the_live_stats
     expect(page).to have_content("36\nrequests today and the previous 7 days")
-    expect(page).to have_content("12 May\t1")
-    expect(page).to have_content("6 May\t7")
+    expect(page).to have_content("Today\t1")
+    expect(page).to have_content("Friday 6 May\t7")
   end
 
   def and_i_see_the_usage_duration
-    expect(page).to have_content("12 May\t3 minutes\t3 minutes\t3 minutes")
-    expect(page).to have_content("6 May\t3 minutes\t3 minutes\t3 minutes")
+    expect(page).to have_content("Today\t3 minutes\t3 minutes\t3 minutes")
+    expect(page).to have_content(
+      "Friday 6 May\t3 minutes\t3 minutes\t3 minutes"
+    )
     expect(page).to have_content(
       "Average (today and the last 7 days)\t3 minutes\t3 minutes\t3 minutes"
+    )
+  end
+
+  def and_i_see_journeys_through_the_service
+    expect(page).to have_content(
+      "4 questions\n+ National Insurance number\t36 users (100%)"
     )
   end
 end
