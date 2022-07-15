@@ -15,11 +15,4 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(result).to eq('alert&shy;"evil')
     end
   end
-
-  describe "#number_with_delimiter" do
-    it "adds commas to a number" do
-      result = number_with_delimiter(1_234_567)
-      expect(result).to eq("1,234,567")
-    end
-  end
 end
