@@ -42,5 +42,10 @@ module FindALostTrn
     config.active_job.queue_adapter = :sidekiq
 
     config.exceptions_app = routes
+
+    config.action_mailer.notify_settings =
+      ENV.fetch("GOVUK_NOTIFY_API_KEY") do
+        raise "'GOVUK_NOTIFY_API_KEY' should be configured in .env.*environment* file. Please refer to https://github.com/DFE-Digital/find-a-lost-trn/#notify"
+      end
   end
 end
