@@ -99,6 +99,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     concurrency: deploy_${{ matrix.environment }}
     strategy:
+      max-parallel: 1
       matrix:
         environment: [dev, test, preprod]
     environment:
