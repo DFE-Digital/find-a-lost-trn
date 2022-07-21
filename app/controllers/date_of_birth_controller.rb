@@ -7,6 +7,17 @@ class DateOfBirthController < ApplicationController
 
   def update
     if date_of_birth_form.update(date_of_birth_params)
+      if FeatureFlag.active?(:match_on_email)
+        begin
+          find_trn_using_api unless @trn_request.trn
+        rescue DqtApi::ApiError,
+               Faraday::ConnectionFailed,
+               Faraday::TimeoutError,
+               DqtApi::TooManyResults,
+               DqtApi::NoResults
+          # Do nothing.
+        end
+      end
       next_question
     else
       render :edit
@@ -25,6 +36,14 @@ class DateOfBirthController < ApplicationController
       "date_of_birth(3i)",
       "date_of_birth(2i)",
       "date_of_birth(1i)"
+    )
+  end
+
+  def find_trn_using_api
+    response = DqtApi.find_trn!(@trn_request)
+    @trn_request.update!(
+      trn: response["trn"],
+      has_active_sanctions: response["hasActiveSanctions"]
     )
   end
 end
