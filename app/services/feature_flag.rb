@@ -38,6 +38,11 @@ class FeatureFlag
       :zendesk_integration,
       "Submit tickets to Zendesk on behalf of users at the end of the journey",
       "Theodor Vararu"
+    ],
+    [
+      :match_on_email,
+      "Matching is done at the date of birth step instead of the NI step",
+      "Ransom Voke Anighoro"
     ]
   ].freeze
 
