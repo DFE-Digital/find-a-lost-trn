@@ -39,14 +39,14 @@ class DqtApi
   def self.trn_request_params(trn_request)
     {
       dateOfBirth: trn_request.date_of_birth,
-      emailAddress: trn_request.email,
+      emailAddress: (trn_request.email if FeatureFlag.active?(:match_on_email)),
       firstName: trn_request.first_name,
       ittProviderName: trn_request.itt_provider_name,
       lastName: trn_request.last_name,
       previousFirstName: trn_request.previous_first_name,
       previousLastName: trn_request.previous_last_name,
       nationalInsuranceNumber: trn_request.ni_number
-    }
+    }.compact
   end
 
   def client
