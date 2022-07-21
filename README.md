@@ -123,10 +123,6 @@ Run the application on `http://localhost:3000`:
 bin/dev
 ```
 
-### Basic Auth
-
-Due to the `Service open` feature flag which is set to `false` by default across all environments except Production, you will be asked to sign in with basic auth. You can find credentials in the .env._environment_ file stored in the ENV variables `SUPPORT_USERNAME` and `SUPPORT_PASSWORD`. You can toggle the `Service open` feature flag to `true` when developing locally to switch off basic auth.
-
 ### Notify
 
 If you want to test and simulate sending emails locally, you need to be added
@@ -143,8 +139,6 @@ GOVUK_NOTIFY_API_KEY=theo__local_test-abcefgh-1234-abcdefgh
 
 When you send an email locally, the email should appear in the message log in
 the Notify dashboard in the `API integration` section.
-
-_Note:_ You can set `GOVUK_NOTIFY_API_KEY=fake-key` when running locally if you don't need to use Notify.
 
 ### Docker
 
@@ -168,14 +162,6 @@ bin/lint
 
 To run the tests (requires Chrome due to
 [cuprite](https://github.com/rubycdp/cuprite)):
-
-To compile assets up front (needed by the end to end tests):
-
-```bash
-bin/rails assets:precompile
-```
-
-And then:
 
 ```bash
 bin/test
