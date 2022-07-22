@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/DFE-Digital/dfe-autocomplete.git
+  revision: 4c8a507927e286d58e4db97e4b4c24bcd6841d86
+  specs:
+    dfe-autocomplete (0.1.0)
+      actionview (>= 7.0.2.3)
+      activemodel (>= 7.0.2.3)
+      govuk-components
+      rails (>= 7.0.2.3)
+      view_component
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -455,6 +466,7 @@ DEPENDENCIES
   cssbundling-rails
   cuprite (~> 0.13)
   debug
+  dfe-autocomplete!
   dotenv-rails
   factory_bot_rails
   faker

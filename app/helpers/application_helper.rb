@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  include DfE::Autocomplete::ApplicationHelper
+
   def back_link_url(back = url_for(:back))
     if session[:form_complete] &&
          [check_answers_path, itt_provider_path].exclude?(request.path)
