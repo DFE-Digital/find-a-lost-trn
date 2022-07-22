@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Kevin&ittProviderName&lastName=E&nationalInsuranceNumber&previousFirstName&previousLastName
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&firstName=Kevin&lastName=E
       body:
         encoding: US-ASCII
         string: ""
@@ -10,7 +10,7 @@ http_interactions:
         User-Agent:
           - Faraday v1.10.0
         Authorization:
-          - Bearer testkey
+          - Bearer <BEARER_TOKEN_REDACTED>
         Accept-Encoding:
           - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
         Accept:
@@ -27,7 +27,7 @@ http_interactions:
         Connection:
           - keep-alive
         Date:
-          - Fri, 01 Apr 2022 10:40:39 GMT
+          - Fri, 22 Jul 2022 22:14:08 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -37,23 +37,23 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - "291"
+          - "299"
         X-Rate-Limit-Reset:
-          - "2022-04-01T10:41:00.0000000Z"
+          - "2022-07-22T22:15:00.0000000Z"
         X-Vcap-Request-Id:
-          - ce282427-592f-4f7d-4eee-187d4b336485
+          - 146eba6c-a3d9-40f3-6b14-b6d5e5f4d4e3
         X-Xss-Protection:
           - "0"
         X-Cache:
           - Miss from cloudfront
         Via:
-          - 1.1 c334b6410f9d489eb2a951a4371f3d18.cloudfront.net (CloudFront)
+          - 1.1 b16cebff619862e7e4cf8eb234632e3a.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - LHR61-C1
+          - LHR61-P2
         X-Amz-Cf-Id:
-          - yz4UIADzzE_hyi7NtMS3iMx3pG8ZtYUDkQJSpVIPp4IGRCzXzi5l_A==
+          - QLcm4al61YfzzClqfMAlva-WQXv4Hdbht0J2IDK_vg-EDotqJE8Uzw==
       body:
         encoding: UTF-8
         string: '{"results":[{"trn":"2921020","emailAddresses":["anonymous@anonymousdomain.org.net.co.uk"],"firstName":"Kevin","lastName":"Evans","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","uid":"f7891223-7661-e411-8047-005056822391"}]}'
-    recorded_at: Fri, 01 Apr 2022 10:40:39 GMT
+    recorded_at: Fri, 22 Jul 2022 22:14:06 GMT
 recorded_with: VCR 6.1.0
