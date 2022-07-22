@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=kevin&ittProviderName&lastName&nationalInsuranceNumber=1000000&previousFirstName&previousLastName
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&firstName=kevin&nationalInsuranceNumber=1000000
       body:
         encoding: US-ASCII
         string: ""
@@ -27,7 +27,7 @@ http_interactions:
         Connection:
           - keep-alive
         Date:
-          - Fri, 01 Apr 2022 10:40:16 GMT
+          - Fri, 22 Jul 2022 20:12:15 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -37,23 +37,23 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - "294"
+          - "295"
         X-Rate-Limit-Reset:
-          - "2022-04-01T10:41:00.0000000Z"
+          - "2022-07-22T20:13:00.0000000Z"
         X-Vcap-Request-Id:
-          - 4622e0ff-0df7-4896-7f5a-d500d7942c09
+          - eb02f67b-ac22-421e-4b9c-f05ba581855b
         X-Xss-Protection:
           - "0"
         X-Cache:
           - Miss from cloudfront
         Via:
-          - 1.1 c975be6c710711d2ced7184eca05c992.cloudfront.net (CloudFront)
+          - 1.1 71f478e240c18306c2c4c6fa48fc6dca.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - LHR61-C1
+          - LHR50-C1
         X-Amz-Cf-Id:
-          - oFO9MfW2F608a6TGFLyF79Yy41J-Bw36NK1klaXIZYIG9go74h7EiQ==
+          - MrgYQRCsx1tNn0zS4gT5V8JSLQRi0z_Me3y3iATf0XuhqpA_T6dKFw==
       body:
         encoding: UTF-8
         string: '{"results":[{"trn":"2921020","emailAddresses":["anonymous@anonymousdomain.org.net.co.uk"],"firstName":"Kevin","lastName":"Evans","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","uid":"f7891223-7661-e411-8047-005056822391"}]}'
-    recorded_at: Fri, 01 Apr 2022 10:40:16 GMT
+    recorded_at: Fri, 22 Jul 2022 20:12:15 GMT
 recorded_with: VCR 6.1.0
