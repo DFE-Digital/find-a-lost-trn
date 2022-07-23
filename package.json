@@ -14,7 +14,7 @@
     "postinstall": "cp -R node_modules/govuk-frontend/govuk/assets/fonts/. public/assets/fonts && cp -R node_modules/govuk-frontend/govuk/assets/images/. public/assets/images"
   },
   "devDependencies": {
-    "@prettier/plugin-ruby": "^3.1.2",
+    "@prettier/plugin-ruby": "^3.2.0",
     "eslint": "^8.20.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
