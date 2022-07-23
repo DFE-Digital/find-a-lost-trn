@@ -4,7 +4,7 @@
   "dependencies": {
     "esbuild": "^0.14.49",
     "govuk-frontend": "^4.0.1",
-    "sass": "^1.49.10"
+    "sass": "^1.54.0"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --target=ie11 --bundle --sourcemap --outdir=app/assets/builds",
