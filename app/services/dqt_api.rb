@@ -37,8 +37,7 @@ class DqtApi
   end
 
   def self.get_itt_providers
-    response =
-      new.client.get("/v2/itt-providers", {} )
+    response = new.client.get("/v2/itt-providers", {})
     raise ApiError unless response.status == 200
 
     return [] unless response.body.key?("ittProviders")

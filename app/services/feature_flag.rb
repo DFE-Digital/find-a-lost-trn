@@ -21,7 +21,11 @@ class FeatureFlag
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = [
-    [:use_dqt_api_itt_providers, "Use autocomplete from DQT API results", "Richard da Silva"],
+    [
+      :use_dqt_api_itt_providers,
+      "Use autocomplete from DQT API results",
+      "Richard da Silva"
+    ],
     [:dqt_api_always_timeout, "Always time-out the DQT API", "Felix Clack"],
     [:log_validation_errors, "Log validation errors", "Felix Clack"],
     [
