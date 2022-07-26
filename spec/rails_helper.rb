@@ -87,6 +87,7 @@ RSpec.configure do |config|
 
   config.include ActiveSupport::Testing::TimeHelpers
   config.include ActiveJob::TestHelper
+  config.include DfE::Autocomplete::ApplicationHelper
   config.include FactoryBot::Syntax::Methods
   config.include ViewComponent::TestHelpers, type: :component
 
