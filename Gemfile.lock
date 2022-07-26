@@ -166,7 +166,7 @@ GEM
       pagy (~> 5.10.1)
       railties (>= 6.1)
       view_component (~> 2.56.2)
-    govuk_design_system_formbuilder (3.1.0)
+    govuk_design_system_formbuilder (3.1.1)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -231,11 +231,11 @@ GEM
       net-protocol
       timeout
     nio4r (2.5.8)
-    nokogiri (1.13.7-arm64-darwin)
+    nokogiri (1.13.8-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.13.7-x86_64-darwin)
+    nokogiri (1.13.8-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.13.7-x86_64-linux)
+    nokogiri (1.13.8-x86_64-linux)
       racc (~> 1.4)
     notifications-ruby-client (5.3.0)
       jwt (>= 1.5, < 3)
@@ -293,7 +293,7 @@ GEM
     rake (13.0.6)
     rbs (2.6.0)
     redcarpet (3.5.1)
-    redis (4.7.0)
+    redis (4.7.1)
     regexp_parser (2.5.0)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -363,7 +363,7 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    sidekiq-cron (1.6.0)
+    sidekiq-cron (1.7.0)
       fugit (~> 1)
       sidekiq (>= 4.2.1)
     solargraph (0.45.0)
@@ -395,9 +395,9 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     strscan (3.0.3)
-    syntax_tree (3.2.0)
+    syntax_tree (3.2.1)
       prettier_print
-    syntax_tree-haml (1.2.0)
+    syntax_tree-haml (1.3.0)
       haml (>= 5.2)
       prettier_print
       syntax_tree (>= 2.0.1)
@@ -407,7 +407,7 @@ GEM
       syntax_tree (>= 2.0.1)
     temple (0.8.2)
     thor (1.2.1)
-    tilt (2.0.10)
+    tilt (2.0.11)
     timecop (0.9.5)
     timeout (0.3.0)
     tzinfo (2.0.5)
@@ -481,14 +481,14 @@ DEPENDENCIES
   sentry-rails
   shoulda-matchers (~> 5.1)
   sidekiq
-  sidekiq-cron (~> 1.6)
+  sidekiq-cron (~> 1.7)
   solargraph
   solargraph-rails
   spring
   spring-commands-rspec
   sprockets-rails
   syntax_tree (~> 3.2)
-  syntax_tree-haml (~> 1.2)
+  syntax_tree-haml (~> 1.3)
   syntax_tree-rbs (~> 0.5.0)
   timecop
   tzinfo-data
