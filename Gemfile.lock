@@ -293,7 +293,7 @@ GEM
     rake (13.0.6)
     rbs (2.6.0)
     redcarpet (3.5.1)
-    redis (4.7.0)
+    redis (4.7.1)
     regexp_parser (2.5.0)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -363,7 +363,7 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    sidekiq-cron (1.6.0)
+    sidekiq-cron (1.7.0)
       fugit (~> 1)
       sidekiq (>= 4.2.1)
     solargraph (0.45.0)
@@ -481,7 +481,7 @@ DEPENDENCIES
   sentry-rails
   shoulda-matchers (~> 5.1)
   sidekiq
-  sidekiq-cron (~> 1.6)
+  sidekiq-cron (~> 1.7)
   solargraph
   solargraph-rails
   spring

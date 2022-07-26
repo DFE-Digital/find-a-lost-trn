@@ -22,7 +22,7 @@ gem "rack-attack"
 gem "rails", "~> 7.0.3"
 gem "sentry-rails"
 gem "sidekiq"
-gem "sidekiq-cron", "~> 1.6"
+gem "sidekiq-cron", "~> 1.7"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "view_component"
