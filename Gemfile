@@ -29,7 +29,8 @@ gem "view_component"
 
 gem "dfe-autocomplete",
     require: "dfe/autocomplete",
-    github: "DFE-Digital/dfe-autocomplete"
+    github: "DFE-Digital/dfe-autocomplete",
+    ref: "be98ad823fac28af718da4c2053c6510852edfdd"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
