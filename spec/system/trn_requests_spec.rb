@@ -391,6 +391,24 @@ RSpec.describe "TRN requests", type: :system do
       then_i_see_a_message_to_check_my_email
       and_i_receive_an_email_with_the_trn_number
     end
+
+    it "matches on the date of birth step when match_on_email feature is active",
+       vcr: true do
+      given_the_use_dqt_api_feature_is_enabled
+      given_the_match_on_email_feature_is_enabled
+      given_i_am_on_the_home_page
+      when_i_press_the_start_button
+      when_i_confirm_i_have_a_trn_number
+      when_i_press_continue
+      when_i_fill_in_the_email_form
+      when_i_fill_in_the_name_form
+      when_i_complete_my_date_of_birth
+      then_i_see_the_check_answers_page
+
+      when_i_press_the_submit_button
+      then_i_see_a_message_to_check_my_email
+      and_i_receive_an_email_with_the_trn_number
+    end
   end
 
   context "when the Zendesk API is unavailable" do
@@ -515,6 +533,14 @@ RSpec.describe "TRN requests", type: :system do
 
   def given_the_zendesk_integration_feature_is_enabled
     FeatureFlag.activate(:zendesk_integration)
+  end
+
+  def given_the_match_on_email_feature_is_enabled
+    FeatureFlag.activate(:match_on_email)
+  end
+
+  def and_the_match_on_email_feature_is_disabled
+    FeatureFlag.deactivate(:match_on_email)
   end
 
   def given_the_zendesk_connection_is_unavailable
