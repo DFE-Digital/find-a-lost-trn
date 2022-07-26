@@ -21,7 +21,7 @@ runs:
       if: ${{ inputs.skip-ruby == 'false' }}
       uses: ruby/setup-ruby@v1
       with:
-        bundler-cache: true
+        bundler-cache: false
 
     - name: Set up Node
       if: ${{ inputs.skip-node == 'false' }}
