@@ -27,6 +27,10 @@ gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "view_component"
 
+gem "dfe-autocomplete",
+    require: "dfe/autocomplete",
+    github: "DFE-Digital/dfe-autocomplete"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

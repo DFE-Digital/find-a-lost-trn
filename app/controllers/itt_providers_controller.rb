@@ -3,6 +3,8 @@ class IttProvidersController < ApplicationController
   include EnforceQuestionOrder
 
   def edit
+    set_itt_provider_options if FeatureFlag.active?(:use_dqt_api_itt_providers)
+
     @itt_provider_form = IttProviderForm.new(trn_request:).assign_form_values
   end
 
@@ -11,6 +13,9 @@ class IttProvidersController < ApplicationController
     if @itt_provider_form.save
       next_question
     else
+      if FeatureFlag.active?(:use_dqt_api_itt_providers)
+        set_itt_provider_options
+      end
       render :edit
     end
   end
@@ -22,5 +27,17 @@ class IttProvidersController < ApplicationController
       .require(:itt_provider_form)
       .permit(:itt_provider_enrolled, :itt_provider_name)
       .merge(trn_request:)
+  end
+
+  def set_itt_provider_options
+    @itt_provider_options ||=
+      DqtApi.get_itt_providers.map do |itt_provider|
+        OpenStruct.new(
+          name: itt_provider["providerName"],
+          value: itt_provider["ukprn"]
+        )
+      end
+  rescue DqtApi::ApiError, Faraday::ConnectionFailed, Faraday::TimeoutError
+    @itt_provider_options ||= []
   end
 end
