@@ -75,6 +75,8 @@ module EnforceQuestionOrder
   end
 
   def ask_if_has_ni_number?
+    return false if trn_request.trn
+
     trn_request.has_ni_number.nil?
   end
 
