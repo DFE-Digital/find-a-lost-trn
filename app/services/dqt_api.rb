@@ -36,6 +36,14 @@ class DqtApi
     response.body
   end
 
+  def self.get_itt_providers
+    response = new.client.get("/v2/itt-providers", {})
+    raise ApiError unless response.status == 200
+
+    return [] unless response.body.key?("ittProviders")
+    response.body["ittProviders"]
+  end
+
   def self.trn_request_params(trn_request)
     {
       dateOfBirth: trn_request.date_of_birth,

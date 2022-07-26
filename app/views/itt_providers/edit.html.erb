@@ -7,11 +7,27 @@
       <%= f.govuk_error_summary %>
       <%= f.govuk_radio_buttons_fieldset(:itt_provider_enrolled, legend: { tag: 'h1', size: 'xl', text: 'Did a university, SCITT or school award your QTS?' }) do %>
         <%= f.govuk_radio_button :itt_provider_enrolled, true, label: { text: 'Yes' }, link_errors: true do %>
-          <%= f.govuk_text_field(:itt_provider_name,
+          <% if FeatureFlag.active?(:use_dqt_api_itt_providers) %>
+            <%= render DfE::Autocomplete::View.new(
+              f,
+              attribute_name: :itt_provider_name,
+              form_field: f.govuk_select(
+                :itt_provider_name,
+                options_for_select(
+                  dfe_autocomplete_options(@itt_provider_options, synonyms_fields: %i[suggestion_synonyms match_synonyms]),
+                  f.object.itt_provider_name,
+                ),
+                label: { text: 'Where did you get your QTS?', class: 'govuk-label govuk-label--s' },
+                hint: { text: 'Your university, SCITT, school or other training provider' }, 
+              )
+            ) %>
+          <% else %>
+            <%= f.govuk_text_field(:itt_provider_name,
                 hint: { text: 'Your university, SCITT, school or other training provider' },
                 label: { text: 'Where did you get your QTS?', class: 'govuk-label govuk-label--s' },
-            )
-          %>
+              )
+            %>
+          <% end %>
         <% end %>
         <%= f.govuk_radio_button :itt_provider_enrolled, false, label: { text: 'No, I was awarded QTS another way' } %>
       <% end %>

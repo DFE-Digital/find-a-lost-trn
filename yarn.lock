@@ -43,6 +43,13 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
 
+accessible-autocomplete@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/accessible-autocomplete/-/accessible-autocomplete-2.0.4.tgz#e295256c8d268b97c5ab456a1cb084b553ed3eb0"
+  integrity sha512-2p0txrSpvs5wXFUeQJHMheDPTZVSEmiUHWlEPb7vJnv2Dd1xPfoLnBQQMfNbTSit2pL/9sSQYESuD2Yyohd4Yw==
+  dependencies:
+    preact "^8.3.1"
+
 acorn-jsx@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"
@@ -234,6 +241,12 @@ define-properties@^1.1.3, define-properties@^1.1.4:
   dependencies:
     has-property-descriptors "^1.0.0"
     object-keys "^1.1.1"
+
+"dfe-autocomplete@github:DFE-Digital/dfe-autocomplete":
+  version "0.0.1"
+  resolved "https://codeload.github.com/DFE-Digital/dfe-autocomplete/tar.gz/4c8a507927e286d58e4db97e4b4c24bcd6841d86"
+  dependencies:
+    accessible-autocomplete "^2.0.4"
 
 doctrine@^2.1.0:
   version "2.1.0"
@@ -1099,6 +1112,11 @@ picomatch@^2.0.4, picomatch@^2.2.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.3.1.tgz#3ba3833733646d9d3e4995946c1365a67fb07a42"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
+
+preact@^8.3.1:
+  version "8.5.3"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-8.5.3.tgz#78c2a5562fcecb1fed1d0055fa4ac1e27bde17c1"
+  integrity sha512-O3kKP+1YdgqHOFsZF2a9JVdtqD+RPzCQc3rP+Ualf7V6rmRDchZ9MJbiGTT7LuyqFKZqlHSOyO/oMFmI2lVTsw==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
