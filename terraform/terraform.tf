@@ -2,7 +2,7 @@ terraform {
   required_version = "~> 1.0"
 
   backend "azurerm" {
-    container_name = "fmtrn-tfstate"
+    container_name = "faltrn-tfstate"
   }
 
   required_providers {
