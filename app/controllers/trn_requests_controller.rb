@@ -20,7 +20,7 @@ class TrnRequestsController < ApplicationController
       find_trn_using_api unless trn_request.trn
       raise TrnHasAlert if trn_request.has_active_sanctions
 
-      TeacherMailer.found_trn(trn_request).deliver_now
+      TeacherMailer.found_trn(trn_request).deliver_later
 
       redirect_to trn_found_path
     rescue DqtApi::NoResults
@@ -38,7 +38,7 @@ class TrnRequestsController < ApplicationController
         CreateZendeskTicketJob.set(wait: 5.minutes).perform_later(
           trn_request.id
         )
-        TeacherMailer.delayed_information_received(trn_request).deliver_now
+        TeacherMailer.delayed_information_received(trn_request).deliver_later
         redirect_to helpdesk_request_delayed_path
       end
     end
@@ -64,7 +64,7 @@ class TrnRequestsController < ApplicationController
 
   def create_zendesk_ticket
     ZendeskService.create_ticket!(trn_request)
-    TeacherMailer.information_received(trn_request).deliver_now
+    TeacherMailer.information_received(trn_request).deliver_later
     CheckZendeskTicketForTrnJob.set(wait: 2.days).perform_later(trn_request.id)
   end
 end

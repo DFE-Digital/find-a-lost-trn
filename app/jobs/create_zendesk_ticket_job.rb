@@ -6,7 +6,7 @@ class CreateZendeskTicketJob < ApplicationJob
     return if trn_request.zendesk_ticket_id
 
     ZendeskService.create_ticket!(trn_request)
-    TeacherMailer.information_received(trn_request).deliver_now
+    TeacherMailer.information_received(trn_request).deliver_later
     CheckZendeskTicketForTrnJob.set(wait: 2.days).perform_later(trn_request.id)
   end
 end
