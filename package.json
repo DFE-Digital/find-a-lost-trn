@@ -2,10 +2,10 @@
   "name": "app",
   "private": "true",
   "dependencies": {
+    "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete",
     "esbuild": "^0.14.51",
     "govuk-frontend": "^4.0.1",
-    "sass": "^1.54.0",
-    "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete"
+    "sass": "^1.54.0"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --target=ie11 --bundle --sourcemap --outdir=app/assets/builds",
