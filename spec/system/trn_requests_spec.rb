@@ -440,6 +440,7 @@ RSpec.describe "TRN requests", type: :system do
   end
 
   def and_i_receive_an_email_about_the_delay
+    perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
     open_email("kevin@kevin.com")
     expect(current_email.subject).to eq(
       "We’ve received the information you submitted"
@@ -450,11 +451,13 @@ RSpec.describe "TRN requests", type: :system do
   end
 
   def and_i_receive_an_email_with_the_trn_number
+    perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
     open_email("kevin@kevin.com")
     expect(current_email.subject).to eq("Your TRN is 2921020")
   end
 
   def and_i_receive_an_email_with_the_zendesk_ticket_number
+    perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
     open_email("kevin@kevin.com")
     expect(current_email.subject).to eq(
       "We’ve received the information you submitted"

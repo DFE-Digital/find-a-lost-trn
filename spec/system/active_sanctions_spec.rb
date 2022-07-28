@@ -111,6 +111,7 @@ RSpec.describe "TRN requests", type: :system do
   end
 
   def and_i_receive_an_email_with_the_zendesk_ticket_number
+    perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
     open_email("test@example.com")
     expect(current_email.subject).to eq(
       "We’ve received the information you submitted"
