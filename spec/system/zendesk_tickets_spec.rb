@@ -103,6 +103,7 @@ RSpec.describe "Zendesk ticket syncing", type: :system do
 
     fill_in "First name", with: "Not"
     fill_in "Last name", with: "Valid"
+    choose "No, I've not changed my name", visible: false
     click_on "Continue"
 
     fill_in "Day", with: "01"

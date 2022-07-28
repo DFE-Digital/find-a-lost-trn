@@ -18,11 +18,16 @@
         required: true
       ) %>
 
-  <%= f.govuk_check_boxes_fieldset :name_changed, legend: nil do %>
-    <%= f.govuk_check_box :name_changed, "true", label: { text: 'I’ve changed my name since I received my TRN' }, link_errors: true, multiple: false do %>
-      <%= f.govuk_text_field(:previous_first_name, label: { text: 'Previous first name' }) %>
-      <%= f.govuk_text_field(:previous_last_name, label: { text: 'Previous last name' }) %>
+  <%= f.govuk_radio_buttons_fieldset :name_changed, legend: { size: 'm', text: 'Have you ever changed your name?' } do %>
+    <%= f.govuk_radio_button :name_changed, false, label: { text: "No, I've not changed my name" }, link_errors: true %>
+    <%= f.govuk_radio_button :name_changed, true, label: { text: "Yes, I've changed my name" } do %>
+      <p class="govuk-body">You don't have to tell us your previous name, but it will help us identify you.</p>
+      <p class="govuk-body">If we cannot match your current name against our records, we'll try to match your previous name.</p>
+      <p class="govuk-body">If you changed your name more than once, please tell us your most recent previous name.</p>
+      <%= f.govuk_text_field(:previous_first_name, label: { size: 's', text: 'Previous first name (optional)' }) %>
+      <%= f.govuk_text_field(:previous_last_name, label: { size: 's', text: 'Previous last name (optional)' }) %>
     <% end %>
+    <%= f.govuk_radio_button :name_changed, "prefer", label: { text: 'Prefer not to say' } %>
   <% end %>
   <%= f.govuk_submit prevent_double_click: false %>
 <% end %>

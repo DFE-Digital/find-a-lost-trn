@@ -147,6 +147,43 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_updated_name
   end
 
+  it "changing my previous name" do
+    given_i_have_completed_a_trn_request
+    when_i_press_change_name
+    then_i_see_the_existing_name
+
+    when_i_enter_a_previous_name
+    then_i_see_the_updated_previous_name
+  end
+
+  it "changed my previous name but prefer not to specify" do
+    given_i_have_completed_a_trn_request
+    when_i_press_change_name
+    then_i_see_the_existing_name
+
+    when_i_prefer_not_to_specify_a_previous_name
+    then_i_do_not_see_a_previous_name
+  end
+
+  it "when I do not specify if my name has changed" do
+    given_i_am_on_the_home_page
+    when_i_press_the_start_button
+    then_i_see_the_check_trn_page
+
+    when_i_confirm_i_have_a_trn_number
+    then_i_see_the_ask_questions_page
+
+    when_i_press_continue
+    then_i_see_the_email_page
+
+    when_i_fill_in_my_email_address
+    and_i_press_continue
+    then_i_see_the_name_page
+
+    when_i_fill_in_the_name_form_without_specifying_if_my_name_has_changed
+    then_i_see_a_validation_error
+  end
+
   it "changing my NI number" do
     given_i_have_completed_a_trn_request
     when_i_press_change_ni_number
@@ -602,10 +639,6 @@ RSpec.describe "TRN requests", type: :system do
     expect(page).to have_content("We’ve sent it to")
   end
 
-  def then_i_see_a_missing_previous_name_error
-    expect(page).to have_content("Enter a previous first name or last name")
-  end
-
   def then_i_see_the_ask_questions_page
     expect(page).to have_current_path("/ask-questions")
     expect(page.driver.browser.current_title).to start_with(
@@ -783,6 +816,15 @@ RSpec.describe "TRN requests", type: :system do
     expect(page).to have_content("Kevin Smith")
   end
 
+  def then_i_see_the_updated_previous_name
+    expect(page).to have_content("Previous name")
+    expect(page).to have_content("Kev Jones")
+  end
+
+  def then_i_do_not_see_a_previous_name
+    expect(page).to_not have_content("Previous name")
+  end
+
   def then_i_see_the_updated_ni_number
     expect(page).to have_content("AA 12 34 56 A")
   end
@@ -867,14 +909,30 @@ RSpec.describe "TRN requests", type: :system do
   def when_i_enter_a_new_name
     fill_in "First name", with: "Kevin"
     fill_in "Last name", with: "Smith"
-    check "I’ve changed my name since I received my TRN", visible: false
+    choose "No, I've not changed my name", visible: false
     when_i_press_continue
-    then_i_see_a_missing_previous_name_error
-    fill_in "Previous last name", with: "Evans"
+  end
+
+  def when_i_enter_a_previous_name
+    choose "Yes, I've changed my name", visible: false
+    fill_in "Previous first name (optional)", with: "Kev"
+    fill_in "Previous last name (optional)", with: "Jones"
+    when_i_press_continue
+  end
+
+  def when_i_prefer_not_to_specify_a_previous_name
+    choose "Prefer not to say", visible: false
     when_i_press_continue
   end
 
   def when_i_fill_in_the_name_form
+    fill_in "First name", with: "Kevin"
+    fill_in "Last name", with: "E"
+    choose "No, I've not changed my name", visible: false
+    when_i_press_continue
+  end
+
+  def when_i_fill_in_the_name_form_without_specifying_if_my_name_has_changed
     fill_in "First name", with: "Kevin"
     fill_in "Last name", with: "E"
     when_i_press_continue
