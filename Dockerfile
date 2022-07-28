@@ -37,4 +37,5 @@ RUN bundle exec rails assets:precompile && \
     rm -rf tmp/* log/* node_modules /tmp/*
 
 CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \
+    bundle exec rails data:migrate && \
     bundle exec rails server -b 0.0.0.0

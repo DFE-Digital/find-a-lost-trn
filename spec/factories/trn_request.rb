@@ -20,6 +20,7 @@ FactoryBot.define do
     trait :has_previous_name do
       previous_first_name { Faker::Name.first_name }
       previous_last_name { Faker::Name.last_name }
+      name_changed { true }
     end
 
     trait :has_trn do

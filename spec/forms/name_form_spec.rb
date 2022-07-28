@@ -14,18 +14,6 @@ RSpec.describe NameForm, type: :model do
   end
   it { is_expected.to validate_length_of(:first_name).is_at_most(255) }
   it { is_expected.to validate_length_of(:last_name).is_at_most(255) }
-  it { is_expected.to validate_length_of(:previous_first_name).is_at_most(255) }
-  it { is_expected.to validate_length_of(:previous_last_name).is_at_most(255) }
-
-  context "when name_changed is true and previous names are empty" do
-    subject { described_class.new(name_changed: true) }
-
-    it do
-      is_expected.to validate_absence_of(:name_changed).with_message(
-        "Enter a previous first name or last name"
-      )
-    end
-  end
 
   describe "#save" do
     subject(:save!) { name_form.save }
@@ -39,6 +27,8 @@ RSpec.describe NameForm, type: :model do
     context "when first and last names are present" do
       let(:first_name) { "John" }
       let(:last_name) { "Doe" }
+
+      before { name_form.instance_variable_set(:@name_changed, "false") }
 
       it { is_expected.to be_truthy }
 
@@ -58,7 +48,7 @@ RSpec.describe NameForm, type: :model do
         described_class.new(
           first_name: "John",
           last_name: "Doe",
-          name_changed: true,
+          name_changed: "true",
           previous_first_name: "Jonathan",
           previous_last_name: "Smith",
           trn_request:
@@ -74,14 +64,49 @@ RSpec.describe NameForm, type: :model do
         save!
         expect(trn_request.previous_last_name).to eq("Smith")
       end
+
+      it "allows previous first name to be at most 255 characters" do
+        previous_first_name = "a" * 256
+        name_form.previous_first_name = previous_first_name
+        expect(name_form).to_not be_valid
+      end
+
+      it "allows previous last name to be at most 255 characters" do
+        previous_last_name = "a" * 256
+        name_form.previous_last_name = previous_last_name
+        expect(name_form).to_not be_valid
+      end
     end
 
-    context "when the previous names are present but name_changed is unchecked" do
+    context "when the previous names are present but name_changed is selected to 'No, I've not changed my name'" do
       let(:name_form) do
         described_class.new(
           first_name: "John",
           last_name: "Doe",
-          name_changed: false,
+          name_changed: "false",
+          previous_first_name: "Jonathan",
+          previous_last_name: "Smith",
+          trn_request:
+        )
+      end
+
+      it "clears the previous first name on the TrnRequest" do
+        save!
+        expect(trn_request.previous_first_name).to be_blank
+      end
+
+      it "clears the previous last name on the TrnRequest" do
+        save!
+        expect(trn_request.previous_last_name).to be_blank
+      end
+    end
+
+    context "when the previous names are present but name_changed is selected to 'Prefer not to say'" do
+      let(:name_form) do
+        described_class.new(
+          first_name: "John",
+          last_name: "Doe",
+          name_changed: "prefer",
           previous_first_name: "Jonathan",
           previous_last_name: "Smith",
           trn_request:
@@ -100,37 +125,73 @@ RSpec.describe NameForm, type: :model do
     end
 
     context "when the form is invalid" do
-      let(:first_name) { nil }
+      context "first name is invalid" do
+        let(:first_name) { nil }
 
-      it { is_expected.to be_falsy }
+        it { is_expected.to be_falsy }
 
-      it "adds an error" do
-        save!
-        expect(name_form.errors[:first_name]).to include(
-          "Enter your first name"
-        )
+        it "adds an error" do
+          save!
+          expect(name_form.errors[:first_name]).to include(
+            "Enter your first name"
+          )
+        end
+
+        it "logs a validation error" do
+          FeatureFlag.activate(:log_validation_errors)
+          expect { save! }.to change(ValidationError, :count).by(1)
+          FeatureFlag.deactivate(:log_validation_errors)
+        end
+
+        it "records all the validation error messages" do
+          FeatureFlag.activate(:log_validation_errors)
+          save!
+          expect(ValidationError.last.messages).to include(
+            "first_name" => {
+              "messages" => ["Enter your first name"],
+              "value" => nil
+            },
+            "last_name" => {
+              "messages" => ["Enter your last name"],
+              "value" => nil
+            }
+          )
+          FeatureFlag.deactivate(:log_validation_errors)
+        end
       end
 
-      it "logs a validation error" do
-        FeatureFlag.activate(:log_validation_errors)
-        expect { save! }.to change(ValidationError, :count).by(1)
-        FeatureFlag.deactivate(:log_validation_errors)
-      end
+      context "name_changed is invalid" do
+        let(:first_name) { "John" }
+        let(:last_name) { "Doe" }
 
-      it "records all the validation error messages" do
-        FeatureFlag.activate(:log_validation_errors)
-        save!
-        expect(ValidationError.last.messages).to include(
-          "first_name" => {
-            "messages" => ["Enter your first name"],
-            "value" => nil
-          },
-          "last_name" => {
-            "messages" => ["Enter your last name"],
-            "value" => nil
-          }
-        )
-        FeatureFlag.deactivate(:log_validation_errors)
+        before { name_form.instance_variable_set(:@name_changed, nil) }
+
+        it { is_expected.to be_falsy }
+
+        it "adds an error" do
+          save!
+          expect(name_form.errors[:name_changed]).to include(
+            "Tell us if you have changed your name"
+          )
+        end
+
+        it "logs a validation error" do
+          FeatureFlag.activate(:log_validation_errors)
+          expect { save! }.to change(ValidationError, :count).by(1)
+          FeatureFlag.deactivate(:log_validation_errors)
+        end
+
+        it "records all the validation error messages" do
+          FeatureFlag.activate(:log_validation_errors)
+          save!
+          expect(ValidationError.last.messages).to include(
+            "name_changed" => {
+              "messages" => ["Tell us if you have changed your name"],
+              "value" => nil
+            }
+          )
+          FeatureFlag.deactivate(:log_validation_errors)
+        end
       end
     end
   end
@@ -169,14 +230,16 @@ RSpec.describe NameForm, type: :model do
     subject { name_form.previous_first_name }
 
     let(:name_form) { described_class.new(trn_request:) }
-    let(:trn_request) { TrnRequest.new(previous_first_name: "Existing") }
+    let(:trn_request) do
+      TrnRequest.new(previous_first_name: "Existing", name_changed: true)
+    end
 
     it { is_expected.to eq("Existing") }
 
     context "when intialized with a previous first name" do
       let(:name_form) do
         described_class.new(
-          name_changed: true,
+          name_changed: "true",
           previous_first_name: "New",
           trn_request:
         )
@@ -190,14 +253,16 @@ RSpec.describe NameForm, type: :model do
     subject { name_form.previous_last_name }
 
     let(:name_form) { described_class.new(trn_request:) }
-    let(:trn_request) { TrnRequest.new(previous_last_name: "Existing") }
+    let(:trn_request) do
+      TrnRequest.new(previous_last_name: "Existing", name_changed: true)
+    end
 
     it { is_expected.to eq("Existing") }
 
     context "when intialized with a previous last name" do
       let(:name_form) do
         described_class.new(
-          name_changed: true,
+          name_changed: "true",
           previous_last_name: "New",
           trn_request:
         )
