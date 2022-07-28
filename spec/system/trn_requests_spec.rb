@@ -428,8 +428,9 @@ RSpec.describe "TRN requests", type: :system do
       and_i_press_continue
       then_i_see_the_updated_suggested_provider
 
-      # when_i_press_change_itt_provider
-      # then_i_see_the_updated_suggested_provider
+      # Test if caching is working; shouldn't update the vcr tapes
+      when_i_press_change_itt_provider
+      then_i_see_the_itt_provider_page
     end
   end
 

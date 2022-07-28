@@ -31,12 +31,16 @@ class IttProvidersController < ApplicationController
 
   def set_itt_provider_options
     @itt_provider_options ||=
-      DqtApi.get_itt_providers.map do |itt_provider|
-        OpenStruct.new(
-          name: itt_provider["providerName"],
-          value: itt_provider["ukprn"]
-        )
-      end
+      Rails
+        .cache
+        .fetch("itt_provider_options", expires_in: 1.hour) do
+          DqtApi.get_itt_providers.map do |itt_provider|
+            OpenStruct.new(
+              name: itt_provider["providerName"],
+              value: itt_provider["ukprn"]
+            )
+          end
+        end
   rescue DqtApi::ApiError, Faraday::ConnectionFailed, Faraday::TimeoutError
     @itt_provider_options ||= []
   end
