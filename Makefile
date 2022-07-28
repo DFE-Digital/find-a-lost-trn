@@ -11,21 +11,33 @@ help: ## Show this help
 dev:
 	$(eval DEPLOY_ENV=dev)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
+	$(eval RESOURCE_NAME_PREFIX=s165d01)
+	$(eval ENV_SHORT=dv)
+	$(eval ENV_TAG=dev)
 
 .PHONY: test
 test:
 	$(eval DEPLOY_ENV=test)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
+	$(eval RESOURCE_NAME_PREFIX=s165t01)
+	$(eval ENV_SHORT=ts)
+	$(eval ENV_TAG=test)
 
 .PHONY: preprod
 preprod:
 	$(eval DEPLOY_ENV=preprod)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
+	$(eval RESOURCE_NAME_PREFIX=s165t01)
+	$(eval ENV_SHORT=pp)
+	$(eval ENV_TAG=pre-prod)
 
 .PHONY: production
 production:
 	$(eval DEPLOY_ENV=production)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-production)
+	$(eval RESOURCE_NAME_PREFIX=s165p01)
+	$(eval ENV_SHORT=pd)
+	$(eval ENV_TAG=prod)
 	$(eval AZURE_BACKUP_STORAGE_ACCOUNT_NAME=s165p01dbbackup)
 	$(eval AZURE_BACKUP_STORAGE_CONTAINER_NAME=find-a-lost-trn)
 
@@ -43,6 +55,9 @@ ci:	## Run in automation environment
 	$(eval DISABLE_PASSCODE=true)
 	$(eval AUTO_APPROVE=-auto-approve)
 	$(eval SP_AUTH=true)
+
+tags: ##Tags that will be added to resource group on it's creation in ARM template
+	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Find a Lost TRN", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Find a Lost TRN", "Environment" : "$(ENV_TAG)"}' | jq . ))
 
 .PHONY: read-keyvault-config
 read-keyvault-config:
@@ -138,3 +153,13 @@ terraform-apply-replace-redis: terraform-init # make dev terraform-apply-replace
 
 terraform-destroy: terraform-init
 	terraform -chdir=terraform destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+
+tags: ##Tags that will be added to resource group on it's creation in ARM template
+	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Find a Lost TRN", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Find a Lost TRN", "Environment" : "$(ENV_TAG)"}' | jq . ))
+
+deploy-azure-resources: set-azure-account tags # make dev deploy-azure-resources CONFIRM_DEPLOY=1
+	$(if $(CONFIRM_DEPLOY), , $(error can only run with CONFIRM_DEPLOY))
+	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/main/azure/resourcedeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-faltrn-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" "tfStorageAccountName=${RESOURCE_NAME_PREFIX}faltrntfstate${ENV_SHORT}" "tfStorageContainerName=faltrn-tfstate" "dbBackupStorageAccountName=false" "dbBackupStorageContainerName=false" "keyVaultName=${RESOURCE_NAME_PREFIX}-faltrn-${ENV_SHORT}-kv"
+
+validate-azure-resources: set-azure-account  tags# make dev validate-azure-resources
+	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/main/azure/resourcedeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-faltrn-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" "tfStorageAccountName=${RESOURCE_NAME_PREFIX}faltrntfstate${ENV_SHORT}" "tfStorageContainerName=faltrn-tfstate" "dbBackupStorageAccountName=false" "dbBackupStorageContainerName=false" "keyVaultName=${RESOURCE_NAME_PREFIX}-faltrn-${ENV_SHORT}-kv" --what-if
