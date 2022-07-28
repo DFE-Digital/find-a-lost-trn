@@ -244,7 +244,7 @@ define-properties@^1.1.3, define-properties@^1.1.4:
 
 "dfe-autocomplete@github:DFE-Digital/dfe-autocomplete":
   version "0.0.1"
-  resolved "https://codeload.github.com/DFE-Digital/dfe-autocomplete/tar.gz/4c8a507927e286d58e4db97e4b4c24bcd6841d86"
+  resolved "https://codeload.github.com/DFE-Digital/dfe-autocomplete/tar.gz/7bf95631e7c912795b1994b04bfd86997d8bd2ff"
   dependencies:
     accessible-autocomplete "^2.0.4"
 
