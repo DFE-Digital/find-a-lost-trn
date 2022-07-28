@@ -411,6 +411,28 @@ RSpec.describe "TRN requests", type: :system do
     end
   end
 
+  context "when the use_dqt_api_itt_providers feature is enabled" do
+    it "allows users to pick from a list of ITT providers", vcr: true do
+      given_the_use_dqt_api_itt_providers_feature_is_enabled
+      given_i_have_completed_a_trn_request
+      when_i_press_change_awarded_qts
+      then_no_should_be_checked
+
+      when_i_choose_yes
+      and_i_press_continue
+      when_i_choose_yes
+      and_i_type_in_scitt
+      then_i_see_provider_suggestions
+
+      when_i_choose_a_suggested_provider
+      and_i_press_continue
+      then_i_see_the_updated_suggested_provider
+
+      # when_i_press_change_itt_provider
+      # then_i_see_the_updated_suggested_provider
+    end
+  end
+
   context "when the Zendesk API is unavailable" do
     before { allow(Sentry).to receive(:capture_exception) }
 
@@ -534,6 +556,10 @@ RSpec.describe "TRN requests", type: :system do
     FeatureFlag.activate(:use_dqt_api)
   end
 
+  def given_the_use_dqt_api_itt_providers_feature_is_enabled
+    FeatureFlag.activate(:use_dqt_api_itt_providers)
+  end
+
   def given_the_zendesk_integration_feature_is_enabled
     FeatureFlag.activate(:zendesk_integration)
   end
@@ -550,6 +576,14 @@ RSpec.describe "TRN requests", type: :system do
     allow(ZendeskService).to receive(:create_ticket!).and_raise(
       ZendeskService::ConnectionError
     )
+  end
+
+  def then_i_see_the_updated_suggested_provider
+    expect(page).to have_content("Astra SCITT")
+  end
+
+  def then_i_see_provider_suggestions
+    expect(page).to have_content("Astra SCITT")
   end
 
   def then_i_see_a_message_to_check_my_email
@@ -858,6 +892,11 @@ RSpec.describe "TRN requests", type: :system do
   end
   alias_method :and_i_fill_in_my_ni_number, :when_i_fill_in_my_ni_number
 
+  def when_i_choose_a_suggested_provider
+    find("#itt-provider-form-itt-provider-name-field").native.send_keys(:down)
+    find("body").native.send_key(:tab)
+  end
+
   def when_i_choose_no
     choose "No", visible: false
   end
@@ -992,6 +1031,10 @@ RSpec.describe "TRN requests", type: :system do
 
   def and_i_press_continue_without_it
     click_on "Continue without it"
+  end
+
+  def and_i_type_in_scitt
+    find("#itt-provider-form-itt-provider-name-field").native.send_keys "astra"
   end
 
   def when_i_navigate_to_the_name_page
