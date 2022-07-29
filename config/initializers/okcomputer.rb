@@ -1,3 +1,5 @@
+require_relative "../../lib/ok_computer_checks/zendesk_check"
+
 OkComputer.logger = Rails.logger
 OkComputer.mount_at = "health"
 
@@ -11,5 +13,6 @@ Sidekiq.redis do |conn|
 end
 
 OkComputer::Registry.register "version", OkComputer::AppVersionCheck.new
+OkComputer::Registry.register "zendesk", OkComputerChecks::ZendeskCheck.new
 
 OkComputer.make_optional %w[version]

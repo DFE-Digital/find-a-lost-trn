@@ -3,6 +3,10 @@ require "gds_zendesk/client"
 require "gds_zendesk/dummy_client"
 
 module DummyTicketExtensions
+  def count!
+    1
+  end
+
   # The create! method in the DummyTicket class does not actually return a
   # real-ish Zendesk ticket. This is a monkey patch to call the original method
   # and then return a ticket instance.
