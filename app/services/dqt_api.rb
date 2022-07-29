@@ -44,6 +44,11 @@ class DqtApi
     response.body["ittProviders"]
   end
 
+  def self.unlock_teacher(teacher_id:)
+    response = new.client.put("/v2/unlock-teacher/#{teacher_id}", {})
+    raise ApiError, response.reason_phrase unless response.success?
+  end
+
   def self.trn_request_params(trn_request)
     {
       dateOfBirth: trn_request.date_of_birth,
