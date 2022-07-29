@@ -2,7 +2,7 @@
   "name": "app",
   "private": "true",
   "dependencies": {
-    "esbuild": "^0.14.50",
+    "esbuild": "^0.14.51",
     "govuk-frontend": "^4.0.1",
     "sass": "^1.54.0",
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete"
