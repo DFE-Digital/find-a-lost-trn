@@ -8,6 +8,7 @@ ruby "3.1.1"
 gem "bootsnap", require: false
 gem "cssbundling-rails"
 gem "devise"
+gem "devise_invitable"
 gem "faraday", "~> 1.10"
 gem "gds_zendesk"
 gem "govuk-components", "~> 3.1.4"
