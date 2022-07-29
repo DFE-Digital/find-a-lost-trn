@@ -55,9 +55,9 @@ jobs:
           TF_STATE_FILE=review/review-pr-$PR_NUMBER.tfstate
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
           echo "TF_STATE_FILE=$TF_STATE_FILE" >> $GITHUB_ENV
-          pr_state_file=$(az storage blob list -c fmtrn-tfstate \
+          pr_state_file=$(az storage blob list -c faltrn-tfstate \
             --account-key ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }} \
-            --account-name "s165d01tfstate" \
+            --account-name "s165d01faltrntfstatedv" \
             --prefix $TF_STATE_FILE --query "[].name" -o tsv)
           if [ -n "$pr_state_file" ]; then echo "TF_STATE_EXISTS=true" >> $GITHUB_ENV; fi;
       - name: Terraform
@@ -75,6 +75,6 @@ jobs:
       - name: Delete tf state file
         if: env.TF_STATE_EXISTS == 'true'
         run: |
-          az storage blob delete -c fmtrn-tfstate --name ${{ env.TF_STATE_FILE }} \
+          az storage blob delete -c faltrn-tfstate --name ${{ env.TF_STATE_FILE }} \
           --account-key ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }} \
-          --account-name "s165d01tfstate"
+          --account-name "s165d01faltrntfstatedv"
