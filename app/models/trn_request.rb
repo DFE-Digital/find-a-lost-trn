@@ -1,4 +1,28 @@
 # frozen_string_literal: true
+
+# == Schema Information
+#
+# Table name: trn_requests
+#
+#  id                    :bigint           not null, primary key
+#  awarded_qts           :boolean
+#  checked_at            :datetime
+#  date_of_birth         :date
+#  email                 :string
+#  first_name            :string
+#  has_active_sanctions  :boolean
+#  has_ni_number         :boolean
+#  itt_provider_enrolled :boolean
+#  itt_provider_name     :string
+#  last_name             :string
+#  ni_number             :string
+#  previous_first_name   :string
+#  previous_last_name    :string
+#  trn                   :string
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  zendesk_ticket_id     :integer
+#
 class TrnRequest < ApplicationRecord
   has_many :trn_responses, dependent: :destroy
 
