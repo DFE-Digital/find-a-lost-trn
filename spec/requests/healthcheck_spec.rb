@@ -10,4 +10,9 @@ RSpec.describe "Health check", type: :request do
     get "/health/postgresql"
     expect(response).to have_http_status(:ok)
   end
+
+  it "checks Zendesk health" do
+    get "/health/zendesk"
+    expect(response).to have_http_status(:ok)
+  end
 end
