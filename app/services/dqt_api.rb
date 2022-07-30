@@ -27,7 +27,21 @@ class DqtApi
 
     raise NoResults if results.size.zero?
 
-    results.first
+    teacher_account_detail = results.first
+
+    if FeatureFlag.active?(:unlock_teachers_self_service_portal_account)
+      begin
+        DqtApi.unlock_teacher(teacher_account_detail.fetch("uid"))
+      rescue KeyError,
+             DqtApi::ApiError,
+             Faraday::ConnectionFailed,
+             Faraday::TimeoutError,
+             DqtApi::TooManyResults => e
+        Sentry.capture_exception(e)
+      end
+    end
+
+    teacher_account_detail
   end
 
   def self.find_teacher!(date_of_birth:, trn:)
