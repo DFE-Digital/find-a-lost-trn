@@ -1,6 +1,6 @@
-# frozen_string_literal: true
-
 class Staff::SessionsController < Devise::SessionsController
+  layout "two_thirds"
+
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
