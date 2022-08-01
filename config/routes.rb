@@ -1,8 +1,16 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
-  devise_for :staff
   root to: redirect("/start")
+
+  devise_for :staff,
+             controllers: {
+               confirmations: "staff/confirmations",
+               invitations: "staff/invitations",
+               passwords: "staff/passwords",
+               sessions: "staff/sessions",
+               unlocks: "staff/unlocks"
+             }
 
   namespace :support_interface, path: "/support" do
     get "/", to: redirect("/support/trn-requests")
