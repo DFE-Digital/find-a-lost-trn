@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+require "sidekiq/web"
 
 Rails.application.routes.draw do
   devise_for :staff
@@ -25,21 +25,11 @@ Rails.application.routes.draw do
       resource :zendesk_sync, only: [:create], controller: "zendesk_sync"
     end
 
-    # https://github.com/mperham/sidekiq/wiki/Monitoring#rails-http-basic-auth-from-routes
-    require "sidekiq/web"
-
-    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-      ActiveSupport::SecurityUtils.secure_compare(
-        ::Digest::SHA256.hexdigest(username),
-        ::Digest::SHA256.hexdigest(ENV.fetch("SUPPORT_USERNAME", nil))
-      ) &
-        ActiveSupport::SecurityUtils.secure_compare(
-          ::Digest::SHA256.hexdigest(password),
-          ::Digest::SHA256.hexdigest(ENV.fetch("SUPPORT_PASSWORD", nil))
-        )
+    devise_scope :staff do
+      authenticate :staff do
+        mount Sidekiq::Web, at: "sidekiq"
+      end
     end
-
-    mount Sidekiq::Web, at: "sidekiq"
   end
 
   get "/name", to: "name#edit"
