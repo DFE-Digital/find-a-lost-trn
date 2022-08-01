@@ -1,6 +1,6 @@
-# frozen_string_literal: true
-
 class Staff::PasswordsController < Devise::PasswordsController
+  layout "two_thirds"
+
   # GET /resource/password/new
   # def new
   #   super

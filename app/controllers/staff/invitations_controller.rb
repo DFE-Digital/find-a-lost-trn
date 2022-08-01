@@ -1,6 +1,6 @@
-# frozen_string_literal: true
-
 class Staff::InvitationsController < Devise::InvitationsController
+  layout "two_thirds"
+
   # GET /resource/invitation/new
   # def new
   #   super

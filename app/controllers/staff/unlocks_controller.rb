@@ -1,6 +1,6 @@
-# frozen_string_literal: true
-
 class Staff::UnlocksController < Devise::UnlocksController
+  layout "two_thirds"
+
   # GET /resource/unlock/new
   # def new
   #   super
