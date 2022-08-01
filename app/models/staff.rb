@@ -42,8 +42,6 @@
 #  index_staff_on_unlock_token          (unlock_token) UNIQUE
 #
 class Staff < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :confirmable,
          :database_authenticatable,
          :invitable,
