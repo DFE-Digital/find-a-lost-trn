@@ -15,4 +15,12 @@ RSpec.describe "Health check", type: :request do
     get "/health/zendesk"
     expect(response).to have_http_status(:ok)
   end
+
+  it "checks Notify integration health" do
+    allow(Notifications::Client).to receive(:new).and_return(
+      double(:client, send_email: true)
+    )
+    get "/health/notify"
+    expect(response).to have_http_status(:ok)
+  end
 end
