@@ -1,32 +1,28 @@
 <% content_for :page_title, "#{'Error: ' if @ni_number.errors.any?}What is your National Insurance number?" %>
 <% content_for :back_link_url, have_ni_number_path %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @ni_number, url: ni_number_path do |f| %>
-      <%= f.govuk_error_summary %>
-      <%= f.govuk_text_field(:ni_number,
-            label: { tag: 'h1', size: 'xl', text: 'What is your National Insurance number?' },
-            hint: { text: 'It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.' },
-            class: 'govuk-input--width-10',
-            required: true
-          ) %>
+<%= form_with model: @ni_number, url: ni_number_path do |f| %>
+  <%= f.govuk_error_summary %>
+  <%= f.govuk_text_field(:ni_number,
+        label: { tag: 'h1', size: 'xl', text: 'What is your National Insurance number?' },
+        hint: { text: 'It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.' },
+        class: 'govuk-input--width-10',
+        required: true
+      ) %>
 
-      <%= f.govuk_submit 'Submit', prevent_double_click: false, class: 'govuk-visually-hidden', name: 'submit', value: 'hidden_submit', tabindex: '-1' %>
+  <%= f.govuk_submit 'Submit', prevent_double_click: false, class: 'govuk-visually-hidden', name: 'submit', value: 'hidden_submit', tabindex: '-1' %>
 
-      <%= govuk_details(summary_text: "I don’t know my National Insurance number") do %>
-        <p class="govuk-body">
-          You can <a class="govuk-link" target="_blank" rel="noopener noreferrer" href="https://www.gov.uk/lost-national-insurance-number">find a lost National Insurance number</a>.
-        </p>
+  <%= govuk_details(summary_text: "I don’t know my National Insurance number") do %>
+    <p class="govuk-body">
+      You can <a class="govuk-link" target="_blank" rel="noopener noreferrer" href="https://www.gov.uk/lost-national-insurance-number">find a lost National Insurance number</a>.
+    </p>
 
-        <p class="govuk-body">
-          Or you can continue without it, but we are less likely to find your TRN.
-        </p>
+    <p class="govuk-body">
+      Or you can continue without it, but we are less likely to find your TRN.
+    </p>
 
-        <%= f.govuk_submit 'Continue without it', prevent_double_click: false, secondary: true, name: 'submit', value: 'ni_number_not_known' %>
-      <% end %>
+    <%= f.govuk_submit 'Continue without it', prevent_double_click: false, secondary: true, name: 'submit', value: 'ni_number_not_known' %>
+  <% end %>
 
-      <%= f.govuk_submit prevent_double_click: false, name: 'submit', value: 'submit' %>
-    <% end %>
-  </div>
-</div>
+  <%= f.govuk_submit prevent_double_click: false, name: 'submit', value: 'submit' %>
+<% end %>

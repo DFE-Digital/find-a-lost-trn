@@ -2,6 +2,8 @@
 class NoMatchController < ApplicationController
   include EnforceQuestionOrder
 
+  layout "two_thirds"
+
   def new
     @no_match_form = NoMatchForm.new
   end

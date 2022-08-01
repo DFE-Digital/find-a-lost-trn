@@ -1,6 +1,8 @@
 class AwardedQtsController < ApplicationController
   include EnforceQuestionOrder
 
+  layout "two_thirds"
+
   def edit
     @awarded_qts_form = AwardedQtsForm.new(trn_request:)
   end

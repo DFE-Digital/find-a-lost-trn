@@ -5,6 +5,8 @@ class TrnRequestsController < ApplicationController
 
   include EnforceQuestionOrder
 
+  layout "two_thirds"
+
   def show
     redirect_to root_url unless trn_request
     session[:form_complete] = true
