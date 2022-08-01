@@ -2,6 +2,8 @@
 class NameController < ApplicationController
   include EnforceQuestionOrder
 
+  layout "two_thirds"
+
   def edit
     @name_form = NameForm.new(trn_request:)
   end

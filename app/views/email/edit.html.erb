@@ -1,17 +1,13 @@
 <% content_for :page_title, "#{'Error: ' if @email_form.errors.any?}Your email address" %>
 <%= content_for :back_link_url, back_link_url(ask_questions_path) %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @email_form, url: email_path do |f| %>
-      <%= f.govuk_error_summary %>
-      <%= f.govuk_email_field(
-            :email,
-            label: { tag: 'h1', size: 'xl', text: 'Your email address' },
-            hint: { text: 'If we can find your TRN, we’ll send it to the email address you give.' }
-          )
-      %>
-      <%= f.govuk_submit prevent_double_click: false %>
-    <% end %>
-  </div>
-</div>
+<%= form_with model: @email_form, url: email_path do |f| %>
+  <%= f.govuk_error_summary %>
+  <%= f.govuk_email_field(
+        :email,
+        label: { tag: 'h1', size: 'xl', text: 'Your email address' },
+        hint: { text: 'If we can find your TRN, we’ll send it to the email address you give.' }
+      )
+  %>
+  <%= f.govuk_submit prevent_double_click: false %>
+<% end %>

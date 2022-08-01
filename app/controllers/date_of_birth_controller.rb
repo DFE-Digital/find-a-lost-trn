@@ -2,6 +2,8 @@
 class DateOfBirthController < ApplicationController
   include EnforceQuestionOrder
 
+  layout "two_thirds"
+
   def edit
   end
 

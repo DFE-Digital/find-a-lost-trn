@@ -2,6 +2,8 @@
 class IttProvidersController < ApplicationController
   include EnforceQuestionOrder
 
+  layout "two_thirds"
+
   def edit
     set_itt_provider_options if FeatureFlag.active?(:use_dqt_api_itt_providers)
 

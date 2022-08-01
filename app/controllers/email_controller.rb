@@ -2,6 +2,8 @@
 class EmailController < ApplicationController
   include EnforceQuestionOrder
 
+  layout "two_thirds"
+
   def edit
     @email_form = EmailForm.new(trn_request:)
   end

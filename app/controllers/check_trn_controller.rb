@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class CheckTrnController < ApplicationController
+  layout "two_thirds"
+
   def new
     @check_trn_form = CheckTrnForm.new
   end

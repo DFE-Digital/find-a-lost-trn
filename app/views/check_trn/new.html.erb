@@ -1,28 +1,24 @@
 <% content_for :page_title, "#{'Error: ' if @check_trn_form.errors.any?}Check if you have a TRN number" %>
 <% content_for :back_link_url, start_path %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @check_trn_form, url: check_trn_path, method: :post do |f| %>
-      <%= f.govuk_error_summary %>
-      <h1 class="govuk-heading-xl">Check if you have a TRN</h1>
-      <p class="govuk-body">You will have a TRN if you:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>hold qualified teacher status (QTS) in England or Wales</li>
-        <li>hold early years teacher status (EYTS) in England</li>
-        <li>hold a national professional qualification (NPQ)</li>
-        <li>are working towards QTS, EYTS or an NPQ</li>
-        <li>contribute to the Teachers’ Pensions scheme in England or Wales</li>
-        <li>have a relevant restriction in relation to teaching in England</li>
-      </ul>
-      <p class="govuk-body">If you have qualified teacher learning and skills (QTLS) status, you will not necessarily have a TRN. You do not need one to apply for a job.</p>
-      <%= f.govuk_collection_radio_buttons(:has_trn,
-            [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
-            :value,
-            :label,
-            legend: { size: 'm', text: 'Do you think you have a TRN?' }
-          ) %>
-      <%= f.govuk_submit prevent_double_click: false %>
-    <% end %>
-  </div>
-</div>
+<%= form_with model: @check_trn_form, url: check_trn_path, method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+  <h1 class="govuk-heading-xl">Check if you have a TRN</h1>
+  <p class="govuk-body">You will have a TRN if you:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>hold qualified teacher status (QTS) in England or Wales</li>
+    <li>hold early years teacher status (EYTS) in England</li>
+    <li>hold a national professional qualification (NPQ)</li>
+    <li>are working towards QTS, EYTS or an NPQ</li>
+    <li>contribute to the Teachers’ Pensions scheme in England or Wales</li>
+    <li>have a relevant restriction in relation to teaching in England</li>
+  </ul>
+  <p class="govuk-body">If you have qualified teacher learning and skills (QTLS) status, you will not necessarily have a TRN. You do not need one to apply for a job.</p>
+  <%= f.govuk_collection_radio_buttons(:has_trn,
+        [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
+        :value,
+        :label,
+        legend: { size: 'm', text: 'Do you think you have a TRN?' }
+      ) %>
+  <%= f.govuk_submit prevent_double_click: false %>
+<% end %>

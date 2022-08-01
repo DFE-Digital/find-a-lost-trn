@@ -2,6 +2,8 @@
 class NiNumberController < ApplicationController
   include EnforceQuestionOrder
 
+  layout "two_thirds"
+
   def edit
     @ni_number = NiNumberForm.new(trn_request:)
   end
