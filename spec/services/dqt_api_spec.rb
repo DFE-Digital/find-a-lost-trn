@@ -18,11 +18,6 @@ RSpec.describe DqtApi do
     end
 
     context "with a matching TRN request", vcr: true do
-      it do
-        expect(described_class).not_to receive(:unlock_teacher).with(
-          teacher_id: "f7891223-7661-e411-8047-005056822391"
-        )
-      end
       it { is_expected.to match(hash_including("trn" => "2921020")) }
       it do
         is_expected.to match(

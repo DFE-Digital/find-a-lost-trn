@@ -27,21 +27,11 @@ class DqtApi
 
     raise NoResults if results.size.zero?
 
-    teacher_account_detail = results.first
+    teacher_account = results.first
 
-    if FeatureFlag.active?(:unlock_teachers_self_service_portal_account)
-      begin
-        DqtApi.unlock_teacher(teacher_account_detail.fetch("uid"))
-      rescue KeyError,
-             DqtApi::ApiError,
-             Faraday::ConnectionFailed,
-             Faraday::TimeoutError,
-             DqtApi::TooManyResults => e
-        Sentry.capture_exception(e)
-      end
-    end
+    DqtApi.unlock_teacher!(teacher_account)
 
-    teacher_account_detail
+    teacher_account
   end
 
   def self.find_teacher!(date_of_birth:, trn:)
@@ -58,9 +48,22 @@ class DqtApi
     response.body["ittProviders"]
   end
 
-  def self.unlock_teacher(teacher_id:)
-    response = new.client.put("/v2/unlock-teacher/#{teacher_id}", {})
-    raise ApiError, response.reason_phrase unless response.success?
+  def self.unlock_teacher!(teacher_account)
+    if FeatureFlag.active?(:unlock_teachers_self_service_portal_account)
+      begin
+        response =
+          new.client.put(
+            "/v2/unlock-teacher/#{teacher_account.fetch("uid")}",
+            {}
+          )
+        raise ApiError, response.reason_phrase unless response.success?
+      rescue KeyError,
+             ApiError,
+             Faraday::ConnectionFailed,
+             Faraday::TimeoutError
+        Sentry.capture_exception(e)
+      end
+    end
   end
 
   def self.trn_request_params(trn_request)
