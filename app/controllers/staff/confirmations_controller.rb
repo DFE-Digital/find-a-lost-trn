@@ -1,6 +1,6 @@
-# frozen_string_literal: true
-
 class Staff::ConfirmationsController < Devise::ConfirmationsController
+  layout "two_thirds"
+
   # GET /resource/confirmation/new
   # def new
   #   super
