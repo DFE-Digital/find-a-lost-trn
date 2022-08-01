@@ -1,17 +1,13 @@
 <% content_for :page_title, "#{'Error: ' if @awarded_qts_form.errors.any?}Have you been awarded qualified teacher status (QTS)?" %>
 <%= content_for :back_link_url, back_link_url(@awarded_qts_form.trn_request.has_ni_number? ? ni_number_path : have_ni_number_path) %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @awarded_qts_form, url: awarded_qts_path, method: :post do |f| %>
-      <%= f.govuk_error_summary %>
-      <%= f.govuk_collection_radio_buttons(:awarded_qts,
-            [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
-            :value,
-            :label,
-            legend: { tag: 'h1', size: 'xl', text: 'Have you been awarded qualified teacher status (QTS)?' }
-          ) %>
-      <%= f.govuk_submit prevent_double_click: false %>
-    <% end %>
-  </div>
-</div>
+<%= form_with model: @awarded_qts_form, url: awarded_qts_path, method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+  <%= f.govuk_collection_radio_buttons(:awarded_qts,
+        [OpenStruct.new(label: 'Yes', value: true), OpenStruct.new(label: 'No', value: false)],
+        :value,
+        :label,
+        legend: { tag: 'h1', size: 'xl', text: 'Have you been awarded qualified teacher status (QTS)?' }
+      ) %>
+  <%= f.govuk_submit prevent_double_click: false %>
+<% end %>
