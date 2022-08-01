@@ -64,7 +64,7 @@ resource "cloudfoundry_app" "app" {
   strategy                   = "blue-green"
   environment                = local.app_environment_variables
   health_check_type          = "http"
-  health_check_http_endpoint = "/health"
+  health_check_http_endpoint = "/health/all"
   dynamic "routes" {
     for_each = local.flt_routes
     content {
