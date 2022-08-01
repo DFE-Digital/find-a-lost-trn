@@ -17,6 +17,13 @@ class FeatureFlag
       :slack_alerts,
       "Enable Slack alerts and notifications for this environment",
       "Felix Clack"
+    ],
+    [
+      :staff_http_basic_auth,
+      "Allow signing in as a staff user using HTTP Basic authentication. " \
+        "This is useful before staff users have been created, but should " \
+        "otherwise be inactive.",
+      "Theodor Vararu"
     ]
   ].freeze
 
