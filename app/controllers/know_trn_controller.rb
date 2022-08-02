@@ -8,7 +8,11 @@ class KnowTrnController < ApplicationController
   def create
     @know_trn_form = KnowTrnForm.new(know_trn_params.merge(trn_request:))
     if @know_trn_form.save
-      payload = { trn: @trn_request.trn }
+      payload = {
+        given_name: "Stub Given Name",
+        family_name: "Stub Family Name",
+        trn: @trn_request.trn
+      }
       key = Base64.decode64 ENV.fetch("IDENTITY_JWT_KEY")
       token = JWT.encode payload, key, "HS256"
       redirect_to "#{session[:redirect_uri]}&user=#{token}",
