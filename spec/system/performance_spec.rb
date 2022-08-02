@@ -7,12 +7,14 @@ RSpec.describe "Performance", type: :system do
   after { Timecop.return }
 
   it "using the performance dashboard" do
-    given_the_service_is_open
-    given_there_are_a_few_trns
-    when_i_visit_the_performance_page
-    then_i_see_the_live_stats
-    and_i_see_the_usage_duration
-    and_i_see_journeys_through_the_service
+    travel_to(Date.new(2022, 5, 12)) do
+      given_the_service_is_open
+      given_there_are_a_few_trns
+      when_i_visit_the_performance_page
+      then_i_see_the_live_stats
+      and_i_see_the_usage_duration
+      and_i_see_journeys_through_the_service
+    end
   end
 
   private
