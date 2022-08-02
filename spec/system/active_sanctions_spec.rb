@@ -8,6 +8,8 @@ RSpec.describe "TRN requests", type: :system do
     given_the_use_dqt_api_feature_is_enabled
   end
 
+  after { deactivate_feature_flags }
+
   it "handles a TRN with active sanctions", vcr: true do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
@@ -26,6 +28,12 @@ RSpec.describe "TRN requests", type: :system do
     when_i_press_the_submit_button
     then_i_see_the_zendesk_confirmation_page
     and_i_receive_an_email_with_the_zendesk_ticket_number
+  end
+
+  def deactivate_feature_flags
+    FeatureFlag.deactivate(:service_open)
+    FeatureFlag.deactivate(:use_dqt_api)
+    FeatureFlag.deactivate(:zendesk_integration)
   end
 
   def given_the_service_is_open

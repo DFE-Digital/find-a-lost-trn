@@ -7,6 +7,8 @@ RSpec.describe "Zendesk ticket syncing", type: :system do
     given_the_zendesk_integration_feature_is_enabled
   end
 
+  after { deactivate_feature_flags }
+
   context "when the ticket has a TRN" do
     it "checks the ticket at regular intervals", vcr: true do
       given_there_is_a_completed_trn_request
@@ -74,6 +76,11 @@ RSpec.describe "Zendesk ticket syncing", type: :system do
 
   def and_i_am_on_the_check_answers_page
     visit trn_request_path
+  end
+
+  def deactivate_feature_flags
+    FeatureFlag.deactivate(:service_open)
+    FeatureFlag.deactivate(:zendesk_integration)
   end
 
   def given_the_service_is_open

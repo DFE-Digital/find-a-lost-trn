@@ -40,6 +40,7 @@ RSpec.describe ZendeskService do
 
   context "when feature flag is on" do
     before { FeatureFlag.activate(:zendesk_integration) }
+    after { FeatureFlag.deactivate(:zendesk_integration) }
 
     describe ".create_ticket!" do
       subject(:create_ticket!) { described_class.create_ticket!(trn_request) }

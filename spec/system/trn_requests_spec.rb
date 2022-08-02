@@ -7,6 +7,8 @@ RSpec.describe "TRN requests", type: :system do
     given_the_zendesk_integration_feature_is_enabled
   end
 
+  after { deactivate_feature_flags }
+
   it "completing a request" do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
@@ -506,6 +508,15 @@ RSpec.describe "TRN requests", type: :system do
 
   def and_my_email_is_not_filled_in
     expect(page).not_to have_field("Email", with: "kevin@kevin.com")
+  end
+
+  def deactivate_feature_flags
+    FeatureFlag.deactivate(:match_on_email)
+    FeatureFlag.deactivate(:processing_delays)
+    FeatureFlag.deactivate(:service_open)
+    FeatureFlag.deactivate(:use_dqt_api)
+    FeatureFlag.deactivate(:use_dqt_api_itt_providers)
+    FeatureFlag.deactivate(:zendesk_integration)
   end
 
   def given_i_am_on_the_home_page
