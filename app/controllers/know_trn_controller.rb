@@ -9,7 +9,8 @@ class KnowTrnController < ApplicationController
     @know_trn_form = KnowTrnForm.new(know_trn_params.merge(trn_request:))
     if @know_trn_form.save
       payload = { trn: @trn_request.trn }
-      token = JWT.encode payload, ENV.fetch("IDENTITY_JWT_KEY"), "HS256"
+      key = Base64.decode64 ENV.fetch("IDENTITY_JWT_KEY")
+      token = JWT.encode payload, key, "HS256"
       redirect_to "#{session[:redirect_uri]}?user=#{token}",
                   allow_other_host: true
     else
