@@ -11,7 +11,7 @@ class KnowTrnController < ApplicationController
       payload = { trn: @trn_request.trn }
       key = Base64.decode64 ENV.fetch("IDENTITY_JWT_KEY")
       token = JWT.encode payload, key, "HS256"
-      redirect_to "#{session[:redirect_uri]}?user=#{token}",
+      redirect_to "#{session[:redirect_uri]}&user=#{token}",
                   allow_other_host: true
     else
       render :new
