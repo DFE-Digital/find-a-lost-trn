@@ -44,6 +44,24 @@ class DqtApi
     response.body["ittProviders"]
   end
 
+  def self.unlock_teacher!(teacher_account)
+    if FeatureFlag.active?(:unlock_teachers_self_service_portal_account)
+      begin
+        response =
+          new.client.put(
+            "/v2/unlock-teacher/#{teacher_account.fetch(:uid)}",
+            {}
+          )
+        raise ApiError, response.reason_phrase unless response.success?
+      rescue KeyError,
+             ApiError,
+             Faraday::ConnectionFailed,
+             Faraday::TimeoutError => e
+        Sentry.capture_exception(e)
+      end
+    end
+  end
+
   def self.trn_request_params(trn_request)
     {
       dateOfBirth: trn_request.date_of_birth,
