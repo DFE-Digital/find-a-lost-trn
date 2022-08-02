@@ -2,9 +2,7 @@
 require "rails_helper"
 
 RSpec.describe "Performance", type: :system do
-  before { Timecop.freeze(Date.new(2022, 5, 12)) }
-
-  after { Timecop.return }
+  after { deactivate_feature_flags }
 
   it "using the performance dashboard" do
     travel_to(Date.new(2022, 5, 12)) do
@@ -18,6 +16,10 @@ RSpec.describe "Performance", type: :system do
   end
 
   private
+
+  def deactivate_feature_flags
+    FeatureFlag.deactivate(:service_open)
+  end
 
   def given_the_service_is_open
     FeatureFlag.activate(:service_open)

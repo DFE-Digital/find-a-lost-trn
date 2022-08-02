@@ -3,6 +3,7 @@ require "rails_helper"
 
 RSpec.describe "Throttling", rack_attack: true do
   before { FeatureFlag.activate(:service_open) }
+  after { FeatureFlag.deactivate(:service_open) }
 
   shared_examples "throttled" do |path|
     context path do
