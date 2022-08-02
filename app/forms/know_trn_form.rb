@@ -1,14 +1,14 @@
 # frozen_string_literal: true
-class HaveTrnForm
+class KnowTrnForm
   include ActiveModel::Model
   include LogErrors
 
-  attr_accessor :has_trn
+  attr_accessor :know_trn
 
-  validates :has_trn, inclusion: { in: %w[true false] }
+  validates :know_trn, inclusion: { in: %w[true false] }
 
-  def has_trn?
-    ActiveModel::Type::Boolean.new.cast(has_trn)
+  def know_trn?
+    ActiveModel::Type::Boolean.new.cast(know_trn)
   end
 
   def trn_request

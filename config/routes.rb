@@ -79,6 +79,9 @@ Rails.application.routes.draw do
   get "/have-trn", to: "have_trn#new"
   post "/have-trn", to: "have_trn#create"
 
+  get "/know-trn", to: "know_trn#new"
+  post "/know-trn", to: "know_trn#create"
+
   get "/ask-questions", to: "pages#ask_questions"
   get "/helpdesk-request-submitted", to: "pages#helpdesk_request_submitted"
   get "/helpdesk-request-delayed", to: "pages#helpdesk_request_delayed"
