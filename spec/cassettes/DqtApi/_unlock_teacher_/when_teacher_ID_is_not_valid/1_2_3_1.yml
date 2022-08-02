@@ -1,0 +1,64 @@
+---
+http_interactions:
+  - request:
+      method: put
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/unlock-teacher/f689122-7661-e431-8047-00506822391
+      body:
+        encoding: UTF-8
+        string: "{}"
+      headers:
+        User-Agent:
+          - Faraday v1.10.0
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Content-Type:
+          - application/json
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 400
+        message: Bad Request
+      headers:
+        Content-Type:
+          - application/problem+json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Tue, 02 Aug 2022 04:13:09 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-08-02T04:14:00.0000000Z"
+        X-Vcap-Request-Id:
+          - b31f09ec-e12d-4d6d-7fcd-920eff73cd0b
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Error from cloudfront
+        Via:
+          - 1.1 9fdb94d31cea383ee9cfa1b9714dc610.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - ORD52-C1
+        X-Amz-Cf-Id:
+          - seSH5t8qS2BeXwe2NhyrD-tVUzifjQnIG04t6hBLn9JneFd2VSNEgg==
+      body:
+        encoding: UTF-8
+        string:
+          '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One
+          or more validation errors occurred.","status":400,"traceId":"00-141dbd09ab5424ba3e8083f012efde3c-6e8952cbd3db40f2-00","errors":{"teacherId":["The
+          value ''f689122-7661-e431-8047-00506822391'' is not valid for TeacherId."]}}'
+    recorded_at: Tue, 02 Aug 2022 04:13:09 GMT
+recorded_with: VCR 6.1.0
