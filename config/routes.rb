@@ -73,7 +73,7 @@ Rails.application.routes.draw do
   get "/no-match", to: "no_match#new"
   post "/no-match", to: "no_match#create"
 
-  get "/trnless", to: "trnless#new"
+  get "/have-trn", to: "have_trn#new"
 
   get "/ask-questions", to: "pages#ask_questions"
   get "/helpdesk-request-submitted", to: "pages#helpdesk_request_submitted"

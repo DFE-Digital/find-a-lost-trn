@@ -1,6 +1,6 @@
-<% content_for :page_title, "Trnless" %>
+<% content_for :page_title, "Do you have a teacher reference number (TRN)?" %>
 
-<%= form_with model: @trnless_form, url: '#', method: :post do |f| %>
+<%= form_with model: @have_trn_form, url: have_trn_path, method: :post do |f| %>
   <%= f.govuk_error_summary %>
 
   <h1 class="govuk-heading-xl">Do you have a teacher reference number (TRN)?</h1>

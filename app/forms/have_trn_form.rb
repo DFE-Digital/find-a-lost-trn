@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class TrnlessForm
+class HaveTrnForm
   include ActiveModel::Model
   include LogErrors
 
