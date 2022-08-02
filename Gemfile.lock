@@ -494,6 +494,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder
   govuk_markdown (~> 1.0)
   jsbundling-rails
+  jwt
   logstop (~> 0.2.8)
   mail-notify
   okcomputer (~> 1.18)
