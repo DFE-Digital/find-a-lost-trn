@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/unlock-teacher/f7891223-7661-e411-8047-005056822391
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - Faraday v1.10.0
+      Authorization:
+      - Bearer <BEARER_TOKEN_REDACTED>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Content-Length:
+      - '0'
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 02 Aug 2022 21:47:09 GMT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Rate-Limit-Limit:
+      - 60s
+      X-Rate-Limit-Remaining:
+      - '299'
+      X-Rate-Limit-Reset:
+      - '2022-08-02T21:48:00.0000000Z'
+      X-Vcap-Request-Id:
+      - ed2a066c-13b5-43a4-6be8-618d844681d9
+      X-Xss-Protection:
+      - '0'
+      X-Cache:
+      - Error from cloudfront
+      Via:
+      - 1.1 2eb19ccd40bc3ab33c9eed96d984c41e.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR61-P2
+      X-Amz-Cf-Id:
+      - JaFQ_jo-S4rrF7mhGgmnTfeK8d7BnBoj3LcRFHCcRThcDehV5ImasQ==
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Tue, 02 Aug 2022 21:47:09 GMT
+recorded_with: VCR 6.1.0
