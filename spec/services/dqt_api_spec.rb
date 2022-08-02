@@ -85,4 +85,60 @@ RSpec.describe DqtApi do
       end
     end
   end
+
+  describe ".unlock_teacher!" do
+    before do
+      FeatureFlag.activate(:unlock_teachers_self_service_portal_account)
+    end
+    after do
+      FeatureFlag.deactivate(:unlock_teachers_self_service_portal_account)
+    end
+
+    subject(:unlock_teacher!) do
+      described_class.unlock_teacher!(teacher_account)
+    end
+    let(:uid) { "f7891223-7661-e411-8047-005056822391" }
+    let(:teacher_account_base) do
+      {
+        trn: "2921020",
+        emailAddresses: ["anonymous@anonymousdomain.org.net.co.uk"],
+        firstName: "Kevin",
+        lastName: "Evans",
+        dateOfBirth: "1990-01-01",
+        nationalInsuranceNumber: "AA123456A",
+        uid:
+      }
+    end
+    let(:teacher_account) { teacher_account_base }
+
+    context "when teacher ID is found", vcr: true do
+      it { is_expected.to be_nil }
+    end
+
+    context "when teacher ID is not found", vcr: true do
+      let(:uid) { "f6891223-7661-e431-8047-005056822391" }
+      it { is_expected.to be_nil }
+    end
+
+    context "when teacher ID is not valid", vcr: true do
+      let(:uid) { "a-non-matching-uid" }
+      it { is_expected.to be_nil }
+    end
+
+    context "when uid key is not present" do
+      let(:teacher_account) { teacher_account_base.except(:uid) }
+      it { is_expected.to be_nil }
+    end
+
+    context "when the API returns a timeout error" do
+      it "handles timeout error gracefully" do
+        VCR.turned_off do
+          allow_any_instance_of(Faraday::Connection).to receive(:put).and_raise(
+            Faraday::TimeoutError
+          )
+          expect { unlock_teacher! }.not_to raise_error
+        end
+      end
+    end
+  end
 end
