@@ -2,6 +2,7 @@
 require "rails_helper"
 
 RSpec.describe DateOfBirthForm, type: :model do
+  after { FeatureFlag.deactivate(:log_validation_errors) }
   describe "#update" do
     subject(:update!) { date_of_birth_form.update(params) }
 

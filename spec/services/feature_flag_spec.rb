@@ -23,9 +23,7 @@ RSpec.describe FeatureFlag do
   describe ".deactivate" do
     it "deactivates a feature" do
       # To avoid flakey tests where activation/deactivation happens at the same time
-      travel(5.minutes) do
-        described_class.activate("zendesk_integration")
-      end
+      travel(5.minutes) { described_class.activate("zendesk_integration") }
       expect { described_class.deactivate("zendesk_integration") }.to(
         change { described_class.active?("zendesk_integration") }.from(true).to(
           false

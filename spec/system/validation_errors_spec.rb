@@ -2,6 +2,8 @@
 require "rails_helper"
 
 RSpec.describe "Validation errors", type: :system do
+  after { deactivate_feature_flags }
+
   it "using the validation errors UI" do
     given_the_service_is_open
     given_there_are_a_few_validation_errors
@@ -14,6 +16,11 @@ RSpec.describe "Validation errors", type: :system do
   end
 
   private
+
+  def deactivate_feature_flags
+    FeatureFlag.deactivate(:service_open)
+    FeatureFlag.deactivate(:log_validation_errors)
+  end
 
   def given_the_service_is_open
     FeatureFlag.activate(:service_open)
