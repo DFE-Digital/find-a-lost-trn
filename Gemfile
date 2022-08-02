@@ -88,5 +88,5 @@ group :test do
   gem "shoulda-matchers", "~> 5.1"
   gem "timecop"
   gem "vcr", "~> 6.1"
-  gem "webmock", "~> 3.14"
+  gem "webmock", "~> 3.15"
 end
