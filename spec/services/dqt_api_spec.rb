@@ -96,7 +96,8 @@ RSpec.describe DqtApi do
     subject(:unlock_teacher!) do
       described_class.unlock_teacher!(teacher_account)
     end
-    let(:teacher_account) do
+    let(:uid) { "f7891223-7661-e411-8047-005056822391" }
+    let(:teacher_account_base) do
       {
         trn: "2921020",
         emailAddresses: ["anonymous@anonymousdomain.org.net.co.uk"],
@@ -104,59 +105,34 @@ RSpec.describe DqtApi do
         lastName: "Evans",
         dateOfBirth: "1990-01-01",
         nationalInsuranceNumber: "AA123456A",
-        uid: "f7891223-7661-e411-8047-005056822391"
+        uid:
       }
     end
 
     context "when teacher ID is found", vcr: true do
+      let(:teacher_account) { teacher_account_base }
       it { is_expected.to be_nil }
     end
 
     context "when teacher ID is not found", vcr: true do
-      let(:teacher_account) do
-        {
-          trn: "2921020",
-          emailAddresses: ["anonymous@anonymousdomain.org.net.co.uk"],
-          firstName: "Kevin",
-          lastName: "Evans",
-          dateOfBirth: "1990-01-01",
-          nationalInsuranceNumber: "AA123456A",
-          uid: "f6891223-7661-e431-8047-005056822391"
-        }
-      end
+      let(:uid) { "f6891223-7661-e431-8047-005056822391" }
+      let(:teacher_account) { teacher_account_base }
       it { is_expected.to be_nil }
     end
 
     context "when teacher ID is not valid", vcr: true do
-      let(:teacher_account) do
-        {
-          trn: "2921020",
-          emailAddresses: ["anonymous@anonymousdomain.org.net.co.uk"],
-          firstName: "Kevin",
-          lastName: "Evans",
-          dateOfBirth: "1990-01-01",
-          nationalInsuranceNumber: "AA123456A",
-          uid: "f689122-7661-e431-8047-00506822391"
-        }
-      end
+      let(:uid) { "a-non-matching-uid" }
+      let(:teacher_account) { teacher_account_base }
       it { is_expected.to be_nil }
     end
 
     context "when uid key is not present" do
-      let(:teacher_account) do
-        {
-          trn: "2921020",
-          emailAddresses: ["anonymous@anonymousdomain.org.net.co.uk"],
-          firstName: "Kevin",
-          lastName: "Evans",
-          dateOfBirth: "1990-01-01",
-          nationalInsuranceNumber: "AA123456A"
-        }
-      end
+      let(:teacher_account) { teacher_account_base.except(:uid) }
       it { is_expected.to be_nil }
     end
 
     context "when the API returns a timeout error" do
+      let(:teacher_account) { teacher_account_base }
       it "handles timeout error gracefully" do
         VCR.turned_off do
           allow_any_instance_of(Faraday::Connection).to receive(:put).and_raise(

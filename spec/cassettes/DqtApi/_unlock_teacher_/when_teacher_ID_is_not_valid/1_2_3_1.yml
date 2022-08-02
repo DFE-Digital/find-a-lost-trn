@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: put
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/unlock-teacher/f689122-7661-e431-8047-00506822391
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/unlock-teacher/a-non-matching-uid
       body:
         encoding: UTF-8
         string: "{}"
@@ -29,7 +29,7 @@ http_interactions:
         Connection:
           - keep-alive
         Date:
-          - Tue, 02 Aug 2022 04:13:09 GMT
+          - Tue, 02 Aug 2022 13:04:36 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -41,24 +41,24 @@ http_interactions:
         X-Rate-Limit-Remaining:
           - "299"
         X-Rate-Limit-Reset:
-          - "2022-08-02T04:14:00.0000000Z"
+          - "2022-08-02T13:05:00.0000000Z"
         X-Vcap-Request-Id:
-          - b31f09ec-e12d-4d6d-7fcd-920eff73cd0b
+          - b5fe401c-9700-4914-6491-52c2db8c1d7e
         X-Xss-Protection:
           - "0"
         X-Cache:
           - Error from cloudfront
         Via:
-          - 1.1 9fdb94d31cea383ee9cfa1b9714dc610.cloudfront.net (CloudFront)
+          - 1.1 ca8dbf5658b41cf179a2ae3717fdfcca.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - ORD52-C1
+          - LHR61-P2
         X-Amz-Cf-Id:
-          - seSH5t8qS2BeXwe2NhyrD-tVUzifjQnIG04t6hBLn9JneFd2VSNEgg==
+          - Drz2H4g5QnTIXEGhl0HD7Y7qiKfSG6YClr__uInAQMavflfDHWHHHg==
       body:
         encoding: UTF-8
         string:
           '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One
-          or more validation errors occurred.","status":400,"traceId":"00-141dbd09ab5424ba3e8083f012efde3c-6e8952cbd3db40f2-00","errors":{"teacherId":["The
-          value ''f689122-7661-e431-8047-00506822391'' is not valid for TeacherId."]}}'
-    recorded_at: Tue, 02 Aug 2022 04:13:09 GMT
+          or more validation errors occurred.","status":400,"traceId":"00-bff750de823a32965d090f3effdc6207-711e4f3fc2873960-00","errors":{"teacherId":["The
+          value ''a-non-matching-uid'' is not valid for TeacherId."]}}'
+    recorded_at: Tue, 02 Aug 2022 13:04:36 GMT
 recorded_with: VCR 6.1.0
