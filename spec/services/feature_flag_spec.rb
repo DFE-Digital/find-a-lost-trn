@@ -23,7 +23,7 @@ RSpec.describe FeatureFlag do
   describe ".deactivate" do
     it "deactivates a feature" do
       # To avoid flakey tests where activation/deactivation happens at the same time
-      Timecop.travel(5.minutes.ago) do
+      travel(5.minutes) do
         described_class.activate("zendesk_integration")
       end
       expect { described_class.deactivate("zendesk_integration") }.to(
