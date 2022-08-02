@@ -109,21 +109,19 @@ RSpec.describe DqtApi do
         uid:
       }
     end
+    let(:teacher_account) { teacher_account_base }
 
     context "when teacher ID is found", vcr: true do
-      let(:teacher_account) { teacher_account_base }
       it { is_expected.to be_nil }
     end
 
     context "when teacher ID is not found", vcr: true do
       let(:uid) { "f6891223-7661-e431-8047-005056822391" }
-      let(:teacher_account) { teacher_account_base }
       it { is_expected.to be_nil }
     end
 
     context "when teacher ID is not valid", vcr: true do
       let(:uid) { "a-non-matching-uid" }
-      let(:teacher_account) { teacher_account_base }
       it { is_expected.to be_nil }
     end
 
@@ -133,7 +131,6 @@ RSpec.describe DqtApi do
     end
 
     context "when the API returns a timeout error" do
-      let(:teacher_account) { teacher_account_base }
       it "handles timeout error gracefully" do
         VCR.turned_off do
           allow_any_instance_of(Faraday::Connection).to receive(:put).and_raise(
