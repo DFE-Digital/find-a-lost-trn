@@ -3,7 +3,7 @@ class KnowTrnForm
   include ActiveModel::Model
   include LogErrors
 
-  attr_accessor :know_trn
+  attr_accessor :trn_request, :know_trn, :trn
 
   validates :know_trn, inclusion: { in: %w[true false] }
 
@@ -11,11 +11,13 @@ class KnowTrnForm
     ActiveModel::Type::Boolean.new.cast(know_trn)
   end
 
-  def trn_request
-    TrnRequest.new
-  end
+  def save
+    if invalid?
+      log_errors
+      return false
+    end
 
-  def valid?
-    super.tap { |result| log_errors unless result }
+    trn_request.trn = trn
+    trn_request.save!
   end
 end
