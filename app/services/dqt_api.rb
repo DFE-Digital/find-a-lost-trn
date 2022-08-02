@@ -27,7 +27,11 @@ class DqtApi
 
     raise NoResults if results.size.zero?
 
-    results.first
+    teacher_account = results.first
+
+    DqtApi.unlock_teacher!(teacher_account)
+
+    teacher_account
   end
 
   def self.find_teacher!(date_of_birth:, trn:)
