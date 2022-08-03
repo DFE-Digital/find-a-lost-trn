@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_02_124733) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_03_110444) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -69,10 +69,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_124733) do
     t.boolean "itt_provider_enrolled"
     t.string "itt_provider_name"
     t.boolean "has_ni_number"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "previous_first_name"
-    t.string "previous_last_name"
+    t.string "first_name", limit: 510
+    t.string "last_name", limit: 510
+    t.string "previous_first_name", limit: 510
+    t.string "previous_last_name", limit: 510
     t.string "trn"
     t.integer "zendesk_ticket_id"
     t.boolean "awarded_qts"
