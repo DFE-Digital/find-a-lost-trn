@@ -71,7 +71,7 @@ group :development do
   gem "rubocop-govuk", require: false
   gem "solargraph", require: false
   gem "solargraph-rails", require: false
-  gem "syntax_tree", "~> 3.2", require: false
+  gem "syntax_tree", "~> 3.3", require: false
   gem "syntax_tree-haml", "~> 1.3", require: false
   gem "syntax_tree-rbs", "~> 0.5.0", require: false
 
@@ -87,5 +87,5 @@ group :test do
   gem "rspec-rails"
   gem "shoulda-matchers", "~> 5.1"
   gem "vcr", "~> 6.1"
-  gem "webmock", "~> 3.15"
+  gem "webmock", "~> 3.16"
 end
