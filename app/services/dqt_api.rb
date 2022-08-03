@@ -53,14 +53,11 @@ class DqtApi
       begin
         response =
           new.client.put(
-            "/v2/unlock-teacher/#{teacher_account.fetch(:uid)}",
+            "/v2/unlock-teacher/#{teacher_account.fetch("uid")}",
             {}
           )
         raise ApiError, response.reason_phrase unless response.success?
-      rescue KeyError,
-             ApiError,
-             Faraday::ConnectionFailed,
-             Faraday::TimeoutError => e
+      rescue ApiError, Faraday::ConnectionFailed, Faraday::TimeoutError => e
         Sentry.capture_exception(e)
       end
     end

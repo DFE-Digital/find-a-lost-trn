@@ -100,13 +100,13 @@ RSpec.describe DqtApi do
     let(:uid) { "f7891223-7661-e411-8047-005056822391" }
     let(:teacher_account_base) do
       {
-        trn: "2921020",
-        emailAddresses: ["anonymous@anonymousdomain.org.net.co.uk"],
-        firstName: "Kevin",
-        lastName: "Evans",
-        dateOfBirth: "1990-01-01",
-        nationalInsuranceNumber: "AA123456A",
-        uid:
+        "trn" => "2921020",
+        "emailAddresses" => ["anonymous@anonymousdomain.org.net.co.uk"],
+        "firstName" => "Kevin",
+        "lastName" => "Evans",
+        "dateOfBirth" => "1990-01-01",
+        "nationalInsuranceNumber" => "AA123456A",
+        "uid" => uid
       }
     end
     let(:teacher_account) { teacher_account_base }
@@ -122,11 +122,6 @@ RSpec.describe DqtApi do
 
     context "when teacher ID is not valid", vcr: true do
       let(:uid) { "a-non-matching-uid" }
-      it { is_expected.to be_nil }
-    end
-
-    context "when uid key is not present" do
-      let(:teacher_account) { teacher_account_base.except(:uid) }
       it { is_expected.to be_nil }
     end
 
