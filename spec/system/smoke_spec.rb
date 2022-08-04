@@ -4,6 +4,7 @@ require "capybara/rspec"
 require "capybara/cuprite"
 
 Capybara.javascript_driver = :cuprite
+Capybara.always_include_port = false
 
 RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
   it "works as expected" do
