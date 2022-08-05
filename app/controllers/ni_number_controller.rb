@@ -14,16 +14,14 @@ class NiNumberController < ApplicationController
       session[:ni_number_not_known] = true
       next_question
     elsif @ni_number.update(ni_number_params)
-      unless FeatureFlag.active?(:match_on_email)
-        begin
-          find_trn_using_api unless @trn_request.trn
-        rescue DqtApi::ApiError,
-               Faraday::ConnectionFailed,
-               Faraday::TimeoutError,
-               DqtApi::TooManyResults,
-               DqtApi::NoResults
-          # Do nothing.
-        end
+      begin
+        find_trn_using_api unless @trn_request.trn
+      rescue DqtApi::ApiError,
+             Faraday::ConnectionFailed,
+             Faraday::TimeoutError,
+             DqtApi::TooManyResults,
+             DqtApi::NoResults
+        # Do nothing.
       end
       next_question
     else
