@@ -1,0 +1,137 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+    types:
+      - labeled
+      - synchronize
+      - reopened
+      - opened
+      - converted_to_draft
+
+env:
+  CONTAINER_REGISTRY: ghcr.io
+
+jobs:
+  docker:
+    name: Docker build and push
+    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    outputs:
+      docker_image: ${{ steps.dockerimage.outputs.docker_image_tag }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/actions/build-docker
+        id: dockerimage
+        with:
+          github_username: ${{ github.actor }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy_review:
+    name: Deploy to review environment
+    concurrency: deploy_review_${{ github.event.pull_request.number }}
+    needs: [docker]
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'deploy')
+    environment:
+      name: review
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/actions/deploy-environment
+        id: deploy
+        with:
+          environment_name: review
+          docker_image: ${{ needs.docker.docker_image }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          terraform_vars: workspace_variables/review.tfvars.json
+          pr_id: ${{ github.event.pull_request.number }}
+
+      - name: Post sticky pull request comment
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            Review app deployed to ${{ steps.deploy.outputs.environment_url }}
+
+      - uses: ./.github/workflows/actions/smoke-test
+        id: smoke-test
+        with:
+          environment: review
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+  deploy_nonprod:
+    name: Deploy to ${{ matrix.environment }} environment
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    concurrency: deploy_${{ matrix.environment }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        environment: [dev, test, preprod]
+    environment:
+      name: ${{ matrix.environment }}
+      url: ${{ steps.deploy.outputs.environment_url }}
+    outputs:
+      environment_url: ${{ steps.deploy.outputs.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Docker image tag
+        id: image
+        run: |
+          echo ::set-output name=tag::$CONTAINER_REGISTRY/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]'):$GITHUB_SHA
+        env:
+          CONTAINER_REGISTRY: ${{ env.CONTAINER_REGISTRY }}
+        shell: bash
+
+      - uses: ./.github/workflows/actions/deploy-environment
+        id: deploy
+        with:
+          environment_name: ${{ matrix.environment }}
+          docker_image: ${{ steps.image.outputs.tag }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          terraform_vars: workspace_variables/${{ matrix.environment }}.tfvars.json
+      - uses: ./.github/workflows/actions/smoke-test
+        id: smoke-test
+        with:
+          environment: ${{ matrix.environment }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+  deploy_production:
+    name: Deploy to production environment
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.environment_url }}
+    concurrency: deploy_production
+
+    outputs:
+      environment_url: ${{ steps.deploy.outputs.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Docker image tag
+        id: image
+        run: |
+          echo ::set-output name=tag::$CONTAINER_REGISTRY/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]'):$GITHUB_SHA
+        env:
+          CONTAINER_REGISTRY: ${{ env.CONTAINER_REGISTRY }}
+        shell: bash
+
+      - uses: ./.github/workflows/actions/deploy-environment
+        id: deploy
+        with:
+          environment_name: production
+          docker_image: ${{ steps.image.outputs.tag }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          terraform_vars: workspace_variables/production.tfvars.json
