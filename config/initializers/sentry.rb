@@ -5,9 +5,9 @@ Sentry.init do |config|
   env_var_filters =
     Regexp.union(
       ENV
-        .select do |k, _v|
+        .select { |k, _v|
           filter_parameters.any? { |parameter| k.downcase.include?(parameter) }
-        end
+        }
         .values
     )
   filter =
