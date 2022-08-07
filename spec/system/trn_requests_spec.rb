@@ -909,12 +909,12 @@ RSpec.describe "TRN requests", type: :system do
   def when_i_enter_a_new_name
     fill_in "First name", with: "Kevin"
     fill_in "Last name", with: "Smith"
-    choose "No, I've not changed my name", visible: false
+    choose "No, I’ve not changed my name", visible: false
     when_i_press_continue
   end
 
   def when_i_enter_a_previous_name
-    choose "Yes, I've changed my name", visible: false
+    choose "Yes, I’ve changed my name", visible: false
     fill_in "Previous first name (optional)", with: "Kev"
     fill_in "Previous last name (optional)", with: "Jones"
     when_i_press_continue
@@ -928,7 +928,7 @@ RSpec.describe "TRN requests", type: :system do
   def when_i_fill_in_the_name_form
     fill_in "First name", with: "Kevin"
     fill_in "Last name", with: "E"
-    choose "No, I've not changed my name", visible: false
+    choose "No, I’ve not changed my name", visible: false
     when_i_press_continue
   end
 

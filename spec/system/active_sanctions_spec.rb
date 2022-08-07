@@ -69,7 +69,7 @@ RSpec.describe "TRN requests", type: :system do
   def when_i_fill_in_the_name_form
     fill_in "First name", with: "Audrey"
     fill_in "Last name", with: "Coady"
-    choose "No, I've not changed my name", visible: false
+    choose "No, I’ve not changed my name", visible: false
     when_i_press_continue
   end
 
