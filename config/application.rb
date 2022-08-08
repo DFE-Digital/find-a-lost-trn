@@ -51,5 +51,7 @@ module FindALostTrn
                   "https://github.com/DFE-Digital/find-a-lost-trn/#notify"
         end
     }
+
+    config.active_record.encryption.support_unencrypted_data = true
   end
 end

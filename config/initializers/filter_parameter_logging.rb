@@ -13,4 +13,10 @@ Rails.application.config.filter_parameters += %i[
   certificate
   otp
   ssn
+  _api
+  sensitive
+  usern
+  _dsn
+  _services
+  _url
 ]
