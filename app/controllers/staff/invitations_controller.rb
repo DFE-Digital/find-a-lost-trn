@@ -1,6 +1,8 @@
 class Staff::InvitationsController < Devise::InvitationsController
   layout "two_thirds"
 
+  protect_from_forgery prepend: true
+
   # GET /resource/invitation/new
   # def new
   #   super
