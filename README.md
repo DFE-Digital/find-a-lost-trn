@@ -130,22 +130,7 @@ Due to the `Service open` feature flag which is set to `false` by default across
 
 ### Notify
 
-If you want to test and simulate sending emails locally, you need to be added
-to the TRA digital Notify account. Then, go to
-`API integration > API keys > Create an API key` and create a new key, such as
-`Myname - local test` and set the type to `Test - pretends to send messages`.
-
-Add this key to your local development secrets:
-
-```bash
-$ vim .env.development.local
-GOVUK_NOTIFY_API_KEY=theo__local_test-abcefgh-1234-abcdefgh
-```
-
-When you send an email locally, the email should appear in the message log in
-the Notify dashboard in the `API integration` section.
-
-_Note:_ You can set `GOVUK_NOTIFY_API_KEY=fake-key` when running locally if you don't need to use Notify.
+Notify emails are printed in `tail -f log/development.log` in local dev.
 
 ### Docker
 
