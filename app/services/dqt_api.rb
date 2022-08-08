@@ -86,6 +86,11 @@ class DqtApi
       ) do |faraday|
         faraday.request :authorization, "Bearer", ENV.fetch("DQT_API_KEY", nil)
         faraday.request :json
+        faraday.request :retry,
+                        max: 10,
+                        interval: 0.05,
+                        interval_randomness: 0.5,
+                        backoff_factor: 2
         faraday.response :json
         faraday.response :logger,
                          nil,
