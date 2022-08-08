@@ -9,21 +9,24 @@
 #  checked_at            :datetime
 #  date_of_birth         :date
 #  email                 :string
-#  first_name            :string
+#  first_name            :string(510)
 #  has_active_sanctions  :boolean
 #  has_ni_number         :boolean
 #  itt_provider_enrolled :boolean
 #  itt_provider_name     :string
-#  last_name             :string
+#  last_name             :string(510)
+#  name_changed          :boolean
 #  ni_number             :string
-#  previous_first_name   :string
-#  previous_last_name    :string
+#  previous_first_name   :string(510)
+#  previous_last_name    :string(510)
 #  trn                   :string
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  zendesk_ticket_id     :integer
 #
 class TrnRequest < ApplicationRecord
+  encrypts :first_name, :last_name, :previous_first_name, :previous_last_name
+
   has_many :trn_responses, dependent: :destroy
 
   scope :with_zendesk_ticket, -> { where.not(zendesk_ticket_id: nil) }

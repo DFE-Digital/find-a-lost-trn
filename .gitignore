@@ -60,3 +60,5 @@ dump.rdb
 
 # Infra scripts
 bin/fetch_config.rb
+
+/config/credentials/production.key
