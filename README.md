@@ -34,12 +34,13 @@ Gotchas:
 You can use this user to test that matching works against the preprod
 `qualified-teachers-api` (for example, on `find-a-lost-trn-dev`):
 
-| Field                     | Value       |
-| ------------------------- | ----------- |
-| First name                | `Kevin`     |
-| Last name                 | `E`         |
-| Date of birth             | `1 1 1990`  |
-| National insurance number | `AA123456A` |
+| Field                     | Value                 |
+| ------------------------- | --------------------- |
+| Email                     | `kevin.e@example.com` |
+| First name                | `Kevin`               |
+| Last name                 | `E`                   |
+| Date of birth             | `1 1 1990`            |
+| National insurance number | `AA123456A`           |
 
 ## Dependencies
 
