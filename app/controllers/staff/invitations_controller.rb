@@ -35,4 +35,8 @@ class Staff::InvitationsController < Devise::InvitationsController
       super
     end
   end
+
+  def after_accept_path_for(resource)
+    resource.is_a?(Staff) ? support_interface_path : super
+  end
 end
