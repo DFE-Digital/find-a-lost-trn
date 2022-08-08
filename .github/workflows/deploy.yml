@@ -1,4 +1,4 @@
-name: Deploy
+name: Manual deployment
 on:
   workflow_dispatch:
     inputs:
