@@ -16,5 +16,7 @@ Rails.application.config.filter_parameters += %i[
   _api
   sensitive
   usern
-  dsn
+  _dsn
+  _services
+  _url
 ]
