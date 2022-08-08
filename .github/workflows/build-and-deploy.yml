@@ -112,6 +112,7 @@ jobs:
       name: production
       url: ${{ steps.deploy.outputs.environment_url }}
     concurrency: deploy_production
+    needs: [deploy_nonprod]
 
     outputs:
       environment_url: ${{ steps.deploy.outputs.environment_url }}
