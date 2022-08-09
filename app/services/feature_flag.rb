@@ -55,11 +55,6 @@ class FeatureFlag
       "Theodor Vararu"
     ],
     [
-      :match_on_email,
-      "Matching is done at the date of birth step instead of the NI step",
-      "Ransom Voke Anighoro"
-    ],
-    [
       :unlock_teachers_self_service_portal_account,
       "Unlock a teacher's self service portal account if their TRN is found",
       "Ransom Voke Anighoro"

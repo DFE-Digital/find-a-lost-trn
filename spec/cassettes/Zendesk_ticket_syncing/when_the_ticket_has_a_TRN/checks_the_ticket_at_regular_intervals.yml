@@ -2,13 +2,125 @@
 http_interactions:
   - request:
       method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Not&lastName=Valid
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.1
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Mon, 15 Aug 2022 12:52:45 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-08-15T12:53:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 32a5e117-e4f8-4566-77d9-e95431416b70
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 a048d6da4903d2784c23b413b9b19b16.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-C1
+        X-Amz-Cf-Id:
+          - vjqFscDjY-aoW2OYJg6ekXcIufW3wnJxTRNIMRnv3nBsLqbnLUlZfw==
+      body:
+        encoding: UTF-8
+        string: '{"results":[]}'
+    recorded_at: Mon, 15 Aug 2022 12:52:45 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Not&lastName=Valid
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.1
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Mon, 15 Aug 2022 12:52:46 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "298"
+        X-Rate-Limit-Reset:
+          - "2022-08-15T12:53:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 5b6a68aa-42ed-47c7-7ce8-b3c8e645bb0c
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 04dc9ebdebde1811f62e65be6d89b8c8.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-C1
+        X-Amz-Cf-Id:
+          - gShUSDs81OzL_oZUTrv49ABIGTQ6flypCW4hIFucAbwiynQUJiayeA==
+      body:
+        encoding: UTF-8
+        string: '{"results":[{},{}]}'
+    recorded_at: Mon, 15 Aug 2022 12:52:46 GMT
+  - request:
+      method: get
       uri: https://preprod-teacher-qualifications-api.education.gov.uk/v1/teachers/2921020?birthdate=1990-01-01
       body:
         encoding: US-ASCII
         string: ""
       headers:
         User-Agent:
-          - Faraday v1.10.0
+          - Faraday v1.10.1
         Authorization:
           - Bearer <BEARER_TOKEN_REDACTED>
         Accept-Encoding:
@@ -17,15 +129,17 @@ http_interactions:
           - "*/*"
     response:
       status:
-        code: 401
-        message: Unauthorized
+        code: 200
+        message: OK
       headers:
-        Content-Length:
-          - "0"
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
         Connection:
           - keep-alive
         Date:
-          - Tue, 28 Jun 2022 09:55:35 GMT
+          - Mon, 15 Aug 2022 12:53:36 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -35,77 +149,29 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - "299"
+          - "297"
         X-Rate-Limit-Reset:
-          - "2022-06-28T09:56:00.0000000Z"
+          - "2022-08-15T12:54:00.0000000Z"
         X-Vcap-Request-Id:
-          - 15a29270-290c-45cb-62f4-177b86624760
+          - fecb2d1e-16ac-41a3-4025-24174f3558a4
         X-Xss-Protection:
           - "0"
         X-Cache:
-          - Error from cloudfront
+          - Miss from cloudfront
         Via:
-          - 1.1 a050a32e30453f07ede7fc20c9326306.cloudfront.net (CloudFront)
+          - 1.1 c334b6410f9d489eb2a951a4371f3d18.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - LHR62-C5
+          - LHR61-C1
         X-Amz-Cf-Id:
-          - r-k0UrtgLyjUd-K8ODYF2iWJ1Yci4cCnJXdfC00esC_8PYM8i7SEDQ==
+          - 8C0IpUyxfU9zfeoaDSoEic8OxjmFZMXjm2Gvo2rATbIxsZ-TxKMG9A==
       body:
         encoding: UTF-8
-        string: ""
-    recorded_at: Thu, 30 Jun 2022 09:55:34 GMT
-  - request:
-      method: get
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&firstName=Not&lastName=Valid
-      body:
-        encoding: US-ASCII
-        string: ""
-      headers:
-        User-Agent:
-          - Faraday v1.10.0
-        Authorization:
-          - Bearer <BEARER_TOKEN_REDACTED>
-        Accept-Encoding:
-          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-        Accept:
-          - "*/*"
-    response:
-      status:
-        code: 401
-        message: Unauthorized
-      headers:
-        Content-Length:
-          - "0"
-        Connection:
-          - keep-alive
-        Date:
-          - Tue, 09 Aug 2022 13:01:29 GMT
-        Strict-Transport-Security:
-          - max-age=31536000; includeSubDomains; preload
-        X-Content-Type-Options:
-          - nosniff
-        X-Frame-Options:
-          - deny
-        X-Rate-Limit-Limit:
-          - 60s
-        X-Rate-Limit-Remaining:
-          - "299"
-        X-Rate-Limit-Reset:
-          - "2022-08-09T13:02:00.0000000Z"
-        X-Vcap-Request-Id:
-          - ead07281-d2b8-4331-771c-fcb91aec9593
-        X-Xss-Protection:
-          - "0"
-        X-Cache:
-          - Error from cloudfront
-        Via:
-          - 1.1 37f5076aed3c638f4365df8e8944f880.cloudfront.net (CloudFront)
-        X-Amz-Cf-Pop:
-          - LHR50-C1
-        X-Amz-Cf-Id:
-          - VjtXoiZwICU6e-fJSrQ3X1EIm6lOD4c_1PpR3QRSKfyKXOwL3_Tp4A==
-      body:
-        encoding: UTF-8
-        string: ""
-    recorded_at: Tue, 09 Aug 2022 13:01:29 GMT
+        string:
+          '{"trn":"2921020","ni_number":"AA123456A","qualified_teacher_status":{"name":"Trainee
+          Teacher:DMS","state":"Active","state_name":"Active","qts_date":null},"induction":null,"initial_teacher_training":{"state":"Active","state_code":"Active","programme_start_date":"2020-04-01T00:00:00Z","programme_end_date":"2020-10-10T00:00:00Z","programme_type":"Graduate
+          Teacher Programme","result":"In Training","subject1":"computer science","subject2":null,"subject3":null,"qualification":null,"subject1_code":"100366","subject2_code":null,"subject3_code":null},"qualifications":[{"name":"Higher
+          Education","date_awarded":"2021-05-03T00:00:00Z","he_qualification_name":"First
+          Degree","he_subject1":"computer science","he_subject2":null,"he_subject3":null,"he_subject1_code":"100366","he_subject2_code":null,"he_subject3_code":null,"class":"FirstClassHonours"}],"name":"Kevin
+          E","dob":"1990-01-01T00:00:00","active_alert":false,"state":"Active","state_name":"Active"}'
+    recorded_at: Wed, 17 Aug 2022 12:53:36 GMT
 recorded_with: VCR 6.1.0

@@ -54,4 +54,116 @@ http_interactions:
         encoding: UTF-8
         string: ""
     recorded_at: Tue, 09 Aug 2022 12:07:54 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Kevin&lastName=E
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.1
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Mon, 15 Aug 2022 09:49:48 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "288"
+        X-Rate-Limit-Reset:
+          - "2022-08-15T09:50:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 5a2201f0-ee72-444c-561e-e6dc2cd65b63
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 3bc52f7e0135d4a9f867e6a9ee5796b0.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR50-C1
+        X-Amz-Cf-Id:
+          - xo0a1C59Nv0vATZ0MRUpiwzEGNXnqxffPG4rfLBd49z-Bygcb5Gzmw==
+      body:
+        encoding: UTF-8
+        string: '{"results":[]}'
+    recorded_at: Mon, 15 Aug 2022 09:49:48 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Kevin&ittProviderName=Test%20ITT%20Provider&lastName=E
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.1
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 400
+        message: Bad Request
+      headers:
+        Content-Type:
+          - application/problem+json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Mon, 15 Aug 2022 09:49:50 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "287"
+        X-Rate-Limit-Reset:
+          - "2022-08-15T09:50:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 451b6c85-2298-450a-675c-9c4e5ade9e3e
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Error from cloudfront
+        Via:
+          - 1.1 67cb3947592025e38a5582b2e33b8c2e.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR50-C1
+        X-Amz-Cf-Id:
+          - wdhoj90E7TXZnwty3o2jZ4IdbI06WpmnymUcFnGCvrlEbckdgRVxbA==
+      body:
+        encoding: UTF-8
+        string: '{"title":"Organisation not found","status":400,"errorCode":10008}'
+    recorded_at: Mon, 15 Aug 2022 09:49:50 GMT
 recorded_with: VCR 6.1.0

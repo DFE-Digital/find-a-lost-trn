@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=kevin&nationalInsuranceNumber=1000000
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Kevin&lastName=E
       body:
         encoding: US-ASCII
         string: ""
@@ -27,7 +27,7 @@ http_interactions:
         Connection:
           - keep-alive
         Date:
-          - Mon, 15 Aug 2022 12:57:41 GMT
+          - Mon, 15 Aug 2022 10:48:41 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -39,21 +39,21 @@ http_interactions:
         X-Rate-Limit-Remaining:
           - "299"
         X-Rate-Limit-Reset:
-          - "2022-08-15T12:58:00.0000000Z"
+          - "2022-08-15T10:49:00.0000000Z"
         X-Vcap-Request-Id:
-          - 3dbcdb9e-137d-4bd5-657f-4b148996421e
+          - 53e1d1d8-af73-44e4-4ee9-d674ebd5e4fa
         X-Xss-Protection:
           - "0"
         X-Cache:
           - Miss from cloudfront
         Via:
-          - 1.1 c334b6410f9d489eb2a951a4371f3d18.cloudfront.net (CloudFront)
+          - 1.1 774a6d3757afff80abe764a68fbbe544.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - LHR61-C1
+          - LHR50-C1
         X-Amz-Cf-Id:
-          - OrWnVp3LU3N8NbVQI3_spjS9TsbNFk97uJF_gEOtNqu4vFfLyY9f9g==
+          - uQLGhfaYBB_H8l-L5UJCJkV-9n66BQ122XaFJhVGxKkK_v1zTAxJ7Q==
       body:
         encoding: UTF-8
-        string: '{"results":[{"trn":"2921020","emailAddresses":["anonymous@anonymousdomain.org.net.co.uk"],"firstName":"Kevin","lastName":"Evans","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","uid":"f7891223-7661-e411-8047-005056822391"}]}'
-    recorded_at: Mon, 15 Aug 2022 12:57:41 GMT
+        string: '{"results":[]}'
+    recorded_at: Mon, 15 Aug 2022 10:48:41 GMT
 recorded_with: VCR 6.1.0

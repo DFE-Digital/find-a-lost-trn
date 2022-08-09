@@ -2,13 +2,13 @@
 http_interactions:
   - request:
       method: get
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&firstName=John&lastName=Smith
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Kevin&lastName=E
       body:
         encoding: US-ASCII
         string: ""
       headers:
         User-Agent:
-          - Faraday v1.10.0
+          - Faraday v1.10.1
         Authorization:
           - Bearer <BEARER_TOKEN_REDACTED>
         Accept-Encoding:
@@ -17,15 +17,17 @@ http_interactions:
           - "*/*"
     response:
       status:
-        code: 401
-        message: Unauthorized
+        code: 200
+        message: OK
       headers:
-        Content-Length:
-          - "0"
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
         Connection:
           - keep-alive
         Date:
-          - Tue, 09 Aug 2022 12:39:33 GMT
+          - Mon, 15 Aug 2022 09:49:58 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -35,23 +37,79 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - "299"
+          - "285"
         X-Rate-Limit-Reset:
-          - "2022-08-09T12:40:00.0000000Z"
+          - "2022-08-15T09:50:00.0000000Z"
         X-Vcap-Request-Id:
-          - a1fb1eb1-f327-40dc-5d5a-27382ea1a8cc
+          - c3ee88df-e1f5-4729-40a3-f0173e47158e
         X-Xss-Protection:
           - "0"
         X-Cache:
-          - Error from cloudfront
+          - Miss from cloudfront
         Via:
-          - 1.1 740280b5295c50b47179471832b5a578.cloudfront.net (CloudFront)
+          - 1.1 089ee28df029aa2f4878a528c124aaf8.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
           - LHR50-C1
         X-Amz-Cf-Id:
-          - ZH71DMzEbRLJarw1lsvbtzKPA9oyDH4gXPQWrv8U86cJBmAYPtQOtg==
+          - JmWgfVmnw3J4wM2u5_8FMfQQdXC0lU6830V4t27A457xmmoztLpsJw==
       body:
         encoding: UTF-8
+        string: '{"results":[]}'
+    recorded_at: Mon, 15 Aug 2022 09:49:58 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=John&lastName=Smith
+      body:
+        encoding: US-ASCII
         string: ""
-    recorded_at: Tue, 09 Aug 2022 12:39:33 GMT
+      headers:
+        User-Agent:
+          - Faraday v1.10.1
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Mon, 15 Aug 2022 09:49:59 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "284"
+        X-Rate-Limit-Reset:
+          - "2022-08-15T09:50:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 5311415b-a9c2-4749-744c-001d3435802c
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 774a6d3757afff80abe764a68fbbe544.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR50-C1
+        X-Amz-Cf-Id:
+          - N_NX8smGgh29pG_mHdy4BHcmrYi6ZHgOC_jd-bL8YvHop07qqXq7Ug==
+      body:
+        encoding: UTF-8
+        string: '{"results":[{"trn":"2921020","emailAddresses":["kevin.e@example.com"],"firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","uid":"1bf8803f-3924-417c-9603-1ed6489dae0d","hasActiveSanctions":false},{"trn":"2921020","emailAddresses":["kevin.e@example.com"],"firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","uid":"1bf8803f-3924-417c-9603-1ed6489dae0d","hasActiveSanctions":false}]}'
+    recorded_at: Mon, 15 Aug 2022 09:49:59 GMT
 recorded_with: VCR 6.1.0

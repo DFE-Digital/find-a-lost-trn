@@ -2,13 +2,13 @@
 http_interactions:
   - request:
       method: get
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&firstName=Not&lastName=Valid
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Not&lastName=Valid
       body:
         encoding: US-ASCII
         string: ""
       headers:
         User-Agent:
-          - Faraday v1.10.0
+          - Faraday v1.10.1
         Authorization:
           - Bearer <BEARER_TOKEN_REDACTED>
         Accept-Encoding:
@@ -17,15 +17,17 @@ http_interactions:
           - "*/*"
     response:
       status:
-        code: 401
-        message: Unauthorized
+        code: 200
+        message: OK
       headers:
-        Content-Length:
-          - "0"
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
         Connection:
           - keep-alive
         Date:
-          - Tue, 09 Aug 2022 12:56:23 GMT
+          - Mon, 15 Aug 2022 12:49:57 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -37,21 +39,77 @@ http_interactions:
         X-Rate-Limit-Remaining:
           - "299"
         X-Rate-Limit-Reset:
-          - "2022-08-09T12:57:00.0000000Z"
+          - "2022-08-15T12:50:00.0000000Z"
         X-Vcap-Request-Id:
-          - caead313-a593-4b0b-4286-2be2fd6f0862
+          - b5d06311-b43c-4b2e-5169-313b5366ba43
         X-Xss-Protection:
           - "0"
         X-Cache:
-          - Error from cloudfront
+          - Miss from cloudfront
         Via:
-          - 1.1 740280b5295c50b47179471832b5a578.cloudfront.net (CloudFront)
+          - 1.1 024e0eb7c8dbc0f1008d8bc14f1acebe.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - LHR50-C1
+          - LHR61-C1
         X-Amz-Cf-Id:
-          - n6rYsquEAOEwGYr5aOQr-K82SD2-X7eQQony6X22CLgRBc-05PgeNg==
+          - 7anrwSevsIGpj_kdEoO7YlaGKzG5ZxNNuAwe8LrTadPI92NPBW64lA==
       body:
         encoding: UTF-8
+        string: '{"results":[]}'
+    recorded_at: Mon, 15 Aug 2022 12:49:57 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Not&lastName=Valid
+      body:
+        encoding: US-ASCII
         string: ""
-    recorded_at: Tue, 09 Aug 2022 12:56:22 GMT
+      headers:
+        User-Agent:
+          - Faraday v1.10.1
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Mon, 15 Aug 2022 12:51:13 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-08-15T12:52:00.0000000Z"
+        X-Vcap-Request-Id:
+          - f36a17a2-a197-45d1-5ea1-0367cda27328
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 f6486ebc6b1047af524348c38ba450e4.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-C1
+        X-Amz-Cf-Id:
+          - ApzN8fbtDzEqa9ws0Z-RYZGAIfbnQiUi9lqSZhBdUkM_uukglpyeVQ==
+      body:
+        encoding: UTF-8
+        string: '{"results":[{},{}]}'
+    recorded_at: Mon, 15 Aug 2022 12:51:13 GMT
 recorded_with: VCR 6.1.0
