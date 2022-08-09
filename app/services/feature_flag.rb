@@ -34,7 +34,6 @@ class FeatureFlag
       "Richard da Silva"
     ],
     [:dqt_api_always_timeout, "Always time-out the DQT API", "Felix Clack"],
-    [:log_validation_errors, "Log validation errors", "Felix Clack"],
     [
       :processing_delays,
       "Show users banners and interstitials warning them of increased waiting times",
