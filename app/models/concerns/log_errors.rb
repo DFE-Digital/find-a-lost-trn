@@ -4,8 +4,6 @@ module LogErrors
 
   included do
     def log_errors
-      return unless FeatureFlag.active?(:log_validation_errors)
-
       error_messages =
         errors.messages.to_h do |field, messages|
           [field, { messages:, value: public_send(field) }]

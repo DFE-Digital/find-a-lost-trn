@@ -2,7 +2,6 @@
 require "rails_helper"
 
 RSpec.describe DateOfBirthForm, type: :model do
-  after { FeatureFlag.deactivate(:log_validation_errors) }
   describe "#update" do
     subject(:update!) { date_of_birth_form.update(params) }
 
@@ -68,7 +67,6 @@ RSpec.describe DateOfBirthForm, type: :model do
       end
 
       it "logs a validation error" do
-        FeatureFlag.activate(:log_validation_errors)
         expect { update! }.to change(ValidationError, :count).by(1)
       end
     end
@@ -92,7 +90,6 @@ RSpec.describe DateOfBirthForm, type: :model do
       end
 
       it "logs a validation error" do
-        FeatureFlag.activate(:log_validation_errors)
         expect { update! }.to change(ValidationError, :count).by(1)
       end
     end
@@ -116,7 +113,6 @@ RSpec.describe DateOfBirthForm, type: :model do
       end
 
       it "logs a validation error" do
-        FeatureFlag.activate(:log_validation_errors)
         expect { update! }.to change(ValidationError, :count).by(1)
       end
     end
@@ -140,7 +136,6 @@ RSpec.describe DateOfBirthForm, type: :model do
       end
 
       it "logs a validation error" do
-        FeatureFlag.activate(:log_validation_errors)
         expect { update! }.to change(ValidationError, :count).by(1)
       end
     end
@@ -164,7 +159,6 @@ RSpec.describe DateOfBirthForm, type: :model do
       end
 
       it "logs a validation error" do
-        FeatureFlag.activate(:log_validation_errors)
         expect { update! }.to change(ValidationError, :count).by(1)
       end
     end
@@ -188,7 +182,6 @@ RSpec.describe DateOfBirthForm, type: :model do
       end
 
       it "logs a validation error" do
-        FeatureFlag.activate(:log_validation_errors)
         expect { update! }.to change(ValidationError, :count).by(1)
       end
     end
@@ -212,7 +205,6 @@ RSpec.describe DateOfBirthForm, type: :model do
       end
 
       it "logs a validation error" do
-        FeatureFlag.activate(:log_validation_errors)
         expect { update! }.to change(ValidationError, :count).by(1)
       end
     end
@@ -236,7 +228,6 @@ RSpec.describe DateOfBirthForm, type: :model do
       end
 
       it "logs a validation error" do
-        FeatureFlag.activate(:log_validation_errors)
         expect { update! }.to change(ValidationError, :count).by(1)
       end
     end
@@ -260,7 +251,6 @@ RSpec.describe DateOfBirthForm, type: :model do
       end
 
       it "logs a validation error" do
-        FeatureFlag.activate(:log_validation_errors)
         expect { update! }.to change(ValidationError, :count).by(1)
       end
     end
@@ -284,7 +274,6 @@ RSpec.describe DateOfBirthForm, type: :model do
       end
 
       it "logs a validation error" do
-        FeatureFlag.activate(:log_validation_errors)
         expect { update! }.to change(ValidationError, :count).by(1)
       end
     end
