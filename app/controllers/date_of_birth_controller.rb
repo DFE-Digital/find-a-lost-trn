@@ -9,16 +9,14 @@ class DateOfBirthController < ApplicationController
 
   def update
     if date_of_birth_form.update(date_of_birth_params)
-      if FeatureFlag.active?(:match_on_email)
-        begin
-          find_trn_using_api unless @trn_request.trn
-        rescue DqtApi::ApiError,
-               Faraday::ConnectionFailed,
-               Faraday::TimeoutError,
-               DqtApi::TooManyResults,
-               DqtApi::NoResults
-          # Do nothing.
-        end
+      begin
+        find_trn_using_api unless @trn_request.trn
+      rescue DqtApi::ApiError,
+             Faraday::ConnectionFailed,
+             Faraday::TimeoutError,
+             DqtApi::TooManyResults,
+             DqtApi::NoResults
+        # Do nothing.
       end
       next_question
     else

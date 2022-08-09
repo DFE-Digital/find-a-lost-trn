@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&firstName=kevin&nationalInsuranceNumber=1000000
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin.e@example.com&firstName=kevin&nationalInsuranceNumber=AA123456A
       body:
         encoding: US-ASCII
         string: ""
@@ -10,7 +10,7 @@ http_interactions:
         User-Agent:
           - Faraday v1.10.0
         Authorization:
-          - Bearer testkey
+          - Bearer <BEARER_TOKEN_REDACTED>
         Accept-Encoding:
           - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
         Accept:
@@ -56,4 +56,60 @@ http_interactions:
         encoding: UTF-8
         string: '{"results":[{"trn":"2921020","emailAddresses":["anonymous@anonymousdomain.org.net.co.uk"],"firstName":"Kevin","lastName":"Evans","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","uid":"f7891223-7661-e411-8047-005056822391"}]}'
     recorded_at: Fri, 22 Jul 2022 20:12:14 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin.e@example.com&firstName=kevin&nationalInsuranceNumber=AA123456A
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.1
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Mon, 15 Aug 2022 12:29:16 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "297"
+        X-Rate-Limit-Reset:
+          - "2022-08-15T12:30:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 799bdac2-0474-48e4-5db0-be7f10cde074
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 8759b407cd243e2e2c573d5db804d720.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-C1
+        X-Amz-Cf-Id:
+          - _cBo2S0TDL-nRWLCmGeHaRIQ8gkO3R7QF1K7k0Td99ZQOFjllP8cuA==
+      body:
+        encoding: UTF-8
+        string: '{"results":[{"trn":"2921020","emailAddresses":["kevin.e@example.com"],"firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","uid":"1bf8803f-3924-417c-9603-1ed6489dae0d","hasActiveSanctions":false}]}'
+    recorded_at: Mon, 15 Aug 2022 12:29:16 GMT
 recorded_with: VCR 6.1.0

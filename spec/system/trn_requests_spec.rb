@@ -51,7 +51,7 @@ RSpec.describe "TRN requests", type: :system do
     and_my_email_is_not_filled_in
   end
 
-  it "trying to skip steps" do
+  it "trying to skip steps", vcr: true do
     given_i_am_on_the_home_page
     when_i_try_to_go_straight_to_the_confirmation_page
     then_i_see_the_home_page
@@ -119,10 +119,11 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_ni_number_missing_error
 
     when_i_enter_a_valid_ni_number
-    then_i_see_the_awarded_qts_page
+    then_i_see_the_check_answers_page
   end
 
-  it "when the user has a NI number but says they do not remember it" do
+  it "when the user has a NI number but says they do not remember it",
+     vcr: true do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
     when_i_confirm_i_have_a_trn_number
@@ -138,7 +139,7 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_awarded_qts_page
   end
 
-  it "changing my name" do
+  it "changing my name", vcr: true do
     given_i_have_completed_a_trn_request
     when_i_press_change_name
     then_i_see_the_existing_name
@@ -147,7 +148,7 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_updated_name
   end
 
-  it "changing my previous name" do
+  it "changing my previous name", vcr: true do
     given_i_have_completed_a_trn_request
     when_i_press_change_name
     then_i_see_the_existing_name
@@ -156,7 +157,7 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_updated_previous_name
   end
 
-  it "changed my previous name but prefer not to specify" do
+  it "changed my previous name but prefer not to specify", vcr: true do
     given_i_have_completed_a_trn_request
     when_i_press_change_name
     then_i_see_the_existing_name
@@ -196,7 +197,7 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_updated_ni_number
   end
 
-  it "changing my email address" do
+  it "changing my email address", vcr: true do
     given_i_have_completed_a_trn_request
     when_i_press_change_email
     and_i_fill_in_my_new_email_address
@@ -204,7 +205,7 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_updated_email_address
   end
 
-  it "changing my ITT provider" do
+  it "changing my ITT provider", vcr: true do
     given_i_have_completed_a_trn_request
     when_i_press_change_awarded_qts
     then_no_should_be_checked
@@ -223,7 +224,7 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_no_qts_awarded
   end
 
-  it "changing my date of birth" do
+  it "changing my date of birth", vcr: true do
     given_i_have_completed_a_trn_request
     when_i_press_change_date_of_birth
     then_i_see_the_date_of_birth_page
@@ -252,7 +253,7 @@ RSpec.describe "TRN requests", type: :system do
   end
 
   context "when the user has reached the have NI question" do
-    it "pressing back" do
+    it "pressing back", vcr: true do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
@@ -268,7 +269,7 @@ RSpec.describe "TRN requests", type: :system do
   end
 
   context "when the user has reached the ITT provider question" do
-    it "pressing back" do
+    it "pressing back", vcr: true do
       given_i_am_on_the_home_page
       when_i_press_the_start_button
       when_i_confirm_i_have_a_trn_number
@@ -286,7 +287,7 @@ RSpec.describe "TRN requests", type: :system do
   end
 
   context "when the user has reached the check answers page" do
-    it "pressing back" do
+    it "pressing back", vcr: true do
       given_i_have_completed_a_trn_request
       when_i_press_change_email
       and_i_press_back
@@ -302,7 +303,7 @@ RSpec.describe "TRN requests", type: :system do
     end
   end
 
-  it "refreshing the page and pressing back" do
+  it "refreshing the page and pressing back", vcr: true do
     given_i_have_completed_a_trn_request
     when_i_press_change_email
     then_i_see_the_email_page
@@ -312,7 +313,7 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_check_answers_page
   end
 
-  it "ITT provider validations" do
+  it "ITT provider validations", vcr: true do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
     when_i_confirm_i_have_a_trn_number
@@ -427,9 +428,7 @@ RSpec.describe "TRN requests", type: :system do
     and_i_receive_an_email_with_the_trn_number
   end
 
-  it "matches on the date of birth step when match_on_email feature is active",
-     vcr: true do
-    given_the_match_on_email_feature_is_enabled
+  it "matches on the date of birth step", vcr: true do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
     when_i_confirm_i_have_a_trn_number
@@ -542,7 +541,6 @@ RSpec.describe "TRN requests", type: :system do
   end
 
   def deactivate_feature_flags
-    FeatureFlag.deactivate(:match_on_email)
     FeatureFlag.deactivate(:processing_delays)
     FeatureFlag.deactivate(:service_open)
     FeatureFlag.deactivate(:use_dqt_api_itt_providers)
@@ -606,14 +604,6 @@ RSpec.describe "TRN requests", type: :system do
 
   def given_the_zendesk_integration_feature_is_enabled
     FeatureFlag.activate(:zendesk_integration)
-  end
-
-  def given_the_match_on_email_feature_is_enabled
-    FeatureFlag.activate(:match_on_email)
-  end
-
-  def and_the_match_on_email_feature_is_disabled
-    FeatureFlag.deactivate(:match_on_email)
   end
 
   def given_the_zendesk_connection_is_unavailable
