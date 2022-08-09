@@ -70,6 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     concurrency: deploy_${{ matrix.environment }}
+    needs: [docker]
     strategy:
       max-parallel: 1
       matrix:
@@ -112,7 +113,7 @@ jobs:
       name: production
       url: ${{ steps.deploy.outputs.environment_url }}
     concurrency: deploy_production
-    needs: [deploy_nonprod]
+    needs: [docker, deploy_nonprod]
 
     outputs:
       environment_url: ${{ steps.deploy.outputs.environment_url }}
