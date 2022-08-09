@@ -21,9 +21,7 @@ RSpec.describe HasNiNumberForm, type: :model do
       it { is_expected.to be_falsy }
 
       it "logs a validation error" do
-        FeatureFlag.activate(:log_validation_errors)
         expect { update }.to change(ValidationError, :count).by(1)
-        FeatureFlag.deactivate(:log_validation_errors)
       end
     end
   end

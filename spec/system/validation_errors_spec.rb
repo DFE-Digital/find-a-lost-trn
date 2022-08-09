@@ -19,7 +19,6 @@ RSpec.describe "Validation errors", type: :system do
 
   def deactivate_feature_flags
     FeatureFlag.deactivate(:service_open)
-    FeatureFlag.deactivate(:log_validation_errors)
   end
 
   def given_the_service_is_open
@@ -27,8 +26,6 @@ RSpec.describe "Validation errors", type: :system do
   end
 
   def given_there_are_a_few_validation_errors
-    FeatureFlag.activate(:log_validation_errors)
-
     create(:trn_request).tap do |trn_request|
       trn_request.first_name = nil
       NameForm.new(trn_request:).save # rubocop:disable Rails/SaveBang
