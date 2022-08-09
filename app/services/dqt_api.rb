@@ -12,8 +12,6 @@ class DqtApi
   FIVE_SECONDS = 5
 
   def self.find_trn!(trn_request)
-    raise DqtApi::ApiError unless FeatureFlag.active?(:use_dqt_api)
-
     if FeatureFlag.active?(:dqt_api_always_timeout)
       raise Faraday::TimeoutError, "Time-out feature flag enabled"
     end
