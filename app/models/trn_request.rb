@@ -8,7 +8,7 @@
 #  awarded_qts           :boolean
 #  checked_at            :datetime
 #  date_of_birth         :date
-#  email                 :string
+#  email                 :string(510)
 #  first_name            :string(510)
 #  has_active_sanctions  :boolean
 #  has_ni_number         :boolean
@@ -16,7 +16,7 @@
 #  itt_provider_name     :string
 #  last_name             :string(510)
 #  name_changed          :boolean
-#  ni_number             :string
+#  ni_number             :string(510)
 #  previous_first_name   :string(510)
 #  previous_last_name    :string(510)
 #  trn                   :string
@@ -25,7 +25,12 @@
 #  zendesk_ticket_id     :integer
 #
 class TrnRequest < ApplicationRecord
-  encrypts :first_name, :last_name, :previous_first_name, :previous_last_name
+  encrypts :email,
+           :first_name,
+           :last_name,
+           :ni_number,
+           :previous_first_name,
+           :previous_last_name
 
   has_many :trn_responses, dependent: :destroy
 
