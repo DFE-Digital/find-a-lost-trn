@@ -49,7 +49,6 @@ class FeatureFlag
       "Allow users to access the service and submit TRN Requests",
       "Theodor Vararu"
     ],
-    [:use_dqt_api, "Use DQT API to find TRN", "Felix Clack"],
     [
       :zendesk_integration,
       "Submit tickets to Zendesk on behalf of users at the end of the journey",

@@ -1,0 +1,57 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&firstName=John&lastName=Smith
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.0
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 401
+        message: Unauthorized
+      headers:
+        Content-Length:
+          - "0"
+        Connection:
+          - keep-alive
+        Date:
+          - Tue, 09 Aug 2022 12:39:33 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-08-09T12:40:00.0000000Z"
+        X-Vcap-Request-Id:
+          - a1fb1eb1-f327-40dc-5d5a-27382ea1a8cc
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Error from cloudfront
+        Via:
+          - 1.1 740280b5295c50b47179471832b5a578.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR50-C1
+        X-Amz-Cf-Id:
+          - ZH71DMzEbRLJarw1lsvbtzKPA9oyDH4gXPQWrv8U86cJBmAYPtQOtg==
+      body:
+        encoding: UTF-8
+        string: ""
+    recorded_at: Tue, 09 Aug 2022 12:39:33 GMT
+recorded_with: VCR 6.1.0

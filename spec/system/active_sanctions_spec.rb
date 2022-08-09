@@ -5,7 +5,6 @@ RSpec.describe "TRN requests", type: :system do
   before do
     given_the_service_is_open
     given_the_zendesk_integration_feature_is_enabled
-    given_the_use_dqt_api_feature_is_enabled
   end
 
   after { deactivate_feature_flags }
@@ -32,16 +31,11 @@ RSpec.describe "TRN requests", type: :system do
 
   def deactivate_feature_flags
     FeatureFlag.deactivate(:service_open)
-    FeatureFlag.deactivate(:use_dqt_api)
     FeatureFlag.deactivate(:zendesk_integration)
   end
 
   def given_the_service_is_open
     FeatureFlag.activate(:service_open)
-  end
-
-  def given_the_use_dqt_api_feature_is_enabled
-    FeatureFlag.activate(:use_dqt_api)
   end
 
   def given_the_zendesk_integration_feature_is_enabled
