@@ -29,6 +29,11 @@ class FeatureFlag
 
   TEMPORARY_FEATURE_FLAGS = [
     [
+      :identity_open,
+      "Allow access to the get an identity endpoint",
+      "Richard da Silva"
+    ],
+    [
       :use_dqt_api_itt_providers,
       "Use autocomplete from DQT API results",
       "Richard da Silva"

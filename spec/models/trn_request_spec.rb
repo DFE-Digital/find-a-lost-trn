@@ -8,7 +8,7 @@
 #  awarded_qts           :boolean
 #  checked_at            :datetime
 #  date_of_birth         :date
-#  email                 :string
+#  email                 :string(510)
 #  first_name            :string(510)
 #  has_active_sanctions  :boolean
 #  has_ni_number         :boolean
@@ -16,7 +16,7 @@
 #  itt_provider_name     :string
 #  last_name             :string(510)
 #  name_changed          :boolean
-#  ni_number             :string
+#  ni_number             :string(510)
 #  previous_first_name   :string(510)
 #  previous_last_name    :string(510)
 #  trn                   :string
