@@ -27,7 +27,7 @@ class DqtApi
 
     teacher_account = results.first
 
-    DqtApi.unlock_teacher!(teacher_account)
+    UnlockTeacherAccountJob.set(wait: 5.minutes).perform_later(teacher_account)
 
     teacher_account
   end
@@ -55,10 +55,8 @@ class DqtApi
             {}
           )
         raise ApiError, response.reason_phrase unless response.success?
-      rescue ApiError, Faraday::ConnectionFailed => e
+      rescue ApiError => e
         Sentry.capture_exception(e)
-      rescue Faraday::TimeoutError
-        UnlockTeacherAccountJob.perform_later(teacher_account)
       end
     end
   end

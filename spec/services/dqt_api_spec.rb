@@ -123,12 +123,12 @@ RSpec.describe DqtApi do
     end
 
     context "when the API returns a timeout error" do
-      it "handles timeout error gracefully" do
+      it "raises a time out error" do
         VCR.turned_off do
           allow_any_instance_of(Faraday::Connection).to receive(:put).and_raise(
             Faraday::TimeoutError
           )
-          expect { unlock_teacher! }.not_to raise_error
+          expect { unlock_teacher! }.to raise_error(Faraday::TimeoutError)
         end
       end
     end
