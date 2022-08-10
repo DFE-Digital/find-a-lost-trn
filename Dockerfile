@@ -15,7 +15,8 @@ ENV GOVUK_NOTIFY_API_KEY=TestKey \
     REDIS_URL=redis://required-but-not-used \
     SECRET_KEY_BASE=TestKey \
     ZENDESK_TOKEN=TestToken \
-    ZENDESK_USER=TestUser
+    ZENDESK_USER=TestUser \
+    IDENTITY_SHARED_SECRET_KEY=testkey
 
 WORKDIR /app
 
