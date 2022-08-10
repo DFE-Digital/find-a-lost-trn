@@ -54,4 +54,58 @@ http_interactions:
         encoding: UTF-8
         string: ""
     recorded_at: Thu, 30 Jun 2022 09:55:34 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&firstName=Not&lastName=Valid
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.0
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 401
+        message: Unauthorized
+      headers:
+        Content-Length:
+          - "0"
+        Connection:
+          - keep-alive
+        Date:
+          - Tue, 09 Aug 2022 13:01:29 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-08-09T13:02:00.0000000Z"
+        X-Vcap-Request-Id:
+          - ead07281-d2b8-4331-771c-fcb91aec9593
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Error from cloudfront
+        Via:
+          - 1.1 37f5076aed3c638f4365df8e8944f880.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR50-C1
+        X-Amz-Cf-Id:
+          - VjtXoiZwICU6e-fJSrQ3X1EIm6lOD4c_1PpR3QRSKfyKXOwL3_Tp4A==
+      body:
+        encoding: UTF-8
+        string: ""
+    recorded_at: Tue, 09 Aug 2022 13:01:29 GMT
 recorded_with: VCR 6.1.0

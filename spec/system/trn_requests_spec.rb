@@ -9,7 +9,7 @@ RSpec.describe "TRN requests", type: :system do
 
   after { deactivate_feature_flags }
 
-  it "completing a request" do
+  it "completing a request", vcr: true do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
     then_i_see_the_check_trn_page
@@ -92,7 +92,7 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_the_check_answers_page
   end
 
-  it "entering the NI number" do
+  it "entering the NI number", vcr: true do
     given_i_am_on_the_home_page
     when_i_press_the_start_button
     when_i_confirm_i_have_a_trn_number
@@ -184,7 +184,7 @@ RSpec.describe "TRN requests", type: :system do
     then_i_see_a_validation_error
   end
 
-  it "changing my NI number" do
+  it "changing my NI number", vcr: true do
     given_i_have_completed_a_trn_request
     when_i_press_change_ni_number
     then_no_should_be_checked
@@ -370,84 +370,78 @@ RSpec.describe "TRN requests", type: :system do
     then_i_should_see_the_home_page
   end
 
-  context "when the use_dqt_api feature is enabled" do
-    it "displays the TRN returned by the DQT API", vcr: true do
-      given_the_use_dqt_api_feature_is_enabled
-      when_i_have_completed_a_trn_request
-      and_i_press_the_submit_button
+  it "displays the TRN returned by the DQT API", vcr: true do
+    when_i_have_completed_a_trn_request
+    and_i_press_the_submit_button
 
-      then_i_see_a_message_to_check_my_email
-      and_i_receive_an_email_with_the_trn_number
-    end
+    then_i_see_a_message_to_check_my_email
+    and_i_receive_an_email_with_the_trn_number
+  end
 
-    it "shows the no match page and opens a Zendesk ticket when there is no match",
-       vcr: true do
-      given_the_use_dqt_api_feature_is_enabled
-      when_i_have_completed_a_trn_request_that_wont_match
-      and_i_press_the_submit_button
-      then_i_see_the_no_match_page
-      and_i_see_my_not_matching_details
+  it "shows the no match page and opens a Zendesk ticket when there is no match",
+     vcr: true do
+    when_i_have_completed_a_trn_request_that_wont_match
+    and_i_press_the_submit_button
+    then_i_see_the_no_match_page
+    and_i_see_my_not_matching_details
 
-      when_i_press_continue
-      then_i_see_the_no_match_validation_error
+    when_i_press_continue
+    then_i_see_the_no_match_validation_error
 
-      when_i_choose_yes_i_have_different_details
-      and_i_press_continue
-      then_i_see_the_check_answers_page_with_not_matching_details
+    when_i_choose_yes_i_have_different_details
+    and_i_press_continue
+    then_i_see_the_check_answers_page_with_not_matching_details
 
-      when_i_press_the_submit_button
-      then_i_see_the_no_match_page
+    when_i_press_the_submit_button
+    then_i_see_the_no_match_page
 
-      when_i_choose_no_my_details_are_correct
-      and_i_press_continue
-      then_i_see_the_zendesk_confirmation_page
-      and_i_receive_an_email_with_the_zendesk_ticket_number
-      and_a_job_to_check_zendesk_is_queued
-    end
+    when_i_choose_no_my_details_are_correct
+    and_i_press_continue
+    then_i_see_the_zendesk_confirmation_page
+    and_i_receive_an_email_with_the_zendesk_ticket_number
+    and_a_job_to_check_zendesk_is_queued
+  end
 
-    it "matches eagerly", vcr: true do
-      given_the_use_dqt_api_feature_is_enabled
-      given_i_am_on_the_home_page
-      when_i_press_the_start_button
-      when_i_confirm_i_have_a_trn_number
-      when_i_press_continue
-      when_i_fill_in_the_email_form
-      when_i_fill_in_the_name_form
-      when_i_complete_my_date_of_birth
-      when_i_choose_yes
-      when_i_press_continue
-      when_i_fill_in_my_ni_number
-      when_i_press_continue
-      then_i_see_the_check_answers_page
+  it "matches eagerly", vcr: true do
+    given_i_am_on_the_home_page
+    when_i_press_the_start_button
+    when_i_confirm_i_have_a_trn_number
+    when_i_press_continue
+    when_i_fill_in_the_email_form
+    when_i_fill_in_the_name_form
+    when_i_complete_my_date_of_birth
+    when_i_choose_yes
+    when_i_press_continue
+    when_i_fill_in_my_ni_number
+    when_i_press_continue
+    then_i_see_the_check_answers_page
 
-      when_i_press_back
-      then_i_see_the_ni_number_page
+    when_i_press_back
+    then_i_see_the_ni_number_page
 
-      when_i_press_continue
-      then_i_see_the_check_answers_page
+    when_i_press_continue
+    then_i_see_the_check_answers_page
 
-      when_i_press_the_submit_button
-      then_i_see_a_message_to_check_my_email
-      and_i_receive_an_email_with_the_trn_number
-    end
+    when_i_press_the_submit_button
+    then_i_see_a_message_to_check_my_email
+    and_i_receive_an_email_with_the_trn_number
+  end
 
-    it "matches on the date of birth step when match_on_email feature is active",
-       vcr: true do
-      given_the_use_dqt_api_feature_is_enabled
-      given_the_match_on_email_feature_is_enabled
-      given_i_am_on_the_home_page
-      when_i_press_the_start_button
-      when_i_confirm_i_have_a_trn_number
-      when_i_press_continue
-      when_i_fill_in_the_email_form
-      when_i_fill_in_the_name_form
-      when_i_complete_my_date_of_birth
-      then_i_see_the_check_answers_page
+  it "matches on the date of birth step when match_on_email feature is active",
+     vcr: true do
+    given_the_match_on_email_feature_is_enabled
+    given_i_am_on_the_home_page
+    when_i_press_the_start_button
+    when_i_confirm_i_have_a_trn_number
+    when_i_press_continue
+    when_i_fill_in_the_email_form
+    when_i_fill_in_the_name_form
+    when_i_complete_my_date_of_birth
+    then_i_see_the_check_answers_page
 
-      when_i_press_the_submit_button
-      then_i_see_a_message_to_check_my_email
-      and_i_receive_an_email_with_the_trn_number
-    end
+    when_i_press_the_submit_button
+    then_i_see_a_message_to_check_my_email
+    and_i_receive_an_email_with_the_trn_number
   end
 
   context "when the use_dqt_api_itt_providers feature is enabled" do
@@ -476,9 +470,9 @@ RSpec.describe "TRN requests", type: :system do
   context "when the Zendesk API is unavailable" do
     before { allow(Sentry).to receive(:capture_exception) }
 
-    it "handles the failure gracefully" do
+    it "handles the failure gracefully", vcr: true do
       given_the_zendesk_connection_is_unavailable
-      when_i_have_completed_a_trn_request_that_wont_match
+      when_i_have_completed_a_trn_request_that_has_multiple_matches
       when_i_press_the_submit_button
       then_i_see_the_delayed_information_page
       and_a_job_gets_queued_to_retry_the_zendesk_ticket_creation
@@ -551,7 +545,6 @@ RSpec.describe "TRN requests", type: :system do
     FeatureFlag.deactivate(:match_on_email)
     FeatureFlag.deactivate(:processing_delays)
     FeatureFlag.deactivate(:service_open)
-    FeatureFlag.deactivate(:use_dqt_api)
     FeatureFlag.deactivate(:use_dqt_api_itt_providers)
     FeatureFlag.deactivate(:zendesk_integration)
   end
@@ -589,6 +582,12 @@ RSpec.describe "TRN requests", type: :system do
     when_i_fill_in_the_name_form_with_data_that_will_not_match
   end
 
+  def when_i_have_completed_a_trn_request_that_has_multiple_matches
+    given_i_have_completed_a_trn_request
+    when_i_press_change_name
+    when_i_fill_in_the_name_form_with_data_that_will_match_multiple_times
+  end
+
   def given_it_is_taking_longer_than_usual
     FeatureFlag.activate(:processing_delays)
   end
@@ -599,10 +598,6 @@ RSpec.describe "TRN requests", type: :system do
 
   def given_the_service_is_closed
     FeatureFlag.deactivate(:service_open)
-  end
-
-  def given_the_use_dqt_api_feature_is_enabled
-    FeatureFlag.activate(:use_dqt_api)
   end
 
   def given_the_use_dqt_api_itt_providers_feature_is_enabled
@@ -946,6 +941,12 @@ RSpec.describe "TRN requests", type: :system do
   def when_i_fill_in_the_name_form_with_data_that_will_not_match
     fill_in "First name", with: "Do not"
     fill_in "Last name", with: "Match me"
+    when_i_press_continue
+  end
+
+  def when_i_fill_in_the_name_form_with_data_that_will_match_multiple_times
+    fill_in "First name", with: "John"
+    fill_in "Last name", with: "Smith"
     when_i_press_continue
   end
 

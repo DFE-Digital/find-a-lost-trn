@@ -42,6 +42,11 @@
           href: support_interface_features_path,
           active: current_page?(support_interface_features_path)
         ) %>
+         <% header.navigation_item(
+          text: "Staff",
+          href: support_interface_staff_index_path,
+          active: request.path.start_with?("/support/staff")
+        ) %>
         <% header.navigation_item(
           text: "Sidekiq",
           href: support_interface_sidekiq_web_path

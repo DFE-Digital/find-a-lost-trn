@@ -29,12 +29,16 @@ class FeatureFlag
 
   TEMPORARY_FEATURE_FLAGS = [
     [
+      :identity_open,
+      "Allow access to the get an identity endpoint",
+      "Richard da Silva"
+    ],
+    [
       :use_dqt_api_itt_providers,
       "Use autocomplete from DQT API results",
       "Richard da Silva"
     ],
     [:dqt_api_always_timeout, "Always time-out the DQT API", "Felix Clack"],
-    [:log_validation_errors, "Log validation errors", "Felix Clack"],
     [
       :processing_delays,
       "Show users banners and interstitials warning them of increased waiting times",
@@ -45,7 +49,6 @@ class FeatureFlag
       "Allow users to access the service and submit TRN Requests",
       "Theodor Vararu"
     ],
-    [:use_dqt_api, "Use DQT API to find TRN", "Felix Clack"],
     [
       :zendesk_integration,
       "Submit tickets to Zendesk on behalf of users at the end of the journey",

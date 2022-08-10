@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       resource :zendesk_sync, only: [:create], controller: "zendesk_sync"
     end
 
+    resources :staff, only: %i[index]
+
     devise_scope :staff do
       authenticate :staff do
         mount Sidekiq::Web, at: "sidekiq"
@@ -86,6 +88,8 @@ Rails.application.routes.draw do
   get "/privacy", to: "static#privacy"
 
   get "/performance", to: "performance#index"
+
+  post "/identity", to: "identity#create"
 
   scope via: :all do
     get "/404", to: "errors#not_found"

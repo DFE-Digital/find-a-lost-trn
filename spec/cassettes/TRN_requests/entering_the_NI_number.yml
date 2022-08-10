@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Do%20not&ittProviderName&lastName=Match%20me&nationalInsuranceNumber&previousFirstName&previousLastName
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&firstName=Kevin&lastName=E&nationalInsuranceNumber=AA123456A
       body:
         encoding: US-ASCII
         string: ""
@@ -17,17 +17,15 @@ http_interactions:
           - "*/*"
     response:
       status:
-        code: 200
-        message: OK
+        code: 401
+        message: Unauthorized
       headers:
-        Content-Type:
-          - application/json; charset=utf-8
-        Transfer-Encoding:
-          - chunked
+        Content-Length:
+          - "0"
         Connection:
           - keep-alive
         Date:
-          - Wed, 13 Apr 2022 15:34:12 GMT
+          - Tue, 09 Aug 2022 12:04:27 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -37,23 +35,23 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - "299"
+          - "296"
         X-Rate-Limit-Reset:
-          - "2022-04-13T15:35:00.0000000Z"
+          - "2022-08-09T12:05:00.0000000Z"
         X-Vcap-Request-Id:
-          - 16a1b789-49d4-469d-7ac6-88e93dad5b60
+          - 30bbe138-551e-483b-4657-a4f9c209e068
         X-Xss-Protection:
           - "0"
         X-Cache:
-          - Miss from cloudfront
+          - Error from cloudfront
         Via:
-          - 1.1 fbf20877e73563def3c2e6d94c9533e0.cloudfront.net (CloudFront)
+          - 1.1 bad4c5c93bbbcff151219f57e6a9b2b4.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - LHR62-C5
+          - LHR50-C1
         X-Amz-Cf-Id:
-          - APWwqquICPJkILUblTSbrgoGWCUu6qQKpoj1qnPb7-1fiKb9JV3TdQ==
+          - MO-oEgYQNljK77jqwU5HVXgqUGIhe0U7YpfwUXHGH1zkQIFcq7zbbw==
       body:
         encoding: UTF-8
-        string: '{"results":[]}'
-    recorded_at: Wed, 13 Apr 2022 15:34:12 GMT
+        string: ""
+    recorded_at: Tue, 09 Aug 2022 12:04:27 GMT
 recorded_with: VCR 6.1.0
