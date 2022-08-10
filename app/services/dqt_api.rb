@@ -55,8 +55,10 @@ class DqtApi
             {}
           )
         raise ApiError, response.reason_phrase unless response.success?
-      rescue ApiError, Faraday::ConnectionFailed, Faraday::TimeoutError => e
+      rescue ApiError, Faraday::ConnectionFailed => e
         Sentry.capture_exception(e)
+      rescue Faraday::TimeoutError
+        UnlockTeacherAccountJob.perform_later(teacher_account)
       end
     end
   end
@@ -84,11 +86,6 @@ class DqtApi
       ) do |faraday|
         faraday.request :authorization, "Bearer", ENV.fetch("DQT_API_KEY", nil)
         faraday.request :json
-        faraday.request :retry,
-                        max: 10,
-                        interval: 0.05,
-                        interval_randomness: 0.5,
-                        backoff_factor: 2
         faraday.response :json
         faraday.response :logger,
                          nil,
