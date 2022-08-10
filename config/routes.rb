@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       resource :zendesk_sync, only: [:create], controller: "zendesk_sync"
     end
 
+    resources :staff, only: %i[index]
+
     devise_scope :staff do
       authenticate :staff do
         mount Sidekiq::Web, at: "sidekiq"

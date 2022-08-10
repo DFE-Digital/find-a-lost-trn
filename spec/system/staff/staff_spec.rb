@@ -1,31 +1,39 @@
 require "rails_helper"
 
-RSpec.describe "Staff invitations", type: :system do
-  it "allows inviting staff members" do
+RSpec.describe "Staff support", type: :system do
+  it "allows inviting a user" do
     given_the_service_is_open
+    given_the_service_is_staff_http_basic_auth
 
     when_i_am_authorized_as_a_support_user
-    when_i_visit_the_staff_invitation_page
+    when_i_visit_the_staff_page
+    then_i_see_the_staff_index
+
+    when_i_click_on_invite
     then_i_see_the_staff_invitation_form
 
     when_i_fill_email_address
     and_i_send_invitation
-
     then_i_see_an_invitation_email
+    then_i_see_the_staff_index
+    then_i_see_the_invited_staff_user
 
-    when_i_am_not_authorized_as_a_support_user
     when_i_visit_the_invitation_email
-
-    when_i_fill_password
+    and_i_fill_password
     and_i_set_password
+    then_i_see_the_staff_index
 
-    then_i_am_taken_to_support_interface
+    then_i_see_the_accepted_staff_user
   end
 
   private
 
   def given_the_service_is_open
     FeatureFlag.activate(:service_open)
+  end
+
+  def given_the_service_is_staff_http_basic_auth
+    FeatureFlag.activate(:staff_http_basic_auth)
   end
 
   def when_i_am_authorized_as_a_support_user
@@ -35,12 +43,8 @@ RSpec.describe "Staff invitations", type: :system do
     )
   end
 
-  def when_i_am_not_authorized_as_a_support_user
-    page.driver.open_new_window
-  end
-
-  def when_i_visit_the_staff_invitation_page
-    visit new_staff_invitation_path
+  def when_i_visit_the_staff_page
+    visit support_interface_staff_index_path
   end
 
   def when_i_visit_the_invitation_email
@@ -49,6 +53,19 @@ RSpec.describe "Staff invitations", type: :system do
     expect(uri.path).to eq("/staff/invitation/accept")
     expect(uri.query).to include("invitation_token=")
     visit "#{uri.path}?#{uri.query}"
+  end
+
+  def when_i_click_on_invite
+    click_link "Invite"
+  end
+
+  def when_i_fill_email_address
+    fill_in "staff-email-field", with: "test@example.com"
+  end
+
+  def then_i_see_the_staff_index
+    expect(page).to have_current_path("/support/staff")
+    expect(page).to have_title("Staff")
   end
 
   def then_i_see_the_staff_invitation_form
@@ -67,15 +84,17 @@ RSpec.describe "Staff invitations", type: :system do
     expect(message.to).to include("test@example.com")
   end
 
-  def then_i_am_taken_to_support_interface
-    expect(page).to have_current_path("/support/trn-requests")
+  def then_i_see_the_invited_staff_user
+    expect(page).to have_content("test@example.com")
+    expect(page).to have_content("NOT ACCEPTED")
   end
 
-  def when_i_fill_email_address
-    fill_in "staff-email-field", with: "test@example.com"
+  def then_i_see_the_accepted_staff_user
+    expect(page).to have_content("test@example.com")
+    expect(page).to have_content("ACCEPTED")
   end
 
-  def when_i_fill_password
+  def and_i_fill_password
     fill_in "staff-password-field", with: "password"
     fill_in "staff-password-confirmation-field", with: "password"
   end
