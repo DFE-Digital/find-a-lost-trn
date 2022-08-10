@@ -2,8 +2,16 @@
 require "rails_helper"
 
 RSpec.describe UnlockTeacherAccountJob, type: :job do
-  describe "#perform_later" do
+  describe "#perform" do
     subject(:perform) { described_class.new.perform(teacher_account) }
+    let(:trn_request) do
+      TrnRequest.new(
+        date_of_birth: "1990-01-01",
+        email: "kevin@kevin.com",
+        first_name: "kevin",
+        ni_number: "1000000"
+      )
+    end
     let(:teacher_account) do
       {
         "trn" => "2921020",
@@ -27,16 +35,10 @@ RSpec.describe UnlockTeacherAccountJob, type: :job do
       FeatureFlag.deactivate(:unlock_teachers_self_service_portal_account)
     end
 
-    context "retry unlock teacher account on client timeout" do
-      it do
-        expect { DqtApi.unlock_teacher!(teacher_account) }.to raise_error(
-          Faraday::TimeoutError
-        )
-      end
-      it do
-        expect {
-          described_class.perform_later(teacher_account)
-        }.to have_enqueued_job.with(teacher_account).at(:no_wait)
+    context "retry unlock teacher account on client timeout", vcr: true do
+      it "runs the unlock teacher job asynchronously" do
+        expect { DqtApi.find_trn!(trn_request) }.not_to raise_error
+        expect(described_class).to have_been_enqueued.with(teacher_account)
       end
     end
   end
