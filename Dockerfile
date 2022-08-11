@@ -8,6 +8,7 @@ RUN echo "Europe/London" > /etc/timezone && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime
 
 ENV GOVUK_NOTIFY_API_KEY=TestKey \
+    HOSTING_DOMAIN=https://required-but-not-used \
     LANG=en_GB.UTF-8 \
     RAILS_ENV=production \
     RAILS_SERVE_STATIC_FILES=yes \
