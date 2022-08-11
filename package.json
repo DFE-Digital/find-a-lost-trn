@@ -3,9 +3,9 @@
   "private": "true",
   "dependencies": {
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete",
-    "esbuild": "^0.14.54",
+    "esbuild": "^0.15.1",
     "govuk-frontend": "^4.3.0",
-    "sass": "^1.54.3"
+    "sass": "^1.54.4"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --target=ie11 --bundle --sourcemap --outdir=app/assets/builds",
