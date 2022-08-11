@@ -42,7 +42,5 @@ module FindALostTrn
     config.active_job.queue_adapter = :sidekiq
 
     config.exceptions_app = routes
-
-    config.active_record.encryption.support_unencrypted_data = true
   end
 end
