@@ -43,15 +43,6 @@ module FindALostTrn
 
     config.exceptions_app = routes
 
-    config.action_mailer.notify_settings = {
-      api_key:
-        ENV.fetch("GOVUK_NOTIFY_API_KEY") do
-          raise "'GOVUK_NOTIFY_API_KEY' should be configured in " \
-                  ".env.*environment* file. Please refer to " \
-                  "https://github.com/DFE-Digital/find-a-lost-trn/#notify"
-        end
-    }
-
     config.active_record.encryption.support_unencrypted_data = true
   end
 end

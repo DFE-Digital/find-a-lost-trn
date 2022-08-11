@@ -93,4 +93,7 @@ Rails.application.configure do
     protocol: "https"
   }
   config.action_mailer.delivery_method = :notify
+  config.action_mailer.notify_settings = {
+    api_key: ENV.fetch("GOVUK_NOTIFY_API_KEY")
+  }
 end
