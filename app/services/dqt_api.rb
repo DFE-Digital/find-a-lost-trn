@@ -27,7 +27,7 @@ class DqtApi
 
     teacher_account = results.first
 
-    UnlockTeacherAccountJob.set(wait: 5.minutes).perform_later(teacher_account)
+    UnlockTeacherAccountJob.perform_later(teacher_account)
 
     teacher_account
   end
