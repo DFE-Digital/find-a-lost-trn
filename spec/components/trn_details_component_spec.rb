@@ -12,6 +12,7 @@ RSpec.describe TrnDetailsComponent, type: :component do
       awarded_qts:,
       date_of_birth: 20.years.ago.to_date,
       email:,
+      from_get_an_identity: false,
       first_name: "Test",
       has_ni_number:,
       itt_provider_enrolled:,
@@ -85,6 +86,16 @@ RSpec.describe TrnDetailsComponent, type: :component do
 
     it "renders change email" do
       expect(component.text).to include("Change email")
+    end
+
+    context "when an email address has been supplied by Identity" do
+      before do
+        allow(trn_request).to receive(:from_get_an_identity).and_return(true)
+      end
+
+      it "does not render change email" do
+        expect(component.text).to_not include("Change email")
+      end
     end
   end
 

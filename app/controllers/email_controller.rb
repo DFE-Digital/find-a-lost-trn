@@ -2,6 +2,8 @@
 class EmailController < ApplicationController
   include EnforceQuestionOrder
 
+  before_action :redirect_requests_from_identity
+
   layout "two_thirds"
 
   def edit

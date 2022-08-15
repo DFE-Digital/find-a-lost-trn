@@ -4,7 +4,7 @@
   email_row = {
     key: { text: 'Email address' },
     value: { text: email },
-    actions: [{ href: email_path, visually_hidden_text: 'email address' }]
+    actions: @trn_request.from_get_an_identity? ? [] : [{ href: email_path, visually_hidden_text: 'email address' }]
   }
 
   name_row = {
