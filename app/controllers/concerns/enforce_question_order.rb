@@ -6,6 +6,7 @@ module EnforceQuestionOrder
 
   def redirect_to_next_question
     redirect_to(start_url) and return if start_page_is_required?
+    return if request_from_identity?
     return if all_questions_answered?
     return if previous_question_answered?
 
@@ -18,6 +19,10 @@ module EnforceQuestionOrder
     redirect_to next_question_path
   end
 
+  def redirect_requests_from_identity
+    redirect_to check_answers_path if request_from_identity?
+  end
+
   private
 
   def trn_request
@@ -27,6 +32,10 @@ module EnforceQuestionOrder
 
   def start_page_is_required?
     trn_request.nil? && request.path == "/trn-request"
+  end
+
+  def request_from_identity?
+    trn_request.from_get_an_identity? || request.path == "/identity"
   end
 
   def questions

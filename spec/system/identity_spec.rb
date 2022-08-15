@@ -11,11 +11,18 @@ RSpec.describe "Identity", type: :system do
 
   it "verifies the parameters" do
     and_i_access_the_identity_endpoint_with_parameters
-    then_i_see_no_content
+    then_i_see_the_check_answers_page
   end
 
   it "does not verify with modified parameters" do
     and_i_access_the_identity_endpoint_with_modified_parameters_it_raises_an_error
+  end
+
+  it "does not allow user to change their email" do
+    and_i_access_the_identity_endpoint_with_parameters
+    then_i_see_the_check_answers_page
+    when_i_try_to_go_to_the_email_page
+    then_i_see_the_check_answers_page
   end
 
   private
@@ -46,8 +53,12 @@ RSpec.describe "Identity", type: :system do
     )
   end
 
-  def then_i_see_no_content
-    expect(response).to have_http_status(:no_content)
+  def then_i_see_the_check_answers_page
+    expect(response).to redirect_to("/check-answers")
+  end
+
+  def when_i_try_to_go_to_the_email_page
+    get email_path
   end
 
   def deactivate_feature_flags

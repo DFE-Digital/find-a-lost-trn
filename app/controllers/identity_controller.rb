@@ -2,6 +2,8 @@
 class IdentityController < ApplicationController
   skip_forgery_protection
 
+  include EnforceQuestionOrder
+
   def create
     unless FeatureFlag.active?(:identity_open)
       raise IdentityEndpointOffError,
@@ -15,7 +17,24 @@ class IdentityController < ApplicationController
               "data from Identity was unable to be verified"
     end
 
-    head :no_content
+    # To allow initial testing with the Identity server - seed a new TrnRequest
+    # with fake user data and add it to the session
+    @trn_request =
+      TrnRequest.create!(
+        awarded_qts: false,
+        first_name: "Kevin",
+        email: "kevin.e@example.com",
+        from_get_an_identity: true,
+        itt_provider_enrolled: false,
+        last_name: "E",
+        ni_number: "AA123456A",
+        has_ni_number: true,
+        date_of_birth: Date.parse("1990-01-01")
+      )
+
+    session[:trn_request_id] = @trn_request.id
+
+    redirect_requests_from_identity
   end
 
   private

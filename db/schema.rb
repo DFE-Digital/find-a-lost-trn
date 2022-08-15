@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_05_095822) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_12_150721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_05_095822) do
     t.boolean "awarded_qts"
     t.boolean "has_active_sanctions"
     t.boolean "name_changed"
+    t.boolean "from_get_an_identity", default: false
   end
 
   create_table "trn_responses", force: :cascade do |t|
