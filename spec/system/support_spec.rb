@@ -12,11 +12,11 @@ RSpec.describe "Support", type: :system do
     when_i_visit_the_feature_flags_page
     then_i_see_the_feature_flags
 
-    when_i_activate_the_zendesk_feature_flag
-    then_the_zendesk_flag_is_on
+    when_i_activate_the_slack_alerts_feature_flag
+    then_the_slack_alerts_flag_is_on
 
-    when_i_deactivate_the_zendesk_feature_flag
-    then_the_zendesk_flag_is_off
+    when_i_deactivate_the_slack_alerts_feature_flag
+    then_the_slack_alerts_flag_is_off
   end
 
   it "syncing with Zendesk", vcr: true do
@@ -52,12 +52,12 @@ RSpec.describe "Support", type: :system do
     click_on "Features"
   end
 
-  def when_i_activate_the_zendesk_feature_flag
-    click_on "Activate Zendesk integration"
+  def when_i_activate_the_slack_alerts_feature_flag
+    click_on "Activate Slack alerts"
   end
 
-  def when_i_deactivate_the_zendesk_feature_flag
-    click_on "Deactivate Zendesk integration"
+  def when_i_deactivate_the_slack_alerts_feature_flag
+    click_on "Deactivate Slack alerts"
   end
 
   def when_i_press_sync_with_zendesk
@@ -87,14 +87,14 @@ RSpec.describe "Support", type: :system do
     expect(page).to have_content("AA 12 34 56 A")
   end
 
-  def then_the_zendesk_flag_is_on
-    expect(page).to have_content("Feature “Zendesk integration” activated")
-    expect(page).to have_content("Zendesk integration\n- Active")
+  def then_the_slack_alerts_flag_is_on
+    expect(page).to have_content("Feature “Slack alerts” activated")
+    expect(page).to have_content("Slack alerts\n- Active")
   end
 
-  def then_the_zendesk_flag_is_off
-    expect(page).to have_content("Feature “Zendesk integration” deactivated")
-    expect(page).to have_content("Zendesk integration\n- Inactive")
+  def then_the_slack_alerts_flag_is_off
+    expect(page).to have_content("Feature “Slack alerts” deactivated")
+    expect(page).to have_content("Slack alerts\n- Inactive")
   end
 
   def and_there_is_a_trn_request_in_progress
