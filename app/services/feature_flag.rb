@@ -50,11 +50,6 @@ class FeatureFlag
       "Theodor Vararu"
     ],
     [
-      :zendesk_integration,
-      "Submit tickets to Zendesk on behalf of users at the end of the journey",
-      "Theodor Vararu"
-    ],
-    [
       :unlock_teachers_self_service_portal_account,
       "Unlock a teacher's self service portal account if their TRN is found",
       "Ransom Voke Anighoro"

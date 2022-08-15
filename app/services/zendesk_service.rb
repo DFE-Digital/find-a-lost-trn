@@ -2,22 +2,14 @@
 
 class ZendeskService
   def self.create_ticket!(trn_request)
-    unless FeatureFlag.active?(:zendesk_integration)
-      raise ZendeskOffError,
-            "Could not create a Zendesk ticket because the " \
-              ":zendesk_integration feature flag is off"
-    end
-
-    begin
-      ticket = GDS_ZENDESK_CLIENT.ticket.create!(ticket_template(trn_request))
-      trn_request.update!(zendesk_ticket_id: ticket.id)
-    rescue ZendeskAPI::Error::RecordInvalid => e
-      Sentry.capture_exception(e, contexts: { errors: e.errors })
-      raise CreateError, "Could not create Zendesk ticket"
-    rescue ZendeskAPI::Error::NetworkError => e
-      Sentry.capture_exception(e, contexts: { errors: e.errors })
-      raise ConnectionError, "Could not connect to Zendesk"
-    end
+    ticket = GDS_ZENDESK_CLIENT.ticket.create!(ticket_template(trn_request))
+    trn_request.update!(zendesk_ticket_id: ticket.id)
+  rescue ZendeskAPI::Error::RecordInvalid => e
+    Sentry.capture_exception(e, contexts: { errors: e.errors })
+    raise CreateError, "Could not create Zendesk ticket"
+  rescue ZendeskAPI::Error::NetworkError => e
+    Sentry.capture_exception(e, contexts: { errors: e.errors })
+    raise ConnectionError, "Could not connect to Zendesk"
   end
 
   def self.find_ticket(id)

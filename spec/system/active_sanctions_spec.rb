@@ -2,10 +2,7 @@
 require "rails_helper"
 
 RSpec.describe "TRN requests", type: :system do
-  before do
-    given_the_service_is_open
-    given_the_zendesk_integration_feature_is_enabled
-  end
+  before { given_the_service_is_open }
 
   after { deactivate_feature_flags }
 
@@ -31,15 +28,10 @@ RSpec.describe "TRN requests", type: :system do
 
   def deactivate_feature_flags
     FeatureFlag.deactivate(:service_open)
-    FeatureFlag.deactivate(:zendesk_integration)
   end
 
   def given_the_service_is_open
     FeatureFlag.activate(:service_open)
-  end
-
-  def given_the_zendesk_integration_feature_is_enabled
-    FeatureFlag.activate(:zendesk_integration)
   end
 
   def given_i_am_on_the_home_page
