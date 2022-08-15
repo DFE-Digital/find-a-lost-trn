@@ -58,6 +58,11 @@ class FeatureFlag
       :unlock_teachers_self_service_portal_account,
       "Unlock a teacher's self service portal account if their TRN is found",
       "Ransom Voke Anighoro"
+    ],
+    [
+      :ask_for_trn,
+      "Ask users for their TRN if they already know it",
+      "Ransom Voke Anighoro"
     ]
   ].freeze
 
