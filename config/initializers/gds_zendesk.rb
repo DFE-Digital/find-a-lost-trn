@@ -2,6 +2,31 @@
 require "gds_zendesk/client"
 require "gds_zendesk/dummy_client"
 
+class ExtendedDummyClient
+  def initialize(logger)
+    @logger = logger
+  end
+
+  def search(_params)
+    self
+  end
+
+  def fetch
+    [ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42)]
+  end
+end
+
+module DummyClientExtensions
+  attr_reader :zendesk_client
+
+  def initialize(options)
+    @logger = options[:logger] || NullLogger.instance
+    @ticket = GDSZendesk::DummyTicket.new(@logger)
+    @users = GDSZendesk::DummyUsers.new(@logger)
+    @zendesk_client = ExtendedDummyClient.new(@logger)
+  end
+end
+
 module DummyTicketExtensions
   def count!
     1
@@ -35,6 +60,10 @@ module DummyTicketExtensions
 end
 
 module GDSZendesk
+  class DummyClient
+    prepend DummyClientExtensions
+  end
+
   class DummyTicket
     prepend DummyTicketExtensions
   end
