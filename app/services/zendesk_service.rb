@@ -16,6 +16,14 @@ class ZendeskService
     GDS_ZENDESK_CLIENT.ticket.find(id:)
   end
 
+  def self.find_closed_tickets_from_6_months_ago
+    date = 6.months.ago.strftime("%Y-%m-%d")
+    GDS_ZENDESK_CLIENT
+      .zendesk_client
+      .search(query: "updated<#{date} type:ticket status:closed")
+      .fetch
+  end
+
   def self.ticket_template(trn_request)
     {
       subject: "[Find a lost TRN] Support request from #{trn_request.name}",

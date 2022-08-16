@@ -3,6 +3,7 @@ require "rails_helper"
 
 RSpec.describe ZendeskService do
   let(:ticket_client) { GDS_ZENDESK_CLIENT.ticket }
+  let(:zendesk_client) { GDS_ZENDESK_CLIENT.zendesk_client }
 
   describe ".ticket_template" do
     it "correctly formats a TRN request with no NI number" do
@@ -98,5 +99,20 @@ RSpec.describe ZendeskService do
     end
 
     it { is_expected.to be_a(ZendeskAPI::Ticket) }
+  end
+
+  describe ".find_closed_tickets_from_6_months_ago" do
+    subject(:find_closed_tickets) do
+      described_class.find_closed_tickets_from_6_months_ago
+    end
+
+    before do
+      allow(zendesk_client).to receive(:search).and_return(zendesk_client)
+      allow(zendesk_client).to receive(:fetch).and_return(
+        [ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42)]
+      )
+    end
+
+    it { is_expected.to be_a(Array) }
   end
 end
