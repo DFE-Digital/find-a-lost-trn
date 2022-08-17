@@ -104,8 +104,12 @@ GEM
       mail
     choice (0.2.0)
     cliver (0.3.2)
+    colorize (0.8.1)
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
+    console1984 (0.1.25)
+      colorize
+      parser
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -481,6 +485,7 @@ DEPENDENCIES
   bootsnap
   capybara (~> 3.36)
   capybara-email
+  console1984 (~> 0.1.25)
   cssbundling-rails
   cuprite (~> 0.13)
   data_migrate
