@@ -42,5 +42,6 @@ module FindALostTrn
     config.active_job.queue_adapter = :sidekiq
 
     config.exceptions_app = routes
+    config.console1984 = { ask_for_username_if_empty: true }
   end
 end

@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.1.1"
 
 gem "bootsnap", require: false
+gem "console1984", "~> 0.1.25"
 gem "cssbundling-rails"
 gem "data_migrate"
 gem "devise"

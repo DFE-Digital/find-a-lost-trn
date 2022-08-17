@@ -10,6 +10,7 @@
 #  date_of_birth         :date
 #  email                 :string(510)
 #  first_name            :string(510)
+#  from_get_an_identity  :boolean          default(FALSE)
 #  has_active_sanctions  :boolean
 #  has_ni_number         :boolean
 #  itt_provider_enrolled :boolean
