@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     get "/validation-errors/:form_object" => "validation_errors#show",
         :as => :validation_error
 
+    get "/zendesk", to: "zendesk#index"
+
     resources :trn_requests, only: [] do
       resource :zendesk_sync, only: [:create], controller: "zendesk_sync"
     end

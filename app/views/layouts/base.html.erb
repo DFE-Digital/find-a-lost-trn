@@ -57,6 +57,11 @@
           href: support_interface_validation_errors_path,
           text: 'Validations',
         ) %>
+        <% header.navigation_item(
+          active: request.path.start_with?("/support/zendesk"),
+          href: support_interface_zendesk_path,
+          text: 'Zendesk',
+        ) %>
       <% end %>
     <% end %>
 
