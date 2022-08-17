@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     devise_scope :staff do
       authenticate :staff do
         mount Sidekiq::Web, at: "sidekiq"
+        mount Audits1984::Engine, at: "console"
       end
     end
   end

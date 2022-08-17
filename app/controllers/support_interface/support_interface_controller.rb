@@ -4,5 +4,9 @@ module SupportInterface
     layout "support_layout"
 
     before_action :authenticate_staff!
+
+    def find_current_auditor
+      current_staff
+    end
   end
 end
