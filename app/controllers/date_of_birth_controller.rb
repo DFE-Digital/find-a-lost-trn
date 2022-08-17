@@ -13,9 +13,9 @@ class DateOfBirthController < ApplicationController
         find_trn_using_api unless @trn_request.trn
       rescue DqtApi::ApiError,
              Faraday::ConnectionFailed,
-             Faraday::TimeoutError,
-             DqtApi::TooManyResults,
-             DqtApi::NoResults
+             Faraday::TimeoutError => e
+        Sentry.capture_exception(e)
+      rescue DqtApi::TooManyResults, DqtApi::NoResults
         # Do nothing.
       end
       next_question
