@@ -7,7 +7,15 @@ class ExtendedDummyClient
     @logger = logger
   end
 
+  def tickets
+    self
+  end
+
   def search(_params)
+    self
+  end
+
+  def destroy_many(_params)
     self
   end
 

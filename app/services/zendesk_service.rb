@@ -24,6 +24,10 @@ class ZendeskService
       .fetch
   end
 
+  def self.destroy_tickets!(ids)
+    GDS_ZENDESK_CLIENT.zendesk_client.tickets.destroy_many(ids:).fetch
+  end
+
   def self.ticket_template(trn_request)
     {
       subject: "[Find a lost TRN] Support request from #{trn_request.name}",
