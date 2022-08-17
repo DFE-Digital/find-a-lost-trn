@@ -115,4 +115,21 @@ RSpec.describe ZendeskService do
 
     it { is_expected.to be_a(Array) }
   end
+
+  describe ".destroy_tickets!" do
+    subject(:find_closed_tickets) do
+      described_class.destroy_tickets!(ids: [ticket_id_1, ticket_id_2])
+    end
+
+    let(:ticket_id_1) { 42 }
+    let(:ticket_id_2) { 13 }
+
+    before do
+      allow(zendesk_client).to receive(:tickets).and_return(zendesk_client)
+      allow(zendesk_client).to receive(:destroy_many).and_return(zendesk_client)
+      allow(zendesk_client).to receive(:fetch).and_return([])
+    end
+
+    it { is_expected.to be_a(Array) }
+  end
 end
