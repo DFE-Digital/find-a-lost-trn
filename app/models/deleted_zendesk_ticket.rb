@@ -13,4 +13,24 @@
 #  ticket_id          :integer          not null
 #
 class DeletedZendeskTicket < ApplicationRecord
+  ENQUIRY_TYPE_FIELD_ID = 4_419_328_659_089
+  NO_ACTION_REQUIRED_FIELD_ID = 4_562_126_876_049
+
+  def from(ticket)
+    self.ticket_id = ticket.id
+    self.received_at = ticket.created_at
+    self.closed_at = ticket.updated_at
+    self.enquiry_type =
+      ticket
+        .custom_fields
+        .find { |field| field.id == ENQUIRY_TYPE_FIELD_ID }
+        .value
+    self.no_action_required =
+      ticket
+        .custom_fields
+        .find { |field| field.id == NO_ACTION_REQUIRED_FIELD_ID }
+        .value
+    self.group_name = ticket.group.name
+    self
+  end
 end
