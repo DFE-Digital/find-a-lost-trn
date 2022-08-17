@@ -33,28 +33,29 @@
       <% case try(:current_namespace) %>
       <% when 'support_interface' %>
         <% header.navigation_item(
-          text: "TRNs",
-          href: support_interface_trn_requests_path,
           active: current_page?(support_interface_trn_requests_path),
+          href: support_interface_trn_requests_path,
+          text: "TRNs",
         ) %>
         <% header.navigation_item(
-          text: "Features",
+          active: current_page?(support_interface_features_path),
           href: support_interface_features_path,
-          active: current_page?(support_interface_features_path)
+          text: "Features",
         ) %>
         <% header.navigation_item(
-          text: "Staff",
+          active: request.path.start_with?("/support/staff"),
           href: support_interface_staff_index_path,
-          active: request.path.start_with?("/support/staff")
+          text: "Staff",
         ) %>
         <% header.navigation_item(
+          active: false,
+          href: support_interface_sidekiq_web_path,
           text: "Sidekiq",
-          href: support_interface_sidekiq_web_path
         ) %>
         <% header.navigation_item(
-          text: 'Validations',
           active: current_page?(support_interface_validation_errors_path),
           href: support_interface_validation_errors_path,
+          text: 'Validations',
         ) %>
       <% end %>
     <% end %>
