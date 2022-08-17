@@ -1,0 +1,48 @@
+<% content_for :page_title, 'Zendesk ticket deletion' %>
+
+<h1 class="govuk-heading-l">
+  Zendesk tickets to be deleted
+  <span class="govuk-caption-l">
+    Showing <%= @zendesk_tickets.size %> total
+  </span>
+</h1>
+
+<%= govuk_table do |table|
+  table.head do |head|
+    head.row do |row|
+      row.cell(header: true, width: 'one-quarter') do
+        tag.span("Ticket link") +
+          tag.span("Group name", class: 'govuk-caption-m')
+      end
+      row.cell(header: true, width: 'one-third') do
+        tag.span("Closed at") +
+          tag.span("Received at", class: 'govuk-caption-m')
+      end
+      row.cell(header: true) do
+        tag.span("Enquiry type") +
+          tag.span("No action required", class: 'govuk-caption-m')
+      end
+    end
+  end
+
+  table.body do |body|
+    @zendesk_tickets.each do |ticket|
+      body.row do |row|
+        row.cell do
+          tag.a("Ticket #{ticket.ticket_id}",
+            class: 'govuk-link',
+            href: "https://teachingregulationagency.zendesk.com/agent/tickets/#{ticket.ticket_id}") +
+            tag.span(ticket.group_name, class: 'govuk-caption-m')
+        end
+        row.cell do
+          tag.span(ticket.closed_at, class: 'app-!-font-tabular') +
+            tag.span(ticket.received_at, class: 'app-!-font-tabular govuk-caption-m')
+        end
+        row.cell do
+          tag.code(ticket.enquiry_type, class: 'app-!-word-break-all') +
+            tag.span(ticket.no_action_required, class: 'govuk-caption-m')
+        end
+      end
+    end
+  end
+end %>
