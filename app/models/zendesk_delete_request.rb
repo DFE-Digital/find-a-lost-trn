@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: deleted_zendesk_tickets
+# Table name: zendesk_delete_requests
 #
 #  id                 :bigint           not null, primary key
 #  closed_at          :datetime         not null
@@ -12,7 +12,7 @@
 #  updated_at         :datetime         not null
 #  ticket_id          :integer          not null
 #
-class DeletedZendeskTicket < ApplicationRecord
+class ZendeskDeleteRequest < ApplicationRecord
   ENQUIRY_TYPE_FIELD_ID = 4_419_328_659_089
   NO_ACTION_REQUIRED_FIELD_ID = 4_562_126_876_049
 

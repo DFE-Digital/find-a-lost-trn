@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_17_143001) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_18_102555) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,17 +60,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_17_143001) do
   end
 
   create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
-  end
-
-  create_table "deleted_zendesk_tickets", force: :cascade do |t|
-    t.datetime "received_at", null: false
-    t.datetime "closed_at", null: false
-    t.integer "ticket_id", null: false
-    t.string "enquiry_type", null: false
-    t.string "no_action_required", null: false
-    t.string "group_name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "features", force: :cascade do |t|
@@ -156,6 +145,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_17_143001) do
     t.datetime "updated_at", null: false
     t.index ["messages"], name: "index_validation_errors_on_messages", using: :gin
     t.index ["trn_request_id"], name: "index_validation_errors_on_trn_request_id"
+  end
+
+  create_table "zendesk_delete_requests", force: :cascade do |t|
+    t.datetime "received_at", null: false
+    t.datetime "closed_at", null: false
+    t.integer "ticket_id", null: false
+    t.string "enquiry_type", null: false
+    t.string "no_action_required", null: false
+    t.string "group_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "trn_responses", "trn_requests"

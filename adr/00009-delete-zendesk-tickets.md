@@ -24,6 +24,7 @@ We need to delete:
 
 When deleting, we need to retain certain fields for reporting purposes:
 
+- Ticket id: `.id`
 - Received date: `.created_at`
 - Closed date: `.updated_at`
 - Enquiry type (Custom field): `.custom_fields.find { |cf| cf.id == 4419328659089 }.value`
@@ -35,7 +36,7 @@ When deleting, we need to retain certain fields for reporting purposes:
 Find will use a background job to delete closed tickets that have not been
 updated in 6 months or more.
 
-Find will retain `DeletedZendeskTickets` as rows in the database containing the
+Find will retain `ZendeskDeleteRequest` as rows in the database containing the
 necessary metadata and allow exporting / reporting of useful data.
 
 ## Consequences
