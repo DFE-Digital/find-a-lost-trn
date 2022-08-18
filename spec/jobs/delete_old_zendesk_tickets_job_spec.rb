@@ -51,7 +51,7 @@ RSpec.describe DeleteOldZendeskTicketsJob, type: :job do
     end
 
     it "creates deleted ticket entries" do
-      expect { perform }.to change { DeletedZendeskTicket.count }.by 2
+      expect { perform }.to change { ZendeskDeleteRequest.count }.by 2
     end
   end
 end
