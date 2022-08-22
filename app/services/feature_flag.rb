@@ -29,6 +29,11 @@ class FeatureFlag
 
   TEMPORARY_FEATURE_FLAGS = [
     [
+      :identity_api_always_timeout,
+      "Always time-out the Identity API",
+      "Richard da Silva"
+    ],
+    [
       :identity_open,
       "Allow access to the get an identity endpoint",
       "Richard da Silva"

@@ -16,7 +16,9 @@ ENV GOVUK_NOTIFY_API_KEY=TestKey \
     SECRET_KEY_BASE=TestKey \
     ZENDESK_TOKEN=TestToken \
     ZENDESK_USER=TestUser \
-    IDENTITY_SHARED_SECRET_KEY=testkey
+    IDENTITY_SHARED_SECRET_KEY=testkey \
+    IDENTITY_API_URL=http://localhost \
+    IDENTITY_API_KEY=TestKey
 
 WORKDIR /app
 
