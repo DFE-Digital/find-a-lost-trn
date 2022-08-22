@@ -1,0 +1,24 @@
+<% content_for :page_title, "#{'Error: ' if @delete_form.errors.any?}Confirm Zendesk ticket deletion" %>
+<%= content_for :back_link_url, support_interface_zendesk_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      Delete <%= @ticket_count %> Zendesk tickets
+    </h1>
+
+    <p>To confirm, type in the number of tickets that will be deleted below.</p>
+
+    <%= form_with model: @delete_form, url: support_interface_zendesk_confirm_deletion_path do |f| %>
+      <%= f.govuk_error_summary %>
+      <%= f.govuk_text_field(
+        :number_of_tickets,
+        width: 5,
+        label: { tag: 'h2', size: 'm', text: 'Number of tickets to delete' },
+      ) %>
+      <%= f.govuk_submit "Delete #{ @ticket_count } tickets",
+        prevent_double_click: false,
+        warning: true %>
+    <% end %>
+  </div>
+</div>

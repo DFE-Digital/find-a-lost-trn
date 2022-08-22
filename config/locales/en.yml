@@ -78,3 +78,8 @@ en:
             itt_provider_name:
               blank: Enter your university, SCITT, school or other training provider
               too_long: Enter a school that is less than 255 letters long
+        support_interface/zendesk_ticket_deletion_form:
+          attributes:
+            number_of_tickets:
+              blank: Enter the number of tickets to delete
+              equal_to: "%{attribute} must be equal to %{count}"

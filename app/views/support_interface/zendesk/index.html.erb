@@ -1,11 +1,35 @@
-<% content_for :page_title, 'Zendesk ticket deletion' %>
+<% content_for :page_title, 'Zendesk tickets to be deleted' %>
 
-<h1 class="govuk-heading-l">
-  Zendesk tickets to be deleted
-  <span class="govuk-caption-l">
-    Showing <%= @zendesk_tickets.size %> total
-  </span>
-</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      Zendesk tickets to be deleted
+    </h1>
+
+    <p>
+      The tickets below have not had any activity in the past 6 months and
+      should be deleted. Deleted tickets are kept in Zendesk for a further 30
+      days. They are then permanently deleted.
+    </p>
+
+    <p>
+      Find keeps a record of every deleted Zendesk ticket’s metadata.
+    </p>
+
+    <p>You will be asked to confirm before the tickets are deleted.</p>
+
+    <%= govuk_start_button(
+      text: 'Start',
+      href: support_interface_zendesk_confirm_deletion_path) %>
+
+    <h2 class="govuk-heading-m">
+      List of tickets to be deleted
+      <span class="govuk-caption-m">
+        Showing <%= @zendesk_tickets.size %> total
+      </span>
+    </h1>
+  </div>
+</div>
 
 <%= govuk_table do |table|
   table.head do |head|

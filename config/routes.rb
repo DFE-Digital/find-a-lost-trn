@@ -30,6 +30,8 @@ Rails.application.routes.draw do
         :as => :validation_error
 
     get "/zendesk", to: "zendesk#index"
+    get "/zendesk/confirm-deletion", to: "zendesk#confirm_deletion"
+    post "/zendesk/confirm-deletion", to: "zendesk#destroy"
 
     resources :trn_requests, only: [] do
       resource :zendesk_sync, only: [:create], controller: "zendesk_sync"
