@@ -31,6 +31,9 @@ FileUtils.chdir APP_ROOT do
   puts "\n== Running data migrations =="
   system! "bin/rails db:migrate:with_data"
 
+  puts "\n== Formatting db/data_schema.rb =="
+  system! "yarn run prettier --write 'db/data_schema.rb'"
+
   puts "\n== Removing old logs and tempfiles =="
   system! "bin/rails log:clear tmp:clear"
 
