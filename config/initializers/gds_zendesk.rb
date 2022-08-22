@@ -20,7 +20,21 @@ class ExtendedDummyClient
   end
 
   def fetch
-    [ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42)]
+    [
+      ZendeskAPI::Ticket.new(
+        GDS_ZENDESK_CLIENT,
+        id: 42,
+        created_at: (6.months + 8.days).ago,
+        updated_at: (6.months + 1.day).ago,
+        custom_fields: [
+          { id: 4_419_328_659_089, value: "Foo" },
+          { id: 4_562_126_876_049, value: "Bar" }
+        ],
+        group: {
+          name: "Some group"
+        }
+      )
+    ]
   end
 end
 
