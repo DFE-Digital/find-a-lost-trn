@@ -10,24 +10,65 @@ RSpec.describe "Identity", type: :system do
   after { deactivate_feature_flags }
 
   it "verifies the parameters" do
-    and_i_access_the_identity_endpoint_with_parameters
+    when_i_access_the_identity_endpoint_with_parameters
     then_i_see_the_check_answers_page
   end
 
   it "does not verify with modified parameters" do
-    and_i_access_the_identity_endpoint_with_modified_parameters_it_raises_an_error
+    when_i_access_the_identity_endpoint_with_modified_parameters_it_raises_an_error
   end
 
   it "does not allow user to change their email" do
-    and_i_access_the_identity_endpoint_with_parameters
+    when_i_access_the_identity_endpoint_with_parameters
     then_i_see_the_check_answers_page
     when_i_try_to_go_to_the_email_page
     then_i_see_the_check_answers_page
   end
 
+  context "when sending the trn to the Identity API" do
+    it "redirects back to Get An Identity", vcr: true do
+      when_i_access_the_identity_endpoint_with_parameters
+      then_i_see_the_check_answers_page
+      when_i_press_the_submit_button
+      then_i_am_redirected_back_to_get_an_identity
+    end
+
+    context "when there is no trn match", vcr: true do
+      before do
+        allow(DqtApi).to receive(:find_trn!).and_raise(DqtApi::NoResults)
+      end
+
+      it "sends a blank trn to Get an Identity and redirects back Get An Identity" do
+        when_i_access_the_identity_endpoint_with_parameters
+        then_i_see_the_check_answers_page
+        when_i_press_the_submit_button
+        then_i_see_the_no_match_page
+        when_i_submit_anyway
+        then_i_am_redirected_back_to_get_an_identity
+      end
+    end
+
+    context "when there is an Identity API error" do
+      before do
+        allow(Sentry).to receive(:capture_exception)
+        FeatureFlag.activate(:identity_api_always_timeout)
+      end
+
+      after { FeatureFlag.deactivate(:identity_api_always_timeout) }
+
+      it "redirects to the error page", vcr: true do
+        when_i_access_the_identity_endpoint_with_parameters
+        then_i_see_the_check_answers_page
+        when_i_press_the_submit_button
+        then_sentry_receives_a_warning_about_the_failure
+        and_i_am_redirected_to_the_error_page
+      end
+    end
+  end
+
   private
 
-  def and_i_access_the_identity_endpoint_with_parameters
+  def when_i_access_the_identity_endpoint_with_parameters
     params = {
       redirect_uri: "https://authserveruri/",
       client_title: "The Client Title",
@@ -39,7 +80,7 @@ RSpec.describe "Identity", type: :system do
     post identity_path, params:
   end
 
-  def and_i_access_the_identity_endpoint_with_modified_parameters_it_raises_an_error
+  def when_i_access_the_identity_endpoint_with_modified_parameters_it_raises_an_error
     params = {
       redirect_uri: "https://authserveruri/",
       client_title: "New Title",
@@ -59,6 +100,30 @@ RSpec.describe "Identity", type: :system do
 
   def when_i_try_to_go_to_the_email_page
     get email_path
+  end
+
+  def when_i_press_the_submit_button
+    put "/trn-request", params: { trn_request: { answers_checked: true } }
+  end
+
+  def then_i_see_the_no_match_page
+    expect(response).to redirect_to("/no-match")
+  end
+
+  def then_i_am_redirected_back_to_get_an_identity
+    expect(response).to redirect_to("https://authserveruri/")
+  end
+
+  def then_sentry_receives_a_warning_about_the_failure
+    expect(Sentry).to have_received(:capture_exception)
+  end
+
+  def and_i_am_redirected_to_the_error_page
+    expect(response.status).to be(500)
+  end
+
+  def when_i_submit_anyway
+    post "/no-match", params: { no_match_form: { try_again: false } }
   end
 
   def deactivate_feature_flags
