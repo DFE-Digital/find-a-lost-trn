@@ -18,6 +18,14 @@ $govuk-new-link-styles: true;
   color: $govuk-link-colour;
 }
 
+.app-\!-font-tabular {
+  @include govuk-font($size: false, $tabular: true);
+}
+
+.app-\!-word-break-all {
+  word-break: break-all;
+}
+
 .app-govuk-related-navigation {
   @include govuk-text-colour;
   border-top: 2px solid $govuk-brand-colour;
