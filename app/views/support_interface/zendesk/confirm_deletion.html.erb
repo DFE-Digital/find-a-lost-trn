@@ -7,7 +7,7 @@
       Delete <%= @ticket_count %> Zendesk tickets
     </h1>
 
-    <p>To confirm, type in the number of tickets that will be deleted below.</p>
+    <p>To confirm, enter the number of tickets that will be deleted.</p>
 
     <%= form_with model: @delete_form, url: support_interface_zendesk_confirm_deletion_path do |f| %>
       <%= f.govuk_error_summary %>
