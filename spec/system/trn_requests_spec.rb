@@ -538,6 +538,7 @@ RSpec.describe "TRN requests", type: :system do
   end
 
   def deactivate_feature_flags
+    FeatureFlag.deactivate(:ask_for_trn)
     FeatureFlag.deactivate(:processing_delays)
     FeatureFlag.deactivate(:service_open)
     FeatureFlag.deactivate(:use_dqt_api_itt_providers)
@@ -596,6 +597,26 @@ RSpec.describe "TRN requests", type: :system do
 
   def given_the_use_dqt_api_itt_providers_feature_is_enabled
     FeatureFlag.activate(:use_dqt_api_itt_providers)
+  end
+
+  def given_the_zendesk_integration_feature_is_enabled
+    FeatureFlag.activate(:zendesk_integration)
+  end
+
+  def given_the_match_on_email_feature_is_enabled
+    FeatureFlag.activate(:match_on_email)
+  end
+
+  def and_the_match_on_email_feature_is_disabled
+    FeatureFlag.deactivate(:match_on_email)
+  end
+
+  def given_the_ask_for_trn_feature_is_enabled
+    FeatureFlag.activate(:ask_for_trn)
+  end
+
+  def given_the_ask_for_trn_feature_is_disabled
+    FeatureFlag.deactivate(:ask_for_trn)
   end
 
   def given_the_zendesk_connection_is_unavailable

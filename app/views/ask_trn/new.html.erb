@@ -1,0 +1,17 @@
+<% content_for :page_title, "#{'Error: ' if @ask_trn_form.errors.any?}What is your TRN number?" %>
+<% content_for :back_link_url, back_link_url(@ask_trn_form.trn_request.has_ni_number? ? ni_number_path : have_ni_number_path) %>
+
+<%= form_with model: @ask_trn_form, url: ask_trn_path, method: :post do |f| %>
+  <%= f.govuk_error_summary %>
+  <h1 class="govuk-heading-xl">Do you know your teacher reference number (TRN)?</h1>
+  <p>Your TRN is 7 digits long, for example 4567814.</p>
+  <p>It might include the letters RP and a slash, for example RP99/12345</p>
+  <p class="govuk-!-margin-bottom-7">It’s previously been known as a QTS, GTC, DfE, DfES and DCSF number.</p>
+  <%= f.govuk_radio_buttons_fieldset :do_you_know_your_trn, legend: { size: 'm', text: 'Do you know your TRN?' } do %>
+    <%= f.govuk_radio_button :do_you_know_your_trn, true, label: { text: "Yes, I know my TRN" } do %>
+      <%= f.govuk_text_field(:trn_from_user, label: { size: 's', text: 'What is your TRN?' }) %>
+    <% end %>
+    <%= f.govuk_radio_button :do_you_know_your_trn, false, label: { text: "No, I need to continue without my TRN" }, link_errors: true %>
+  <% end %>
+  <%= f.govuk_submit prevent_double_click: false %>
+<% end %>

@@ -83,3 +83,11 @@ en:
             number_of_tickets:
               blank: Enter the number of tickets to delete
               equal_to: "%{attribute} must be equal to %{count}"
+        ask_trn_form:
+          attributes:
+            do_you_know_your_trn:
+              inclusion: Tell us if you know your TRN number
+            trn_from_user:
+              blank: Enter your TRN number
+              too_long: Enter a TRN number that is 7 digits long
+              wrong_length: Your TRN number should contain 7 digits
