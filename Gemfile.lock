@@ -110,6 +110,13 @@ GEM
       mail
     choice (0.2.0)
     cliver (0.3.2)
+    coffee-rails (5.0.0)
+      coffee-script (>= 2.2.0)
+      railties (>= 5.2.0)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.12.2)
     colorize (0.8.1)
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
@@ -149,6 +156,7 @@ GEM
     erubi (1.11.0)
     et-orbi (1.2.7)
       tzinfo
+    execjs (2.8.1)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
@@ -393,6 +401,11 @@ GEM
       rexml
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
+    rvt (1.1.0)
+      activemodel (>= 4.0)
+      coffee-rails
+      railties (>= 4.0)
+      sprockets-rails
     sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -538,6 +551,7 @@ DEPENDENCIES
   rspec
   rspec-rails
   rubocop-govuk
+  rvt (~> 1.1)
   sentry-rails
   shoulda-matchers (~> 5.1)
   sidekiq

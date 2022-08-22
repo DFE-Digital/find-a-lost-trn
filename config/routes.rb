@@ -38,11 +38,13 @@ Rails.application.routes.draw do
     end
 
     resources :staff, only: %i[index]
+    resource :console, only: %i[show], controller: "console"
 
     devise_scope :staff do
       authenticate :staff do
         mount Sidekiq::Web, at: "sidekiq"
-        mount Audits1984::Engine, at: "console"
+        mount Audits1984::Engine, at: "console/audits"
+        mount RVT::Engine, at: "console-session", as: "rvt"
       end
     end
   end

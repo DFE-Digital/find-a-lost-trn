@@ -55,5 +55,7 @@ module FindALostTrn
           "config/credentials/production.yml.enc"
         end
       )
+
+    config.rvt.automount = false
   end
 end

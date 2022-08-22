@@ -1,0 +1,33 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'rvt/application' %>
+  <%= javascript_include_tag 'rvt/application' %>
+<% end %>
+
+<%= javascript_tag nonce: true do %>
+  // Expose the main RVT namespace.
+  this.RVT || (this.RVT = {});
+
+  RVT.config = {
+    terminal: {
+      theme: <%= raw RVT.config.style.colors.to_json %>
+    },
+
+    transport: {
+      url: {
+        input: "<%= support_interface_rvt.input_console_session_path(@console_session) %>",
+        pendingOutput: "<%= support_interface_rvt.pending_output_console_session_path(@console_session) %>",
+        configuration: "<%= support_interface_rvt.configuration_console_session_path(@console_session) %>"
+      },
+
+      uid: "<%= @console_session.uid %>"
+    }
+  };
+<% end %>
+
+<style>
+  .xterm.fullscreen {
+    position: relative;
+  }
+</style>
+
+<div id="terminal" class="contain"></div>

@@ -18,6 +18,7 @@
 
     <meta property="og:image" content="assets/images/govuk-opengraph-image.png">
 
+    <%= yield(:head) %>
     <%= stylesheet_link_tag "main" %>
     <%= javascript_include_tag "main", defer: true %>
   </head>
@@ -61,6 +62,16 @@
           active: request.path.start_with?("/support/zendesk"),
           href: support_interface_zendesk_path,
           text: 'Zendesk',
+        ) %>
+        <% header.navigation_item(
+          active: current_page?(support_interface_console_path),
+          href: support_interface_console_path,
+          text: 'Console'
+        ) %>
+        <% header.navigation_item(
+          active: current_page?(support_interface_audits1984_path),
+          href: support_interface_audits1984_path,
+          text: 'Console Audits'
         ) %>
       <% end %>
     <% end %>
