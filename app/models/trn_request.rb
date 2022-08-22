@@ -21,6 +21,7 @@
 #  previous_first_name   :string(510)
 #  previous_last_name    :string(510)
 #  trn                   :string
+#  trn_from_user         :string
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  zendesk_ticket_id     :integer

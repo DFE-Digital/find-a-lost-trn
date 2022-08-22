@@ -45,6 +45,7 @@ module EnforceQuestionOrder
       { path: date_of_birth_path, needs_answer: ask_for_date_of_birth? },
       { path: have_ni_number_path, needs_answer: ask_if_has_ni_number? },
       { path: ni_number_path, needs_answer: ask_for_ni_number? },
+      { path: ask_trn_path, needs_answer: ask_for_trn? },
       { path: awarded_qts_path, needs_answer: ask_if_awarded_qts? },
       { path: itt_provider_path, needs_answer: ask_for_itt_provider? }
     ]
@@ -93,6 +94,14 @@ module EnforceQuestionOrder
     return false if session[:ni_number_not_known]
 
     trn_request.has_ni_number && trn_request.ni_number.nil?
+  end
+
+  def ask_for_trn?
+    return false unless FeatureFlag.active?(:ask_for_trn)
+
+    return false if trn_request.trn || session[:user_knows_trn] == "false"
+
+    trn_request.trn_from_user.nil?
   end
 
   def ask_if_awarded_qts?

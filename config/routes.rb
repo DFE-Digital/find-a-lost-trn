@@ -96,6 +96,9 @@ Rails.application.routes.draw do
 
   post "/identity", to: "identity#create"
 
+  get "/ask-trn", to: "ask_trn#new"
+  post "/ask-trn", to: "ask_trn#create"
+
   scope via: :all do
     get "/404", to: "errors#not_found"
     get "/422", to: "errors#unprocessable_entity"

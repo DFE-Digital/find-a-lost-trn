@@ -127,6 +127,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_23_143016) do
     t.boolean "has_active_sanctions"
     t.boolean "name_changed"
     t.boolean "from_get_an_identity", default: false
+    t.string "trn_from_user"
   end
 
   create_table "trn_responses", force: :cascade do |t|

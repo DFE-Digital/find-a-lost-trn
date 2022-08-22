@@ -31,6 +31,12 @@
     actions: [{ href: have_ni_number_path, visually_hidden_text: 'national insurance number' }]
   }
 
+  ask_trn_row = {
+    key: { text: 'Teacher reference number (TRN)' },
+    value: { text: trn_from_user_value },
+    actions: [{ href: ask_trn_path, visually_hidden_text: 'teacher reference number (trn)'}]
+  }
+
   awarded_qts_row = {
     key: { text: 'Have you been awarded QTS?' },
     value: { text: awarded_qts_value },
@@ -48,6 +54,7 @@
   rows.push(previous_name_row) if @trn_request.previous_name?
   rows.push(date_of_birth_row)
   rows.push(ni_row)
+  rows.push(ask_trn_row) if FeatureFlag.active?(:ask_for_trn)
   rows.push(awarded_qts_row) unless @trn_request.awarded_qts.nil?
   rows.push(itt_provider_row) unless @trn_request.itt_provider_enrolled.nil?
 
