@@ -27,7 +27,7 @@ class DqtApi
 
     teacher_account = results.first
 
-    UnlockTeacherAccountJob.perform_later(teacher_account)
+    UnlockTeacherAccountJob.perform_later(uid: teacher_account.fetch("uid"))
 
     teacher_account
   end
@@ -46,14 +46,10 @@ class DqtApi
     response.body["ittProviders"]
   end
 
-  def self.unlock_teacher!(teacher_account)
+  def self.unlock_teacher!(uid:)
     if FeatureFlag.active?(:unlock_teachers_self_service_portal_account)
       begin
-        response =
-          new.client.put(
-            "/v2/unlock-teacher/#{teacher_account.fetch("uid")}",
-            {}
-          )
+        response = new.client.put("/v2/unlock-teacher/#{uid}", {})
         raise ApiError, response.reason_phrase unless response.success?
       rescue ApiError => e
         Sentry.capture_exception(e)

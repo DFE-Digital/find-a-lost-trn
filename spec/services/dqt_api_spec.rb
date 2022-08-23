@@ -91,22 +91,8 @@ RSpec.describe DqtApi do
       FeatureFlag.deactivate(:unlock_teachers_self_service_portal_account)
     end
 
-    subject(:unlock_teacher!) do
-      described_class.unlock_teacher!(teacher_account)
-    end
+    subject(:unlock_teacher!) { described_class.unlock_teacher!(uid:) }
     let(:uid) { "f7891223-7661-e411-8047-005056822391" }
-    let(:teacher_account_base) do
-      {
-        "trn" => "2921020",
-        "emailAddresses" => ["anonymous@anonymousdomain.org.net.co.uk"],
-        "firstName" => "Kevin",
-        "lastName" => "Evans",
-        "dateOfBirth" => "1990-01-01",
-        "nationalInsuranceNumber" => "AA123456A",
-        "uid" => uid
-      }
-    end
-    let(:teacher_account) { teacher_account_base }
 
     context "when teacher ID is found", vcr: true do
       it { is_expected.to be_nil }
