@@ -6,13 +6,15 @@ class AskTrnController < ApplicationController
 
   def new
     @ask_trn_form = AskTrnForm.new(trn_request:)
-    @ask_trn_form.do_you_know_your_trn = session[:user_knows_trn]
+    @ask_trn_form.do_you_know_your_trn = "true" if @ask_trn_form
+      .trn_request
+      .trn_from_user
+      .present?
   end
 
   def create
     @ask_trn_form = AskTrnForm.new(trn_request:)
     if @ask_trn_form.update(trn_params)
-      session[:user_knows_trn] = trn_params.require(:do_you_know_your_trn)
       next_question
     else
       render :new

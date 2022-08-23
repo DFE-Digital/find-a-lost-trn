@@ -29,6 +29,7 @@ class IdentityController < ApplicationController
         last_name: "E",
         ni_number: "AA123456A",
         has_ni_number: true,
+        trn_from_user: "",
         date_of_birth: Date.parse("1990-01-01")
       )
 
