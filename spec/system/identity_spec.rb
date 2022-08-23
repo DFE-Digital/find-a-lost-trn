@@ -66,6 +66,78 @@ RSpec.describe "Identity", type: :system do
     end
   end
 
+  context "ask user for their TRN if they know it" do
+    let(:trn_params) do
+      {
+        awarded_qts: false,
+        first_name: "Kevin",
+        email: "kevin.e@example.com",
+        from_get_an_identity: true,
+        itt_provider_enrolled: false,
+        last_name: "E",
+        ni_number: "AA123456A",
+        has_ni_number: true,
+        date_of_birth: Date.parse("1990-01-01")
+      }
+    end
+
+    before do
+      trn_request = TrnRequest.create!(trn_params)
+      allow(TrnRequest).to receive(:create!).and_return(trn_request)
+    end
+
+    it "when user has not answered this question" do
+      when_i_access_the_identity_endpoint_with_parameters
+      then_i_see_the_ask_for_trn_page
+    end
+
+    context "when user has indicated they know their TRN" do
+      let(:trn_params) do
+        {
+          awarded_qts: false,
+          first_name: "Kevin",
+          email: "kevin.e@example.com",
+          from_get_an_identity: true,
+          itt_provider_enrolled: false,
+          last_name: "E",
+          ni_number: "AA123456A",
+          trn_from_user: "1234567",
+          has_ni_number: true,
+          date_of_birth: Date.parse("1990-01-01")
+        }
+      end
+      it "skip asking the user for their TRN" do
+        when_i_access_the_identity_endpoint_with_parameters
+        then_i_see_the_check_answers_page
+        then_i_see_the_trn_details_in_the_check_answers_summary("1234567")
+      end
+    end
+
+    context "when user wants to continue without their TRN" do
+      let(:trn_params) do
+        {
+          awarded_qts: false,
+          first_name: "Kevin",
+          email: "kevin.e@example.com",
+          from_get_an_identity: true,
+          itt_provider_enrolled: false,
+          last_name: "E",
+          ni_number: "AA123456A",
+          trn_from_user: "",
+          has_ni_number: true,
+          date_of_birth: Date.parse("1990-01-01")
+        }
+      end
+      it "skip asking the user for their TRN" do
+        when_i_access_the_identity_endpoint_with_parameters
+        then_i_see_the_check_answers_page
+        then_i_see_the_trn_details_in_the_check_answers_summary(
+          "I don’t know my TRN"
+        )
+      end
+    end
+  end
+
   private
 
   def when_i_access_the_identity_endpoint_with_parameters
@@ -98,6 +170,10 @@ RSpec.describe "Identity", type: :system do
     expect(response).to redirect_to("/check-answers")
   end
 
+  def then_i_see_the_ask_for_trn_page
+    expect(response).to redirect_to("/ask-trn")
+  end
+
   def when_i_try_to_go_to_the_email_page
     get email_path
   end
@@ -116,6 +192,13 @@ RSpec.describe "Identity", type: :system do
 
   def then_sentry_receives_a_warning_about_the_failure
     expect(Sentry).to have_received(:capture_exception)
+  end
+
+  def then_i_see_the_trn_details_in_the_check_answers_summary(value)
+    follow_redirect!
+    page = response.parsed_body
+    expect(page).to have_content("Teacher reference number (TRN)")
+    expect(page).to have_content(value)
   end
 
   def and_i_am_redirected_to_the_error_page
