@@ -5,11 +5,7 @@ class AskTrnController < ApplicationController
   layout "two_thirds"
 
   def new
-    @ask_trn_form = AskTrnForm.new(trn_request:)
-    @ask_trn_form.do_you_know_your_trn = "true" if @ask_trn_form
-      .trn_request
-      .trn_from_user
-      .present?
+    @ask_trn_form = AskTrnForm.new(trn_request:).assign_form_values
   end
 
   def create

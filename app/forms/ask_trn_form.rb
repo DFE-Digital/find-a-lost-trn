@@ -35,4 +35,9 @@ class AskTrnForm
   def trn_from_user_not_known?
     do_you_know_your_trn == "false"
   end
+
+  def assign_form_values
+    self.do_you_know_your_trn = "true" if trn_request.trn_from_user.present?
+    self
+  end
 end
