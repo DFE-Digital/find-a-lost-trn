@@ -50,10 +50,10 @@ module FindALostTrn
 
     config.credentials.content_path =
       (
-        if ENV.fetch("HOSTING_ENVIRONMENT_NAME", "development") == "production"
-          "config/credentials/production.yml.enc"
-        else
+        if HostingEnvironment.test_environment?
           "config/credentials.yml.enc"
+        else
+          "config/credentials/production.yml.enc"
         end
       )
   end
