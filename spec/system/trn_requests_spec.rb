@@ -477,6 +477,30 @@ RSpec.describe "TRN requests", type: :system do
     end
   end
 
+  context "when user is not coming from an identity journey" do
+    it "does not show the ask for TRN page", vcr: true do
+      given_i_am_on_the_home_page
+      when_i_press_the_start_button
+      when_i_confirm_i_have_a_trn_number
+      when_i_press_continue
+      when_i_fill_in_the_email_form
+      when_i_fill_in_the_name_form
+      when_i_complete_my_date_of_birth
+      and_i_choose_no
+      and_i_press_continue
+      then_i_see_the_awarded_qts_page
+      when_i_press_back
+      then_i_see_the_have_ni_page
+    end
+
+    it "does not give a summary of the TRN details in the check answers page",
+       vcr: true do
+      given_i_have_completed_a_trn_request
+      then_i_see_the_check_answers_page
+      and_i_should_not_see_the_trn_details_row
+    end
+  end
+
   private
 
   def and_a_job_gets_queued_to_retry_the_zendesk_ticket_creation
@@ -842,6 +866,10 @@ RSpec.describe "TRN requests", type: :system do
 
   def then_yes_should_be_checked
     expect(find_field("Yes", checked: true, visible: false)).to be_truthy
+  end
+
+  def and_i_should_not_see_the_trn_details_row
+    expect(page).not_to have_content("Teacher reference number (TRN)")
   end
 
   def when_i_am_on_the_check_answers_page
