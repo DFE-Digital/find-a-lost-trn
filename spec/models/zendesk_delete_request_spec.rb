@@ -4,9 +4,9 @@
 #
 #  id                 :bigint           not null, primary key
 #  closed_at          :datetime         not null
-#  enquiry_type       :string           not null
+#  enquiry_type       :string
 #  group_name         :string           not null
-#  no_action_required :string           not null
+#  no_action_required :string
 #  received_at        :datetime         not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
