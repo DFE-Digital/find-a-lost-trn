@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class UnlockTeacherAccountJob < ApplicationJob
-  def perform(teacher_account)
-    DqtApi.unlock_teacher!(teacher_account)
+  def perform(uid:)
+    DqtApi.unlock_teacher!(uid:)
   end
 end
