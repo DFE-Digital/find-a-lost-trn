@@ -1,5 +1,5 @@
 <% content_for :page_title, "#{'Error: ' if @awarded_qts_form.errors.any?}Have you been awarded qualified teacher status (QTS)?" %>
-<%= content_for :back_link_url, back_link_url(FeatureFlag.active?(:ask_for_trn) ? ask_trn_path : @awarded_qts_form.trn_request.has_ni_number? ? ni_number_path : have_ni_number_path) %>
+<%= content_for :back_link_url, back_link_url(@awarded_qts_form.trn_request.from_get_an_identity ? ask_trn_path : @awarded_qts_form.trn_request.has_ni_number? ? ni_number_path : have_ni_number_path) %>
 
 <%= form_with model: @awarded_qts_form, url: awarded_qts_path, method: :post do |f| %>
   <%= f.govuk_error_summary %>

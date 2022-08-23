@@ -93,7 +93,7 @@ class TrnDetailsComponent < ViewComponent::Base
   end
 
   def trn_from_user_value
-    return @trn_request.trn_from_user if session[:user_knows_trn] == "true"
+    return @trn_request.trn_from_user if @trn_request.trn_from_user.present?
 
     "I don’t know my TRN"
   end

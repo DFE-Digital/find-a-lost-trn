@@ -17,8 +17,8 @@ class AskTrnForm
 
   def update(params = {})
     self.do_you_know_your_trn = params[:do_you_know_your_trn]
-    self.trn_from_user = params[:trn_from_user]
-    clear_trn_from_user unless do_you_know_your_trn == "true"
+    self.trn_from_user =
+      (trn_from_user_not_known? ? "" : params[:trn_from_user])
 
     if invalid?
       log_errors
@@ -32,7 +32,7 @@ class AskTrnForm
     trn_request.trn_from_user = value&.delete("^0-9")
   end
 
-  def clear_trn_from_user
-    trn_request.trn_from_user = nil
+  def trn_from_user_not_known?
+    do_you_know_your_trn == "false"
   end
 end

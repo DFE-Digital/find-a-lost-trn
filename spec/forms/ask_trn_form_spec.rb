@@ -9,8 +9,6 @@ RSpec.describe AskTrnForm, type: :model do
   end
 
   describe "#update" do
-    before { FeatureFlag.activate(:ask_for_trn) }
-    after { FeatureFlag.deactivate(:ask_for_trn) }
     subject(:update!) { ask_trn_form.update(params) }
 
     let(:ask_trn_form) { described_class.new(trn_request:) }

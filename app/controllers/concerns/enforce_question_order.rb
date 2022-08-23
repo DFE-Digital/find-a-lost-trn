@@ -20,7 +20,7 @@ module EnforceQuestionOrder
   end
 
   def redirect_requests_from_identity
-    redirect_to check_answers_path if request_from_identity?
+    redirect_to next_question_path if request_from_identity?
   end
 
   private
@@ -97,9 +97,9 @@ module EnforceQuestionOrder
   end
 
   def ask_for_trn?
-    return false unless FeatureFlag.active?(:ask_for_trn)
+    return false unless trn_request.from_get_an_identity
 
-    return false if trn_request.trn || session[:user_knows_trn] == "false"
+    return false if trn_request.trn
 
     trn_request.trn_from_user.nil?
   end
