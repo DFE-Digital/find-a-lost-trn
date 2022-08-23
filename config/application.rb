@@ -47,5 +47,14 @@ module FindALostTrn
       auditor_class: "Staff",
       base_controller_class: "SupportInterface::SupportInterfaceController"
     }
+
+    config.credentials.content_path =
+      (
+        if ENV.fetch("HOSTING_ENVIRONMENT_NAME", "development") == "production"
+          "config/credentials/production.yml.enc"
+        else
+          "config/credentials.yml.enc"
+        end
+      )
   end
 end
