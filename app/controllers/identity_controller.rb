@@ -4,6 +4,8 @@ class IdentityController < ApplicationController
 
   include EnforceQuestionOrder
 
+  skip_before_action :redirect_to_next_question
+
   def create
     unless FeatureFlag.active?(:identity_open)
       raise IdentityEndpointOffError,
@@ -17,27 +19,17 @@ class IdentityController < ApplicationController
               "data from Identity was unable to be verified"
     end
 
-    # To allow initial testing with the Identity server - seed a new TrnRequest
-    # with fake user data and add it to the session
     @trn_request =
       TrnRequest.create!(
-        awarded_qts: false,
-        first_name: "Kevin",
-        email: "kevin.e@example.com",
-        from_get_an_identity: true,
-        itt_provider_enrolled: false,
-        last_name: "E",
-        ni_number: "AA123456A",
-        has_ni_number: true,
-        trn_from_user: "",
-        date_of_birth: Date.parse("1990-01-01")
+        email: allowed_create_params["email"],
+        from_get_an_identity: true
       )
 
     session[:trn_request_id] = @trn_request.id
     session[:identity_journey_id] = allowed_create_params["journey_id"]
     session[:identity_redirect_uri] = allowed_create_params["redirect_uri"]
 
-    redirect_requests_from_identity
+    redirect_to next_question_path
   end
 
   private

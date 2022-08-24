@@ -6,7 +6,6 @@ module EnforceQuestionOrder
 
   def redirect_to_next_question
     redirect_to(start_url) and return if start_page_is_required?
-    return if request_from_identity?
     return if all_questions_answered?
     return if previous_question_answered?
 
@@ -115,6 +114,6 @@ module EnforceQuestionOrder
   end
 
   def ask_for_email?
-    trn_request.email.nil?
+    trn_request.email.nil? && !trn_request.from_get_an_identity?
   end
 end
