@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module HostingEnvironment
-  TEST_ENVIRONMENTS = %w[local test development].freeze
+  TEST_ENVIRONMENTS = %w[local test development review].freeze
   PRODUCTION_URL = "https://find-a-lost-trn.education.gov.uk/"
 
   def self.host
