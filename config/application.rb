@@ -43,10 +43,9 @@ module FindALostTrn
 
     config.exceptions_app = routes
     config.console1984.ask_for_username_if_empty = true
-    config.audits1984 = {
-      auditor_class: "Staff",
-      base_controller_class: "SupportInterface::SupportInterfaceController"
-    }
+    config.audits1984.auditor_class = "Staff"
+    config.audits1984.base_controller_class =
+      "SupportInterface::SupportInterfaceController"
 
     config.credentials.content_path =
       (
