@@ -11,7 +11,7 @@ RSpec.describe "Identity", type: :system do
 
   it "verifies the parameters" do
     when_i_access_the_identity_endpoint_with_parameters
-    then_i_see_the_check_answers_page
+    then_i_see_the_name_page
   end
 
   it "does not verify with modified parameters" do
@@ -20,14 +20,25 @@ RSpec.describe "Identity", type: :system do
 
   it "does not allow user to change their email" do
     when_i_access_the_identity_endpoint_with_parameters
-    then_i_see_the_check_answers_page
+    then_i_see_the_name_page
     when_i_try_to_go_to_the_email_page
+    then_i_see_the_name_page
+  end
+
+  it "does not ask for an email address", vcr: true do
+    when_i_access_the_identity_endpoint_with_parameters
+    then_i_see_the_name_page
+    when_i_complete_and_submit_the_name_form
+    then_i_see_the_date_of_birth_page
+    when_i_complete_and_submit_my_date_of_birth
     then_i_see_the_check_answers_page
   end
 
   context "when sending the trn to the Identity API" do
     it "redirects back to Get An Identity", vcr: true do
       when_i_access_the_identity_endpoint_with_parameters
+      and_i_complete_and_submit_the_name_form
+      and_i_complete_and_submit_my_date_of_birth
       then_i_see_the_check_answers_page
       when_i_press_the_submit_button
       then_i_am_redirected_back_to_get_an_identity
@@ -38,8 +49,31 @@ RSpec.describe "Identity", type: :system do
         allow(DqtApi).to receive(:find_trn!).and_raise(DqtApi::NoResults)
       end
 
+      it "does not ask for an email address" do
+        when_i_access_the_identity_endpoint_with_parameters
+        then_i_see_the_name_page
+        when_i_complete_and_submit_the_name_form
+        then_i_see_the_date_of_birth_page
+        when_i_complete_and_submit_my_date_of_birth
+        then_i_see_the_have_ni_number_page
+        when_i_have_a_ni_number
+        then_i_see_the_ni_number_page
+        when_i_complete_and_submit_my_ni_number
+        then_i_see_the_ask_trn_page
+        when_i_do_not_know_the_trn
+        then_i_see_the_have_awarded_qts_page
+        when_i_have_not_been_awarded_qts
+        then_i_see_the_check_answers_page
+      end
+
       it "sends a blank trn to Get an Identity and redirects back Get An Identity" do
         when_i_access_the_identity_endpoint_with_parameters
+        and_i_complete_and_submit_the_name_form
+        and_i_complete_and_submit_my_date_of_birth
+        and_i_have_a_ni_number
+        and_i_complete_and_submit_my_ni_number
+        and_i_do_not_know_the_trn
+        and_i_have_not_been_awarded_qts
         then_i_see_the_check_answers_page
         when_i_press_the_submit_button
         then_i_see_the_no_match_page
@@ -58,6 +92,11 @@ RSpec.describe "Identity", type: :system do
 
       it "redirects to the error page", vcr: true do
         when_i_access_the_identity_endpoint_with_parameters
+        and_i_complete_and_submit_the_name_form
+        and_i_complete_and_submit_my_date_of_birth
+        and_i_have_a_ni_number
+        and_i_complete_and_submit_my_ni_number
+        and_i_have_not_been_awarded_qts
         then_i_see_the_check_answers_page
         when_i_press_the_submit_button
         then_sentry_receives_a_warning_about_the_failure
@@ -144,9 +183,9 @@ RSpec.describe "Identity", type: :system do
     params = {
       redirect_uri: "https://authserveruri/",
       client_title: "The Client Title",
-      email: "joe.bloggs@example.com",
+      email: "kevin.e@example.com",
       journey_id: "9ddccb62-ec13-4ea7-a163-c058a19b8222",
-      sig: "E03C7295CF8B3C444C21D8D88B04D4B377615B68A92C83B3321A3F71CF8E4A6D"
+      sig: "F33FFCFCAD9511941D200954DA6B8A381C9BC4307BEABF4B8764EA0F88E95271"
     }
 
     post identity_path, params:
@@ -158,7 +197,7 @@ RSpec.describe "Identity", type: :system do
       client_title: "New Title",
       email: "john.smith@example.com",
       journey_id: "9ddccb62-ec13-4ea7-a163-c058a19b8222",
-      sig: "E03C7295CF8B3C444C21D8D88B04D4B377615B68A92C83B3321A3F71CF8E4A6D"
+      sig: "F33FFCFCAD9511941D200954DA6B8A381C9BC4307BEABF4B8764EA0F88E95271"
     }
 
     expect { post identity_path, params: }.to raise_error(
@@ -166,12 +205,95 @@ RSpec.describe "Identity", type: :system do
     )
   end
 
+  def when_i_complete_and_submit_the_name_form
+    post "/name",
+         params: {
+           name_form: {
+             first_name: "Kevin",
+             last_name: "E",
+             name_changed: false
+           }
+         }
+  end
+  alias_method :and_i_complete_and_submit_the_name_form,
+               :when_i_complete_and_submit_the_name_form
+
+  def when_i_complete_and_submit_my_date_of_birth
+    post "/date-of-birth",
+         params: {
+           date_of_birth_form: {
+             "date_of_birth(3i)" => "1",
+             "date_of_birth(2i)" => "1",
+             "date_of_birth(1i)" => "1990"
+           }
+         }
+  end
+  alias_method :and_i_complete_and_submit_my_date_of_birth,
+               :when_i_complete_and_submit_my_date_of_birth
+
+  def when_i_have_a_ni_number
+    post "/have-ni-number",
+         params: {
+           has_ni_number_form: {
+             has_ni_number: true
+           }
+         }
+  end
+  alias_method :and_i_have_a_ni_number, :when_i_have_a_ni_number
+
+  def when_i_complete_and_submit_my_ni_number
+    post "/ni-number",
+         params: {
+           ni_number_form: {
+             ni_number: "AA123456A"
+           },
+           submit: "submit"
+         }
+  end
+  alias_method :and_i_complete_and_submit_my_ni_number,
+               :when_i_complete_and_submit_my_ni_number
+
+  def when_i_do_not_know_the_trn
+    post "/ask-trn", params: { ask_trn_form: { do_you_know_your_trn: false } }
+  end
+  alias_method :and_i_do_not_know_the_trn, :when_i_do_not_know_the_trn
+
+  def when_i_have_not_been_awarded_qts
+    post "/awarded-qts", params: { awarded_qts_form: { awarded_qts: false } }
+  end
+  alias_method :and_i_have_not_been_awarded_qts,
+               :when_i_have_not_been_awarded_qts
+
   def then_i_see_the_check_answers_page
     expect(response).to redirect_to("/check-answers")
   end
 
   def then_i_see_the_ask_for_trn_page
     expect(response).to redirect_to("/ask-trn")
+  end
+
+  def then_i_see_the_name_page
+    expect(response).to redirect_to("/name")
+  end
+
+  def then_i_see_the_date_of_birth_page
+    expect(response).to redirect_to("/date-of-birth")
+  end
+
+  def then_i_see_the_have_ni_number_page
+    expect(response).to redirect_to("/have-ni-number")
+  end
+
+  def then_i_see_the_ni_number_page
+    expect(response).to redirect_to("/ni-number")
+  end
+
+  def then_i_see_the_ask_trn_page
+    expect(response).to redirect_to("/ask-trn")
+  end
+
+  def then_i_see_the_have_awarded_qts_page
+    expect(response).to redirect_to("/awarded-qts")
   end
 
   def when_i_try_to_go_to_the_email_page
