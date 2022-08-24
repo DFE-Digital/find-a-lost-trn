@@ -9,6 +9,7 @@ module SupportInterface
               ZendeskDeleteRequest.new.from(t)
             end
           end
+      @zendesk_delete_requests = ZendeskDeleteRequest.all
     end
 
     def confirm_deletion
