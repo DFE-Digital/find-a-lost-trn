@@ -29,4 +29,48 @@ module ApplicationHelper
   def shy_email(email)
     sanitize(email).scan(/\W?\w+/).join("&shy;").html_safe
   end
+
+  def custom_title(page_title)
+    return sanitize(session[:client_title]) if session[:client_title]
+
+    [page_title, t("service.name")].compact.join(" - ")
+  end
+
+  def custom_header
+    govuk_header(service_name: t("service.name")) do |header|
+      case try(:current_namespace)
+      when "support_interface"
+        header.navigation_item(
+          active: current_page?(support_interface_trn_requests_path),
+          href: support_interface_trn_requests_path,
+          text: "TRNs"
+        )
+        header.navigation_item(
+          active: current_page?(support_interface_features_path),
+          href: support_interface_features_path,
+          text: "Features"
+        )
+        header.navigation_item(
+          active: request.path.start_with?("/support/staff"),
+          href: support_interface_staff_index_path,
+          text: "Staff"
+        )
+        header.navigation_item(
+          active: false,
+          href: support_interface_sidekiq_web_path,
+          text: "Sidekiq"
+        )
+        header.navigation_item(
+          active: current_page?(support_interface_validation_errors_path),
+          href: support_interface_validation_errors_path,
+          text: "Validations"
+        )
+        header.navigation_item(
+          active: request.path.start_with?("/support/zendesk"),
+          href: support_interface_zendesk_path,
+          text: "Zendesk"
+        )
+      end
+    end
+  end
 end

@@ -175,6 +175,14 @@ RSpec.describe "Identity", type: :system do
         )
       end
     end
+
+    context "custom client_title from get an identity" do
+      it "displays the client_title from get an identity journey" do
+        when_i_access_the_identity_endpoint_with_parameters
+        then_i_see_the_ask_for_trn_page
+        then_i_should_see_the_client_title_from_get_an_identity
+      end
+    end
   end
 
   private
@@ -321,6 +329,12 @@ RSpec.describe "Identity", type: :system do
     page = response.parsed_body
     expect(page).to have_content("Teacher reference number (TRN)")
     expect(page).to have_content(value)
+  end
+
+  def then_i_should_see_the_client_title_from_get_an_identity
+    follow_redirect!
+    page = response.parsed_body
+    expect(page).to have_content("The Client Title")
   end
 
   def and_i_am_redirected_to_the_error_page
