@@ -25,7 +25,7 @@ class ZendeskService
   end
 
   def self.destroy_tickets!(ids)
-    GDS_ZENDESK_CLIENT.zendesk_client.tickets.destroy_many(ids:).fetch
+    ZendeskAPI::Ticket.destroy_many!(GDS_ZENDESK_CLIENT.zendesk_client, ids)
   end
 
   def self.ticket_template(trn_request)

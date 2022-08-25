@@ -4,6 +4,7 @@ require "rails_helper"
 RSpec.describe ZendeskService do
   let(:ticket_client) { GDS_ZENDESK_CLIENT.ticket }
   let(:zendesk_client) { GDS_ZENDESK_CLIENT.zendesk_client }
+  let(:zendesk_api_ticket) { ZendeskAPI::Ticket }
 
   describe ".ticket_template" do
     it "correctly formats a TRN request with no NI number" do
@@ -125,9 +126,7 @@ RSpec.describe ZendeskService do
     let(:ticket_id_2) { 13 }
 
     before do
-      allow(zendesk_client).to receive(:tickets).and_return(zendesk_client)
-      allow(zendesk_client).to receive(:destroy_many).and_return(zendesk_client)
-      allow(zendesk_client).to receive(:fetch).and_return([])
+      allow(zendesk_api_ticket).to receive(:destroy_many!).and_return([])
     end
 
     it { is_expected.to be_a(Array) }
