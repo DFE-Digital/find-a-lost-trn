@@ -16,6 +16,10 @@ class ZendeskService
     GDS_ZENDESK_CLIENT.ticket.find(id:)
   end
 
+  def self.find_ticket!(id)
+    GDS_ZENDESK_CLIENT.ticket.find!(id:)
+  end
+
   def self.find_closed_tickets_from_6_months_ago
     date = 6.months.ago.strftime("%Y-%m-%d")
     GDS_ZENDESK_CLIENT

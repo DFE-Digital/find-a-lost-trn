@@ -102,6 +102,22 @@ RSpec.describe ZendeskService do
     it { is_expected.to be_a(ZendeskAPI::Ticket) }
   end
 
+  describe ".find_ticket!" do
+    subject(:find_ticket!) { described_class.find_ticket!(ticket_id) }
+
+    let(:ticket_id) { 42 }
+
+    context "when the ticket exists" do
+      before do
+        allow(ticket_client).to receive(:find!).and_return(
+          ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42)
+        )
+      end
+
+      it { is_expected.to be_a(ZendeskAPI::Ticket) }
+    end
+  end
+
   describe ".find_closed_tickets_from_6_months_ago" do
     subject(:find_closed_tickets) do
       described_class.find_closed_tickets_from_6_months_ago
