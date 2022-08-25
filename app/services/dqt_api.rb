@@ -27,7 +27,9 @@ class DqtApi
 
     teacher_account = results.first
 
-    UnlockTeacherAccountJob.perform_later(uid: teacher_account.fetch("uid"))
+    unless trn_request.previous_trn_success_for_email?
+      UnlockTeacherAccountJob.perform_later(uid: teacher_account.fetch("uid"))
+    end
 
     teacher_account
   end

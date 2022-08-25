@@ -112,4 +112,78 @@ RSpec.describe TrnRequest, type: :model do
       it { is_expected.to eq("John Smith") }
     end
   end
+
+  describe "#previous_trn_success_for_email?" do
+    subject(:trn_request) do
+      described_class.create(
+        first_name: "John",
+        last_name: "Doe",
+        previous_last_name: "Smith",
+        trn: "2921020",
+        email: "john.doe@example.com"
+      )
+    end
+
+    context "with no previous successful trn search for email address" do
+      it { expect(subject.previous_trn_success_for_email?).to be_falsey }
+    end
+
+    context "when there is no trn" do
+      it do
+        subject.trn = nil
+        expect(subject.previous_trn_success_for_email?).to be_falsey
+      end
+    end
+
+    context "when there is a previous successful trn search for the email address" do
+      context "with the same trn" do
+        let!(:previous_successful_trn_request) do
+          described_class.create(
+            first_name: "John",
+            last_name: "Doe",
+            previous_last_name: "Smith",
+            trn: "2921020",
+            email: "john.doe@example.com"
+          )
+        end
+
+        it { expect(trn_request.previous_trn_success_for_email?).to be_falsey }
+      end
+
+      context "with a different trn" do
+        let!(:previous_successful_trn_request) do
+          described_class.create(
+            first_name: "John",
+            last_name: "Doe",
+            previous_last_name: "Smith",
+            trn: "2921019",
+            email: "john.doe@example.com"
+          )
+        end
+
+        it { expect(trn_request.previous_trn_success_for_email?).to be_truthy }
+
+        context "and the current TrnRequest has no trn" do
+          it do
+            subject.trn = nil
+            expect(subject.previous_trn_success_for_email?).to be_falsey
+          end
+        end
+      end
+    end
+
+    context "when there is a previous no match trn search for the email address" do
+      let!(:previous_successful_trn_request) do
+        described_class.create(
+          first_name: "John",
+          last_name: "Doe",
+          previous_last_name: "Smith",
+          trn: nil,
+          email: "john.doe@example.com"
+        )
+      end
+
+      it { expect(trn_request.previous_trn_success_for_email?).to be_falsey }
+    end
+  end
 end

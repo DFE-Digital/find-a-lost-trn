@@ -74,4 +74,10 @@ class TrnRequest < ApplicationRecord
 
     !has_ni_number.nil? && !has_ni_number_was.nil?
   end
+
+  # Detect if the same email has successfully requested a different TRN
+  def previous_trn_success_for_email?
+    return false if trn.blank?
+    TrnRequest.where(email:).where.not(trn:).exists?
+  end
 end
