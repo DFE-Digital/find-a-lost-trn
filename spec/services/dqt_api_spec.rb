@@ -39,6 +39,32 @@ RSpec.describe DqtApi do
       end
     end
 
+    context "unlocking a teacher account", vcr: true do
+      before do
+        allow(trn_request).to receive(
+          :previous_trn_success_for_email?
+        ).and_return(false)
+      end
+
+      it "enqueues a job to unlock the teacher account" do
+        described_class.find_trn!(trn_request)
+        expect(UnlockTeacherAccountJob).to have_been_enqueued
+      end
+
+      context "when there is a previous successful trn request for the email address" do
+        before do
+          allow(trn_request).to receive(
+            :previous_trn_success_for_email?
+          ).and_return(true)
+        end
+
+        it "does not enqueue a job to unlock the teacher account" do
+          described_class.find_trn!(trn_request)
+          expect(UnlockTeacherAccountJob).to_not have_been_enqueued
+        end
+      end
+    end
+
     context "when the API returns a timeout error" do
       it "raises a timeout error" do
         VCR.turned_off do
