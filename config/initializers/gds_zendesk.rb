@@ -39,7 +39,7 @@ class ExtendedDummyClient
 end
 
 module DummyClientExtensions
-  attr_reader :zendesk_client
+  attr_reader :zendesk_client, :ticket
 
   def initialize(options)
     @logger = options[:logger] || NullLogger.instance
@@ -78,6 +78,10 @@ module DummyTicketExtensions
       )
     ]
     ticket
+  end
+
+  def find!(id:)
+    find(id:)
   end
 end
 

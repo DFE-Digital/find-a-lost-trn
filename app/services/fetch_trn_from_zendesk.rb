@@ -39,6 +39,6 @@ class FetchTrnFromZendesk
   end
 
   def zendesk_ticket
-    @zendesk_ticket ||= ZendeskService.find_ticket(zendesk_ticket_id)
+    @zendesk_ticket ||= ZendeskService.find_ticket!(zendesk_ticket_id)
   end
 end
