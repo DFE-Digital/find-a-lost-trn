@@ -185,7 +185,7 @@ RSpec.describe "Identity", type: :system do
       client_title: "The Client Title",
       email: "kevin.e@example.com",
       journey_id: "9ddccb62-ec13-4ea7-a163-c058a19b8222",
-      sig: "F33FFCFCAD9511941D200954DA6B8A381C9BC4307BEABF4B8764EA0F88E95271"
+      sig: "2940250690ABB0055E0EF197E7C296BF5FF62587ECD7B39A2F88D08F3AC8A30E"
     }
 
     post identity_path, params:
@@ -197,7 +197,7 @@ RSpec.describe "Identity", type: :system do
       client_title: "New Title",
       email: "john.smith@example.com",
       journey_id: "9ddccb62-ec13-4ea7-a163-c058a19b8222",
-      sig: "F33FFCFCAD9511941D200954DA6B8A381C9BC4307BEABF4B8764EA0F88E95271"
+      sig: "2940250690ABB0055E0EF197E7C296BF5FF62587ECD7B39A2F88D08F3AC8A30E"
     }
 
     expect { post identity_path, params: }.to raise_error(

@@ -39,7 +39,7 @@ class IdentityController < ApplicationController
   end
 
   # Compare the signature provided by Identity with the signature calcuated
-  # using the recieved params. If they match then data has not been tampered with.
+  # using the received params. If they match then data has not been tampered with.
   def valid_identity_params?
     return false if expected_signature.blank? || new_signature.blank?
 
@@ -56,11 +56,10 @@ class IdentityController < ApplicationController
 
   # Encode each of the hash values and return a url paramter string, url_encode ensures
   # spaces are encoded as '%20' rather than '+' to match the encoding used by Identity.
-  # Skip the email attribute to avoid encoding the '@' character.
   def encoded_identity_params
     encoded_params =
       sorted_identity_params.flat_map do |k, v|
-        encoded_value = k == "email" ? v : ERB::Util.url_encode(v)
+        encoded_value = ERB::Util.url_encode(v)
         "#{k}=#{encoded_value}"
       end
 
