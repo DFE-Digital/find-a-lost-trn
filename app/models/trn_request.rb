@@ -28,7 +28,13 @@
 #
 class TrnRequest < ApplicationRecord
   encrypts :email,
-           :first_name,
+           deterministic: {
+             fixed: false
+           },
+           previous: {
+             deterministic: false
+           }
+  encrypts :first_name,
            :last_name,
            :ni_number,
            :previous_first_name,
