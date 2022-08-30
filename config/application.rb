@@ -41,6 +41,9 @@ module FindALostTrn
 
     config.active_job.queue_adapter = :sidekiq
 
+    config.active_record.encryption.extend_queries = true
+    config.active_record.encryption.store_key_references = true
+
     config.exceptions_app = routes
     config.console1984.ask_for_username_if_empty = true
     config.audits1984.auditor_class = "Staff"
