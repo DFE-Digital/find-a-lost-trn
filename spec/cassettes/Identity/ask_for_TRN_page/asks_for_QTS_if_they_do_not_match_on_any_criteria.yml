@@ -1,0 +1,115 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1999-01-01&emailAddress=kevin.e@example.com&firstName=Kevin&lastName=E
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Wed, 31 Aug 2022 16:12:22 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "296"
+        X-Rate-Limit-Reset:
+          - "2022-08-31T16:13:00.0000000Z"
+        X-Vcap-Request-Id:
+          - ecf3f435-c089-41b3-6647-1972dd86a476
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 50ef760066390594318a8cc54c245fd2.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-P2
+        X-Amz-Cf-Id:
+          - 9RqLeVo7aA-F7k4JiYdHM9mZL1JHAB2Rco6PDzCjm5ROFWRim_C3VQ==
+      body:
+        encoding: UTF-8
+        string: '{"results":[]}'
+    recorded_at: Wed, 31 Aug 2022 16:12:22 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1999-01-01&emailAddress=kevin.e@example.com&firstName=Kevin&lastName=E&trn=1234567
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Wed, 31 Aug 2022 16:12:22 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "295"
+        X-Rate-Limit-Reset:
+          - "2022-08-31T16:13:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 86a6ea44-d653-45fc-4f17-2c63553a27f7
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 1c6be95f21b3cc0cf77147b4aa61e7c2.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-P2
+        X-Amz-Cf-Id:
+          - RDcjZWBr7lQ2v089G2kh-PtjBvHbk-4ywSLCE6f7ky34rx-htzrnyA==
+      body:
+        encoding: UTF-8
+        string: '{"results":[]}'
+    recorded_at: Wed, 31 Aug 2022 16:12:22 GMT
+recorded_with: VCR 6.1.0

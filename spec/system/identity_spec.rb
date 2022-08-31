@@ -105,83 +105,58 @@ RSpec.describe "Identity", type: :system do
     end
   end
 
-  context "ask user for their TRN if they know it" do
-    let(:trn_params) do
-      {
-        awarded_qts: false,
-        first_name: "Kevin",
-        email: "kevin.e@example.com",
-        from_get_an_identity: true,
-        itt_provider_enrolled: false,
-        last_name: "E",
-        ni_number: "AA123456A",
-        has_ni_number: true,
-        date_of_birth: Date.parse("1990-01-01")
-      }
-    end
-
-    before do
-      trn_request = TrnRequest.create!(trn_params)
-      allow(TrnRequest).to receive(:create!).and_return(trn_request)
-    end
-
-    it "when user has not answered this question" do
+  context "ask for TRN page" do
+    it "matches if they don't match on other criteria", vcr: true do
       when_i_access_the_identity_endpoint_with_parameters
-      then_i_see_the_ask_for_trn_page
+      then_i_see_the_name_page
+
+      when_i_complete_and_submit_the_name_form
+      then_i_see_the_date_of_birth_page
+
+      when_i_complete_and_submit_my_wrong_date_of_birth
+      then_i_see_the_have_ni_number_page
+
+      when_i_dont_have_a_ni_number
+      then_i_see_the_ask_trn_page
+
+      when_i_submit_my_trn
+      then_i_see_the_check_answers_page
     end
 
-    context "when user has indicated they know their TRN" do
-      let(:trn_params) do
-        {
-          awarded_qts: false,
-          first_name: "Kevin",
-          email: "kevin.e@example.com",
-          from_get_an_identity: true,
-          itt_provider_enrolled: false,
-          last_name: "E",
-          ni_number: "AA123456A",
-          trn_from_user: "1234567",
-          has_ni_number: true,
-          date_of_birth: Date.parse("1990-01-01")
-        }
-      end
-      it "skip asking the user for their TRN" do
-        when_i_access_the_identity_endpoint_with_parameters
-        then_i_see_the_check_answers_page
-        then_i_see_the_trn_details_in_the_check_answers_summary("1234567")
-      end
+    it "does not ask if they match on other criteria", vcr: true do
+      when_i_access_the_identity_endpoint_with_parameters
+      then_i_see_the_name_page
+
+      when_i_complete_and_submit_the_name_form
+      then_i_see_the_date_of_birth_page
+
+      when_i_complete_and_submit_my_date_of_birth
+      then_i_see_the_check_answers_page
     end
 
-    context "when user wants to continue without their TRN" do
-      let(:trn_params) do
-        {
-          awarded_qts: false,
-          first_name: "Kevin",
-          email: "kevin.e@example.com",
-          from_get_an_identity: true,
-          itt_provider_enrolled: false,
-          last_name: "E",
-          ni_number: "AA123456A",
-          trn_from_user: "",
-          has_ni_number: true,
-          date_of_birth: Date.parse("1990-01-01")
-        }
-      end
-      it "skip asking the user for their TRN" do
-        when_i_access_the_identity_endpoint_with_parameters
-        then_i_see_the_check_answers_page
-        then_i_see_the_trn_details_in_the_check_answers_summary(
-          "I don’t know my TRN"
-        )
-      end
-    end
+    it "asks for QTS if they do not match on any criteria", vcr: true do
+      when_i_access_the_identity_endpoint_with_parameters
+      then_i_see_the_name_page
 
-    context "custom client_title from get an identity" do
-      it "displays the client_title from get an identity journey" do
-        when_i_access_the_identity_endpoint_with_parameters
-        then_i_see_the_ask_for_trn_page
-        then_i_should_see_the_client_title_from_get_an_identity
-      end
+      when_i_complete_and_submit_the_name_form
+      then_i_see_the_date_of_birth_page
+
+      when_i_complete_and_submit_my_wrong_date_of_birth
+      then_i_see_the_have_ni_number_page
+
+      when_i_dont_have_a_ni_number
+      then_i_see_the_ask_trn_page
+
+      when_i_submit_my_wrong_trn
+      then_i_see_the_have_awarded_qts_page
+    end
+  end
+
+  context "custom client_title from get an identity" do
+    it "displays the client_title from get an identity journey" do
+      when_i_access_the_identity_endpoint_with_parameters
+      then_i_see_the_name_page
+      then_i_should_see_the_client_title_from_get_an_identity
     end
   end
 
@@ -239,6 +214,17 @@ RSpec.describe "Identity", type: :system do
   alias_method :and_i_complete_and_submit_my_date_of_birth,
                :when_i_complete_and_submit_my_date_of_birth
 
+  def when_i_complete_and_submit_my_wrong_date_of_birth
+    post "/date-of-birth",
+         params: {
+           date_of_birth_form: {
+             "date_of_birth(3i)" => "1",
+             "date_of_birth(2i)" => "1",
+             "date_of_birth(1i)" => "1999"
+           }
+         }
+  end
+
   def when_i_have_a_ni_number
     post "/have-ni-number",
          params: {
@@ -248,6 +234,15 @@ RSpec.describe "Identity", type: :system do
          }
   end
   alias_method :and_i_have_a_ni_number, :when_i_have_a_ni_number
+
+  def when_i_dont_have_a_ni_number
+    post "/have-ni-number",
+         params: {
+           has_ni_number_form: {
+             has_ni_number: false
+           }
+         }
+  end
 
   def when_i_complete_and_submit_my_ni_number
     post "/ni-number",
@@ -265,6 +260,26 @@ RSpec.describe "Identity", type: :system do
     post "/ask-trn", params: { ask_trn_form: { do_you_know_your_trn: false } }
   end
   alias_method :and_i_do_not_know_the_trn, :when_i_do_not_know_the_trn
+
+  def when_i_submit_my_trn
+    post "/ask-trn",
+         params: {
+           ask_trn_form: {
+             do_you_know_your_trn: true,
+             trn_from_user: "2921020"
+           }
+         }
+  end
+
+  def when_i_submit_my_wrong_trn
+    post "/ask-trn",
+         params: {
+           ask_trn_form: {
+             do_you_know_your_trn: true,
+             trn_from_user: "1234567"
+           }
+         }
+  end
 
   def when_i_have_not_been_awarded_qts
     post "/awarded-qts", params: { awarded_qts_form: { awarded_qts: false } }
@@ -304,6 +319,10 @@ RSpec.describe "Identity", type: :system do
     expect(response).to redirect_to("/awarded-qts")
   end
 
+  def then_i_see_the_have_itt_provider_page
+    expect(response).to redirect_to("/itt-provider")
+  end
+
   def when_i_try_to_go_to_the_email_page
     get email_path
   end
@@ -311,6 +330,7 @@ RSpec.describe "Identity", type: :system do
   def when_i_press_the_submit_button
     put "/trn-request", params: { trn_request: { answers_checked: true } }
   end
+  alias_method :when_i_submit_anyway, :when_i_press_the_submit_button
 
   def then_i_see_the_no_match_page
     expect(response).to redirect_to("/no-match")
@@ -322,13 +342,6 @@ RSpec.describe "Identity", type: :system do
 
   def then_sentry_receives_a_warning_about_the_failure
     expect(Sentry).to have_received(:capture_exception)
-  end
-
-  def then_i_see_the_trn_details_in_the_check_answers_summary(value)
-    follow_redirect!
-    page = response.parsed_body
-    expect(page).to have_content("Teacher reference number (TRN)")
-    expect(page).to have_content(value)
   end
 
   def then_i_should_see_the_client_title_from_get_an_identity
