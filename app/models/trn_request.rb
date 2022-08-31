@@ -27,8 +27,8 @@
 #  zendesk_ticket_id     :integer
 #
 class TrnRequest < ApplicationRecord
-  encrypts :email,
-           :first_name,
+  encrypts :email, deterministic: true
+  encrypts :first_name,
            :last_name,
            :ni_number,
            :previous_first_name,
