@@ -29,6 +29,7 @@ class IdentityController < ApplicationController
     session[:identity_journey_id] = allowed_create_params["journey_id"]
     session[:identity_redirect_uri] = allowed_create_params["redirect_uri"]
     session[:client_title] = allowed_create_params["client_title"]
+    session[:client_url] = allowed_create_params["client_url"]
 
     redirect_to next_question_path
   end
@@ -36,7 +37,14 @@ class IdentityController < ApplicationController
   private
 
   def allowed_create_params
-    params.permit(:email, :redirect_uri, :client_title, :journey_id, :sig)
+    params.permit(
+      :client_url,
+      :email,
+      :redirect_uri,
+      :client_title,
+      :journey_id,
+      :sig
+    )
   end
 
   # Compare the signature provided by Identity with the signature calcuated
