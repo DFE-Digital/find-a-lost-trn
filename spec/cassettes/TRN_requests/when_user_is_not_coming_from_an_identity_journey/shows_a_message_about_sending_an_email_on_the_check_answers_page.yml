@@ -1,0 +1,57 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin@kevin.com&firstName=Kevin&lastName=E
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 401
+        message: Unauthorized
+      headers:
+        Content-Length:
+          - "0"
+        Connection:
+          - keep-alive
+        Date:
+          - Thu, 01 Sep 2022 13:39:47 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-09-01T13:40:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 3cba5bf0-f8da-481d-630b-de0f4506a56f
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Error from cloudfront
+        Via:
+          - 1.1 ce084a1179392e1921b98c60a4590284.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR62-C5
+        X-Amz-Cf-Id:
+          - 7Bbo-nHTKhLO39bCFbxrvE9Yw4FXBHV9xuwgvq1jV4qzJN_D-QHPLg==
+      body:
+        encoding: UTF-8
+        string: ""
+    recorded_at: Thu, 01 Sep 2022 13:39:47 GMT
+recorded_with: VCR 6.1.0
