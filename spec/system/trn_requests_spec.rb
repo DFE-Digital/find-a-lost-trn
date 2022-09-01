@@ -843,6 +843,11 @@ RSpec.describe "TRN requests", type: :system do
 
   def then_i_see_the_no_match_page
     expect(page).to have_content("We could not find your TRN")
+    expect(page).to have_content("Check your details")
+    expect(page).not_to have_content(
+      "We could not match your answers with our records"
+    )
+    expect(page).not_to have_content("Check your answers")
   end
 
   def then_i_see_no_qts_awarded
