@@ -1,0 +1,59 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=kevin.e@example.com&firstName=Kevin&lastName=E
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Wed, 31 Aug 2022 16:12:22 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "297"
+        X-Rate-Limit-Reset:
+          - "2022-08-31T16:13:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 4df72007-4eab-49c6-6f41-1f68502f66f3
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 5778022b3a2272b3eca05304cf962166.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-P2
+        X-Amz-Cf-Id:
+          - "-pMV2L4WOgq6JoYT27_P6DrzWcXhakfaShFLIVM0_G6UeUEmZxnlfQ=="
+      body:
+        encoding: UTF-8
+        string: '{"results":[{"trn":"2921020","emailAddresses":["kevin.e@example.com"],"firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","uid":"1bf8803f-3924-417c-9603-1ed6489dae0d","hasActiveSanctions":false}]}'
+    recorded_at: Wed, 31 Aug 2022 16:12:22 GMT
+recorded_with: VCR 6.1.0

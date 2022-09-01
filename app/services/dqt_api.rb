@@ -68,7 +68,8 @@ class DqtApi
       lastName: trn_request.last_name,
       previousFirstName: trn_request.previous_first_name,
       previousLastName: trn_request.previous_last_name,
-      nationalInsuranceNumber: trn_request.ni_number
+      nationalInsuranceNumber: trn_request.ni_number,
+      trn: trn_request.trn_from_user
     }.compact
   end
 
