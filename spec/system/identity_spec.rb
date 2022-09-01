@@ -175,15 +175,22 @@ RSpec.describe "Identity", type: :system do
     end
   end
 
+  it "renders a link to the calling service" do
+    when_i_access_the_identity_endpoint_with_parameters
+    then_i_see_the_name_page
+    and_it_links_to_the_calling_service
+  end
+
   private
 
   def when_i_access_the_identity_endpoint_with_parameters
     params = {
-      redirect_uri: "https://authserveruri/",
       client_title: "The Client Title",
+      client_url: "https://clienturi/",
       email: "kevin.e@example.com",
       journey_id: "9ddccb62-ec13-4ea7-a163-c058a19b8222",
-      sig: "2940250690ABB0055E0EF197E7C296BF5FF62587ECD7B39A2F88D08F3AC8A30E"
+      redirect_uri: "https://authserveruri/",
+      sig: "2b92f4e7c5d22e3627f477ade69fd0a8f2c0f948c33572d53ebaece8534f858b"
     }
 
     post identity_path, params:
@@ -400,5 +407,11 @@ RSpec.describe "Identity", type: :system do
   def and_i_see_a_continue_button
     follow_redirect!
     expect(response.parsed_body).to have_button("Continue", visible: false)
+  end
+
+  def and_it_links_to_the_calling_service
+    follow_redirect!
+    page = response.parsed_body
+    expect(page).to have_link(href: "https://clienturi/")
   end
 end
