@@ -80,6 +80,20 @@ RSpec.describe "Identity", type: :system do
         when_i_submit_anyway
         then_i_am_redirected_back_to_get_an_identity
       end
+
+      it "has the correct no match page copy for Get an Identity journey" do
+        when_i_access_the_identity_endpoint_with_parameters
+        and_i_complete_and_submit_the_name_form
+        and_i_complete_and_submit_my_date_of_birth
+        and_i_have_a_ni_number
+        and_i_complete_and_submit_my_ni_number
+        and_i_do_not_know_the_trn
+        and_i_have_not_been_awarded_qts
+        then_i_see_the_check_answers_page
+        when_i_press_the_submit_button
+        then_i_see_the_no_match_page
+        and_i_see_the_correct_no_match_copy
+      end
     end
 
     context "when there is an Identity API error" do
@@ -348,6 +362,17 @@ RSpec.describe "Identity", type: :system do
     follow_redirect!
     page = response.parsed_body
     expect(page).to have_content("The Client Title")
+  end
+
+  def and_i_see_the_correct_no_match_copy
+    follow_redirect!
+    page = response.parsed_body
+    expect(page).to have_content(
+      "We could not match your answers with our records"
+    )
+    expect(page).to have_content("Check your answers")
+    expect(page).not_to have_content("We could not find your TRN")
+    expect(page).not_to have_content("Check your details")
   end
 
   def and_i_am_redirected_to_the_error_page
