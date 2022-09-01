@@ -85,7 +85,7 @@ RSpec.describe DateOfBirthForm, type: :model do
       it "adds an error" do
         update!
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(
-          ["Enter your date of birth, formatted as a number"]
+          ["Enter your date of birth"]
         )
       end
 
