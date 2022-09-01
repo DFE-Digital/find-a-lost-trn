@@ -40,7 +40,7 @@ RSpec.describe "Identity", type: :system do
       and_i_complete_and_submit_the_name_form
       and_i_complete_and_submit_my_date_of_birth
       then_i_see_the_check_answers_page
-      when_i_press_the_submit_button
+      when_i_press_the_continue_button
       then_i_am_redirected_back_to_get_an_identity
     end
 
@@ -75,7 +75,7 @@ RSpec.describe "Identity", type: :system do
         and_i_do_not_know_the_trn
         and_i_have_not_been_awarded_qts
         then_i_see_the_check_answers_page
-        when_i_press_the_submit_button
+        when_i_press_the_continue_button
         then_i_see_the_no_match_page
         when_i_submit_anyway
         then_i_am_redirected_back_to_get_an_identity
@@ -90,7 +90,7 @@ RSpec.describe "Identity", type: :system do
         and_i_do_not_know_the_trn
         and_i_have_not_been_awarded_qts
         then_i_see_the_check_answers_page
-        when_i_press_the_submit_button
+        when_i_press_the_continue_button
         then_i_see_the_no_match_page
         and_i_see_the_correct_no_match_copy
       end
@@ -112,7 +112,8 @@ RSpec.describe "Identity", type: :system do
         and_i_complete_and_submit_my_ni_number
         and_i_have_not_been_awarded_qts
         then_i_see_the_check_answers_page
-        when_i_press_the_submit_button
+        and_i_see_a_continue_button
+        when_i_press_the_continue_button
         then_sentry_receives_a_warning_about_the_failure
         and_i_am_redirected_to_the_error_page
       end
@@ -341,10 +342,10 @@ RSpec.describe "Identity", type: :system do
     get email_path
   end
 
-  def when_i_press_the_submit_button
+  def when_i_press_the_continue_button
     put "/trn-request", params: { trn_request: { answers_checked: true } }
   end
-  alias_method :when_i_submit_anyway, :when_i_press_the_submit_button
+  alias_method :when_i_submit_anyway, :when_i_press_the_continue_button
 
   def then_i_see_the_no_match_page
     expect(response).to redirect_to("/no-match")
@@ -394,5 +395,10 @@ RSpec.describe "Identity", type: :system do
 
   def given_the_identity_endpoint_is_open
     FeatureFlag.activate(:identity_open)
+  end
+
+  def and_i_see_a_continue_button
+    follow_redirect!
+    expect(response.parsed_body).to have_button("Continue", visible: false)
   end
 end
