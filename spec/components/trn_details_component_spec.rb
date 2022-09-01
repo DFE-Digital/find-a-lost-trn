@@ -7,19 +7,22 @@ RSpec.describe TrnDetailsComponent, type: :component do
   let(:ni_number) { "QC123456A" }
   let(:email) { "test@example.com" }
   let(:awarded_qts) { true }
+  let(:trn_from_user) { "1234567" }
+  let(:from_get_an_identity) { false }
   let(:trn_request) do
     TrnRequest.new(
       awarded_qts:,
       date_of_birth: 20.years.ago.to_date,
       email:,
-      from_get_an_identity: false,
+      from_get_an_identity:,
       first_name: "Test",
       has_ni_number:,
       itt_provider_enrolled:,
       itt_provider_name: "Big SCITT",
       last_name: "User",
       ni_number:,
-      previous_last_name: "Smith"
+      previous_last_name: "Smith",
+      trn_from_user:
     )
   end
   let(:component) { render_inline(described_class.new(trn_request:)) }
@@ -53,6 +56,18 @@ RSpec.describe TrnDetailsComponent, type: :component do
 
   it "renders email" do
     expect(component.text).to include("test­@example­.com") # NB: This is test&shy;@example&shy;.com
+  end
+
+  context "when a TRN from user is provided" do
+    it { expect(component.text).to_not include("1234567") }
+
+    context "when from Get An Identity" do
+      let(:from_get_an_identity) { true }
+
+      it "does render TRN from user" do
+        expect(component.text).to include("1234567")
+      end
+    end
   end
 
   it "does not render change buttons" do
@@ -184,5 +199,33 @@ RSpec.describe TrnDetailsComponent, type: :component do
       )
     end
     it { is_expected.to include("No, I was awarded QTS another way") }
+  end
+
+  context "when TRN from user is not provided" do
+    let(:trn_from_user) { "" }
+
+    it { expect(component.text).to_not include("I don’t know my TRN") }
+
+    context "when from Get An Identity" do
+      let(:from_get_an_identity) { true }
+
+      it "does renders that the TRN was not provided" do
+        expect(component.text).to include("I don’t know my TRN")
+      end
+    end
+  end
+
+  context "when a TRN from user is nil" do
+    let(:trn_from_user) { nil }
+
+    it { expect(component.text).to_not include("I don’t know my TRN") }
+
+    context "when from Get An Identity" do
+      let(:from_get_an_identity) { true }
+
+      it "does not render TRN from user" do
+        expect(component.text).to_not include("I don’t know my TRN")
+      end
+    end
   end
 end
