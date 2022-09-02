@@ -501,6 +501,15 @@ RSpec.describe "TRN requests", type: :system do
     end
   end
 
+  context "when user is not coming from an identity journey" do
+    it "shows a message about sending an email on the check answers page",
+       vcr: true do
+      given_i_have_completed_a_trn_request
+      then_i_see_the_check_answers_page
+      and_i_see_a_message_about_sending_an_email
+    end
+  end
+
   private
 
   def and_a_job_gets_queued_to_retry_the_zendesk_ticket_creation
@@ -681,6 +690,12 @@ RSpec.describe "TRN requests", type: :system do
     and_i_see_my_not_matching_details
   end
 
+  def and_i_see_a_message_about_sending_an_email
+    expect(page).to have_content(
+      "We will send your TRN to kevin@kevin.com if we find one matching your details."
+    )
+  end
+
   def then_i_see_my_not_matching_details
     expect(page).to have_content("Do not Match me")
     expect(page).to have_content("kevin­@kevin­.com") # NB: This is kevin&shy;@kevin&shy;.com
@@ -843,6 +858,11 @@ RSpec.describe "TRN requests", type: :system do
 
   def then_i_see_the_no_match_page
     expect(page).to have_content("We could not find your TRN")
+    expect(page).to have_content("Check your details")
+    expect(page).not_to have_content(
+      "We could not match your answers with our records"
+    )
+    expect(page).not_to have_content("Check your answers")
   end
 
   def then_i_see_no_qts_awarded

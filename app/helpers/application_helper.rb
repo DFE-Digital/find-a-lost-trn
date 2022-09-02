@@ -31,13 +31,11 @@ module ApplicationHelper
   end
 
   def custom_title(page_title)
-    return sanitize(session[:client_title]) if session[:client_title]
-
-    [page_title, t("service.name")].compact.join(" - ")
+    [page_title, service_name].compact.join(" - ")
   end
 
   def custom_header
-    govuk_header(service_name: t("service.name")) do |header|
+    govuk_header(service_name:) do |header|
       case try(:current_namespace)
       when "support_interface"
         header.navigation_item(
@@ -71,6 +69,14 @@ module ApplicationHelper
           text: "Zendesk"
         )
       end
+    end
+  end
+
+  def service_name
+    if session[:client_title]
+      sanitize(session[:client_title])
+    else
+      t("service.name")
     end
   end
 end

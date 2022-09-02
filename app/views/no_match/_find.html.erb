@@ -1,0 +1,29 @@
+<% content_for :page_title, "#{'Error: ' if @no_match_form.errors.any?}We could not find your trn" %>
+<% content_for :back_link_url, check_answers_path %>
+
+<%= form_with model: @no_match_form, url: no_match_path do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl">We could not find your TRN</h1>
+
+  <p class="govuk-body">This could be because you:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>abbreviated your first name, for example Rob/Robert</li>
+    <li>used a different name to the one held on the Teaching Regulation
+      Agency records</li>
+    <li>mistyped or entered some incorrect information</li>
+  </ul>
+
+  <h2 class="govuk-heading-m">Check your details</h2>
+
+  <%= render(TrnDetailsComponent.new(trn_request: @trn_request)) %>
+
+  <%= f.govuk_collection_radio_buttons(:try_again,
+        [OpenStruct.new(label: 'Yes, I have different details I can try', value: true), OpenStruct.new(label: 'No, submit these details, they are correct', value: false)],
+        :value,
+        :label,
+        legend: { size: 'm', text: 'Do you want to change something and try again?' }
+      ) %>
+  <%= f.govuk_submit 'Continue', prevent_double_click: false %>
+<% end %>

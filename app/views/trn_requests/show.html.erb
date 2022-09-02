@@ -2,11 +2,13 @@
 <%= content_for :back_link_url, back_link_url %>
 
 <h1 class="govuk-heading-xl">Check your answers</h1>
-<p class="govuk-body">We will send your TRN to <%= @trn_request.email %> if we find one matching your details.</p>
+<% unless @trn_request.from_get_an_identity? %>
+  <p class="govuk-body">We will send your TRN to <%= @trn_request.email %> if we find one matching your details.</p>
+<% end %>
 
 <%= render(TrnDetailsComponent.new(trn_request: @trn_request, actions: true)) %>
 
 <%= form_with model: @trn_request, method: :put do |f| %>
   <%= f.hidden_field :answers_checked, value: true %>
-  <%= f.govuk_submit 'Submit', prevent_double_click: false %>
+  <%= f.govuk_submit @trn_request.from_get_an_identity ? 'Continue' : 'Submit', prevent_double_click: false %>
 <% end %>
