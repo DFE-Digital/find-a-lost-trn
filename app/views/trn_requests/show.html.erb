@@ -10,5 +10,5 @@
 
 <%= form_with model: @trn_request, method: :put do |f| %>
   <%= f.hidden_field :answers_checked, value: true %>
-  <%= f.govuk_submit 'Submit', prevent_double_click: false %>
+  <%= f.govuk_submit @trn_request.from_get_an_identity ? 'Continue' : 'Submit', prevent_double_click: false %>
 <% end %>
