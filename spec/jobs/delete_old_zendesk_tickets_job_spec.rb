@@ -60,8 +60,12 @@ RSpec.describe DeleteOldZendeskTicketsJob, type: :job do
 
     context "with 100 or more tickets" do
       let(:returned_tickets) { tickets * 50 }
-      it "raises an error" do
-        expect { perform }.to raise_error RuntimeError
+      it "does not raise an error" do
+        expect { perform }.not_to raise_error
+      end
+      it "recursively performs the job" do
+        perform
+        expect(described_class).to have_been_enqueued
       end
     end
   end
