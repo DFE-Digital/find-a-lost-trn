@@ -1,11 +1,15 @@
 module SupportInterface
   class ZendeskController < SupportInterfaceController
+    include Pagy::Backend
+
     def index
       @zendesk_tickets =
         ZendeskService.find_closed_tickets_from_6_months_ago.map do |t|
           ZendeskDeleteRequest.new.from(t)
         end
-      @zendesk_delete_requests = ZendeskDeleteRequest.all
+
+      @pagy, @zendesk_delete_requests =
+        pagy(ZendeskDeleteRequest.order(closed_at: :desc))
     end
 
     def confirm_deletion

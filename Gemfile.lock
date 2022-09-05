@@ -528,6 +528,7 @@ DEPENDENCIES
   logstop (~> 0.2.8)
   mail-notify
   okcomputer (~> 1.18)
+  pagy
   pg (~> 1.4)
   prettier_print (~> 0.1.0)
   puma (~> 5.6)
