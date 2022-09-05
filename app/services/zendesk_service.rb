@@ -24,7 +24,10 @@ class ZendeskService
     date = 6.months.ago.strftime("%Y-%m-%d")
     GDS_ZENDESK_CLIENT
       .zendesk_client
-      .search(query: "updated<#{date} type:ticket status:closed")
+      .search(
+        query: "updated<#{date} type:ticket status:closed",
+        include: "tickets(groups)"
+      )
       .fetch
   end
 
