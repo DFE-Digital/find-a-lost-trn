@@ -21,6 +21,30 @@ RSpec.describe "Zendesk ticket deletion", type: :system do
     and_a_job_to_delete_tickets_is_queued
   end
 
+  context "when there are Zendesk tickets that have been requested for deletion" do
+    before do
+      # Create Zendesk deletion requests for 2 pages (100 per page)
+      150.times do |cntr|
+        ZendeskDeleteRequest.create(
+          ticket_id: cntr + 42,
+          received_at: Time.zone.now,
+          closed_at: Time.zone.now,
+          group_name: "delete request group"
+        )
+      end
+    end
+
+    it "shows the Zendesk delete requests paginated" do
+      given_i_am_authorized_as_a_support_user
+      when_i_visit_the_zendesk_support_page
+      then_i_should_see_the_latest_delete_request
+      and_i_should_see_page_1_navigation_links
+      when_i_click_on_next
+      then_i_should_see_page_2_navigation_links
+      and_i_should_see_the_last_delete_request
+    end
+  end
+
   private
 
   def deactivate_feature_flags
@@ -73,5 +97,32 @@ RSpec.describe "Zendesk ticket deletion", type: :system do
 
   def and_a_job_to_delete_tickets_is_queued
     expect(DeleteOldZendeskTicketsJob).to have_been_enqueued
+  end
+
+  def then_i_should_see_the_latest_delete_request
+    expect(page).to have_content "Ticket 191"
+  end
+
+  def when_i_click_on_next
+    # There are top and bottom page navigation menus
+    first("a", text: "Next").click
+  end
+
+  def and_i_should_see_page_1_navigation_links
+    expect(page).to have_link("1")
+    expect(page).to have_link("2")
+    expect(page).to have_link("Next")
+    expect(page).to_not have_link("Prev")
+  end
+
+  def then_i_should_see_page_2_navigation_links
+    expect(page).to have_link("1")
+    expect(page).to have_link("2")
+    expect(page).to have_link("Prev")
+    expect(page).to_not have_link("Next")
+  end
+
+  def and_i_should_see_the_last_delete_request
+    expect(page).to have_content("Ticket 43")
   end
 end
