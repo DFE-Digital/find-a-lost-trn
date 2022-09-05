@@ -5,3 +5,7 @@ performance_alert:
 zendesk_health_alert:
   cron: "0 10 * * *"
   class: "ZendeskHealthJob"
+
+zendesk_delete:
+  cron: "0 9 * * WED"
+  class: "DeleteOldZendeskTicketsJob"
