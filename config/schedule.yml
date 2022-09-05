@@ -7,5 +7,5 @@ zendesk_health_alert:
   class: "ZendeskHealthJob"
 
 zendesk_delete:
-  cron: "0 9 * * WED"
+  cron: "0 11 * * WED"
   class: "DeleteOldZendeskTicketsJob"
