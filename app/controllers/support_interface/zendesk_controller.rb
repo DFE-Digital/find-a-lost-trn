@@ -8,6 +8,8 @@ module SupportInterface
           ZendeskDeleteRequest.new.from(t)
         end
 
+      @total = ZendeskDeleteRequest.count
+
       @pagy, @zendesk_delete_requests =
         pagy(ZendeskDeleteRequest.order(closed_at: :desc))
     end
