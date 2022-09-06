@@ -33,4 +33,21 @@ class ZendeskDeleteRequest < ApplicationRecord
     self.group_name = ticket.group.name
     self
   end
+
+  def self.to_csv
+    attributes = %w[
+      ticket_id
+      group_name
+      received_at
+      closed_at
+      enquiry_type
+      no_action_required
+    ]
+    CSV.generate(headers: true) do |csv|
+      csv << attributes.map(&:titleize)
+      all.find_each do |request|
+        csv << attributes.map { |attr| request.send(attr) }
+      end
+    end
+  end
 end

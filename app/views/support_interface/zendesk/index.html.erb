@@ -83,6 +83,8 @@
     </span>
   </h2>
 
+  <p><%= govuk_link_to "Export to CSV", support_interface_zendesk_export_path(format: :csv) %></p>
+
   <%= govuk_pagination(pagy: @pagy) %>
 
   <%= govuk_table do |table|

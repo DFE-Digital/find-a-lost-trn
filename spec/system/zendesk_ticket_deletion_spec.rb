@@ -43,6 +43,13 @@ RSpec.describe "Zendesk ticket deletion", type: :system do
       then_i_should_see_page_2_navigation_links
       and_i_should_see_the_last_delete_request
     end
+
+    it "exports Zendesk tickets that have been requested for deletion" do
+      given_i_am_authorized_as_a_support_user
+      when_i_visit_the_zendesk_support_page
+      then_i_should_see_the_latest_delete_request
+      and_i_should_be_able_to_export_tickets_to_csv
+    end
   end
 
   private
@@ -124,5 +131,18 @@ RSpec.describe "Zendesk ticket deletion", type: :system do
 
   def and_i_should_see_the_last_delete_request
     expect(page).to have_content("Ticket 43")
+  end
+
+  def and_i_should_be_able_to_export_tickets_to_csv
+    expect(page).to have_link("Export to CSV")
+    click_on("Export to CSV")
+    filename = "#{Time.zone.today}_deleted_zendesk_tickets.csv"
+    expect(page.driver.response_headers["Content-Disposition"]).to eq(
+      "attachment; filename=\"#{filename}\"; filename*=UTF-8''#{filename}"
+    )
+    sleep(2) # Need a way to verify the download is complete
+    expect(File.read("#{Rails.root.join("tmp/capybara")}/#{filename}")).to eq(
+      ZendeskDeleteRequest.to_csv
+    )
   end
 end

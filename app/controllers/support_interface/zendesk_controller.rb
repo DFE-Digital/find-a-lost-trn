@@ -1,3 +1,5 @@
+require "csv"
+
 module SupportInterface
   class ZendeskController < SupportInterfaceController
     include Pagy::Backend
@@ -33,6 +35,13 @@ module SupportInterface
         redirect_to support_interface_zendesk_path
       else
         render :confirm_deletion
+      end
+    end
+
+    def export
+      filename = "#{Time.zone.today}_deleted_zendesk_tickets.csv"
+      respond_to do |format|
+        format.csv { send_data ZendeskDeleteRequest.to_csv, filename: }
       end
     end
 
