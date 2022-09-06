@@ -9,3 +9,7 @@ zendesk_health_alert:
 zendesk_delete:
   cron: "0 11 * * WED"
   class: "DeleteOldZendeskTicketsJob"
+
+zendesk_delete_alert:
+  cron: "0 11 * * TUE"
+  class: "DeleteZendeskTicketsAlertJob"
