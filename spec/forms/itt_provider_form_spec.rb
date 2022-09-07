@@ -25,7 +25,7 @@ RSpec.describe IttProviderForm, type: :model do
     end
   end
 
-  describe "#save" do
+  describe "#save", vcr: true do
     subject(:save!) { form.save }
 
     context "when itt_provider_enrolled is missing" do
@@ -51,6 +51,38 @@ RSpec.describe IttProviderForm, type: :model do
         save!
         expect(form.trn_request.itt_provider_enrolled).to be true
         expect(form.trn_request.itt_provider_name).to eq "Big SCITT"
+      end
+    end
+
+    context "when the itt provider has a UKPRN" do
+      let(:form) do
+        described_class.new(
+          trn_request: TrnRequest.new,
+          itt_provider_enrolled: "true",
+          itt_provider_name: "Astra SCITT"
+        )
+      end
+
+      it "saves the UKPRN" do
+        save!
+        expect(form.trn_request.itt_provider_ukprn).to eq "10032610"
+        expect(form.trn_request.itt_provider_name).to eq "Astra SCITT"
+      end
+    end
+
+    context "when the itt provider has no UKPRN" do
+      let(:form) do
+        described_class.new(
+          trn_request: TrnRequest.new,
+          itt_provider_enrolled: "true",
+          itt_provider_name: "Undefined SCITT"
+        )
+      end
+
+      it "does not save a UKPRN" do
+        save!
+        expect(form.trn_request.itt_provider_ukprn).to be nil
+        expect(form.trn_request.itt_provider_name).to eq "Undefined SCITT"
       end
     end
   end

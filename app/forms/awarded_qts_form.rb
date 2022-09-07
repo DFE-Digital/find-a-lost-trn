@@ -21,5 +21,6 @@ class AwardedQtsForm
   def clear_itt_provider
     trn_request.itt_provider_enrolled = nil
     trn_request.itt_provider_name = nil
+    trn_request.itt_provider_ukprn = nil
   end
 end

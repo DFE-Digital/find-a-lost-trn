@@ -145,4 +145,56 @@ RSpec.describe DqtApi do
       end
     end
   end
+
+  describe ".trn_request_params" do
+    context "when there is a ukprn for the ITT Provider" do
+      let(:trn_request) do
+        TrnRequest.new(
+          email: "test@example.com",
+          first_name: "John",
+          last_name: "Smith",
+          ni_number: "QQ123456C",
+          itt_provider_ukprn: "12345",
+          itt_provider_name: "Astra SCITT"
+        )
+      end
+
+      it "the params contain the ukprn" do
+        expect(DqtApi.trn_request_params(trn_request)).to eq(
+          {
+            emailAddress: "test@example.com",
+            firstName: "John",
+            ittProviderUkprn: "12345",
+            lastName: "Smith",
+            nationalInsuranceNumber: "QQ123456C"
+          }
+        )
+      end
+    end
+
+    context "when there is no ukrn for the ITT Provider" do
+      let(:trn_request) do
+        TrnRequest.new(
+          email: "test@example.com",
+          first_name: "John",
+          last_name: "Smith",
+          ni_number: "QQ123456C",
+          itt_provider_ukprn: nil,
+          itt_provider_name: "Astra SCITT"
+        )
+      end
+
+      it "the params contain the ITT Provider name" do
+        expect(DqtApi.trn_request_params(trn_request)).to eq(
+          {
+            emailAddress: "test@example.com",
+            firstName: "John",
+            ittProviderName: "Astra SCITT",
+            lastName: "Smith",
+            nationalInsuranceNumber: "QQ123456C"
+          }
+        )
+      end
+    end
+  end
 end

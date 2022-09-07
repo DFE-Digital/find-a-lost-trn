@@ -15,6 +15,7 @@
 #  has_ni_number         :boolean
 #  itt_provider_enrolled :boolean
 #  itt_provider_name     :string
+#  itt_provider_ukprn    :string
 #  last_name             :string(510)
 #  name_changed          :boolean
 #  ni_number             :string(510)
@@ -73,5 +74,9 @@ class TrnRequest < ApplicationRecord
   def previous_trn_success_for_email?
     return false if trn.blank?
     TrnRequest.where(email:).where.not(trn:).exists?
+  end
+
+  def itt_provider_name_for_dqt
+    itt_provider_ukprn.present? ? nil : itt_provider_name
   end
 end
