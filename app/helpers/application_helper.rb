@@ -87,4 +87,8 @@ module ApplicationHelper
       t("service.name")
     end
   end
+
+  def is_identity_journey?
+    !!session[:identity_journey_id]
+  end
 end
