@@ -7,6 +7,7 @@ module SupportInterface
       @identity_params.email = "kevin.e@example.com"
       @identity_params.journey_id = journey_id
       @identity_params.redirect_uri = redirect_uri
+      @identity_params.client_url = client_url
     end
 
     def confirm
@@ -14,7 +15,8 @@ module SupportInterface
         client_title: create_params[:client_title],
         email: create_params[:email],
         journey_id:,
-        redirect_uri:
+        redirect_uri:,
+        client_url:
       }
       sig = Identity.signature_from(@identity_params)
       @identity_params[:sig] = sig
@@ -40,6 +42,10 @@ module SupportInterface
     end
 
     def redirect_uri
+      support_interface_identity_callback_path
+    end
+
+    def client_url
       support_interface_identity_callback_path
     end
   end

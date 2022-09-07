@@ -33,6 +33,13 @@
                 disabled for simulated journeys because simulated journeys \
                 should always return to Find." }
       ) %>
+      <%= f.govuk_text_field(:client_url,
+        disabled: true,
+        label: { size: 's', text: 'Client URL' },
+        hint: { text: "Will be linked to from the header. Editing is \
+                disabled for simulated journeys because simulated journeys \
+                should always return to Find." }
+      ) %>
       <%= f.govuk_submit "Continue", prevent_double_click: false %>
     <% end %>
   </div>
