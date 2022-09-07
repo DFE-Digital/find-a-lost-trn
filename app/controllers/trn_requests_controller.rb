@@ -29,6 +29,7 @@ class TrnRequestsController < ApplicationController
 
           # Send the user back to Get an Identity
           redirect_to session[:identity_redirect_uri], allow_other_host: true
+          reset_session
         rescue IdentityApi::ApiError,
                Faraday::ConnectionFailed,
                Faraday::TimeoutError,

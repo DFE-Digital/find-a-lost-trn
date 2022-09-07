@@ -48,6 +48,7 @@ RSpec.describe "Identity", type: :system do
 
       when_i_press_the_continue_button
       then_i_am_redirected_to_the_callback
+      and_the_title_of_the_service_is_find_a_lost_trn
     end
 
     context "when there is no trn match", vcr: true do
@@ -179,6 +180,15 @@ RSpec.describe "Identity", type: :system do
     end
   end
 
+  it "renders a link to the calling service" do
+    when_i_access_the_identity_endpoint
+    then_i_see_the_name_page
+
+    when_i_click_on_the_header
+    then_i_am_redirected_to_the_callback
+    and_the_title_of_the_service_is_find_a_lost_trn
+  end
+
   private
 
   def when_i_access_the_identity_endpoint
@@ -269,6 +279,10 @@ RSpec.describe "Identity", type: :system do
   alias_method :and_i_have_not_been_awarded_qts,
                :when_i_have_not_been_awarded_qts
 
+  def when_i_click_on_the_header
+    click_on "Register for a National Professional Qualification"
+  end
+
   def then_i_see_the_check_answers_page
     expect(page).to have_content("Check your answers")
   end
@@ -357,5 +371,9 @@ RSpec.describe "Identity", type: :system do
 
   def given_the_identity_endpoint_is_open
     FeatureFlag.activate(:identity_open)
+  end
+
+  def and_the_title_of_the_service_is_find_a_lost_trn
+    expect(page).to have_content("Find a lost teacher reference number (TRN)")
   end
 end
