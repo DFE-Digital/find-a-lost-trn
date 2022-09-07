@@ -28,8 +28,8 @@ class IdentityController < ApplicationController
     session[:trn_request_id] = @trn_request.id
     session[:identity_journey_id] = allowed_create_params["journey_id"]
     session[:identity_redirect_uri] = allowed_create_params["redirect_uri"]
-    session[:client_title] = allowed_create_params["client_title"]
-    session[:client_url] = allowed_create_params["client_url"]
+    session[:identity_client_title] = allowed_create_params["client_title"]
+    session[:identity_client_url] = allowed_create_params["client_url"]
 
     redirect_to next_question_path
   end
