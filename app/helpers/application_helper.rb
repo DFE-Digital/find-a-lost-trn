@@ -78,8 +78,8 @@ module ApplicationHelper
   end
 
   def service_name
-    if session[:client_title]
-      sanitize(session[:client_title])
+    if session[:identity_client_title]
+      sanitize(session[:identity_client_title])
     else
       t("service.name")
     end
