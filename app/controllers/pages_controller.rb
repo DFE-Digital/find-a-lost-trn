@@ -21,5 +21,10 @@ class PagesController < ApplicationController
 
   def start
     session[:form_complete] = false
+
+    if session[:client_url]
+      redirect_to session[:client_url], allow_other_host: true
+      reset_session
+    end
   end
 end
