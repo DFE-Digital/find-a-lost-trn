@@ -55,39 +55,13 @@ class IdentityController < ApplicationController
     expected_signature.upcase == new_signature.upcase
   end
 
-  # Retrieve the list of params required for the paramater check. The keys
-  # must be in alphabetical order.
-  def sorted_identity_params
-    params_without_signature = allowed_create_params.except("sig")
-
-    params_without_signature.to_hash.sort
-  end
-
-  # Encode each of the hash values and return a url paramter string, url_encode ensures
-  # spaces are encoded as '%20' rather than '+' to match the encoding used by Identity.
-  def encoded_identity_params
-    encoded_params =
-      sorted_identity_params.flat_map do |k, v|
-        encoded_value = ERB::Util.url_encode(v)
-        "#{k}=#{encoded_value}"
-      end
-
-    encoded_params.join("&")
-  end
-
   # Retrieve the signature provided by Identity
   def expected_signature
     allowed_create_params.key?("sig") ? allowed_create_params["sig"] : ""
   end
 
-  # Calculate a new signature from the params supplied by Identity
   def new_signature
-    digest = OpenSSL::Digest.new("sha256")
-    OpenSSL::HMAC.hexdigest(
-      digest,
-      ENV["IDENTITY_SHARED_SECRET_KEY"],
-      encoded_identity_params
-    )
+    Identity.signature_from(allowed_create_params.except("sig"))
   end
 
   class IdentityEndpointOffError < StandardError
