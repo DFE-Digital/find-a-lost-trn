@@ -1,0 +1,32 @@
+<% content_for :page_title, "Simulate an Identity session" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      Confirm session
+    </h1>
+
+    <p>
+      Submit this form to <code>POST /identity</code> with the following
+      params.
+    </p>
+
+    <%= form_with url: identity_path do |f| %>
+      <%
+        rows = @identity_params.map do |k, v|
+          {
+            key: { text: k },
+            value: { text: v }
+          }
+        end
+      %>
+      <%= govuk_summary_list(rows: rows) %>
+
+      <% @identity_params.each do |k, value| %>
+        <%= f.hidden_field k.to_sym, value: %>
+      <% end %>
+
+      <%= f.govuk_submit "Submit", prevent_double_click: false %>
+    <% end %>
+  </div>
+</div>
