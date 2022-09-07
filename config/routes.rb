@@ -33,6 +33,10 @@ Rails.application.routes.draw do
     get "/zendesk/confirm-deletion", to: "zendesk#confirm_deletion"
     post "/zendesk/confirm-deletion", to: "zendesk#destroy"
 
+    get "/identity", to: "identity#new"
+    post "/identity/confirm", to: "identity#confirm"
+    get "/identity/callback", to: "identity#callback"
+
     resources :trn_requests, only: [] do
       resource :zendesk_sync, only: [:create], controller: "zendesk_sync"
     end
