@@ -7,34 +7,50 @@ class ExtendedDummyClient
     @logger = logger
   end
 
+  def connection
+    Struct.new(:get).new
+  end
+
   def tickets
     self
   end
 
   def search(_params)
-    self
+    fetch
   end
 
   def destroy_many(_params)
     self
   end
 
-  def fetch
-    [
-      ZendeskAPI::Ticket.new(
-        GDS_ZENDESK_CLIENT,
-        id: 42,
-        created_at: (6.months + 8.days).ago,
-        updated_at: (6.months + 1.day).ago,
-        custom_fields: [
-          { id: 4_419_328_659_089, value: "Foo" },
-          { id: 4_562_126_876_049, value: "Bar" }
-        ],
-        group: {
-          name: "Some group"
-        }
-      )
-    ]
+  def fetch(*args)
+    fetch!(*args)
+  end
+
+  def fetch!(*_args)
+    ZendeskAPI::Collection
+      .new(self, ZendeskAPI::Ticket)
+      .tap do |collection|
+        collection.instance_variable_set(
+          :@resources,
+          [
+            ZendeskAPI::Ticket.new(
+              GDS_ZENDESK_CLIENT,
+              id: 42,
+              created_at: (6.months + 8.days).ago,
+              updated_at: (6.months + 1.day).ago,
+              custom_fields: [
+                { id: 4_419_328_659_089, value: "Foo" },
+                { id: 4_562_126_876_049, value: "Bar" }
+              ],
+              group: {
+                name: "Some group"
+              }
+            )
+          ]
+        )
+        collection.instance_variable_set(:@count, 1)
+      end
   end
 end
 

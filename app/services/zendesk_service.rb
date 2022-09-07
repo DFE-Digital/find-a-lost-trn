@@ -22,13 +22,10 @@ class ZendeskService
 
   def self.find_closed_tickets_from_6_months_ago
     date = 6.months.ago.strftime("%Y-%m-%d")
-    GDS_ZENDESK_CLIENT
-      .zendesk_client
-      .search(
-        query: "updated<#{date} type:ticket status:closed",
-        include: "tickets(groups)"
-      )
-      .fetch
+    GDS_ZENDESK_CLIENT.zendesk_client.search(
+      query: "updated<#{date} type:ticket status:closed",
+      include: "tickets(groups)"
+    )
   end
 
   def self.destroy_tickets!(ids)

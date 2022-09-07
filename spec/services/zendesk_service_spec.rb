@@ -123,14 +123,9 @@ RSpec.describe ZendeskService do
       described_class.find_closed_tickets_from_6_months_ago
     end
 
-    before do
-      allow(zendesk_client).to receive(:search).and_return(zendesk_client)
-      allow(zendesk_client).to receive(:fetch).and_return(
-        [ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42)]
-      )
-    end
+    let(:search_results) { double("ZendeskAPI::Colleciton", count: 1) }
 
-    it { is_expected.to be_a(Array) }
+    it { is_expected.to be_a(ZendeskAPI::Collection) }
   end
 
   describe ".destroy_tickets!" do
