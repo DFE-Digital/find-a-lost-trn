@@ -1,8 +1,8 @@
 class DeleteOldZendeskTicketsJob < ApplicationJob
   def perform
     tickets = ZendeskService.find_closed_tickets_from_6_months_ago
-    return if tickets.size.zero?
-    if tickets.size >= 100
+    return if tickets.count.zero?
+    if tickets.count >= 100
       DeleteOldZendeskTicketsJob.set(wait: 5.minutes).perform_later
     end
 
