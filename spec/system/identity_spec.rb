@@ -199,7 +199,7 @@ RSpec.describe "Identity", type: :system do
 
   def when_i_access_the_identity_endpoint_with_modified_parameters_it_raises_an_error
     params = {
-      redirect_uri: "https://authserveruri/",
+      redirect_url: "https://authserveruri/",
       client_title: "New Title",
       email: "john.smith@example.com",
       journey_id: "9ddccb62-ec13-4ea7-a163-c058a19b8222",
