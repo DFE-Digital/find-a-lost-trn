@@ -4,7 +4,7 @@ RSpec.describe "Zendesk ticket deletion", type: :system do
   before { given_the_service_is_open }
   after { deactivate_feature_flags }
 
-  it "allows deleting outstanding Zendesk tickets", vcr: true do
+  it "allows deleting outstanding Zendesk tickets", vcr: true, download: true do
     given_i_am_authorized_as_a_support_user
     when_i_visit_the_zendesk_support_page
     then_i_should_see_a_ticket
