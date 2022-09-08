@@ -21,28 +21,28 @@ class IdentityController < ApplicationController
 
     @trn_request =
       TrnRequest.create!(
-        email: allowed_create_params["email"],
+        email: recognised_params["email"],
         from_get_an_identity: true
       )
 
     session[:trn_request_id] = @trn_request.id
-    session[:identity_journey_id] = allowed_create_params["journey_id"]
-    session[:identity_redirect_uri] = allowed_create_params["redirect_uri"]
-    session[:identity_client_title] = allowed_create_params["client_title"]
-    session[:identity_client_url] = allowed_create_params["client_url"]
+    session[:identity_journey_id] = recognised_params["journey_id"]
+    session[:identity_redirect_uri] = recognised_params["redirect_uri"]
+    session[:identity_client_title] = recognised_params["client_title"]
+    session[:identity_client_url] = recognised_params["client_url"]
 
     redirect_to next_question_path
   end
 
   private
 
-  def allowed_create_params
+  def recognised_params
     params.permit(
+      :client_title,
       :client_url,
       :email,
-      :redirect_uri,
-      :client_title,
       :journey_id,
+      :redirect_uri,
       :sig
     )
   end
@@ -57,11 +57,16 @@ class IdentityController < ApplicationController
 
   # Retrieve the signature provided by Identity
   def expected_signature
-    allowed_create_params.key?("sig") ? allowed_create_params["sig"] : ""
+    params.fetch("sig", "")
   end
 
   def new_signature
-    Identity.signature_from(allowed_create_params.except("sig"))
+    # Pass in all params without allowlisting via `.permit` to compute the
+    # signature. This is necessary because new parameters can be added to Get
+    # an Identity, which would cause the sig to change and break us as a
+    # downstream user.
+    unsafe_params = params.to_unsafe_h.except("sig", "controller", "action")
+    Identity.signature_from(unsafe_params)
   end
 
   class IdentityEndpointOffError < StandardError
