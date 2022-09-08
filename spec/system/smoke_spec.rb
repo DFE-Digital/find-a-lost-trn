@@ -44,6 +44,11 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
     then_i_see_the_check_answers_page
   end
 
+  it "/health/all returns 200" do
+    page.visit("#{ENV["HOSTING_DOMAIN"]}/health/all")
+    expect(page.status_code).to eq(200)
+  end
+
   private
 
   def then_i_see_the_ask_questions_page
