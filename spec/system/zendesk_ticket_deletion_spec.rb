@@ -134,15 +134,7 @@ RSpec.describe "Zendesk ticket deletion", type: :system do
   end
 
   def and_i_should_be_able_to_export_tickets_to_csv
-    expect(page).to have_link("Export to CSV")
     click_on("Export to CSV")
-    filename = "#{Time.zone.today}_deleted_zendesk_tickets.csv"
-    expect(page.driver.response_headers["Content-Disposition"]).to eq(
-      "attachment; filename=\"#{filename}\"; filename*=UTF-8''#{filename}"
-    )
-    sleep(2) # Need a way to verify the download is complete
-    expect(File.read("#{Rails.root.join("tmp/capybara")}/#{filename}")).to eq(
-      ZendeskDeleteRequest.to_csv
-    )
+    expect(download_content).to eq(ZendeskDeleteRequest.to_csv)
   end
 end
