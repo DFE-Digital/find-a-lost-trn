@@ -37,7 +37,7 @@ end
 RSpec.configure do |config|
   config.include System::DownloadHelpers, type: :system
 
-  config.around(:each, type: :system) do |example|
+  config.around(:each, type: :system, download: ->(v) { v }) do |example|
     clear_downloads
     example.run
     clear_downloads
