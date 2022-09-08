@@ -36,4 +36,17 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(result).to eq("Page Title - alert(\"evil\")")
     end
   end
+
+  describe "#is_identity_journey?" do
+    it "returns false if it's not an identity journey" do
+      result = is_identity_journey?
+      expect(result).to be_falsey
+    end
+
+    it "returns true if it's an identity journey" do
+      session[:identity_journey_id] = "Foo"
+      result = is_identity_journey?
+      expect(result).to be_truthy
+    end
+  end
 end
