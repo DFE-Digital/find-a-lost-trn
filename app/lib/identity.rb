@@ -11,7 +11,7 @@ class Identity
   # url_encode ensures spaces are encoded as '%20' rather than '+' to match the
   # encoding used by Identity.
   def self.encode_params(params)
-    sorted_params = params.to_hash.sort # Keys must be in alphabetical order.
+    sorted_params = params.sort # Keys must be in alphabetical order.
 
     encoded_params =
       sorted_params.flat_map do |k, v|
