@@ -40,6 +40,13 @@
                 disabled for simulated journeys because simulated journeys \
                 should always return to Find." }
       ) %>
+      <%= f.govuk_text_field(:previous_url,
+        disabled: true,
+        label: { size: 's', text: 'Previous URL' },
+        hint: { text: "Linked to from the back button on the Name page. Editing \
+                is disabled for simulated journeys because simulated journeys \
+                should always return to Find." }
+      ) %>
       <%= f.govuk_submit "Continue", prevent_double_click: false %>
     <% end %>
   </div>
