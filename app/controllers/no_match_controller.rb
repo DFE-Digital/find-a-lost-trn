@@ -19,7 +19,7 @@ class NoMatchController < ApplicationController
           IdentityApi.submit_trn!(trn_request, session[:identity_journey_id])
 
           # Send the user back to Get an Identity
-          redirect_to session[:identity_redirect_uri], allow_other_host: true
+          redirect_to session[:identity_redirect_url], allow_other_host: true
         rescue IdentityApi::ApiError,
                Faraday::ConnectionFailed,
                Faraday::TimeoutError,

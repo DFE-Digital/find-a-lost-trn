@@ -30,7 +30,7 @@ class IdentityController < ApplicationController
     session[:identity_client_url] = recognised_params["client_url"]
     session[:identity_journey_id] = recognised_params["journey_id"]
     session[:identity_previous_url] = recognised_params["previous_url"]
-    session[:identity_redirect_uri] = recognised_params["redirect_uri"]
+    session[:identity_redirect_url] = recognised_params["redirect_url"]
 
     redirect_to next_question_path
   end
@@ -44,7 +44,7 @@ class IdentityController < ApplicationController
       :email,
       :journey_id,
       :previous_url,
-      :redirect_uri,
+      :redirect_url,
       :sig
     )
   end

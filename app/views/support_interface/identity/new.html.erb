@@ -26,9 +26,9 @@
                 session. Editing is disabled for simulated journeys  \
                 because we don’t use it." }
       ) %>
-      <%= f.govuk_text_field(:redirect_uri,
+      <%= f.govuk_text_field(:redirect_url,
         disabled: true,
-        label: { size: 's', text: 'Redirect URI' },
+        label: { size: 's', text: 'Redirect URL' },
         hint: { text: "Callback URL to the Identity server. Editing is \
                 disabled for simulated journeys because simulated journeys \
                 should always return to Find." }

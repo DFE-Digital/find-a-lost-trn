@@ -5,7 +5,7 @@ module SupportInterface
     attr_accessor :client_title,
                   :email,
                   :journey_id,
-                  :redirect_uri,
+                  :redirect_url,
                   :client_url,
                   :previous_url
   end
