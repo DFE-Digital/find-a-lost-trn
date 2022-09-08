@@ -1,4 +1,4 @@
-<% content_for :page_title, "#{'Error: ' if @ask_trn_form.errors.any?}What is your TRN number?" %>
+<% content_for :page_title, "#{'Error: ' if @ask_trn_form.errors.any?}Do you know your TRN?" %>
 <% content_for :back_link_url, back_link_url(@ask_trn_form.trn_request.has_ni_number? ? ni_number_path : have_ni_number_path) %>
 
 <%= form_with model: @ask_trn_form, url: ask_trn_path, method: :post do |f| %>
