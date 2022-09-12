@@ -1,6 +1,6 @@
 class DeleteOldZendeskTicketsJob < ApplicationJob
   def perform
-    return unless HostingEnvironment.environment_name == "production"
+    return unless HostingEnvironment.production?
 
     tickets = ZendeskService.find_closed_tickets_from_6_months_ago
     return if tickets.count.zero?

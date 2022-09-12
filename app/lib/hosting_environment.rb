@@ -14,4 +14,8 @@ module HostingEnvironment
   def self.test_environment?
     TEST_ENVIRONMENTS.include?(HostingEnvironment.environment_name)
   end
+
+  def self.production?
+    environment_name == "production"
+  end
 end
