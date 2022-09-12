@@ -52,6 +52,17 @@ RSpec.describe "Zendesk ticket deletion", type: :system do
     end
   end
 
+  context "when there are no existing Zendesk delete requests" do
+    it "imports Zendesk tickets that have been requested for deletion" do
+      given_i_am_authorized_as_a_support_user
+      when_i_visit_the_zendesk_support_page
+      when_i_import_tickets_from_csv
+      then_i_should_see_the_imported_delete_request
+      when_i_import_the_same_tickets_from_csv
+      then_i_should_not_see_duplicate_delete_requests
+    end
+  end
+
   private
 
   def deactivate_feature_flags
@@ -136,5 +147,24 @@ RSpec.describe "Zendesk ticket deletion", type: :system do
   def and_i_should_be_able_to_export_tickets_to_csv
     click_on("Export to CSV")
     expect(download_content).to eq(ZendeskDeleteRequest.to_csv)
+  end
+
+  def when_i_import_tickets_from_csv
+    click_on("Import from CSV")
+    attach_file(
+      "ZendeskDeleteRequest CSV",
+      Rails.root.join("spec/support/zendesk_delete_requests.csv")
+    )
+    click_on("Upload")
+  end
+  alias_method :when_i_import_the_same_tickets_from_csv,
+               :when_i_import_tickets_from_csv
+
+  def then_i_should_see_the_imported_delete_request
+    expect(page).to have_content("Ticket 43")
+  end
+
+  def then_i_should_not_see_duplicate_delete_requests
+    expect(page).to have_content("Ticket 43").once
   end
 end
