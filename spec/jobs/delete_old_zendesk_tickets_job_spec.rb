@@ -44,28 +44,58 @@ RSpec.describe DeleteOldZendeskTicketsJob, type: :job do
       allow(ZendeskService).to receive(:destroy_tickets!)
     end
 
-    it "fetches closed tickets" do
-      expect(ZendeskService).to receive(:find_closed_tickets_from_6_months_ago)
-      perform
-    end
-
-    it "deletes old tickets" do
-      expect(ZendeskService).to receive(:destroy_tickets!).with([42, 13])
-      perform
-    end
-
-    it "creates deleted ticket entries" do
-      expect { perform }.to change { ZendeskDeleteRequest.count }.by 2
-    end
-
-    context "with 100 or more tickets" do
-      let(:returned_tickets) { tickets * 50 }
-      it "does not raise an error" do
-        expect { perform }.not_to raise_error
+    context "when run in a production environment" do
+      before do
+        allow(HostingEnvironment).to receive(:production?).and_return(true)
       end
-      it "recursively performs the job" do
+
+      it "fetches closed tickets" do
+        expect(ZendeskService).to receive(
+          :find_closed_tickets_from_6_months_ago
+        )
         perform
-        expect(described_class).to have_been_enqueued
+      end
+
+      it "deletes old tickets" do
+        expect(ZendeskService).to receive(:destroy_tickets!).with([42, 13])
+        perform
+      end
+
+      it "creates deleted ticket entries" do
+        expect { perform }.to change { ZendeskDeleteRequest.count }.by 2
+      end
+
+      context "with 100 or more tickets" do
+        let(:returned_tickets) { tickets * 50 }
+        it "does not raise an error" do
+          expect { perform }.not_to raise_error
+        end
+        it "recursively performs the job" do
+          perform
+          expect(described_class).to have_been_enqueued
+        end
+      end
+    end
+
+    context "when run in a non-production environment" do
+      before do
+        allow(HostingEnvironment).to receive(:production?).and_return(false)
+      end
+
+      it "does not fetch closed tickets" do
+        expect(ZendeskService).not_to receive(
+          :find_closed_tickets_from_6_months_ago
+        )
+        perform
+      end
+
+      it "does not delete old tickets" do
+        expect(ZendeskService).not_to receive(:destroy_tickets!)
+        perform
+      end
+
+      it "does not create deleted ticket entries" do
+        expect { perform }.not_to change(ZendeskDeleteRequest, :count)
       end
     end
   end
