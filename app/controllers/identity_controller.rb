@@ -31,6 +31,7 @@ class IdentityController < ApplicationController
     session[:identity_journey_id] = recognised_params["journey_id"]
     session[:identity_previous_url] = recognised_params["previous_url"]
     session[:identity_redirect_url] = recognised_params["redirect_url"]
+    session[:identity_api_request_sent] = false
 
     redirect_to next_question_path
   end
