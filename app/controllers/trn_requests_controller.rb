@@ -26,10 +26,11 @@ class TrnRequestsController < ApplicationController
         begin
           # Send a request to Get An Identity API with the TRN for the journey
           IdentityApi.submit_trn!(trn_request, session[:identity_journey_id])
+          session[:identity_trn_request_sent] = true
 
           # Send the user back to Get an Identity
-          redirect_to session[:identity_redirect_uri], allow_other_host: true
-          reset_session
+          redirect_to session[:identity_redirect_url], allow_other_host: true
+          session[:identity_client_title] = nil
         rescue IdentityApi::ApiError,
                Faraday::ConnectionFailed,
                Faraday::TimeoutError,

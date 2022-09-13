@@ -26,10 +26,12 @@ class IdentityController < ApplicationController
       )
 
     session[:trn_request_id] = @trn_request.id
-    session[:identity_journey_id] = recognised_params["journey_id"]
-    session[:identity_redirect_uri] = recognised_params["redirect_uri"]
     session[:identity_client_title] = recognised_params["client_title"]
     session[:identity_client_url] = recognised_params["client_url"]
+    session[:identity_journey_id] = recognised_params["journey_id"]
+    session[:identity_previous_url] = recognised_params["previous_url"]
+    session[:identity_redirect_url] = recognised_params["redirect_url"]
+    session[:identity_api_request_sent] = false
 
     redirect_to next_question_path
   end
@@ -42,7 +44,8 @@ class IdentityController < ApplicationController
       :client_url,
       :email,
       :journey_id,
-      :redirect_uri,
+      :previous_url,
+      :redirect_url,
       :sig
     )
   end
@@ -65,7 +68,13 @@ class IdentityController < ApplicationController
     # signature. This is necessary because new parameters can be added to Get
     # an Identity, which would cause the sig to change and break us as a
     # downstream user.
-    unsafe_params = params.to_unsafe_h.except("sig", "controller", "action")
+    unsafe_params =
+      params.to_unsafe_h.except(
+        "action",
+        "authenticity_token",
+        "controller",
+        "sig"
+      )
     Identity.signature_from(unsafe_params)
   end
 

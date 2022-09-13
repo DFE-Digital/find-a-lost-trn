@@ -51,6 +51,21 @@ RSpec.describe "Identity", type: :system do
       and_the_title_of_the_service_is_find_a_lost_trn
     end
 
+    context "after being redirected to the callback" do
+      it "cannot go back to the check answers page", vcr: true do
+        when_i_access_the_identity_endpoint
+        and_i_complete_and_submit_the_name_form
+        and_i_complete_and_submit_my_date_of_birth
+        then_i_see_the_check_answers_page
+
+        when_i_press_the_continue_button
+        then_i_am_redirected_to_the_callback
+
+        when_i_try_to_go_to_the_check_answers_page
+        then_i_am_redirected_to_the_callback
+      end
+    end
+
     context "when there is no trn match", vcr: true do
       before do
         allow(DqtApi).to receive(:find_trn!).and_raise(DqtApi::NoResults)
@@ -101,6 +116,28 @@ RSpec.describe "Identity", type: :system do
         when_i_press_the_continue_button
         then_i_see_the_no_match_page
         and_i_see_the_correct_no_match_content
+      end
+
+      context "after being redirected to the callback" do
+        it "cannot go back to the check answers page" do
+          when_i_access_the_identity_endpoint
+          and_i_complete_and_submit_the_name_form
+          and_i_complete_and_submit_my_date_of_birth
+          and_i_have_a_ni_number
+          and_i_complete_and_submit_my_ni_number
+          and_i_do_not_know_the_trn
+          and_i_have_not_been_awarded_qts
+          then_i_see_the_check_answers_page
+
+          when_i_press_the_continue_button
+          then_i_see_the_no_match_page
+
+          when_i_submit_anyway
+          then_i_am_redirected_to_the_callback
+
+          when_i_try_to_go_to_the_check_answers_page
+          then_i_am_redirected_to_the_callback
+        end
       end
     end
 
@@ -199,7 +236,7 @@ RSpec.describe "Identity", type: :system do
 
   def when_i_access_the_identity_endpoint_with_modified_parameters_it_raises_an_error
     params = {
-      redirect_uri: "https://authserveruri/",
+      redirect_url: "https://authserveruri/",
       client_title: "New Title",
       email: "john.smith@example.com",
       journey_id: "9ddccb62-ec13-4ea7-a163-c058a19b8222",
@@ -315,6 +352,10 @@ RSpec.describe "Identity", type: :system do
 
   def when_i_try_to_go_to_the_email_page
     visit email_path
+  end
+
+  def when_i_try_to_go_to_the_check_answers_page
+    visit check_answers_path
   end
 
   def when_i_press_the_continue_button
