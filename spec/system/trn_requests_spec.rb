@@ -413,13 +413,6 @@ RSpec.describe "TRN requests", type: :system do
     when_i_fill_in_my_ni_number
     when_i_press_continue
     then_i_see_the_check_answers_page
-
-    when_i_press_back
-    then_i_see_the_ni_number_page
-
-    when_i_press_continue
-    then_i_see_the_check_answers_page
-
     when_i_press_the_submit_button
     then_i_see_a_message_to_check_my_email
     and_i_receive_an_email_with_the_trn_number
