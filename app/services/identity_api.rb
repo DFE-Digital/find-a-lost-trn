@@ -5,6 +5,17 @@ class IdentityApi
 
   FIVE_SECONDS = 5
 
+  def self.get_teacher(_uuid)
+    # Stub this method for now while the required API endpoint is being built
+    {
+      userId: "29e9e624-073e-41f5-b1b3-8164ce3a5233",
+      email: "kevin.e@digital.education.gov.uk",
+      firstName: "Kevin",
+      lastName: "E",
+      dateOfBirth: "1990-01-01"
+    }
+  end
+
   def self.submit_trn!(trn_request, journey_id)
     if FeatureFlag.active?(:identity_api_always_timeout)
       raise Faraday::TimeoutError, "Time-out feature flag enabled"

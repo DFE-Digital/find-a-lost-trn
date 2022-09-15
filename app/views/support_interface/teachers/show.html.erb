@@ -1,0 +1,79 @@
+<% content_for :page_title, 'Teachers' %>
+
+<%= govuk_breadcrumbs(breadcrumbs: { "Support" => support_interface_validation_errors_path, @teacher_name => nil }) %>
+<h1 class="govuk-heading-xl">
+  <%= @teacher_name %>
+</h1>
+
+<section class="x-govuk-summary-card govuk-!-margin-bottom-9">
+  <header class="x-govuk-summary-card__header">
+    <h2 class="x-govuk-summary-card__title">
+      Get an identity details
+    </h2>
+  </header>
+  <div class="x-govuk-summary-card__body">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+        Official name
+        </dt>
+        <dd class="govuk-summary-list__value">
+        <p>
+          <%= @teacher_name %>
+
+          <span class="govuk-!-margin-left-1 govuk-tag govuk-tag--grey">Unverified</span>
+        </p>
+
+        <span class="govuk-!-font-size-16 govuk-hint">
+          From: Register for an NPQ<br>
+          Created: 12 March 2022
+        </span>
+        </dd>
+
+        <dd class="govuk-summary-list__actions">
+        <ul class="govuk-summary-list__actions-list">
+          <li class="govuk-summary-list__actions-list-item">
+            <a class="govuk-link" href="#">
+              Verify<span class="govuk-visually-hidden"> name</span>
+            </a>
+          </li>
+          <li class="govuk-summary-list__actions-list-item">
+            <a class="govuk-link" href="#">
+              Change<span class="govuk-visually-hidden"> name</span>
+            </a>
+          </li>
+        </ul>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+        Email address
+        </dt>
+        <dd class="govuk-summary-list__value">
+        <%= @teacher.fetch(:email) %>
+        </dd>
+
+        <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="#">
+          Change<span class="govuk-visually-hidden"> email address</span>
+        </a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+        DQT record
+        </dt>
+        <dd class="govuk-summary-list__value">
+        No record linked
+        </dd>
+
+        <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="#">
+          Add record</a>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>
