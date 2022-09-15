@@ -1,0 +1,18 @@
+<% content_for :page_title, 'Import Zendesk delete requests' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      Import Zendesk delete requests
+    </h1>
+
+    <%= form_with model: @form, url: support_interface_zendesk_imports_path do |f| %>
+      <%= f.govuk_error_summary %>
+      <%= f.govuk_file_field(:file,
+        width: 5,
+        label: { tag: 'h2', size: 'm', text: 'ZendeskDeleteRequest CSV' },
+      ) %>
+      <%= f.govuk_submit "Upload", prevent_double_click: false, warning: true %>
+    <% end %>
+  </div>
+</div>
