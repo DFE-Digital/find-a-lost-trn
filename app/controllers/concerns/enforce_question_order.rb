@@ -5,6 +5,10 @@ module EnforceQuestionOrder
   included { before_action :redirect_to_next_question }
 
   def redirect_to_next_question
+    if request_from_identity_and_complete?
+      redirect_to session[:identity_redirect_url], allow_other_host: true
+      return
+    end
     redirect_to(start_url) and return if start_page_is_required?
     return if all_questions_answered?
     return if previous_question_answered?
@@ -20,6 +24,11 @@ module EnforceQuestionOrder
 
   def redirect_requests_from_identity
     redirect_to next_question_path if request_from_identity?
+  end
+
+  def request_from_identity_and_complete?
+    session[:identity_redirect_url] && request_from_identity? &&
+      session[:identity_trn_request_sent]
   end
 
   private

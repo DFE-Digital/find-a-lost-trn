@@ -88,7 +88,7 @@ asdf plugin add redis
 asdf install
 ```
 
-If installing PostgreSQL via `asdf`, set up the `postgres` user:
+If installing PostgreSQL via `asdf`, you may need to set up the `postgres` user:
 
 ```bash
 pg_ctl start
@@ -97,13 +97,26 @@ psql -d default
 > CREATE ROLE postgres LOGIN SUPERUSER;
 ```
 
+If the install step created the `postgres` user already, it won't have created one
+matching your username, and you'll see errors like:
+
+`FATAL: role "username" does not exist`
+
+So instead run:
+
+```bash
+pg_ctl start
+createdb -U postgres default
+```
+
 You might also need to install `postgresql-libs`:
 
 ```bash
 sudo apt install libpq-dev
+sudo pacman -S postgresql-libs
+sudo pamac install postgres-libs
 sudo yum install postgresql-devel
 sudo zypper in postgresql-devel
-sudo pacman -S postgresql-libs
 ```
 
 If installing Redis, you'll need to start it in a separate terminal:
@@ -117,6 +130,9 @@ Setup the project (re-run after `Gemfile` or `package.json` updates, automatical
 ```bash
 bin/setup
 ```
+
+Follow the instructions in (docs/encryption.md)[docs/encryption.md]
+to correctly set up database encryption.
 
 Run the application on `http://localhost:3000`:
 
