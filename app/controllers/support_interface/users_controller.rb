@@ -1,5 +1,5 @@
 module SupportInterface
-  class TeachersController < SupportInterfaceController
+  class UsersController < SupportInterfaceController
     def show
       @teacher = IdentityApi.get_teacher(uuid)
       @teacher_name =
