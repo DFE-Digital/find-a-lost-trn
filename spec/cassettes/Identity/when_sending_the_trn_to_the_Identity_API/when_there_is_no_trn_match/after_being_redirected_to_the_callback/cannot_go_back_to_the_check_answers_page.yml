@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: put
-      uri: https://s165d01-getanid-dev-auth-server-app.azurewebsites.net/api/find-trn/user/9ddccb62-ec13-4ea7-a163-c058a19b8222
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/find-trn/user/9ddccb62-ec13-4ea7-a163-c058a19b8222
       body:
         encoding: UTF-8
         string: '{"firstName":"Kevin","lastName":"E","trn":"2921020","dateOfBirth":"1990-01-01"}'

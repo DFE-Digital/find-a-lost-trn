@@ -1,0 +1,50 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/teachers
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v1.10.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Date:
+          - Thu, 15 Sep 2022 16:51:36 GMT
+        Transfer-Encoding:
+          - chunked
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=2592000
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-j7OoGArf6XW6YY4cAyS3riSSvrJRqpSi1fOF9vQ5SrI='
+            'nonce-+bnYwS++CIUAr+PO3AjljCKj0q5VbYkdbL6DTV4EWdI='
+      body:
+        encoding: UTF-8
+        string: '{"teachers":[{"userId":"37ee5357-fb84-478e-b750-bf552e5c8eed","email":"paul.hayes@digital.education.gov.uk","firstName":"Jane","lastName":"Doess","dateOfBirth":"1901-01-01","trn":null},{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"jake.benilov@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"},{"userId":"f3ef3547-071e-4fbd-8a85-4faeaf788a51","email":"naomi@lockyy.com","firstName":"Naomi","lastName":"Lockhart","dateOfBirth":"1992-02-17","trn":null}]}'
+    recorded_at: Thu, 15 Sep 2022 16:51:36 GMT
+recorded_with: VCR 6.1.0
