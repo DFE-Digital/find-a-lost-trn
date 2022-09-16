@@ -131,7 +131,7 @@ Setup the project (re-run after `Gemfile` or `package.json` updates, automatical
 bin/setup
 ```
 
-Follow the instructions in (docs/encryption.md)[docs/encryption.md]
+Follow the instructions in [docs/encryption.md](docs/encryption.md)
 to correctly set up database encryption.
 
 Run the application on `http://localhost:3000`:
