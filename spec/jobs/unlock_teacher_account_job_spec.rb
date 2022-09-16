@@ -16,9 +16,6 @@ RSpec.describe UnlockTeacherAccountJob, type: :job do
 
     before do
       FeatureFlag.activate(:unlock_teachers_self_service_portal_account)
-      allow(DqtApi).to receive(:unlock_teacher!).and_raise(
-        Faraday::TimeoutError
-      )
       ActiveJob::Base.queue_adapter = :test
     end
     after do
@@ -26,6 +23,12 @@ RSpec.describe UnlockTeacherAccountJob, type: :job do
     end
 
     context "retry unlock teacher account on client timeout", vcr: true do
+      before do
+        allow(DqtApi).to receive(:unlock_teacher!).and_raise(
+          Faraday::TimeoutError
+        )
+      end
+
       it "runs the unlock teacher job asynchronously" do
         expect { DqtApi.find_trn!(trn_request) }.not_to raise_error
         expect(described_class).to have_been_enqueued.with(uid:)
