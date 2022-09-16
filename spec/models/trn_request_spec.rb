@@ -15,6 +15,7 @@
 #  has_ni_number         :boolean
 #  itt_provider_enrolled :boolean
 #  itt_provider_name     :string
+#  itt_provider_ukprn    :string
 #  last_name             :string(510)
 #  name_changed          :boolean
 #  ni_number             :string(510)
