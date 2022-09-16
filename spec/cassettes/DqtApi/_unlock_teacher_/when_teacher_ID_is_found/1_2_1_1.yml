@@ -8,7 +8,7 @@ http_interactions:
         string: "{}"
       headers:
         User-Agent:
-          - Faraday v1.10.0
+          - Faraday v2.5.2
         Authorization:
           - Bearer <BEARER_TOKEN_REDACTED>
         Content-Type:
@@ -19,15 +19,17 @@ http_interactions:
           - "*/*"
     response:
       status:
-        code: 401
-        message: Unauthorized
+        code: 200
+        message: OK
       headers:
-        Content-Length:
-          - "0"
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
         Connection:
           - keep-alive
         Date:
-          - Tue, 02 Aug 2022 21:47:09 GMT
+          - Fri, 16 Sep 2022 12:08:59 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -39,21 +41,21 @@ http_interactions:
         X-Rate-Limit-Remaining:
           - "299"
         X-Rate-Limit-Reset:
-          - "2022-08-02T21:48:00.0000000Z"
+          - "2022-09-16T12:09:00.0000000Z"
         X-Vcap-Request-Id:
-          - ed2a066c-13b5-43a4-6be8-618d844681d9
+          - "08a8ef2d-2312-401d-4d36-a91d0b2179bc"
         X-Xss-Protection:
           - "0"
         X-Cache:
-          - Error from cloudfront
+          - Miss from cloudfront
         Via:
-          - 1.1 2eb19ccd40bc3ab33c9eed96d984c41e.cloudfront.net (CloudFront)
+          - 1.1 fc5742d412f28df527dddbda8097bfe2.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
           - LHR61-P2
         X-Amz-Cf-Id:
-          - JaFQ_jo-S4rrF7mhGgmnTfeK8d7BnBoj3LcRFHCcRThcDehV5ImasQ==
+          - 21GAKILfHLY3RpzFSOXBIW6M6DjOW-rIxkQUwGCN-OHDusQDUdTOlw==
       body:
         encoding: UTF-8
-        string: ""
-    recorded_at: Tue, 02 Aug 2022 21:47:09 GMT
+        string: '{"hasBeenUnlocked":false}'
+    recorded_at: Fri, 16 Sep 2022 12:08:59 GMT
 recorded_with: VCR 6.1.0
