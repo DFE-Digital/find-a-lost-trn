@@ -36,6 +36,7 @@ class TrnRequest < ApplicationRecord
            :previous_last_name
 
   has_many :trn_responses, dependent: :destroy
+  has_many :account_unlock_events
 
   scope :with_zendesk_ticket, -> { where.not(zendesk_ticket_id: nil) }
 
