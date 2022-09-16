@@ -27,7 +27,7 @@ module SupportInterface
     def callback
       flash[:success] = "You have completed a simulated Identity journey"
 
-      redirect_to support_interface_identity_path
+      redirect_to support_interface_identity_simulate_path
     end
 
     private
@@ -44,15 +44,15 @@ module SupportInterface
     end
 
     def redirect_url
-      support_interface_identity_callback_path
+      support_interface_identity_simulate_callback_path
     end
 
     def client_url
-      support_interface_identity_callback_path
+      support_interface_identity_simulate_callback_path
     end
 
     def previous_url
-      support_interface_identity_path
+      support_interface_identity_simulate_path
     end
   end
 end

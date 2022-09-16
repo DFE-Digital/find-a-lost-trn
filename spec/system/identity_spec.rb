@@ -229,7 +229,7 @@ RSpec.describe "Identity", type: :system do
   private
 
   def when_i_access_the_identity_endpoint
-    visit support_interface_identity_path
+    visit support_interface_identity_simulate_path
     click_on "Continue"
     click_on "Submit"
   end

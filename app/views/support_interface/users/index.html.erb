@@ -1,0 +1,53 @@
+<% content_for :page_title, 'Support for Get an identity' %>
+
+<h2 class="govuk-heading-m">
+  <span class="govuk-caption-m">
+    Showing <%= @users.size %> of <%= @total %> total
+  </span>
+</h2>
+
+<%= govuk_pagination(pagy: @pagy) %>
+
+<% if @users.size.zero? %>
+  <p>No users.</p>
+<% else %>
+  <%= govuk_table do |table|
+    table.head do |head|
+      head.row do |row|
+        row.cell(header: true, width: 'one-quarter') do
+          tag.span("Name")
+        end
+        row.cell(header: true, width: 'one-quarter') do
+          tag.span("Name verified?")
+        end
+        row.cell(header: true, width: 'one-quarter') do
+          tag.span("DQT record")
+        end
+        row.cell(header: true, width: 'one-quarter') do
+          tag.span("TRN")
+        end
+      end
+    end
+
+    table.body do |body|
+      @users.each do |user|
+        body.row do |row|
+          row.cell do
+            user_info_link(user)
+          end
+          row.cell do
+            user_verification_status(user)
+          end
+          row.cell do
+            user_dqt_record_status(user)
+          end
+          row.cell do
+            tag.span(user.trn)
+          end
+        end
+      end
+    end
+  end %>
+<% end %>
+
+<%= govuk_pagination(pagy: @pagy) %>

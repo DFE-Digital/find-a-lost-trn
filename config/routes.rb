@@ -36,9 +36,12 @@ Rails.application.routes.draw do
 
     resources :zendesk_imports, only: %i[new create]
 
-    get "/identity", to: "identity#new"
+    get "/identity", to: "users#index"
     post "/identity/confirm", to: "identity#confirm"
-    get "/identity/callback", to: "identity#callback"
+    get "/identity/simulate/callback", to: "identity#callback"
+    get "/identity/simulate", to: "identity#new"
+    get "/identity/users", to: "users#index"
+    get "/identity/users/:uuid", to: "users#show", as: :identity_user
 
     get "/users/:uuid", to: "users#show", as: :user
 
