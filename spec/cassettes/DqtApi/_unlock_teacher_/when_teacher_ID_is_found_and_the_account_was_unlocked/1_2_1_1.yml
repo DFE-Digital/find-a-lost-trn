@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/unlock-teacher/f7891223-7661-e411-8047-005056822391
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - Faraday v2.5.2
+      Authorization:
+      - Bearer <BEARER_TOKEN_REDACTED>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 16 Sep 2022 13:43:39 GMT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Rate-Limit-Limit:
+      - 60s
+      X-Rate-Limit-Remaining:
+      - '299'
+      X-Rate-Limit-Reset:
+      - '2022-09-16T13:44:00.0000000Z'
+      X-Vcap-Request-Id:
+      - c241fab3-0ecf-4df7-5a7c-284174f93204
+      X-Xss-Protection:
+      - '0'
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 065611e4902dee87a737c0875c8e6708.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR61-P2
+      X-Amz-Cf-Id:
+      - rBVeDoyGluVDVoxkTGn2clylNPL9zXb4rSW446RoyV6VB4E16eWrKA==
+    body:
+      encoding: UTF-8
+      string: '{"hasBeenUnlocked":true}'
+  recorded_at: Fri, 16 Sep 2022 13:43:39 GMT
+recorded_with: VCR 6.1.0
