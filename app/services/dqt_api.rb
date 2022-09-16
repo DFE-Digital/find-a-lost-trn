@@ -53,8 +53,10 @@ class DqtApi
       begin
         response = new.client.put("/v2/unlock-teacher/#{uid}", {})
         raise ApiError, response.reason_phrase unless response.success?
+        response.body['hasBeenUnlocked']
       rescue ApiError => e
         Sentry.capture_exception(e)
+        nil
       end
     end
   end

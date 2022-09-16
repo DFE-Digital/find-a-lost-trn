@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/unlock-teacher/a-non-matching-uid
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - Faraday v2.5.2
+      Authorization:
+      - Bearer <BEARER_TOKEN_REDACTED>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Content-Type:
+      - application/problem+json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 16 Sep 2022 13:55:07 GMT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Rate-Limit-Limit:
+      - 60s
+      X-Rate-Limit-Remaining:
+      - '299'
+      X-Rate-Limit-Reset:
+      - '2022-09-16T13:56:00.0000000Z'
+      X-Vcap-Request-Id:
+      - 3b42e11a-13d0-4ae1-5fbd-44632ffe3aa7
+      X-Xss-Protection:
+      - '0'
+      X-Cache:
+      - Error from cloudfront
+      Via:
+      - 1.1 eadf79e9c2d5c2d1c323c9bb914a92d4.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR61-P2
+      X-Amz-Cf-Id:
+      - 87S-ONhcnixUrRDK0LZMDnKP2TcuW4qySYxIFKSMw6f5rO-L-F-Wyw==
+    body:
+      encoding: UTF-8
+      string: '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One
+        or more validation errors occurred.","status":400,"traceId":"00-fdbbb85de671934ee5c9d998e05cdc0f-c3a9822ce6caabc4-00","errors":{"teacherId":["The
+        value ''a-non-matching-uid'' is not valid for TeacherId."]}}'
+  recorded_at: Fri, 16 Sep 2022 13:55:07 GMT
+recorded_with: VCR 6.1.0
