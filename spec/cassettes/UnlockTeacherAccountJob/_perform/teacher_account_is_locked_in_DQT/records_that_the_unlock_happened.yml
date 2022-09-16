@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: put
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/unlock-teacher/a-non-matching-uid
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/unlock-teacher/f7891223-7661-e411-8047-005056822391
       body:
         encoding: UTF-8
         string: "{}"
@@ -19,17 +19,17 @@ http_interactions:
           - "*/*"
     response:
       status:
-        code: 400
-        message: Bad Request
+        code: 200
+        message: OK
       headers:
         Content-Type:
-          - application/problem+json; charset=utf-8
+          - application/json; charset=utf-8
         Transfer-Encoding:
           - chunked
         Connection:
           - keep-alive
         Date:
-          - Fri, 16 Sep 2022 13:55:07 GMT
+          - Fri, 16 Sep 2022 13:10:05 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -41,24 +41,21 @@ http_interactions:
         X-Rate-Limit-Remaining:
           - "299"
         X-Rate-Limit-Reset:
-          - "2022-09-16T13:56:00.0000000Z"
+          - "2022-09-16T13:11:00.0000000Z"
         X-Vcap-Request-Id:
-          - 3b42e11a-13d0-4ae1-5fbd-44632ffe3aa7
+          - 89c80065-7d1a-4720-737b-b8d28fc4c8d5
         X-Xss-Protection:
           - "0"
         X-Cache:
-          - Error from cloudfront
+          - Miss from cloudfront
         Via:
-          - 1.1 eadf79e9c2d5c2d1c323c9bb914a92d4.cloudfront.net (CloudFront)
+          - 1.1 b16cebff619862e7e4cf8eb234632e3a.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
           - LHR61-P2
         X-Amz-Cf-Id:
-          - 87S-ONhcnixUrRDK0LZMDnKP2TcuW4qySYxIFKSMw6f5rO-L-F-Wyw==
+          - 2ESYP45MUs9iSGSw_shAGmcysXIG0lLtC9ifyRSE8s9HOZpMNpNgAg==
       body:
         encoding: UTF-8
-        string:
-          '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One
-          or more validation errors occurred.","status":400,"traceId":"00-fdbbb85de671934ee5c9d998e05cdc0f-c3a9822ce6caabc4-00","errors":{"teacherId":["The
-          value ''a-non-matching-uid'' is not valid for TeacherId."]}}'
-    recorded_at: Fri, 16 Sep 2022 13:55:07 GMT
+        string: '{"hasBeenUnlocked":true}'
+    recorded_at: Fri, 16 Sep 2022 13:10:05 GMT
 recorded_with: VCR 6.1.0

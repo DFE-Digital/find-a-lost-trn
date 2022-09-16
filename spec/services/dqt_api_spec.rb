@@ -120,11 +120,13 @@ RSpec.describe DqtApi do
     subject(:unlock_teacher!) { described_class.unlock_teacher!(uid:) }
     let(:uid) { "f7891223-7661-e411-8047-005056822391" }
 
-    context "when teacher ID is found and the account was unlocked", vcr: true do
+    context "when teacher ID is found and the account was unlocked",
+            vcr: true do
       it { is_expected.to be_truthy }
     end
 
-    context "when teacher ID is found and the account was not unlocked", vcr: true do
+    context "when teacher ID is found and the account was not unlocked",
+            vcr: true do
       it { is_expected.to be_falsey }
     end
 
