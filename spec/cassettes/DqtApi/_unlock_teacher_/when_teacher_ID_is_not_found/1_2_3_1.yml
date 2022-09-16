@@ -1,62 +1,63 @@
 ---
 http_interactions:
-- request:
-    method: put
-    uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/unlock-teacher/f6891223-7661-e431-8047-005056822391
-    body:
-      encoding: UTF-8
-      string: "{}"
-    headers:
-      User-Agent:
-      - Faraday v2.5.2
-      Authorization:
-      - Bearer <BEARER_TOKEN_REDACTED>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 404
-      message: Not Found
-    headers:
-      Content-Type:
-      - application/problem+json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 16 Sep 2022 13:55:08 GMT
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - deny
-      X-Rate-Limit-Limit:
-      - 60s
-      X-Rate-Limit-Remaining:
-      - '297'
-      X-Rate-Limit-Reset:
-      - '2022-09-16T13:56:00.0000000Z'
-      X-Vcap-Request-Id:
-      - 28db3b3a-9c08-4ec8-7cbc-4d88ad325272
-      X-Xss-Protection:
-      - '0'
-      X-Cache:
-      - Error from cloudfront
-      Via:
-      - 1.1 5f684ddc3ff7bc889dac29fa9e51915a.cloudfront.net (CloudFront)
-      X-Amz-Cf-Pop:
-      - LHR61-P2
-      X-Amz-Cf-Id:
-      - Y3raffFwHGVPKQtxni6-VoVVvviSkxbBfiHCOS6UOyIlYYYLkIbCwQ==
-    body:
-      encoding: UTF-8
-      string: '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not
-        Found","status":404,"traceId":"00-a884b06f53f9d4707fc3cdd3b4f3cfc2-7471bfdba4f9a05f-00"}'
-  recorded_at: Fri, 16 Sep 2022 13:55:08 GMT
+  - request:
+      method: put
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/unlock-teacher/f6891223-7661-e431-8047-005056822391
+      body:
+        encoding: UTF-8
+        string: "{}"
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Content-Type:
+          - application/json
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 404
+        message: Not Found
+      headers:
+        Content-Type:
+          - application/problem+json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Fri, 16 Sep 2022 13:55:08 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "297"
+        X-Rate-Limit-Reset:
+          - "2022-09-16T13:56:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 28db3b3a-9c08-4ec8-7cbc-4d88ad325272
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Error from cloudfront
+        Via:
+          - 1.1 5f684ddc3ff7bc889dac29fa9e51915a.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-P2
+        X-Amz-Cf-Id:
+          - Y3raffFwHGVPKQtxni6-VoVVvviSkxbBfiHCOS6UOyIlYYYLkIbCwQ==
+      body:
+        encoding: UTF-8
+        string:
+          '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not
+          Found","status":404,"traceId":"00-a884b06f53f9d4707fc3cdd3b4f3cfc2-7471bfdba4f9a05f-00"}'
+    recorded_at: Fri, 16 Sep 2022 13:55:08 GMT
 recorded_with: VCR 6.1.0

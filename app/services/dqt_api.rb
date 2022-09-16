@@ -28,7 +28,10 @@ class DqtApi
     teacher_account = results.first
 
     unless trn_request.previous_trn_success_for_email?
-      UnlockTeacherAccountJob.perform_later(uid: teacher_account.fetch("uid"))
+      UnlockTeacherAccountJob.perform_later(
+        uid: teacher_account.fetch("uid"),
+        trn_request_id: trn_request.id
+      )
     end
 
     teacher_account
@@ -53,7 +56,7 @@ class DqtApi
       begin
         response = new.client.put("/v2/unlock-teacher/#{uid}", {})
         raise ApiError, response.reason_phrase unless response.success?
-        response.body['hasBeenUnlocked']
+        response.body["hasBeenUnlocked"]
       rescue ApiError => e
         Sentry.capture_exception(e)
         nil
