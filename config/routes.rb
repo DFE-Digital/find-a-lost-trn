@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     post "/identity/confirm", to: "identity#confirm"
     get "/identity/callback", to: "identity#callback"
 
-    get "/teachers/:uuid", to: "teachers#show", as: :teacher
+    get "/users/:uuid", to: "users#show", as: :user
 
     resources :trn_requests, only: [] do
       resource :zendesk_sync, only: [:create], controller: "zendesk_sync"
