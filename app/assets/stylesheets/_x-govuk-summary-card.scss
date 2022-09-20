@@ -2,7 +2,7 @@
   border: 1px solid $govuk-border-colour;
 
   // Card header
-  .x-govuk-summary-card__header {
+  &__header {
     align-items: center;
     background-color: govuk-colour("light-grey");
     padding: govuk-spacing(3);
@@ -14,28 +14,28 @@
     }
   }
 
-  .x-govuk-summary-card__title {
+  &__title {
     @include govuk-font($size: 19);
     margin: 0;
   }
 
-  .x-govuk-summary-card__meta {
+  &__meta {
     @include govuk-font($size: 16);
     display: block;
     margin: 0;
   }
 
-  .x-govuk-summary-card__actions {
+  &__actions {
     @include govuk-font($size: 19);
   }
 
-  .x-govuk-summary-card__actions-list {
+  &__actions-list {
     width: 100%;
     margin: 0;
     padding: 0;
   }
 
-  .x-govuk-summary-card__actions-list-item {
+  &__actions-list-item {
     display: block;
     white-space: nowrap;
 
@@ -46,12 +46,12 @@
     }
   }
 
-  .x-govuk-summary-card__actions-list-item:first-child {
+  &__actions-list-item:first-child {
     margin-left: 0;
   }
 
   // Card body
-  .x-govuk-summary-card__body {
+  &__body {
     @include govuk-font($size: 19);
     padding: govuk-spacing(3);
   }
