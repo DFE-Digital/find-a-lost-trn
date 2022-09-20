@@ -33,7 +33,7 @@
 
       <% list.row do |row| %>
         <% row.key { "Email address" } %>
-        <% row.value { @teacher.fetch(:email) } %>
+        <% row.value { @teacher.fetch("email") } %>
         <%= row.action(text: "Change", href: "#", visually_hidden_text: "email address") %>
       <% end %>
 

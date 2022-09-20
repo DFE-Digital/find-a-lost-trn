@@ -1,8 +1,17 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe "View a user in support", type: :system do
-  scenario "Staff user views user details" do
+RSpec.feature "User page in support", type: :system do
+  background { @user_email = "kevin.e@digital.education.gov.uk" }
+
+  scenario(
+    "Staff user views user details",
+    vcr: {
+      erb: {
+        user_email: @user_email,
+      },
+    },
+  ) do
     given_i_am_authorized_as_staff
     and_a_user_exists_on_the_identity_api
     when_i_navigate_to_the_user_show_page_in_support
@@ -16,9 +25,8 @@ RSpec.describe "View a user in support", type: :system do
   end
 
   def and_a_user_exists_on_the_identity_api
-    # Use an arbitrary uuid value for now. Once the required API endpoint is implemented,
-    # this should match the value used in a recorded VCR cassette.
-    @uuid = "any-uuid"
+    # Matches uuid value used in VCR cassette
+    @uuid = "29e9e624-073e-41f5-b1b3-8164ce3a5233"
   end
 
   def when_i_navigate_to_the_user_show_page_in_support
@@ -32,7 +40,7 @@ RSpec.describe "View a user in support", type: :system do
         expect(page).to have_content "Get an identity details"
       end
       expect(page).to have_content "Kevin E"
-      expect(page).to have_content "kevin.e@digital.education.gov.uk"
+      expect(page).to have_content @user_email
     end
   end
 end
