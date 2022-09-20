@@ -12,7 +12,7 @@ module SupportInterface
     def show
       @teacher = IdentityApi.get_teacher(uuid)
       @teacher_name =
-        "#{@teacher.fetch(:firstName)} #{@teacher.fetch(:lastName)}"
+        "#{@teacher.fetch("firstName")} #{@teacher.fetch("lastName")}"
     end
 
     private
