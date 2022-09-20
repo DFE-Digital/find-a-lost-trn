@@ -7,6 +7,7 @@ Rails.application.routes.draw do
              controllers: {
                confirmations: "staff/confirmations",
                invitations: "staff/invitations",
+               omniauth_callbacks: "staff/omniauth_callbacks",
                passwords: "staff/passwords",
                sessions: "staff/sessions",
                unlocks: "staff/unlocks",

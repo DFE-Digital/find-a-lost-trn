@@ -41,27 +41,54 @@
 #  index_staff_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_staff_on_unlock_token          (unlock_token) UNIQUE
 #
-class Staff < ApplicationRecord
-  devise :confirmable,
-         :database_authenticatable,
-         :invitable,
-         :lockable,
-         :omniauthable,
-         :recoverable,
-         :rememberable,
-         :timeoutable,
-         :trackable,
-         :validatable
+require "rails_helper"
 
-  def send_devise_notification(notification, *args)
-    devise_mailer.send(notification, self, *args).deliver_later
-  end
+RSpec.describe Staff, type: :model do
+  describe ".from_identity" do
+    subject(:from_identity) { described_class.from_identity(auth_hash) }
 
-  def self.from_identity(params)
-    staff = Staff.find_or_initialize_by(email: params.extra.raw_info.email)
-    staff.password = Devise.friendly_token[0, 20]
-    staff.skip_confirmation!
-    staff.save!
-    staff
+    context "when the Staff does not exist" do
+      let(:auth_hash) do
+        OmniAuth::AuthHash.new(
+          provider: "identity",
+          extra: {
+            raw_info: {
+              email: "new@example.com",
+            },
+          },
+        )
+      end
+
+      it "creates a new Staff" do
+        expect { from_identity }.to change { Staff.count }.by(1)
+      end
+
+      it "marks the Staff as confirmed" do
+        from_identity
+        expect(Staff.last).to be_confirmed
+      end
+    end
+
+    context "when the Staff email already exists" do
+      let!(:existing) { create(:staff, email: "existing@example.com") }
+      let(:auth_hash) do
+        OmniAuth::AuthHash.new(
+          provider: "identity",
+          extra: {
+            raw_info: {
+              email: "existing@example.com",
+            },
+          },
+        )
+      end
+
+      it "returns the existing Staff record" do
+        expect(from_identity).to eq(existing)
+      end
+
+      it "does not create a new Staff" do
+        expect { from_identity }.not_to change(Staff, :count)
+      end
+    end
   end
 end

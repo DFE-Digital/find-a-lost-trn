@@ -39,6 +39,11 @@ class FeatureFlag
       "Richard da Silva",
     ],
     [
+      :identity_auth_service,
+      "Allow access to the Identity Auth Service",
+      "Felix Clack",
+    ],
+    [
       :use_dqt_api_itt_providers,
       "Use autocomplete from DQT API results",
       "Richard da Silva",

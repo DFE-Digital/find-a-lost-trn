@@ -26,6 +26,16 @@ RSpec.describe "Staff support", type: :system do
     then_i_see_the_accepted_staff_user
   end
 
+  it "allows authenticating staff using Identity" do
+    given_the_service_is_open
+    and_the_identity_service_is_running
+    when_i_visit_the_staff_sign_in_page
+    then_i_see_the_option_to_sign_in_using_identity
+    when_i_sign_in_with_identity
+    then_i_see_the_support_dashboard
+    and_i_see_the_success_message
+  end
+
   private
 
   def given_the_service_is_open
@@ -105,5 +115,35 @@ RSpec.describe "Staff support", type: :system do
 
   def and_i_set_password
     click_button "Set my password", visible: false
+  end
+
+  def then_i_see_the_option_to_sign_in_using_identity
+    expect(page).to have_button("Sign in with Identity")
+  end
+
+  def when_i_visit_the_staff_sign_in_page
+    visit new_staff_session_path
+  end
+
+  def when_i_sign_in_with_identity
+    click_button "Sign in with Identity"
+  end
+
+  def and_the_identity_service_is_running
+    FeatureFlag.activate(:identity_auth_service)
+    OmniAuth.config.test_mode = true
+    OmniAuth.config.add_mock(
+      :identity,
+      { uid: nil, extra: { raw_info: { email: "new@example.com" } } },
+    )
+  end
+
+  def and_i_see_the_success_message
+    expect(page).to have_content("Signed in successfully.")
+  end
+
+  def then_i_see_the_support_dashboard
+    expect(page).to have_current_path("/support/trn-requests")
+    expect(page).to have_title("TRN Requests")
   end
 end
