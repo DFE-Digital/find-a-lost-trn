@@ -25,17 +25,19 @@ RSpec.describe UnlockTeacherAccountJob, type: :job do
 
     context "teacher account is locked in DQT", vcr: true do
       it "records that the unlock happened" do
-        perform
-
-        expect(trn_request.account_unlock_events.count).to eq(1)
+        expect { perform }.to change(
+          trn_request.account_unlock_events,
+          :count
+        ).by(1)
       end
     end
 
     context "teacher account is already unlocked in DQT", vcr: true do
       it "does not record any unlocks" do
-        perform
-
-        expect(trn_request.account_unlock_events.empty?).to be_truthy
+        expect { perform }.not_to change(
+          trn_request.account_unlock_events,
+          :count
+        )
       end
     end
 
