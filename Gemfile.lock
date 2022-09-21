@@ -416,7 +416,7 @@ GEM
     solargraph-rails (0.3.1)
       activesupport
       solargraph (>= 0.41.1)
-    spring (4.0.0)
+    spring (4.1.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
     sprockets (4.1.1)
