@@ -88,7 +88,7 @@ RSpec.describe "TRN requests", type: :system do
 
   def then_i_see_the_zendesk_confirmation_page
     expect(page.driver.browser.current_title).to start_with(
-      "We’ve received your request"
+      "We’ve received your request",
     )
     expect(page).to have_content("We’ve received your request")
     expect(page).to have_content("give the helpdesk your request number: 42")
@@ -97,7 +97,7 @@ RSpec.describe "TRN requests", type: :system do
   def then_i_see_the_check_answers_page
     expect(page).to have_current_path("/check-answers")
     expect(page.driver.browser.current_title).to start_with(
-      "Check your answers"
+      "Check your answers",
     )
     expect(page).to have_content("Check your answers")
     expect(page).to have_content("Audrey Coady")
@@ -109,10 +109,10 @@ RSpec.describe "TRN requests", type: :system do
     perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
     open_email("test@example.com")
     expect(current_email.subject).to eq(
-      "We’ve received the information you submitted"
+      "We’ve received the information you submitted",
     )
     expect(current_email.body).to include(
-      "give the helpdesk your ticket number: 42"
+      "give the helpdesk your ticket number: 42",
     )
   end
 end

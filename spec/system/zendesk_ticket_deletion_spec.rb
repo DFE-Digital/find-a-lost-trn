@@ -29,7 +29,7 @@ RSpec.describe "Zendesk ticket deletion", type: :system do
           ticket_id: cntr + 42,
           received_at: Time.zone.now,
           closed_at: Time.zone.now,
-          group_name: "delete request group"
+          group_name: "delete request group",
         )
       end
     end
@@ -76,7 +76,7 @@ RSpec.describe "Zendesk ticket deletion", type: :system do
   def given_i_am_authorized_as_a_support_user
     page.driver.basic_authorize(
       ENV["SUPPORT_USERNAME"],
-      ENV["SUPPORT_PASSWORD"]
+      ENV["SUPPORT_PASSWORD"],
     )
   end
 
@@ -153,7 +153,7 @@ RSpec.describe "Zendesk ticket deletion", type: :system do
     click_on("Import from CSV")
     attach_file(
       "ZendeskDeleteRequest CSV",
-      Rails.root.join("spec/support/zendesk_delete_requests.csv")
+      Rails.root.join("spec/support/zendesk_delete_requests.csv"),
     )
     click_on("Upload")
   end

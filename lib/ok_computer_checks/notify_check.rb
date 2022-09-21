@@ -8,9 +8,9 @@ module OkComputerChecks
         email_address: TEST_EMAIL,
         personalisation: {
           body: "Test",
-          subject: "Test"
+          subject: "Test",
         },
-        template_id: ApplicationMailer::GENERIC_NOTIFY_TEMPLATE
+        template_id: ApplicationMailer::GENERIC_NOTIFY_TEMPLATE,
       )
       mark_message "Notify is connected"
     rescue StandardError => e

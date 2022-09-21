@@ -36,7 +36,7 @@ class AskTrnController < ApplicationController
     response = DqtApi.find_trn!(@trn_request)
     @trn_request.update!(
       trn: response["trn"],
-      has_active_sanctions: response["hasActiveSanctions"]
+      has_active_sanctions: response["hasActiveSanctions"],
     )
   end
 end

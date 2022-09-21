@@ -26,7 +26,7 @@ module SupportInterface
       @delete_form =
         ZendeskTicketDeletionForm.new(
           actual_number_of_tickets: @ticket_count.to_s,
-          number_of_tickets: destroy_params
+          number_of_tickets: destroy_params,
         )
 
       if @delete_form.valid?

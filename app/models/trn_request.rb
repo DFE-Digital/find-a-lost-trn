@@ -57,7 +57,7 @@ class TrnRequest < ApplicationRecord
   def previous_name
     [
       previous_first_name.presence || first_name,
-      previous_last_name.presence || last_name
+      previous_last_name.presence || last_name,
     ].join(" ")
   end
 

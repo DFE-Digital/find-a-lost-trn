@@ -7,7 +7,7 @@ RSpec.describe IdentityApi do
     subject(:submit_trn!) do
       described_class.submit_trn!(
         trn_request,
-        "9ddccb62-ec13-4ea7-a163-c058a19b8222"
+        "9ddccb62-ec13-4ea7-a163-c058a19b8222",
       )
     end
 
@@ -18,7 +18,7 @@ RSpec.describe IdentityApi do
         first_name: "kevin",
         last_name: "E",
         ni_number: "AA123456A",
-        trn: "2921020"
+        trn: "2921020",
       )
     end
 

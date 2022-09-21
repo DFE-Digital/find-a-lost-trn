@@ -12,7 +12,7 @@ class IdentityApi
       email: "kevin.e@digital.education.gov.uk",
       firstName: "Kevin",
       lastName: "E",
-      dateOfBirth: "1990-01-01"
+      dateOfBirth: "1990-01-01",
     }
   end
 
@@ -24,7 +24,7 @@ class IdentityApi
     response =
       new.client.put(
         "/api/find-trn/user/#{journey_id}",
-        trn_request_params(trn_request)
+        trn_request_params(trn_request),
       )
 
     raise ApiError, response.reason_phrase unless response.status == 204
@@ -37,7 +37,7 @@ class IdentityApi
       firstName: trn_request.first_name,
       lastName: trn_request.last_name,
       trn: trn_request.trn,
-      dateOfBirth: trn_request.date_of_birth&.to_date&.to_s
+      dateOfBirth: trn_request.date_of_birth&.to_date&.to_s,
     }.compact
   end
 
@@ -46,8 +46,8 @@ class IdentityApi
       Faraday.new(
         url: ENV.fetch("IDENTITY_API_URL", nil),
         request: {
-          timeout: FIVE_SECONDS
-        }
+          timeout: FIVE_SECONDS,
+        },
       ) do |faraday|
         faraday.request :authorization,
                         "Bearer",
@@ -59,7 +59,7 @@ class IdentityApi
                          { bodies: true, headers: true } do |logger|
           logger.filter(
             /((given_name|family_name|birthdate|nino|trn)=)([^&]+)/,
-            '\1[REDACTED]'
+            '\1[REDACTED]',
           )
         end
         faraday.adapter Faraday.default_adapter

@@ -16,49 +16,49 @@ class FeatureFlag
     [
       :slack_alerts,
       "Enable Slack alerts and notifications for this environment",
-      "Felix Clack"
+      "Felix Clack",
     ],
     [
       :staff_http_basic_auth,
       "Allow signing in as a staff user using HTTP Basic authentication. " \
         "This is useful before staff users have been created, but should " \
         "otherwise be inactive.",
-      "Theodor Vararu"
-    ]
+      "Theodor Vararu",
+    ],
   ].freeze
 
   TEMPORARY_FEATURE_FLAGS = [
     [
       :identity_api_always_timeout,
       "Always time-out the Identity API",
-      "Richard da Silva"
+      "Richard da Silva",
     ],
     [
       :identity_open,
       "Allow access to the get an identity endpoint",
-      "Richard da Silva"
+      "Richard da Silva",
     ],
     [
       :use_dqt_api_itt_providers,
       "Use autocomplete from DQT API results",
-      "Richard da Silva"
+      "Richard da Silva",
     ],
     [:dqt_api_always_timeout, "Always time-out the DQT API", "Felix Clack"],
     [
       :processing_delays,
       "Show users banners and interstitials warning them of increased waiting times",
-      "Felix Clack"
+      "Felix Clack",
     ],
     [
       :service_open,
       "Allow users to access the service and submit TRN Requests",
-      "Theodor Vararu"
+      "Theodor Vararu",
     ],
     [
       :unlock_teachers_self_service_portal_account,
       "Unlock a teacher's self service portal account if their TRN is found",
-      "Ransom Voke Anighoro"
-    ]
+      "Ransom Voke Anighoro",
+    ],
   ].freeze
 
   FEATURES =

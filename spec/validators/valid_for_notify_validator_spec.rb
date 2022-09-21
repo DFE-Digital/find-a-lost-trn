@@ -71,7 +71,7 @@ RSpec.describe ValidForNotifyValidator do
         "local-with-’-apostrophe@domain.com",
         "local-with-”-quotes@domain.com",
         "domain-starts-with-a-dot@.domain.com",
-        "brackets(in)local@domain.com"
+        "brackets(in)local@domain.com",
       ]
     end
 
@@ -87,7 +87,7 @@ RSpec.describe ValidForNotifyValidator do
       model.email_address = "foo"
       model.validate(:no_context)
       expect(model.errors[:email_address]).to include(
-        "Enter an email address in the correct format, like name@example.com"
+        "Enter an email address in the correct format, like name@example.com",
       )
     end
   end

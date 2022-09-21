@@ -17,7 +17,7 @@ module SupportInterface
 
     def import_params
       params.require(
-        :support_interface_zendesk_delete_request_import_form
+        :support_interface_zendesk_delete_request_import_form,
       ).permit(:file)
     end
   end

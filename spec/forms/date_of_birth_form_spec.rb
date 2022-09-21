@@ -10,7 +10,7 @@ RSpec.describe DateOfBirthForm, type: :model do
       {
         "date_of_birth(1i)" => "2000",
         "date_of_birth(2i)" => "01",
-        "date_of_birth(3i)" => "01"
+        "date_of_birth(3i)" => "01",
       }
     end
     let(:trn_request) { TrnRequest.new }
@@ -25,7 +25,7 @@ RSpec.describe DateOfBirthForm, type: :model do
         {
           "date_of_birth(1i)" => "2000",
           "date_of_birth(2i)" => "Jan",
-          "date_of_birth(3i)" => "01"
+          "date_of_birth(3i)" => "01",
         }
       end
 
@@ -40,7 +40,7 @@ RSpec.describe DateOfBirthForm, type: :model do
         {
           "date_of_birth(1i)" => "2000",
           "date_of_birth(2i)" => "tWeLvE  ",
-          "date_of_birth(3i)" => "One"
+          "date_of_birth(3i)" => "One",
         }
       end
 
@@ -55,7 +55,7 @@ RSpec.describe DateOfBirthForm, type: :model do
         {
           "date_of_birth(1i)" => "2000",
           "date_of_birth(2i)" => "02",
-          "date_of_birth(3i)" => "30"
+          "date_of_birth(3i)" => "30",
         }
       end
 
@@ -76,7 +76,7 @@ RSpec.describe DateOfBirthForm, type: :model do
         {
           "date_of_birth(1i)" => "",
           "date_of_birth(2i)" => "",
-          "date_of_birth(3i)" => ""
+          "date_of_birth(3i)" => "",
         }
       end
 
@@ -85,7 +85,7 @@ RSpec.describe DateOfBirthForm, type: :model do
       it "adds an error" do
         update!
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(
-          ["Enter your date of birth"]
+          ["Enter your date of birth"],
         )
       end
 
@@ -99,7 +99,7 @@ RSpec.describe DateOfBirthForm, type: :model do
         {
           "date_of_birth(1i)" => 1.year.from_now.year,
           "date_of_birth(2i)" => "01",
-          "date_of_birth(3i)" => "01"
+          "date_of_birth(3i)" => "01",
         }
       end
 
@@ -108,7 +108,7 @@ RSpec.describe DateOfBirthForm, type: :model do
       it "adds an error" do
         update!
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(
-          ["Your date of birth must be in the past"]
+          ["Your date of birth must be in the past"],
         )
       end
 
@@ -122,7 +122,7 @@ RSpec.describe DateOfBirthForm, type: :model do
         {
           "date_of_birth(1i)" => 15.years.ago.year,
           "date_of_birth(2i)" => Time.zone.today.month,
-          "date_of_birth(3i)" => Time.zone.today.day
+          "date_of_birth(3i)" => Time.zone.today.day,
         }
       end
 
@@ -131,7 +131,7 @@ RSpec.describe DateOfBirthForm, type: :model do
       it "adds an error" do
         update!
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(
-          ["You must be 16 or over to use this service"]
+          ["You must be 16 or over to use this service"],
         )
       end
 
@@ -145,7 +145,7 @@ RSpec.describe DateOfBirthForm, type: :model do
         {
           "date_of_birth(1i)" => "1899",
           "date_of_birth(2i)" => "1",
-          "date_of_birth(3i)" => "1"
+          "date_of_birth(3i)" => "1",
         }
       end
 
@@ -154,7 +154,7 @@ RSpec.describe DateOfBirthForm, type: :model do
       it "adds an error" do
         update!
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(
-          ["Enter a year of birth later than 1900"]
+          ["Enter a year of birth later than 1900"],
         )
       end
 
@@ -168,7 +168,7 @@ RSpec.describe DateOfBirthForm, type: :model do
         {
           "date_of_birth(1i)" => "99",
           "date_of_birth(2i)" => "1",
-          "date_of_birth(3i)" => "1"
+          "date_of_birth(3i)" => "1",
         }
       end
 
@@ -177,7 +177,7 @@ RSpec.describe DateOfBirthForm, type: :model do
       it "adds an error" do
         update!
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(
-          ["Enter a year with 4 digits"]
+          ["Enter a year with 4 digits"],
         )
       end
 
@@ -191,7 +191,7 @@ RSpec.describe DateOfBirthForm, type: :model do
         {
           "date_of_birth(1i)" => "1990",
           "date_of_birth(2i)" => "1",
-          "date_of_birth(3i)" => ""
+          "date_of_birth(3i)" => "",
         }
       end
 
@@ -200,7 +200,7 @@ RSpec.describe DateOfBirthForm, type: :model do
       it "adds an error" do
         update!
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(
-          ["Enter a day for your date of birth, formatted as a number"]
+          ["Enter a day for your date of birth, formatted as a number"],
         )
       end
 
@@ -214,7 +214,7 @@ RSpec.describe DateOfBirthForm, type: :model do
         {
           "date_of_birth(1i)" => "1990",
           "date_of_birth(2i)" => "",
-          "date_of_birth(3i)" => "1"
+          "date_of_birth(3i)" => "1",
         }
       end
 
@@ -223,7 +223,7 @@ RSpec.describe DateOfBirthForm, type: :model do
       it "adds an error" do
         update!
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(
-          ["Enter a month for your date of birth, formatted as a number"]
+          ["Enter a month for your date of birth, formatted as a number"],
         )
       end
 
@@ -237,7 +237,7 @@ RSpec.describe DateOfBirthForm, type: :model do
         {
           "date_of_birth(1i)" => "1990",
           "date_of_birth(2i)" => " ",
-          "date_of_birth(3i)" => "1"
+          "date_of_birth(3i)" => "1",
         }
       end
 
@@ -246,7 +246,7 @@ RSpec.describe DateOfBirthForm, type: :model do
       it "adds an error" do
         update!
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(
-          ["Enter a month for your date of birth, formatted as a number"]
+          ["Enter a month for your date of birth, formatted as a number"],
         )
       end
 
@@ -260,7 +260,7 @@ RSpec.describe DateOfBirthForm, type: :model do
         {
           "date_of_birth(1i)" => "1990",
           "date_of_birth(2i)" => "Potatoes",
-          "date_of_birth(3i)" => "1"
+          "date_of_birth(3i)" => "1",
         }
       end
 
@@ -269,7 +269,7 @@ RSpec.describe DateOfBirthForm, type: :model do
       it "adds an error" do
         update!
         expect(date_of_birth_form.errors[:date_of_birth]).to eq(
-          ["Enter a month for your date of birth, formatted as a number"]
+          ["Enter a month for your date of birth, formatted as a number"],
         )
       end
 

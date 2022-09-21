@@ -11,7 +11,7 @@ module LogErrors
       ValidationError.create!(
         form_object: self.class.name,
         messages: error_messages,
-        trn_request:
+        trn_request:,
       )
     end
   end

@@ -8,7 +8,7 @@ RSpec.describe NiNumberForm, type: :model do
 
   specify do
     expect(ni_number_form).to validate_presence_of(:ni_number).with_message(
-      "Enter a National Insurance number"
+      "Enter a National Insurance number",
     )
   end
 
@@ -18,7 +18,7 @@ RSpec.describe NiNumberForm, type: :model do
     it "adds an incorrect format error message" do
       ni_number_form.validate
       expect(ni_number_form.errors[:ni_number]).to include(
-        "Enter a National Insurance number in the correct format"
+        "Enter a National Insurance number in the correct format",
       )
     end
   end
@@ -73,7 +73,7 @@ RSpec.describe NiNumberForm, type: :model do
       "QQ123456C",
       "QQ 1 2 3 4 5 6 C",
       "qq123456c",
-      "QQ-12-34-56-C"
+      "QQ-12-34-56-C",
     ]
 
     valid_numbers_in_strange_formats.each do |ni_number|

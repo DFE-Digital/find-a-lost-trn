@@ -55,7 +55,7 @@ module EnforceQuestionOrder
       { path: ni_number_path, needs_answer: ask_for_ni_number? },
       { path: ask_trn_path, needs_answer: ask_for_trn? },
       { path: awarded_qts_path, needs_answer: ask_if_awarded_qts? },
-      { path: itt_provider_path, needs_answer: ask_for_itt_provider? }
+      { path: itt_provider_path, needs_answer: ask_for_itt_provider? },
     ]
   end
 

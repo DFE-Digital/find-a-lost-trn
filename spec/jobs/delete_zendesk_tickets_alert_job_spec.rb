@@ -14,14 +14,14 @@ RSpec.describe DeleteZendeskTicketsAlertJob, type: :job do
       context "when there Zendesk tickets ready for deletion" do
         before do
           allow(ZendeskService).to receive(
-            :find_closed_tickets_from_6_months_ago
+            :find_closed_tickets_from_6_months_ago,
           ).and_return([1, 2])
         end
 
         it "sends the count as a Slack message" do
           perform
           expect(SlackClient).to have_received(:create_message).with(
-            "There are 2 Zendesk tickets scheduled for deletion tomorrow. http://localhost:3000/support/zendesk"
+            "There are 2 Zendesk tickets scheduled for deletion tomorrow. http://localhost:3000/support/zendesk",
           )
         end
       end
@@ -29,14 +29,14 @@ RSpec.describe DeleteZendeskTicketsAlertJob, type: :job do
       context "when there are no Zendesk tickets for deletion" do
         before do
           allow(ZendeskService).to receive(
-            :find_closed_tickets_from_6_months_ago
+            :find_closed_tickets_from_6_months_ago,
           ).and_return([])
         end
 
         it "sends the latest count as a Slack message" do
           perform
           expect(SlackClient).to have_received(:create_message).with(
-            "There are 0 Zendesk tickets scheduled for deletion tomorrow. http://localhost:3000/support/zendesk"
+            "There are 0 Zendesk tickets scheduled for deletion tomorrow. http://localhost:3000/support/zendesk",
           )
         end
       end

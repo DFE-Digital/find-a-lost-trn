@@ -35,7 +35,7 @@ class DateOfBirthController < ApplicationController
     params.require(:date_of_birth_form).permit(
       "date_of_birth(3i)",
       "date_of_birth(2i)",
-      "date_of_birth(1i)"
+      "date_of_birth(1i)",
     )
   end
 
@@ -43,7 +43,7 @@ class DateOfBirthController < ApplicationController
     response = DqtApi.find_trn!(@trn_request)
     @trn_request.update!(
       trn: response["trn"],
-      has_active_sanctions: response["hasActiveSanctions"]
+      has_active_sanctions: response["hasActiveSanctions"],
     )
   end
 end

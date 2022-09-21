@@ -46,10 +46,10 @@ RSpec.describe StaffHttpBasicAuthStrategy do
           {
             "Content-Length" => "0",
             "Content-Type" => "text/plain",
-            "WWW-Authenticate" => "Basic realm=\"Application\""
+            "WWW-Authenticate" => "Basic realm=\"Application\"",
           },
-          []
-        ]
+          [],
+        ],
       )
     end
 

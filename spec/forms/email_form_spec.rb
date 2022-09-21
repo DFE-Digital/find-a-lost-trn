@@ -6,7 +6,7 @@ RSpec.describe EmailForm, type: :model do
 
   specify do
     expect(email_form).to validate_presence_of(:email).with_message(
-      "Enter an email address"
+      "Enter an email address",
     )
   end
 
@@ -16,7 +16,7 @@ RSpec.describe EmailForm, type: :model do
     specify do
       email_form.valid?
       expect(email_form.errors[:email]).to include(
-        "Enter an email address in the correct format, like name@example.com"
+        "Enter an email address in the correct format, like name@example.com",
       )
     end
   end

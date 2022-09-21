@@ -240,11 +240,11 @@ RSpec.describe "Identity", type: :system do
       client_title: "New Title",
       email: "john.smith@example.com",
       journey_id: "9ddccb62-ec13-4ea7-a163-c058a19b8222",
-      sig: "an invalid sig"
+      sig: "an invalid sig",
     }
 
     expect { post identity_path, params: }.to raise_error(
-      IdentityController::IdentityDataError
+      IdentityController::IdentityDataError,
     )
   end
 
@@ -346,7 +346,7 @@ RSpec.describe "Identity", type: :system do
 
   def then_i_see_the_have_awarded_qts_page
     expect(page).to have_content(
-      "Have you been awarded qualified teacher status"
+      "Have you been awarded qualified teacher status",
     )
   end
 
@@ -368,7 +368,7 @@ RSpec.describe "Identity", type: :system do
 
   def then_i_am_redirected_to_the_callback
     expect(page).to have_content(
-      "You have completed a simulated Identity journey"
+      "You have completed a simulated Identity journey",
     )
   end
 
@@ -382,7 +382,7 @@ RSpec.describe "Identity", type: :system do
 
   def and_i_see_the_correct_no_match_content
     expect(page).to have_content(
-      "We could not match your answers with our records"
+      "We could not match your answers with our records",
     )
     expect(page).to have_content("Check your answers")
     expect(page).not_to have_content("We could not find your TRN")

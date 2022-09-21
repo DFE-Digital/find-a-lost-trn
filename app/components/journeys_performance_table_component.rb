@@ -11,7 +11,7 @@ class JourneysPerformanceTableComponent < ViewComponent::Base
     govuk_table(classes: "app-performance-table") do |table|
       table.caption(
         size: "m",
-        text: "Journeys through Find a lost TRN (today and the last 7 days)"
+        text: "Journeys through Find a lost TRN (today and the last 7 days)",
       )
 
       table.head do |head|
@@ -29,7 +29,7 @@ class JourneysPerformanceTableComponent < ViewComponent::Base
             number_with_percentage_cell(
               @which_questions_were_needed,
               :three_questions,
-              label: "user"
+              label: "user",
             )
           end
         end
@@ -41,7 +41,7 @@ class JourneysPerformanceTableComponent < ViewComponent::Base
             number_with_percentage_cell(
               @which_questions_were_needed,
               :four_questions,
-              label: "user"
+              label: "user",
             )
           end
         end
@@ -53,7 +53,7 @@ class JourneysPerformanceTableComponent < ViewComponent::Base
             number_with_percentage_cell(
               @which_questions_were_needed,
               :five_questions_matched,
-              label: "user"
+              label: "user",
             )
           end
         end
@@ -65,7 +65,7 @@ class JourneysPerformanceTableComponent < ViewComponent::Base
             number_with_percentage_cell(
               @which_questions_were_needed,
               :five_questions_nomatch,
-              label: "user"
+              label: "user",
             )
           end
         end

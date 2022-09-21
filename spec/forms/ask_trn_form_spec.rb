@@ -4,7 +4,7 @@ require "rails_helper"
 RSpec.describe AskTrnForm, type: :model do
   it do
     is_expected.to validate_inclusion_of(:do_you_know_your_trn).in_array(
-      %w[true false]
+      %w[true false],
     )
   end
 
@@ -22,7 +22,7 @@ RSpec.describe AskTrnForm, type: :model do
     end
     it "updates the trn_from_user attribute on the trn_request" do
       expect { update! }.to change(trn_request, :trn_from_user).from(nil).to(
-        "9912345"
+        "9912345",
       )
     end
 
@@ -36,7 +36,7 @@ RSpec.describe AskTrnForm, type: :model do
       it "adds an error" do
         update!
         expect(ask_trn_form.errors[:do_you_know_your_trn]).to eq(
-          ["Tell us if you know your TRN number"]
+          ["Tell us if you know your TRN number"],
         )
       end
       it "logs a validation error" do
@@ -59,7 +59,7 @@ RSpec.describe AskTrnForm, type: :model do
       it "adds an error" do
         update!
         expect(ask_trn_form.errors[:trn_from_user]).to include(
-          "Enter your TRN number"
+          "Enter your TRN number",
         )
       end
       it "logs a validation error" do
@@ -75,7 +75,7 @@ RSpec.describe AskTrnForm, type: :model do
       it "adds an error" do
         update!
         expect(ask_trn_form.errors[:trn_from_user]).to eq(
-          ["Your TRN number should contain 7 digits"]
+          ["Your TRN number should contain 7 digits"],
         )
       end
       it "logs a validation error" do
@@ -91,7 +91,7 @@ RSpec.describe AskTrnForm, type: :model do
       it "adds an error" do
         update!
         expect(ask_trn_form.errors[:trn_from_user]).to eq(
-          ["Your TRN number should contain 7 digits"]
+          ["Your TRN number should contain 7 digits"],
         )
       end
       it "logs a validation error" do
@@ -106,7 +106,7 @@ RSpec.describe AskTrnForm, type: :model do
       end
       it "strips all non numeric characters from the TRN" do
         expect { update! }.to change(trn_request, :trn_from_user).from(nil).to(
-          "9912367"
+          "9912367",
         )
       end
     end

@@ -18,7 +18,7 @@ module SupportInterface
         email: create_params[:email],
         journey_id:,
         previous_url:,
-        redirect_url:
+        redirect_url:,
       }
       sig = Identity.signature_from(@identity_params)
       @identity_params[:sig] = sig
@@ -35,7 +35,7 @@ module SupportInterface
     def create_params
       params.require(:support_interface_identity_params_form).permit(
         :client_title,
-        :email
+        :email,
       )
     end
 

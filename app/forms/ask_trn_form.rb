@@ -9,7 +9,7 @@ class AskTrnForm
   validates :trn_from_user,
             presence: true,
             length: {
-              is: 7
+              is: 7,
             },
             if: -> { do_you_know_your_trn == "true" }
 

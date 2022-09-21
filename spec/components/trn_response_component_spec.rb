@@ -17,7 +17,7 @@ RSpec.describe TrnResponseComponent, type: :component do
         "name" => "Trainee Teacher:DMS",
         "state" => "Active",
         "state_name" => "Active",
-        "qts_date" => nil
+        "qts_date" => nil,
       },
       "induction" => nil,
       "initial_teacher_training" => {
@@ -33,7 +33,7 @@ RSpec.describe TrnResponseComponent, type: :component do
         "qualification" => nil,
         "subject1_code" => "100366",
         "subject2_code" => nil,
-        "subject3_code" => nil
+        "subject3_code" => nil,
       },
       "qualifications" => [
         {
@@ -46,14 +46,14 @@ RSpec.describe TrnResponseComponent, type: :component do
           "he_subject1_code" => "100366",
           "he_subject2_code" => nil,
           "he_subject3_code" => nil,
-          "class" => "FirstClassHonours"
-        }
+          "class" => "FirstClassHonours",
+        },
       ],
       "name" => "Kevin E",
       "dob" => "1990-01-01T00:00:00",
       "active_alert" => false,
       "state" => "Active",
-      "state_name" => "Active"
+      "state_name" => "Active",
     }
   end
   let(:trn_request) do
@@ -62,7 +62,7 @@ RSpec.describe TrnResponseComponent, type: :component do
       first_name:,
       itt_provider_enrolled:,
       last_name:,
-      ni_number:
+      ni_number:,
     )
   end
   let(:trn_response) { TrnResponse.new(trn_request:, raw_result:) }

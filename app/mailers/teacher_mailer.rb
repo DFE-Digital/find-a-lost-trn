@@ -7,7 +7,7 @@ class TeacherMailer < ApplicationMailer
 
     mailer_options = {
       to: @trn_request.email,
-      subject: "Your TRN is #{@trn_request.trn}"
+      subject: "Your TRN is #{@trn_request.trn}",
     }
 
     notify_email(mailer_options)
@@ -18,7 +18,7 @@ class TeacherMailer < ApplicationMailer
 
     mailer_options = {
       to: @trn_request.email,
-      subject: "We’ve received the information you submitted"
+      subject: "We’ve received the information you submitted",
     }
 
     notify_email(mailer_options)
@@ -29,7 +29,7 @@ class TeacherMailer < ApplicationMailer
 
     mailer_options = {
       to: @trn_request.email,
-      subject: "We’ve received the information you submitted"
+      subject: "We’ve received the information you submitted",
     }
 
     notify_email(mailer_options)

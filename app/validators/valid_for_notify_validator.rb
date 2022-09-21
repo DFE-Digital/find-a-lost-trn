@@ -18,7 +18,7 @@ class ValidForNotifyValidator < ActiveModel::EachValidator
 
     record.errors.add(
       attribute,
-      I18n.t("validation_errors.email_address_format")
+      I18n.t("validation_errors.email_address_format"),
     )
   end
 end

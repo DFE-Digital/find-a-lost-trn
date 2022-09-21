@@ -17,19 +17,19 @@ class TrnRequestsPerformanceTableComponent < ViewComponent::Base
             header: true,
             text: "Date",
             classes:
-              "app-performance-table-column-divider app-performance-table-date-column"
+              "app-performance-table-column-divider app-performance-table-date-column",
           )
           row.cell(header: true, text: "TRN found")
           row.cell(header: true, text: "No match")
           row.cell(
             header: true,
             text: "Did not finish",
-            classes: "app-performance-table-column-divider"
+            classes: "app-performance-table-column-divider",
           )
           row.cell(
             header: true,
             text: "Total",
-            classes: "govuk-!-padding-left-2"
+            classes: "govuk-!-padding-left-2",
           )
         end
       end
@@ -50,7 +50,7 @@ class TrnRequestsPerformanceTableComponent < ViewComponent::Base
         body.row(classes: "app-performance-table-total-row") do |row|
           row.cell(
             header: true,
-            classes: "app-performance-table-column-divider"
+            classes: "app-performance-table-column-divider",
           ) { "Total (#{@since})" }
           row.cell do
             number_with_percentage_cell(@total_grouped_requests, :cnt_trn_found)
@@ -61,7 +61,7 @@ class TrnRequestsPerformanceTableComponent < ViewComponent::Base
           row.cell(classes: "app-performance-table-column-divider") do
             number_with_percentage_cell(
               @total_grouped_requests,
-              :cnt_did_not_finish
+              :cnt_did_not_finish,
             )
           end
           row.cell do

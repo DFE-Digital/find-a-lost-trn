@@ -24,7 +24,7 @@ class ZendeskService
     date = 6.months.ago.strftime("%Y-%m-%d")
     GDS_ZENDESK_CLIENT.zendesk_client.search(
       query: "updated<#{date} type:ticket status:closed",
-      include: "tickets(groups)"
+      include: "tickets(groups)",
     )
   end
 
@@ -44,16 +44,16 @@ class ZendeskService
             "\nPrevious name: #{trn_request.previous_name? ? trn_request.previous_name : "None"}" \
             "\nDate of birth: #{trn_request.date_of_birth.strftime("%d %B %Y")}" \
             "\nNI number: #{trn_request.ni_number || "Not provided"}" \
-            "\nITT provider: #{trn_request.itt_provider_name || "Not provided"}\n"
+            "\nITT provider: #{trn_request.itt_provider_name || "Not provided"}\n",
       },
       requester: {
         email: trn_request.email,
-        name: trn_request.name
+        name: trn_request.name,
       },
       custom_fields: {
         id: "4419328659089",
-        value: "request_from_find_a_lost_trn_app"
-      }
+        value: "request_from_find_a_lost_trn_app",
+      },
     }
   end
 

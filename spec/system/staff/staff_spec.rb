@@ -39,7 +39,7 @@ RSpec.describe "Staff support", type: :system do
   def when_i_am_authorized_as_a_support_user
     page.driver.basic_authorize(
       ENV.fetch("SUPPORT_USERNAME", "test"),
-      ENV.fetch("SUPPORT_PASSWORD", "test")
+      ENV.fetch("SUPPORT_PASSWORD", "test"),
     )
   end
 

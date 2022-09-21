@@ -59,7 +59,7 @@ class ZendeskDeleteRequest < ApplicationRecord
         group_name: row["Group Name"],
         no_action_required: row["No Action Required"],
         received_at: row["Received At"],
-        ticket_id: row["Ticket"]
+        ticket_id: row["Ticket"],
       )
     end
   end

@@ -6,7 +6,7 @@ module PerformanceTableHelpers
       percentage =
         number_to_percentage(
           100 * attributes[numerator_key].fdiv(attributes[:total]),
-          precision: 0
+          precision: 0,
         )
       "(#{percentage})"
     end
@@ -18,7 +18,7 @@ module PerformanceTableHelpers
       label&.pluralize(counts[key]),
       '<span class="govuk-hint govuk-!-font-size-16">',
       trn_request_count_percent(counts, key),
-      "</span>"
+      "</span>",
     ].compact.join(" ").html_safe
   end
 end

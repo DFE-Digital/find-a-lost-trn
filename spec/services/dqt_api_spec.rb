@@ -11,7 +11,7 @@ RSpec.describe DqtApi do
         date_of_birth: "1990-01-01",
         email: "kevin.e@example.com",
         first_name: "kevin",
-        ni_number: "AA123456A"
+        ni_number: "AA123456A",
       )
     end
 
@@ -20,8 +20,8 @@ RSpec.describe DqtApi do
       it do
         is_expected.to match(
           hash_including(
-            "emailAddresses" => ["anonymous@anonymousdomain.org.net.co.uk"]
-          )
+            "emailAddresses" => ["anonymous@anonymousdomain.org.net.co.uk"],
+          ),
         )
       end
       it { is_expected.to match(hash_including("firstName" => "Kevin")) }
@@ -29,12 +29,12 @@ RSpec.describe DqtApi do
       it { is_expected.to match(hash_including("dateOfBirth" => "1990-01-01")) }
       it do
         is_expected.to match(
-          hash_including("nationalInsuranceNumber" => "AA123456A")
+          hash_including("nationalInsuranceNumber" => "AA123456A"),
         )
       end
       it do
         is_expected.to match(
-          hash_including("uid" => "f7891223-7661-e411-8047-005056822391")
+          hash_including("uid" => "f7891223-7661-e411-8047-005056822391"),
         )
       end
     end
@@ -42,7 +42,7 @@ RSpec.describe DqtApi do
     context "unlocking a teacher account", vcr: true do
       before do
         allow(trn_request).to receive(
-          :previous_trn_success_for_email?
+          :previous_trn_success_for_email?,
         ).and_return(false)
       end
 
@@ -54,7 +54,7 @@ RSpec.describe DqtApi do
       context "when there is a previous successful trn request for the email address" do
         before do
           allow(trn_request).to receive(
-            :previous_trn_success_for_email?
+            :previous_trn_success_for_email?,
           ).and_return(true)
         end
 
@@ -69,7 +69,7 @@ RSpec.describe DqtApi do
       it "raises a timeout error" do
         VCR.turned_off do
           allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(
-            Faraday::TimeoutError
+            Faraday::TimeoutError,
           )
           expect { find_trn! }.to raise_error(Faraday::TimeoutError)
         end
@@ -83,7 +83,7 @@ RSpec.describe DqtApi do
           email: "test@example.com",
           first_name: "John",
           last_name: "Smith",
-          ni_number: "QQ123456C"
+          ni_number: "QQ123456C",
         )
       end
 
@@ -99,7 +99,7 @@ RSpec.describe DqtApi do
           email: "no@results.com",
           first_name: "No",
           last_name: "Results",
-          ni_number: "QQ123456C"
+          ni_number: "QQ123456C",
         )
       end
 
@@ -144,7 +144,7 @@ RSpec.describe DqtApi do
       it "raises a time out error" do
         VCR.turned_off do
           allow_any_instance_of(Faraday::Connection).to receive(:put).and_raise(
-            Faraday::TimeoutError
+            Faraday::TimeoutError,
           )
           expect { unlock_teacher! }.to raise_error(Faraday::TimeoutError)
         end
@@ -161,7 +161,7 @@ RSpec.describe DqtApi do
           last_name: "Smith",
           ni_number: "QQ123456C",
           itt_provider_ukprn: "12345",
-          itt_provider_name: "Astra SCITT"
+          itt_provider_name: "Astra SCITT",
         )
       end
 
@@ -172,8 +172,8 @@ RSpec.describe DqtApi do
             firstName: "John",
             ittProviderUkprn: "12345",
             lastName: "Smith",
-            nationalInsuranceNumber: "QQ123456C"
-          }
+            nationalInsuranceNumber: "QQ123456C",
+          },
         )
       end
     end
@@ -186,7 +186,7 @@ RSpec.describe DqtApi do
           last_name: "Smith",
           ni_number: "QQ123456C",
           itt_provider_ukprn: nil,
-          itt_provider_name: "Astra SCITT"
+          itt_provider_name: "Astra SCITT",
         )
       end
 
@@ -197,8 +197,8 @@ RSpec.describe DqtApi do
             firstName: "John",
             ittProviderName: "Astra SCITT",
             lastName: "Smith",
-            nationalInsuranceNumber: "QQ123456C"
-          }
+            nationalInsuranceNumber: "QQ123456C",
+          },
         )
       end
     end

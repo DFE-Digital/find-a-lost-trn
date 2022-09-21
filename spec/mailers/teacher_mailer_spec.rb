@@ -22,7 +22,7 @@ RSpec.describe TeacherMailer, type: :mailer do
       first_name: "Joe",
       last_name: "Bloggs",
       email: "joe@example.com",
-      trn: 1_234_567
+      trn: 1_234_567,
     )
   end
 
@@ -32,7 +32,7 @@ RSpec.describe TeacherMailer, type: :mailer do
     it_behaves_like(
       "a mail with subject and content",
       "Your TRN is 1234567",
-      "content" => "We suggest you keep this email for future reference"
+      "content" => "We suggest you keep this email for future reference",
     )
   end
 end

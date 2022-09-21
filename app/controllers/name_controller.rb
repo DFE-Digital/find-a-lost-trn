@@ -25,7 +25,7 @@ class NameController < ApplicationController
       :last_name,
       :name_changed,
       :previous_first_name,
-      :previous_last_name
+      :previous_last_name,
     )
   end
 end
