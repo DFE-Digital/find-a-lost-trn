@@ -6,7 +6,7 @@ module SupportInterface
 
     validates :number_of_tickets,
               comparison: {
-                equal_to: :actual_number_of_tickets
+                equal_to: :actual_number_of_tickets,
               }
   end
 end

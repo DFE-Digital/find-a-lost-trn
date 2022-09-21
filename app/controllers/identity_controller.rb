@@ -22,7 +22,7 @@ class IdentityController < ApplicationController
     @trn_request =
       TrnRequest.create!(
         email: recognised_params["email"],
-        from_get_an_identity: true
+        from_get_an_identity: true,
       )
 
     session[:trn_request_id] = @trn_request.id
@@ -46,7 +46,7 @@ class IdentityController < ApplicationController
       :journey_id,
       :previous_url,
       :redirect_url,
-      :sig
+      :sig,
     )
   end
 
@@ -73,7 +73,7 @@ class IdentityController < ApplicationController
         "action",
         "authenticity_token",
         "controller",
-        "sig"
+        "sig",
       )
     Identity.signature_from(unsafe_params)
   end

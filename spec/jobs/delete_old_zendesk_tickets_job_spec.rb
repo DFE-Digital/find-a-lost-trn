@@ -11,27 +11,27 @@ RSpec.describe DeleteOldZendeskTicketsJob, type: :job do
           id: 42,
           custom_fields: [
             { id: 4_419_328_659_089, value: "Foo" },
-            { id: 4_562_126_876_049, value: "Bar" }
+            { id: 4_562_126_876_049, value: "Bar" },
           ],
           group: {
-            name: "Some group"
+            name: "Some group",
           },
           created_at: 6.months.ago + 7.days,
-          updated_at: 6.months.ago + 1.day
+          updated_at: 6.months.ago + 1.day,
         ),
         ZendeskAPI::Ticket.new(
           GDS_ZENDESK_CLIENT,
           id: 13,
           custom_fields: [
             { id: 4_419_328_659_089, value: "Foo" },
-            { id: 4_562_126_876_049, value: "Bar" }
+            { id: 4_562_126_876_049, value: "Bar" },
           ],
           group: {
-            name: "Some other group"
+            name: "Some other group",
           },
           created_at: 6.months.ago + 8.days,
-          updated_at: 6.months.ago + 2.days
-        )
+          updated_at: 6.months.ago + 2.days,
+        ),
       ]
     end
 
@@ -39,7 +39,7 @@ RSpec.describe DeleteOldZendeskTicketsJob, type: :job do
 
     before do
       allow(ZendeskService).to receive(
-        :find_closed_tickets_from_6_months_ago
+        :find_closed_tickets_from_6_months_ago,
       ).and_return(returned_tickets)
       allow(ZendeskService).to receive(:destroy_tickets!)
     end
@@ -51,7 +51,7 @@ RSpec.describe DeleteOldZendeskTicketsJob, type: :job do
 
       it "fetches closed tickets" do
         expect(ZendeskService).to receive(
-          :find_closed_tickets_from_6_months_ago
+          :find_closed_tickets_from_6_months_ago,
         )
         perform
       end
@@ -84,7 +84,7 @@ RSpec.describe DeleteOldZendeskTicketsJob, type: :job do
 
       it "does not fetch closed tickets" do
         expect(ZendeskService).not_to receive(
-          :find_closed_tickets_from_6_months_ago
+          :find_closed_tickets_from_6_months_ago,
         )
         perform
       end

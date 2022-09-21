@@ -4,12 +4,12 @@ require "rails_helper"
 RSpec.describe NameForm, type: :model do
   it do
     is_expected.to validate_presence_of(:first_name).with_message(
-      "Enter your first name"
+      "Enter your first name",
     )
   end
   it do
     is_expected.to validate_presence_of(:last_name).with_message(
-      "Enter your last name"
+      "Enter your last name",
     )
   end
   it { is_expected.to validate_length_of(:first_name).is_at_most(255) }
@@ -51,7 +51,7 @@ RSpec.describe NameForm, type: :model do
           name_changed: "true",
           previous_first_name: "Jonathan",
           previous_last_name: "Smith",
-          trn_request:
+          trn_request:,
         )
       end
 
@@ -86,7 +86,7 @@ RSpec.describe NameForm, type: :model do
           name_changed: "false",
           previous_first_name: "Jonathan",
           previous_last_name: "Smith",
-          trn_request:
+          trn_request:,
         )
       end
 
@@ -109,7 +109,7 @@ RSpec.describe NameForm, type: :model do
           name_changed: "prefer",
           previous_first_name: "Jonathan",
           previous_last_name: "Smith",
-          trn_request:
+          trn_request:,
         )
       end
 
@@ -133,7 +133,7 @@ RSpec.describe NameForm, type: :model do
         it "adds an error" do
           save!
           expect(name_form.errors[:first_name]).to include(
-            "Enter your first name"
+            "Enter your first name",
           )
         end
 
@@ -146,12 +146,12 @@ RSpec.describe NameForm, type: :model do
           expect(ValidationError.last.messages).to include(
             "first_name" => {
               "messages" => ["Enter your first name"],
-              "value" => nil
+              "value" => nil,
             },
             "last_name" => {
               "messages" => ["Enter your last name"],
-              "value" => nil
-            }
+              "value" => nil,
+            },
           )
         end
       end
@@ -167,7 +167,7 @@ RSpec.describe NameForm, type: :model do
         it "adds an error" do
           save!
           expect(name_form.errors[:name_changed]).to include(
-            "Tell us if you have changed your name"
+            "Tell us if you have changed your name",
           )
         end
 
@@ -180,8 +180,8 @@ RSpec.describe NameForm, type: :model do
           expect(ValidationError.last.messages).to include(
             "name_changed" => {
               "messages" => ["Tell us if you have changed your name"],
-              "value" => nil
-            }
+              "value" => nil,
+            },
           )
         end
       end
@@ -233,7 +233,7 @@ RSpec.describe NameForm, type: :model do
         described_class.new(
           name_changed: "true",
           previous_first_name: "New",
-          trn_request:
+          trn_request:,
         )
       end
 
@@ -256,7 +256,7 @@ RSpec.describe NameForm, type: :model do
         described_class.new(
           name_changed: "true",
           previous_last_name: "New",
-          trn_request:
+          trn_request:,
         )
       end
 

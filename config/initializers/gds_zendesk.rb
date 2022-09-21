@@ -41,13 +41,13 @@ class ExtendedDummyClient
               updated_at: (6.months + 1.day).ago,
               custom_fields: [
                 { id: 4_419_328_659_089, value: "Foo" },
-                { id: 4_562_126_876_049, value: "Bar" }
+                { id: 4_562_126_876_049, value: "Bar" },
               ],
               group: {
-                name: "Some group"
-              }
-            )
-          ]
+                name: "Some group",
+              },
+            ),
+          ],
         )
         collection.instance_variable_set(:@count, 1)
       end
@@ -85,13 +85,13 @@ module DummyTicketExtensions
       ZendeskAPI::Ticket::Comment.new(
         GDS_ZENDESK_CLIENT,
         id: 1,
-        body: "Example"
+        body: "Example",
       ),
       ZendeskAPI::Ticket::Comment.new(
         GDS_ZENDESK_CLIENT,
         id: 2,
-        body: "Your TRN is **2921020**"
-      )
+        body: "Your TRN is **2921020**",
+      ),
     ]
     ticket
   end
@@ -119,6 +119,6 @@ GDS_ZENDESK_CLIENT =
       username: ENV.fetch("ZENDESK_USER", nil),
       token: ENV.fetch("ZENDESK_TOKEN", nil),
       logger: Rails.logger,
-      url: "https://teachingregulationagency.zendesk.com/api/v2/"
+      url: "https://teachingregulationagency.zendesk.com/api/v2/",
     )
   end

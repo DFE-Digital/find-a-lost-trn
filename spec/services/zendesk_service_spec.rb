@@ -11,7 +11,7 @@ RSpec.describe ZendeskService do
       trn_request = TrnRequest.new(date_of_birth: 20.years.ago)
 
       expect(
-        described_class.ticket_template(trn_request)[:comment][:value]
+        described_class.ticket_template(trn_request)[:comment][:value],
       ).to include("NI number: Not provided")
     end
 
@@ -19,7 +19,7 @@ RSpec.describe ZendeskService do
       trn_request = TrnRequest.new(date_of_birth: 20.years.ago)
 
       expect(
-        described_class.ticket_template(trn_request)[:comment][:value]
+        described_class.ticket_template(trn_request)[:comment][:value],
       ).to include("ITT provider: Not provided")
     end
   end
@@ -38,13 +38,13 @@ RSpec.describe ZendeskService do
         itt_provider_name: "Big SCITT",
         last_name: "User",
         ni_number: "QC123456A",
-        previous_last_name: "Smith"
+        previous_last_name: "Smith",
       )
     end
 
     it "creates a ticket" do
       allow(ticket_client).to receive(:create!).and_return(
-        ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42)
+        ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42),
       )
 
       create_ticket!
@@ -61,17 +61,17 @@ RSpec.describe ZendeskService do
                 "\nPrevious name: Test Smith" \
                 "\nDate of birth: #{20.years.ago.strftime("%d %B %Y")}" \
                 "\nNI number: QC123456A" \
-                "\nITT provider: Big SCITT\n"
+                "\nITT provider: Big SCITT\n",
           },
           requester: {
             email: "test@example.com",
-            name: "Test User"
+            name: "Test User",
           },
           custom_fields: {
             id: "4419328659089",
-            value: "request_from_find_a_lost_trn_app"
-          }
-        }
+            value: "request_from_find_a_lost_trn_app",
+          },
+        },
       )
       expect(trn_request.zendesk_ticket_id).to eq(42)
     end
@@ -95,7 +95,7 @@ RSpec.describe ZendeskService do
 
     before do
       allow(ticket_client).to receive(:find).and_return(
-        ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42)
+        ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42),
       )
     end
 
@@ -110,7 +110,7 @@ RSpec.describe ZendeskService do
     context "when the ticket exists" do
       before do
         allow(ticket_client).to receive(:find!).and_return(
-          ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42)
+          ZendeskAPI::Ticket.new(GDS_ZENDESK_CLIENT, id: 42),
         )
       end
 

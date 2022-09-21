@@ -9,7 +9,7 @@ RSpec.describe CreateZendeskTicketJob, type: :job do
     before do
       allow(ZendeskService).to receive(:create_ticket!)
       allow(TeacherMailer).to receive(:information_received).and_return(
-        double(deliver_later: true)
+        double(deliver_later: true),
       )
     end
 
@@ -20,7 +20,7 @@ RSpec.describe CreateZendeskTicketJob, type: :job do
 
     it "sends an email to the teacher" do
       expect(TeacherMailer).to receive(:information_received).with(
-        trn_request
+        trn_request,
       ).and_return(double(deliver_later: true))
       perform
     end
@@ -29,7 +29,7 @@ RSpec.describe CreateZendeskTicketJob, type: :job do
       freeze_time do
         perform
         expect(CheckZendeskTicketForTrnJob).to have_been_enqueued.at(
-          2.days.from_now
+          2.days.from_now,
         ).with(trn_request_id)
       end
     end

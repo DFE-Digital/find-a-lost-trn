@@ -30,7 +30,7 @@ class DqtApi
     unless trn_request.previous_trn_success_for_email?
       UnlockTeacherAccountJob.perform_later(
         uid: teacher_account.fetch("uid"),
-        trn_request_id: trn_request.id
+        trn_request_id: trn_request.id,
       )
     end
 
@@ -75,7 +75,7 @@ class DqtApi
       previousFirstName: trn_request.previous_first_name,
       previousLastName: trn_request.previous_last_name,
       nationalInsuranceNumber: trn_request.ni_number,
-      trn: trn_request.trn_from_user
+      trn: trn_request.trn_from_user,
     }.compact
   end
 
@@ -84,8 +84,8 @@ class DqtApi
       Faraday.new(
         url: ENV.fetch("DQT_API_URL", nil),
         request: {
-          timeout: FIVE_SECONDS
-        }
+          timeout: FIVE_SECONDS,
+        },
       ) do |faraday|
         faraday.request :authorization, "Bearer", ENV.fetch("DQT_API_KEY", nil)
         faraday.request :json
@@ -95,7 +95,7 @@ class DqtApi
                          { bodies: true, headers: true } do |logger|
           logger.filter(
             /((emailAddress|firstName|lastName|nationalInsuranceNumber|previousFirstName|previousLastName)=)([^&]+)/,
-            '\1[REDACTED]'
+            '\1[REDACTED]',
           )
         end
         faraday.adapter Faraday.default_adapter

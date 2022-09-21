@@ -6,7 +6,7 @@ class IttProvidersController < ApplicationController
 
   def edit
     @itt_provider_options = fetch_itt_provider_options if FeatureFlag.active?(
-      :use_dqt_api_itt_providers
+      :use_dqt_api_itt_providers,
     )
 
     @itt_provider_form = IttProviderForm.new(trn_request:).assign_form_values

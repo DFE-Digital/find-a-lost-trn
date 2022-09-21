@@ -69,8 +69,8 @@ class NameForm
     errors.add(
       :name_changed,
       I18n.t(
-        "activemodel.errors.models.name_form.attributes.name_changed.present"
-      )
+        "activemodel.errors.models.name_form.attributes.name_changed.present",
+      ),
     )
   end
 

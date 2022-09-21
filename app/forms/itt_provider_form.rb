@@ -9,7 +9,7 @@ class IttProviderForm
   validates :itt_provider_name,
             presence: true,
             length: {
-              maximum: 255
+              maximum: 255,
             },
             if: -> { itt_provider_enrolled == "true" }
 
@@ -29,7 +29,7 @@ class IttProviderForm
     trn_request.update!(
       itt_provider_enrolled:,
       itt_provider_name:,
-      itt_provider_ukprn:
+      itt_provider_ukprn:,
     )
   end
 
@@ -55,7 +55,7 @@ class IttProviderForm
         DqtApi.get_itt_providers.map do |itt_provider|
           OpenStruct.new(
             name: itt_provider["providerName"],
-            value: itt_provider["ukprn"]
+            value: itt_provider["ukprn"],
           )
         end
       end

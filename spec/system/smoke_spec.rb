@@ -53,13 +53,13 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
 
   def then_i_see_the_ask_questions_page
     expect(page).to have_content(
-      "We’ll ask you some questions to help find your TRN"
+      "We’ll ask you some questions to help find your TRN",
     )
   end
 
   def then_i_see_the_awarded_qts_page
     expect(page).to have_content(
-      "Have you been awarded qualified teacher status (QTS)?"
+      "Have you been awarded qualified teacher status (QTS)?",
     )
   end
 
@@ -89,7 +89,7 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
 
   def then_i_see_the_itt_provider_page
     expect(page).to have_content(
-      "Did a university, SCITT or school award your QTS?"
+      "Did a university, SCITT or school award your QTS?",
     )
   end
 
@@ -104,7 +104,7 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
   def when_i_am_authorized_as_a_support_user
     page.driver.basic_authorize(
       ENV["SUPPORT_USERNAME"],
-      ENV["SUPPORT_PASSWORD"]
+      ENV["SUPPORT_PASSWORD"],
     )
   end
 

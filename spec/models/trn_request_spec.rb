@@ -34,7 +34,7 @@ RSpec.describe TrnRequest, type: :model do
     described_class.new(
       email: "test@example.com",
       has_ni_number: false,
-      itt_provider_enrolled: "no"
+      itt_provider_enrolled: "no",
     )
   end
 
@@ -94,7 +94,7 @@ RSpec.describe TrnRequest, type: :model do
         described_class.new(
           first_name: "John",
           last_name: "Doe",
-          previous_first_name: "Joan"
+          previous_first_name: "Joan",
         )
       end
 
@@ -106,7 +106,7 @@ RSpec.describe TrnRequest, type: :model do
         described_class.new(
           first_name: "John",
           last_name: "Doe",
-          previous_last_name: "Smith"
+          previous_last_name: "Smith",
         )
       end
 
@@ -121,7 +121,7 @@ RSpec.describe TrnRequest, type: :model do
         last_name: "Doe",
         previous_last_name: "Smith",
         trn: "2921020",
-        email: "john.doe@example.com"
+        email: "john.doe@example.com",
       )
     end
 
@@ -144,7 +144,7 @@ RSpec.describe TrnRequest, type: :model do
             last_name: "Doe",
             previous_last_name: "Smith",
             trn: "2921020",
-            email: "john.doe@example.com"
+            email: "john.doe@example.com",
           )
         end
 
@@ -158,7 +158,7 @@ RSpec.describe TrnRequest, type: :model do
             last_name: "Doe",
             previous_last_name: "Smith",
             trn: "2921019",
-            email: "john.doe@example.com"
+            email: "john.doe@example.com",
           )
         end
 
@@ -180,7 +180,7 @@ RSpec.describe TrnRequest, type: :model do
           last_name: "Doe",
           previous_last_name: "Smith",
           trn: nil,
-          email: "john.doe@example.com"
+          email: "john.doe@example.com",
         )
       end
 

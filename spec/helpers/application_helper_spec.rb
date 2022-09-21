@@ -6,7 +6,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     it "softly hyphenates an email" do
       result = shy_email("john.doe@digital.education.gov.uk")
       expect(result).to eq(
-        "john&shy;.doe&shy;@digital&shy;.education&shy;.gov&shy;.uk"
+        "john&shy;.doe&shy;@digital&shy;.education&shy;.gov&shy;.uk",
       )
     end
 
@@ -26,7 +26,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     it "Defaults to page_title if client_title is not set" do
       result = custom_title("Page Title")
       expect(result).to eq(
-        "Page Title - Find a lost teacher reference number (TRN)"
+        "Page Title - Find a lost teacher reference number (TRN)",
       )
     end
 

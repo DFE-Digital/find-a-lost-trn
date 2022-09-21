@@ -9,7 +9,7 @@ Rails.application.routes.draw do
                invitations: "staff/invitations",
                passwords: "staff/passwords",
                sessions: "staff/sessions",
-               unlocks: "staff/unlocks"
+               unlocks: "staff/unlocks",
              }
 
   namespace :support_interface, path: "/support" do

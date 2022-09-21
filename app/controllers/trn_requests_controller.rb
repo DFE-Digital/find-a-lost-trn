@@ -56,7 +56,7 @@ class TrnRequestsController < ApplicationController
       rescue ZendeskService::ConnectionError => exception
         Sentry.capture_exception(exception)
         CreateZendeskTicketJob.set(wait: 5.minutes).perform_later(
-          trn_request.id
+          trn_request.id,
         )
         TeacherMailer.delayed_information_received(trn_request).deliver_later
         redirect_to helpdesk_request_delayed_path
@@ -78,7 +78,7 @@ class TrnRequestsController < ApplicationController
     response = DqtApi.find_trn!(trn_request)
     trn_request.update!(
       trn: response["trn"],
-      has_active_sanctions: response["hasActiveSanctions"]
+      has_active_sanctions: response["hasActiveSanctions"],
     )
   end
 

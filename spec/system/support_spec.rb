@@ -40,7 +40,7 @@ RSpec.describe "Support", type: :system do
       :trn_request,
       :has_zendesk_ticket,
       date_of_birth: "1990-01-01",
-      zendesk_ticket_id: 1234
+      zendesk_ticket_id: 1234,
     )
   end
 

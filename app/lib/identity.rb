@@ -3,7 +3,7 @@ class Identity
     OpenSSL::HMAC.hexdigest(
       OpenSSL::Digest.new("sha256"),
       ENV["IDENTITY_SHARED_SECRET_KEY"],
-      encode_params(params)
+      encode_params(params),
     )
   end
 

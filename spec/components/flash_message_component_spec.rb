@@ -22,7 +22,7 @@ RSpec.describe FlashMessageComponent, type: :component do
 
     it "the component is rendered with the correct content" do
       expect(
-        component.css(".govuk-notification-banner__heading").text
+        component.css(".govuk-notification-banner__heading").text,
       ).to include("Your application has been updated")
     end
   end
@@ -32,7 +32,7 @@ RSpec.describe FlashMessageComponent, type: :component do
 
     it "renders the correct content" do
       expect(
-        component.css(".govuk-notification-banner__heading").text
+        component.css(".govuk-notification-banner__heading").text,
       ).to include("Your application has been updated")
     end
   end
@@ -42,7 +42,7 @@ RSpec.describe FlashMessageComponent, type: :component do
 
     it "the component is rendered with a region role" do
       expect(
-        component.css(".govuk-notification-banner").attribute("role").value
+        component.css(".govuk-notification-banner").attribute("role").value,
       ).to eq("region")
     end
   end
@@ -52,7 +52,7 @@ RSpec.describe FlashMessageComponent, type: :component do
 
     it "the component is rendered with an alert role" do
       expect(
-        component.css(".govuk-notification-banner").attribute("role").value
+        component.css(".govuk-notification-banner").attribute("role").value,
       ).to eq("alert")
     end
   end
@@ -62,7 +62,7 @@ RSpec.describe FlashMessageComponent, type: :component do
 
     it "the component is rendered with an alert role" do
       expect(
-        component.css(".govuk-notification-banner").attribute("role").value
+        component.css(".govuk-notification-banner").attribute("role").value,
       ).to eq("alert")
     end
   end

@@ -26,13 +26,13 @@ RSpec.describe ZendeskDeleteRequest, type: :model do
         id: 42,
         custom_fields: [
           { id: 4_419_328_659_089, value: "Foo" },
-          { id: 4_562_126_876_049, value: "Bar" }
+          { id: 4_562_126_876_049, value: "Bar" },
         ],
         group: {
-          name: "Some group"
+          name: "Some group",
         },
         created_at: 6.months.ago + 7.days,
-        updated_at: 6.months.ago + 1.day
+        updated_at: 6.months.ago + 1.day,
       )
     end
 

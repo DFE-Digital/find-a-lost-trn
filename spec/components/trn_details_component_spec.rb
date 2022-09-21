@@ -22,7 +22,7 @@ RSpec.describe TrnDetailsComponent, type: :component do
       last_name: "User",
       ni_number:,
       previous_last_name: "Smith",
-      trn_from_user:
+      trn_from_user:,
     )
   end
   let(:component) { render_inline(described_class.new(trn_request:)) }
@@ -37,7 +37,7 @@ RSpec.describe TrnDetailsComponent, type: :component do
 
   it "renders date of birth" do
     expect(component.text).to include(
-      20.years.ago.to_date.to_fs(:long_ordinal_uk)
+      20.years.ago.to_date.to_fs(:long_ordinal_uk),
     )
   end
 
@@ -148,7 +148,7 @@ RSpec.describe TrnDetailsComponent, type: :component do
     it "raises an error" do
       expect {
         render_inline(
-          described_class.new(trn_request:, anonymise: true, actions: true)
+          described_class.new(trn_request:, anonymise: true, actions: true),
         )
       }.to raise_error(ArgumentError)
     end
@@ -195,7 +195,7 @@ RSpec.describe TrnDetailsComponent, type: :component do
 
     it do
       is_expected.to include(
-        "Did a university, SCITT or school award your QTS?"
+        "Did a university, SCITT or school award your QTS?",
       )
     end
     it { is_expected.to include("No, I was awarded QTS another way") }

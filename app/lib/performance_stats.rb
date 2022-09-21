@@ -9,7 +9,7 @@ class PerformanceStats
 
     @trn_requests =
       TrnRequest.where(created_at: time_period).group(
-        "date_trunc('day', created_at)"
+        "date_trunc('day', created_at)",
       )
 
     @last_n_days = (0..7).map { |n| n.days.ago.beginning_of_day.utc }
@@ -43,15 +43,15 @@ class PerformanceStats
   def arel_columns_for_request_counts
     [
       Arel.sql(
-        "sum(case when trn is not null and zendesk_ticket_id is null then 1 else 0 end) as cnt_trn_found"
+        "sum(case when trn is not null and zendesk_ticket_id is null then 1 else 0 end) as cnt_trn_found",
       ),
       Arel.sql(
-        "sum(case when zendesk_ticket_id is not null then 1 else 0 end) as cnt_no_match"
+        "sum(case when zendesk_ticket_id is not null then 1 else 0 end) as cnt_no_match",
       ),
       Arel.sql(
-        "sum(case when trn is null and zendesk_ticket_id is null then 1 else 0 end) as cnt_did_not_finish"
+        "sum(case when trn is null and zendesk_ticket_id is null then 1 else 0 end) as cnt_did_not_finish",
       ),
-      Arel.sql("count(*) as total")
+      Arel.sql("count(*) as total"),
     ]
   end
 
@@ -60,7 +60,7 @@ class PerformanceStats
       @trn_requests
         .select(
           Arel.sql("date_trunc('day', created_at) AS day"),
-          *arel_columns_for_request_counts
+          *arel_columns_for_request_counts,
         )
         .each_with_object({}) do |row, hash|
           hash[row["day"]] = row.attributes.except("id", "day").symbolize_keys
@@ -74,7 +74,7 @@ class PerformanceStats
               total: 0,
               cnt_trn_found: 0,
               cnt_no_match: 0,
-              cnt_did_not_finish: 0
+              cnt_did_not_finish: 0,
             }
         date_string =
           day == Time.zone.today ? "Today" : day.to_fs(:weekday_day_and_month)
@@ -98,7 +98,7 @@ class PerformanceStats
   def calculate_request_counts_by_month
     start_date = [
       LAUNCH_DATE,
-      12.months.ago.beginning_of_month.beginning_of_day
+      12.months.ago.beginning_of_month.beginning_of_day,
     ].max
     sparse_request_counts_by_month =
       TrnRequest
@@ -106,7 +106,7 @@ class PerformanceStats
         .group("date_trunc('month', created_at)")
         .select(
           Arel.sql("date_trunc('month', created_at) AS month"),
-          *arel_columns_for_request_counts
+          *arel_columns_for_request_counts,
         )
         .order(Arel.sql("date_trunc('month', created_at) desc"))
         .each_with_object({}) do |row, hash|
@@ -144,14 +144,14 @@ class PerformanceStats
         .pluck(
           Arel.sql("date_trunc('day', created_at) AS day"),
           Arel.sql(
-            "percentile_disc(0.90) within group (order by (checked_at - created_at) asc) as percentile_90"
+            "percentile_disc(0.90) within group (order by (checked_at - created_at) asc) as percentile_90",
           ),
           Arel.sql(
-            "percentile_disc(0.75) within group (order by (checked_at - created_at) asc) as percentile_75"
+            "percentile_disc(0.75) within group (order by (checked_at - created_at) asc) as percentile_75",
           ),
           Arel.sql(
-            "percentile_disc(0.50) within group (order by (checked_at - created_at) asc) as percentile_50"
-          )
+            "percentile_disc(0.50) within group (order by (checked_at - created_at) asc) as percentile_50",
+          ),
         )
         .each_with_object({}) { |row, hash| hash[row[0]] = row.slice(1, 3) }
 
@@ -162,14 +162,14 @@ class PerformanceStats
         .where.not(trn: nil)
         .pick(
           Arel.sql(
-            "percentile_disc(0.90) within group (order by (checked_at - created_at) asc) as percentile_90"
+            "percentile_disc(0.90) within group (order by (checked_at - created_at) asc) as percentile_90",
           ),
           Arel.sql(
-            "percentile_disc(0.75) within group (order by (checked_at - created_at) asc) as percentile_75"
+            "percentile_disc(0.75) within group (order by (checked_at - created_at) asc) as percentile_75",
           ),
           Arel.sql(
-            "percentile_disc(0.50) within group (order by (checked_at - created_at) asc) as percentile_50"
-          )
+            "percentile_disc(0.50) within group (order by (checked_at - created_at) asc) as percentile_50",
+          ),
         )
 
     @duration_data =
@@ -194,22 +194,22 @@ class PerformanceStats
       @trn_requests
         .unscope(:group)
         .where(
-          "trn is not null or zendesk_ticket_id is not null"
+          "trn is not null or zendesk_ticket_id is not null",
         ) # filter out all abandonments
         .select(
           Arel.sql(
-            "sum(case when trn is not null and zendesk_ticket_id is null and has_ni_number is null then 1 else 0 end) as three_questions" # rubocop:disable Layout/LineLength
+            "sum(case when trn is not null and zendesk_ticket_id is null and has_ni_number is null then 1 else 0 end) as three_questions", # rubocop:disable Layout/LineLength
           ),
           Arel.sql(
-            "sum(case when trn is not null and zendesk_ticket_id is null and has_ni_number is not null and awarded_qts is null then 1 else 0 end) as four_questions" # rubocop:disable Layout/LineLength
+            "sum(case when trn is not null and zendesk_ticket_id is null and has_ni_number is not null and awarded_qts is null then 1 else 0 end) as four_questions", # rubocop:disable Layout/LineLength
           ),
           Arel.sql(
-            "sum(case when trn is not null and zendesk_ticket_id is null and awarded_qts is not null then 1 else 0 end) as five_questions_matched" # rubocop:disable Layout/LineLength
+            "sum(case when trn is not null and zendesk_ticket_id is null and awarded_qts is not null then 1 else 0 end) as five_questions_matched", # rubocop:disable Layout/LineLength
           ),
           Arel.sql(
-            "sum(case when zendesk_ticket_id is not null and awarded_qts is not null then 1 else 0 end) as five_questions_nomatch" # rubocop:disable Layout/LineLength
+            "sum(case when zendesk_ticket_id is not null and awarded_qts is not null then 1 else 0 end) as five_questions_nomatch", # rubocop:disable Layout/LineLength
           ),
-          Arel.sql("count(*) as total")
+          Arel.sql("count(*) as total"),
         )
         .map(&:attributes)
         .first

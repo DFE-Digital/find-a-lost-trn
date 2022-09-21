@@ -10,7 +10,7 @@ class ZendeskHealthJob < ApplicationJob
 
     url = root_url(host: ENV.fetch("HOSTING_DOMAIN"))
     SlackClient.create_message(
-      "No Zendesk tickets created in the last 24 hours on #{url}"
+      "No Zendesk tickets created in the last 24 hours on #{url}",
     )
   end
 end

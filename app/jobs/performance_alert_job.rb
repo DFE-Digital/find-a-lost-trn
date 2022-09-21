@@ -8,7 +8,7 @@ class PerformanceAlertJob < ApplicationJob
 
     count =
       TrnRequest.where(
-        created_at: 1.week.ago.beginning_of_day..Time.zone.now
+        created_at: 1.week.ago.beginning_of_day..Time.zone.now,
       ).count
     url = performance_url(host: ENV.fetch("HOSTING_DOMAIN"))
     message =

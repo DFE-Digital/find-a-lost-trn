@@ -507,13 +507,13 @@ RSpec.describe "TRN requests", type: :system do
 
   def and_a_job_gets_queued_to_retry_the_zendesk_ticket_creation
     expect(CreateZendeskTicketJob).to have_been_enqueued.with(
-      TrnRequest.last.id
+      TrnRequest.last.id,
     )
   end
 
   def and_a_job_to_check_zendesk_is_queued
     expect(CheckZendeskTicketForTrnJob).to have_been_enqueued.with(
-      TrnRequest.last.id
+      TrnRequest.last.id,
     )
   end
 
@@ -521,10 +521,10 @@ RSpec.describe "TRN requests", type: :system do
     perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
     open_email("kevin@kevin.com")
     expect(current_email.subject).to eq(
-      "We’ve received the information you submitted"
+      "We’ve received the information you submitted",
     )
     expect(current_email.body).to include(
-      "We’ve received the information you submitted, and you’ll get an email with your TRN if we find a match."
+      "We’ve received the information you submitted, and you’ll get an email with your TRN if we find a match.",
     )
   end
 
@@ -538,10 +538,10 @@ RSpec.describe "TRN requests", type: :system do
     perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
     open_email("kevin@kevin.com")
     expect(current_email.subject).to eq(
-      "We’ve received the information you submitted"
+      "We’ve received the information you submitted",
     )
     expect(current_email.body).to include(
-      "give the helpdesk your ticket number: 42"
+      "give the helpdesk your ticket number: 42",
     )
   end
 
@@ -626,7 +626,7 @@ RSpec.describe "TRN requests", type: :system do
 
   def given_the_zendesk_connection_is_unavailable
     allow(ZendeskService).to receive(:create_ticket!).and_raise(
-      ZendeskService::ConnectionError
+      ZendeskService::ConnectionError,
     )
   end
 
@@ -645,27 +645,27 @@ RSpec.describe "TRN requests", type: :system do
   def then_i_see_the_ask_questions_page
     expect(page).to have_current_path("/ask-questions")
     expect(page.driver.browser.current_title).to start_with(
-      "We’ll ask you some questions to help find your TRN"
+      "We’ll ask you some questions to help find your TRN",
     )
     expect(page).to have_content(
-      "We’ll ask you some questions to help find your TRN"
+      "We’ll ask you some questions to help find your TRN",
     )
   end
 
   def then_i_see_the_awarded_qts_page
     expect(page).to have_current_path("/awarded-qts")
     expect(page.driver.browser.current_title).to start_with(
-      "Have you been awarded qualified teacher status (QTS)?"
+      "Have you been awarded qualified teacher status (QTS)?",
     )
     expect(page).to have_content(
-      "Have you been awarded qualified teacher status (QTS)?"
+      "Have you been awarded qualified teacher status (QTS)?",
     )
   end
 
   def then_i_see_the_check_answers_page
     expect(page).to have_current_path("/check-answers")
     expect(page.driver.browser.current_title).to start_with(
-      "Check your answers"
+      "Check your answers",
     )
     expect(page).to have_content("Check your answers")
     expect(page).to have_content("Kevin E")
@@ -677,7 +677,7 @@ RSpec.describe "TRN requests", type: :system do
   def then_i_see_the_check_answers_page_with_not_matching_details
     expect(page).to have_current_path("/check-answers")
     expect(page.driver.browser.current_title).to start_with(
-      "Check your answers"
+      "Check your answers",
     )
     expect(page).to have_content("Check your answers")
     and_i_see_my_not_matching_details
@@ -685,7 +685,7 @@ RSpec.describe "TRN requests", type: :system do
 
   def and_i_see_a_message_about_sending_an_email
     expect(page).to have_content(
-      "We will send your TRN to kevin@kevin.com if we find one matching your details."
+      "We will send your TRN to kevin@kevin.com if we find one matching your details.",
     )
   end
 
@@ -700,7 +700,7 @@ RSpec.describe "TRN requests", type: :system do
 
   def then_i_see_the_ni_missing_error
     expect(page).to have_content(
-      "Tell us if you have a National Insurance number"
+      "Tell us if you have a National Insurance number",
     )
   end
 
@@ -713,24 +713,24 @@ RSpec.describe "TRN requests", type: :system do
   def then_i_see_the_check_trn_page
     expect(page).to have_current_path("/check-trn")
     expect(page.driver.browser.current_title).to start_with(
-      "Check if you have a TRN"
+      "Check if you have a TRN",
     )
     expect(page).to have_content("Check if you have a TRN")
   end
 
   def then_i_see_the_delayed_information_page
     expect(page.driver.browser.current_title).to start_with(
-      "We’ve received your request"
+      "We’ve received your request",
     )
     expect(page).to have_content("We’ve received your request")
     expect(page).to have_content(
-      "We have not confirmed this by email yet because of a technical problem. We'll try again later."
+      "We have not confirmed this by email yet because of a technical problem. We'll try again later.",
     )
   end
 
   def then_i_see_the_zendesk_confirmation_page
     expect(page.driver.browser.current_title).to start_with(
-      "We’ve received your request"
+      "We’ve received your request",
     )
     expect(page).to have_content("We’ve received your request")
     expect(page).to have_content("give the helpdesk your request number: 42")
@@ -739,7 +739,7 @@ RSpec.describe "TRN requests", type: :system do
   def then_i_see_the_date_of_birth_page
     expect(page).to have_current_path("/date-of-birth")
     expect(page.driver.browser.current_title).to start_with(
-      "Your date of birth"
+      "Your date of birth",
     )
     expect(page).to have_content("Your date of birth")
   end
@@ -749,7 +749,7 @@ RSpec.describe "TRN requests", type: :system do
   def then_i_see_the_email_page
     expect(page).to have_current_path("/email")
     expect(page.driver.browser.current_title).to start_with(
-      "Your email address"
+      "Your email address",
     )
     expect(page).to have_content("Your email address")
   end
@@ -767,17 +767,17 @@ RSpec.describe "TRN requests", type: :system do
   def then_i_see_the_itt_provider_page
     expect(page).to have_current_path("/itt-provider")
     expect(page.driver.browser.current_title).to start_with(
-      "Did a university, SCITT or school award your QTS?"
+      "Did a university, SCITT or school award your QTS?",
     )
     expect(page).to have_content(
-      "Did a university, SCITT or school award your QTS?"
+      "Did a university, SCITT or school award your QTS?",
     )
   end
 
   def then_i_see_the_have_ni_page
     expect(page).to have_current_path("/have-ni-number")
     expect(page.driver.browser.current_title).to start_with(
-      "Do you have a National Insurance number?"
+      "Do you have a National Insurance number?",
     )
     expect(page).to have_content("Do you have a National Insurance number?")
   end
@@ -796,7 +796,7 @@ RSpec.describe "TRN requests", type: :system do
   def then_i_see_the_ni_number_page
     expect(page).to have_current_path("/ni-number")
     expect(page.driver.browser.current_title).to start_with(
-      "What is your National Insurance number?"
+      "What is your National Insurance number?",
     )
     expect(page).to have_content("What is your National Insurance number?")
   end
@@ -808,7 +808,7 @@ RSpec.describe "TRN requests", type: :system do
   def then_i_see_the_no_trn_page
     expect(page).to have_current_path("/you-dont-have-a-trn")
     expect(page.driver.browser.current_title).to start_with(
-      "If you do not have a TRN"
+      "If you do not have a TRN",
     )
     expect(page).to have_content("If you do not have a TRN")
   end
@@ -845,7 +845,7 @@ RSpec.describe "TRN requests", type: :system do
   def then_i_see_the_no_match_validation_error
     expect(page).to have_content("There is a problem")
     expect(page).to have_content(
-      "Choose if you want to try different details, or keep the current ones"
+      "Choose if you want to try different details, or keep the current ones",
     )
   end
 
@@ -853,7 +853,7 @@ RSpec.describe "TRN requests", type: :system do
     expect(page).to have_content("We could not find your TRN")
     expect(page).to have_content("Check your details")
     expect(page).not_to have_content(
-      "We could not match your answers with our records"
+      "We could not match your answers with our records",
     )
     expect(page).not_to have_content("Check your answers")
   end
@@ -1119,7 +1119,7 @@ RSpec.describe "TRN requests", type: :system do
   def when_i_click_on_the_forgotten_ni_number_link
     find(
       ".govuk-details__summary-text",
-      text: "I don’t know my National Insurance number"
+      text: "I don’t know my National Insurance number",
     ).click
   end
 

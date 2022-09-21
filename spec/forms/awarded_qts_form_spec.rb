@@ -8,7 +8,7 @@ RSpec.describe AwardedQtsForm, type: :model do
 
   specify do
     expect(awarded_qts_form).to validate_presence_of(:awarded_qts).with_message(
-      "Tell us if you have been awarded qualified teacher status (QTS)"
+      "Tell us if you have been awarded qualified teacher status (QTS)",
     )
   end
 
@@ -26,7 +26,7 @@ RSpec.describe AwardedQtsForm, type: :model do
       let(:trn_request) do
         TrnRequest.new(
           itt_provider_enrolled: true,
-          itt_provider_name: "Some ITT provider"
+          itt_provider_name: "Some ITT provider",
         )
       end
 

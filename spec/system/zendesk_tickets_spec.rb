@@ -31,20 +31,20 @@ RSpec.describe "Zendesk ticket syncing", type: :system do
             ZendeskAPI::Ticket::Comment.new(
               GDS_ZENDESK_CLIENT,
               id: 1,
-              body: "Example"
+              body: "Example",
             ),
             ZendeskAPI::Ticket::Comment.new(
               GDS_ZENDESK_CLIENT,
               id: 2,
-              body: "Thanks"
-            )
+              body: "Thanks",
+            ),
           ]
         end
     end
 
     before do
       allow(GDS_ZENDESK_CLIENT.ticket).to receive(:find).and_return(
-        ticket_with_no_trn
+        ticket_with_no_trn,
       )
     end
 
@@ -112,13 +112,13 @@ RSpec.describe "Zendesk ticket syncing", type: :system do
 
   def then_a_job_to_check_zendesk_is_queued
     expect(CheckZendeskTicketForTrnJob).to have_been_enqueued.at(
-      2.days.from_now
+      2.days.from_now,
     ).with(TrnRequest.last.id)
   end
 
   def then_a_job_to_check_zendesk_tomorrow_is_queued
     expect(CheckZendeskTicketForTrnJob).to have_been_enqueued.at(
-      1.day.from_now
+      1.day.from_now,
     ).with(TrnRequest.last.id)
   end
 

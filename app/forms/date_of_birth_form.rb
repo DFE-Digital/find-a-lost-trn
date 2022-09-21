@@ -18,7 +18,7 @@ class DateOfBirthForm
     date_fields = [
       params["date_of_birth(1i)"],
       params["date_of_birth(2i)"],
-      params["date_of_birth(3i)"]
+      params["date_of_birth(3i)"],
     ]
 
     date_fields.map! { |f| f.is_a?(String) ? f.strip : f }
@@ -95,7 +95,7 @@ class DateOfBirthForm
 
   def t(str)
     I18n.t(
-      "activemodel.errors.models.date_of_birth_form.attributes.date_of_birth.#{str}"
+      "activemodel.errors.models.date_of_birth_form.attributes.date_of_birth.#{str}",
     )
   end
 
@@ -114,7 +114,7 @@ class DateOfBirthForm
       nine: 9,
       ten: 10,
       eleven: 11,
-      twelve: 12
+      twelve: 12,
     }
 
     words[field.downcase.to_sym] || field

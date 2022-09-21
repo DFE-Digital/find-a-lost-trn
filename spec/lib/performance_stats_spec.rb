@@ -12,26 +12,26 @@ RSpec.describe PerformanceStats do
         :trn_request,
         3,
         :has_zendesk_ticket,
-        created_at: 1.day.ago + 2.hours
+        created_at: 1.day.ago + 2.hours,
       ) # counts against 11 May
       create_list(
         :trn_request,
         4,
         trn: nil,
         zendesk_ticket_id: nil,
-        created_at: 2.days.ago + 2.hours
+        created_at: 2.days.ago + 2.hours,
       ) # counts against 10 May
       create_list(
         :trn_request,
         5,
         trn: nil,
         zendesk_ticket_id: nil,
-        created_at: 1.month.ago + 2.hours
+        created_at: 1.month.ago + 2.hours,
       ) # counts against April, should not affect the counts as it falls outside the window
 
       totals, counts_by_day = described_class.new.request_counts_by_day
       expect(totals).to eq(
-        { total: 9, cnt_did_not_finish: 4, cnt_no_match: 3, cnt_trn_found: 2 }
+        { total: 9, cnt_did_not_finish: 4, cnt_no_match: 3, cnt_trn_found: 2 },
       )
       expect(counts_by_day.size).to eq 8
       expect(counts_by_day).to eq(
@@ -42,8 +42,8 @@ RSpec.describe PerformanceStats do
               cnt_trn_found: 2,
               cnt_no_match: 0,
               cnt_did_not_finish: 0,
-              total: 2
-            }
+              total: 2,
+            },
           ],
           [
             "Wednesday 11 May",
@@ -51,8 +51,8 @@ RSpec.describe PerformanceStats do
               cnt_trn_found: 0,
               cnt_no_match: 3,
               cnt_did_not_finish: 0,
-              total: 3
-            }
+              total: 3,
+            },
           ],
           [
             "Tuesday 10 May",
@@ -60,8 +60,8 @@ RSpec.describe PerformanceStats do
               cnt_trn_found: 0,
               cnt_no_match: 0,
               cnt_did_not_finish: 4,
-              total: 4
-            }
+              total: 4,
+            },
           ],
           [
             "Monday 9 May",
@@ -69,8 +69,8 @@ RSpec.describe PerformanceStats do
               cnt_trn_found: 0,
               cnt_no_match: 0,
               cnt_did_not_finish: 0,
-              total: 0
-            }
+              total: 0,
+            },
           ],
           [
             "Sunday 8 May",
@@ -78,8 +78,8 @@ RSpec.describe PerformanceStats do
               cnt_trn_found: 0,
               cnt_no_match: 0,
               cnt_did_not_finish: 0,
-              total: 0
-            }
+              total: 0,
+            },
           ],
           [
             "Saturday 7 May",
@@ -87,8 +87,8 @@ RSpec.describe PerformanceStats do
               cnt_trn_found: 0,
               cnt_no_match: 0,
               cnt_did_not_finish: 0,
-              total: 0
-            }
+              total: 0,
+            },
           ],
           [
             "Friday 6 May",
@@ -96,8 +96,8 @@ RSpec.describe PerformanceStats do
               cnt_trn_found: 0,
               cnt_no_match: 0,
               cnt_did_not_finish: 0,
-              total: 0
-            }
+              total: 0,
+            },
           ],
           [
             "Thursday 5 May",
@@ -105,10 +105,10 @@ RSpec.describe PerformanceStats do
               cnt_trn_found: 0,
               cnt_no_match: 0,
               cnt_did_not_finish: 0,
-              total: 0
-            }
-          ]
-        ]
+              total: 0,
+            },
+          ],
+        ],
       )
     end
 
@@ -117,13 +117,13 @@ RSpec.describe PerformanceStats do
         :trn_request,
         created_at: Time.zone.today.beginning_of_day,
         checked_at: Time.zone.today.beginning_of_day + 2.minutes,
-        zendesk_ticket_id: nil
+        zendesk_ticket_id: nil,
       )
 
       totals, = described_class.new.request_counts_by_day
 
       expect(totals).to eq(
-        { total: 1, cnt_did_not_finish: 1, cnt_no_match: 0, cnt_trn_found: 0 }
+        { total: 1, cnt_did_not_finish: 1, cnt_no_match: 0, cnt_trn_found: 0 },
       )
     end
 
@@ -133,7 +133,7 @@ RSpec.describe PerformanceStats do
       totals, = described_class.new.request_counts_by_day
 
       expect(totals).to eq(
-        { total: 1, cnt_did_not_finish: 0, cnt_no_match: 1, cnt_trn_found: 0 }
+        { total: 1, cnt_did_not_finish: 0, cnt_no_match: 1, cnt_trn_found: 0 },
       )
     end
   end
@@ -146,7 +146,7 @@ RSpec.describe PerformanceStats do
           :trn_request,
           3,
           :has_zendesk_ticket,
-          created_at: Date.new(2022, 5, 12)
+          created_at: Date.new(2022, 5, 12),
         )
 
         # shouldn't appear as they're prior to service launch on 4 May 2022
@@ -155,12 +155,17 @@ RSpec.describe PerformanceStats do
           5,
           trn: nil,
           zendesk_ticket_id: nil,
-          created_at: Date.new(2022, 5, 1)
+          created_at: Date.new(2022, 5, 1),
         )
 
         totals, counts_by_month = described_class.new.request_counts_by_month
         expect(totals).to eq(
-          { total: 5, cnt_did_not_finish: 0, cnt_no_match: 3, cnt_trn_found: 2 }
+          {
+            total: 5,
+            cnt_did_not_finish: 0,
+            cnt_no_match: 3,
+            cnt_trn_found: 2,
+          },
         )
         expect(counts_by_month.size).to eq 2
         expect(counts_by_month).to eq(
@@ -171,8 +176,8 @@ RSpec.describe PerformanceStats do
                 cnt_trn_found: 2,
                 cnt_no_match: 0,
                 cnt_did_not_finish: 0,
-                total: 2
-              }
+                total: 2,
+              },
             ],
             [
               "May 2022",
@@ -180,10 +185,10 @@ RSpec.describe PerformanceStats do
                 cnt_trn_found: 0,
                 cnt_no_match: 3,
                 cnt_did_not_finish: 0,
-                total: 3
-              }
-            ]
-          ]
+                total: 3,
+              },
+            ],
+          ],
         )
       end
     end
@@ -199,7 +204,12 @@ RSpec.describe PerformanceStats do
 
         totals, counts_by_month = described_class.new.request_counts_by_month
         expect(totals).to eq(
-          { total: 9, cnt_did_not_finish: 0, cnt_no_match: 0, cnt_trn_found: 9 }
+          {
+            total: 9,
+            cnt_did_not_finish: 0,
+            cnt_no_match: 0,
+            cnt_trn_found: 9,
+          },
         )
         expect(counts_by_month.size).to eq 3
         expect(counts_by_month).to eq(
@@ -210,8 +220,8 @@ RSpec.describe PerformanceStats do
                 cnt_trn_found: 2,
                 cnt_no_match: 0,
                 cnt_did_not_finish: 0,
-                total: 2
-              }
+                total: 2,
+              },
             ],
             [
               "June 2023",
@@ -219,8 +229,8 @@ RSpec.describe PerformanceStats do
                 cnt_trn_found: 3,
                 cnt_no_match: 0,
                 cnt_did_not_finish: 0,
-                total: 3
-              }
+                total: 3,
+              },
             ],
             [
               "July 2022",
@@ -228,10 +238,10 @@ RSpec.describe PerformanceStats do
                 cnt_trn_found: 4,
                 cnt_no_match: 0,
                 cnt_did_not_finish: 0,
-                total: 4
-              }
-            ]
-          ]
+                total: 4,
+              },
+            ],
+          ],
         )
       end
     end
@@ -242,7 +252,7 @@ RSpec.describe PerformanceStats do
       totals, = described_class.new.request_counts_by_month
 
       expect(totals).to eq(
-        { total: 1, cnt_did_not_finish: 0, cnt_no_match: 1, cnt_trn_found: 0 }
+        { total: 1, cnt_did_not_finish: 0, cnt_no_match: 1, cnt_trn_found: 0 },
       )
     end
   end
@@ -256,7 +266,7 @@ RSpec.describe PerformanceStats do
           :trn_request,
           :has_trn,
           created_at: Time.zone.today.beginning_of_day,
-          checked_at: Time.zone.today.beginning_of_day + duration.seconds
+          checked_at: Time.zone.today.beginning_of_day + duration.seconds,
         )
       end
 
@@ -265,7 +275,7 @@ RSpec.describe PerformanceStats do
         :trn_request,
         created_at: Time.zone.today.beginning_of_day,
         checked_at: Time.zone.today.beginning_of_day + 6.minutes,
-        trn: nil
+        trn: nil,
       )
 
       averages, data = described_class.new.duration_usage
@@ -284,7 +294,7 @@ RSpec.describe PerformanceStats do
         :has_trn,
         has_ni_number: true,
         awarded_qts: true,
-        zendesk_ticket_id: nil
+        zendesk_ticket_id: nil,
       ) # success after 5 questions
       create(:trn_request, :has_zendesk_ticket, awarded_qts: true) # zendesk after 5 questions
 
@@ -293,7 +303,7 @@ RSpec.describe PerformanceStats do
         three_questions: 1,
         four_questions: 1,
         five_questions_matched: 1,
-        five_questions_nomatch: 1
+        five_questions_nomatch: 1,
       )
     end
   end

@@ -14,8 +14,8 @@ RSpec.describe SlackClient, type: :service do
             body: {
             },
             status: 200,
-            success?: true
-          )
+            success?: true,
+          ),
       )
     end
     let(:message) { "Example message" }
@@ -35,18 +35,18 @@ RSpec.describe SlackClient, type: :service do
             instance_double(
               Faraday::Response,
               body: {
-                errors: ["There was an error"]
+                errors: ["There was an error"],
               },
               status: 500,
-              success?: false
-            )
+              success?: false,
+            ),
         )
       end
 
       it "raises an exception" do
         expect { create_message }.to raise_error(
           SlackClient::Error,
-          'Status code: 500 - {:errors=>["There was an error"]}'
+          'Status code: 500 - {:errors=>["There was an error"]}',
         )
       end
     end

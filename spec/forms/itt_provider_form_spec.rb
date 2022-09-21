@@ -6,21 +6,21 @@ RSpec.describe IttProviderForm, type: :model do
     specify do
       form = described_class.new
       expect(form).to validate_presence_of(:itt_provider_enrolled).with_message(
-        "Tell us how you were awarded qualified teacher status (QTS)"
+        "Tell us how you were awarded qualified teacher status (QTS)",
       )
     end
 
     specify do
       form = described_class.new(itt_provider_enrolled: "true")
       expect(form).to validate_presence_of(:itt_provider_name).with_message(
-        "Enter your university, SCITT, school or other training provider"
+        "Enter your university, SCITT, school or other training provider",
       )
     end
 
     specify do
       form = described_class.new(itt_provider_enrolled: "true")
       expect(form).to validate_length_of(:itt_provider_name).is_at_most(
-        255
+        255,
       ).with_message("Enter a school that is less than 255 letters long")
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe IttProviderForm, type: :model do
         described_class.new(
           trn_request: TrnRequest.new,
           itt_provider_enrolled: "true",
-          itt_provider_name: "Big SCITT"
+          itt_provider_name: "Big SCITT",
         )
       end
 
@@ -59,7 +59,7 @@ RSpec.describe IttProviderForm, type: :model do
         described_class.new(
           trn_request: TrnRequest.new,
           itt_provider_enrolled: "true",
-          itt_provider_name: "Astra SCITT"
+          itt_provider_name: "Astra SCITT",
         )
       end
 
@@ -75,7 +75,7 @@ RSpec.describe IttProviderForm, type: :model do
         described_class.new(
           trn_request: TrnRequest.new,
           itt_provider_enrolled: "true",
-          itt_provider_name: "Undefined SCITT"
+          itt_provider_name: "Undefined SCITT",
         )
       end
 
