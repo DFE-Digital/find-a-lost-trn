@@ -1,8 +1,8 @@
 <% content_for :page_title, 'Teachers' %>
 
-<%= govuk_breadcrumbs(breadcrumbs: { "Support" => support_interface_validation_errors_path, @teacher_name => nil }) %>
+<%= govuk_breadcrumbs(breadcrumbs: { "Support" => support_interface_validation_errors_path, @user.full_name => nil }) %>
 <h1 class="govuk-heading-xl">
-  <%= @teacher_name %>
+  <%= @user.full_name %>
 </h1>
 
 <section class="x-govuk-summary-card govuk-!-margin-bottom-9">
@@ -18,7 +18,7 @@
         <% row.key { "Official name" } %>
         <% row.value do %>
           <p>
-            <%= @teacher_name %>
+            <%= @user.full_name %>
             <%= govuk_tag(text: "Unverified", colour: "grey") %>
           </p>
 
@@ -33,7 +33,7 @@
 
       <% list.row do |row| %>
         <% row.key { "Email address" } %>
-        <% row.value { @teacher.fetch("email") } %>
+        <% row.value { @user.email } %>
         <%= row.action(text: "Change", href: "#", visually_hidden_text: "email address") %>
       <% end %>
 

@@ -14,7 +14,7 @@ class IdentityApi
 
     raise ApiError, response.reason_phrase unless response.status == 200
 
-    response.body
+    User.new(response.body)
   end
 
   def self.submit_trn!(trn_request, journey_id)
