@@ -4,9 +4,6 @@ class DeleteOldZendeskTicketsJob < ApplicationJob
 
     tickets = ZendeskService.find_closed_tickets_from_6_months_ago
     return if tickets.count.zero?
-    if tickets.count >= 100
-      DeleteOldZendeskTicketsJob.set(wait: 5.minutes).perform_later
-    end
 
     tickets.each do |ticket|
       ZendeskDeleteRequest
@@ -17,5 +14,9 @@ class DeleteOldZendeskTicketsJob < ApplicationJob
 
     ids = tickets.map(&:id)
     ZendeskService.destroy_tickets!(ids)
+
+    if tickets.count >= 100
+      DeleteOldZendeskTicketsJob.set(wait: 5.minutes).perform_later
+    end
   end
 end
