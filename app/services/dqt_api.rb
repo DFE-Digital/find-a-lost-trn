@@ -54,7 +54,7 @@ class DqtApi
   def self.unlock_teacher!(uid:)
     if FeatureFlag.active?(:unlock_teachers_self_service_portal_account)
       begin
-        response = new.client.put("/v2/unlock-teacher/#{uid}", {})
+        response = new.client.put("/v2/unlock-teacher/#{uid}", { timeout: 10 })
         raise ApiError, response.reason_phrase unless response.success?
         response.body["hasBeenUnlocked"]
       rescue ApiError => e
