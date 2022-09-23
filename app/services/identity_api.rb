@@ -33,6 +33,18 @@ class IdentityApi
     response.body
   end
 
+  def self.update_user_trn(uuid, trn)
+    if FeatureFlag.active?(:identity_api_always_timeout)
+      raise Faraday::TimeoutError, "Time-out feature flag enabled"
+    end
+
+    response = new.client.put("/api/v1/users/#{uuid}/trn", { trn: })
+
+    raise ApiError, response.reason_phrase unless response.status == 204
+
+    response.body
+  end
+
   def self.get_users
     if FeatureFlag.active?(:identity_api_always_timeout)
       raise Faraday::TimeoutError, "Time-out feature flag enabled"
@@ -42,7 +54,7 @@ class IdentityApi
 
     raise ApiError, response.reason_phrase unless response.status == 200
 
-    users = response.body.fetch("teachers", [])
+    users = response.body.fetch("users", [])
     users.map { |user| User.new(user) }
   end
 

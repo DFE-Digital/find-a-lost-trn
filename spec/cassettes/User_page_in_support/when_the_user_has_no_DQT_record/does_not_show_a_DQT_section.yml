@@ -23,7 +23,7 @@ http_interactions:
         Content-Type:
           - application/json; charset=utf-8
         Date:
-          - Tue, 20 Sep 2022 14:10:10 GMT
+          - Thu, 22 Sep 2022 18:26:20 GMT
         Transfer-Encoding:
           - chunked
         Request-Context:
@@ -42,9 +42,8 @@ http_interactions:
           - no-referrer
         Content-Security-Policy:
           - default-src 'self';script-src 'self' 'sha256-j7OoGArf6XW6YY4cAyS3riSSvrJRqpSi1fOF9vQ5SrI='
-            'nonce-CBFrTy0U2WyBTdBODmxD/VA7qXxyIRT9Bt23MqVZNwU='
+            'nonce-jDQxmKQLH+kyWosDMI/evbtiDvZIhvAeU9UB3/MRbCQ='
       body:
         encoding: UTF-8
-        string: '{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kevin.e@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
-    recorded_at: Tue, 20 Sep 2022 14:10:11 GMT
-recorded_with: VCR 6.1.0
+        string: '{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kevin.e@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":null}'
+    recorded_at: Thu, 22 Sep 2022 18:26:20 GMT
