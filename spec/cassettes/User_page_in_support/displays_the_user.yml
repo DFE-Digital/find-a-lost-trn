@@ -1,0 +1,112 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/teachers/29e9e624-073e-41f5-b1b3-8164ce3a5233
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Date:
+          - Thu, 22 Sep 2022 18:04:30 GMT
+        Transfer-Encoding:
+          - chunked
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=2592000
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-j7OoGArf6XW6YY4cAyS3riSSvrJRqpSi1fOF9vQ5SrI='
+            'nonce-s6kgvaapFwPTdgN+cKpfzK7R42gVHA3+h5hcqqRTDFg='
+      body:
+        encoding: UTF-8
+        string: '{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kevin.e@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
+    recorded_at: Thu, 22 Sep 2022 18:04:30 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v1/teachers/2921020?birthdate=1990-01-01
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Thu, 22 Sep 2022 18:04:34 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-09-22T18:05:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 136b5a6d-4f27-4e45-573b-0b7e1773fcac
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 8ba281782b2b20f7db8f5372bc06a3a2.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-P2
+        X-Amz-Cf-Id:
+          - fk_l6wmcZhqbSs2F1O4idnxy_pfgXMe-_gUBQwVTs8yFcAYkhAX7kw==
+      body:
+        encoding: UTF-8
+        string:
+          '{"trn":"2921020","ni_number":"AA123456A","qualified_teacher_status":{"name":"Trainee
+          Teacher:DMS","state":"Active","state_name":"Active","qts_date":null},"induction":null,"initial_teacher_training":{"state":"Active","state_code":"Active","programme_start_date":"2020-04-01T00:00:00Z","programme_end_date":"2020-10-10T00:00:00Z","programme_type":"Graduate
+          Teacher Programme","result":"In Training","subject1":"computer science","subject2":null,"subject3":null,"qualification":null,"subject1_code":"100366","subject2_code":null,"subject3_code":null},"qualifications":[{"name":"Higher
+          Education","date_awarded":"2021-05-03T00:00:00Z","he_qualification_name":"First
+          Degree","he_subject1":"computer science","he_subject2":null,"he_subject3":null,"he_subject1_code":"100366","he_subject2_code":null,"he_subject3_code":null,"class":"FirstClassHonours"}],"name":"Kevin
+          E","dob":"1990-01-01T00:00:00","active_alert":false,"state":"Active","state_name":"Active"}'
+    recorded_at: Thu, 22 Sep 2022 18:04:34 GMT
+recorded_with: VCR 6.1.0

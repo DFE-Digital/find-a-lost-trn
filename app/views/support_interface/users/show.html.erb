@@ -40,8 +40,14 @@
       <% list.row do |row| %>
         <% row.key { "DQT record" } %>
         <% row.value { "No record linked" } %>
-        <% row.action(text: "Add record", href: "#") %>
+        <% if @user.trn %>
+        <% row.action(text: "Change record", href: '#') %>
+        <% else %>
+        <% row.action(text: "Add record", href: support_interface_identity_user_update_path(uuid: @user.uuid, trn: "2921020")) %>
+        <% end %>
       <% end %>
     <% end %>
   </div>
 </section>
+
+<%= render(DqtRecordComponent.new(dqt_record: @dqt_record)) if @dqt_record %>
