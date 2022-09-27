@@ -49,9 +49,7 @@ module ApplicationHelper
           text: "Features",
         )
         header.navigation_item(
-          active:
-            current_page?(support_interface_identity_users_path) ||
-              current_page?(support_interface_identity_path),
+          active: request.path.start_with?("/support/identity"),
           href: support_interface_identity_users_path,
           text: "Identity",
         )
