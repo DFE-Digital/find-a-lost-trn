@@ -4,7 +4,7 @@ module SupportInterface
     include ActiveModel::Model
     include LogErrors
 
-    attr_accessor :add_dqt_record
+    attr_accessor :add_dqt_record, :trn
 
     validates :add_dqt_record, inclusion: { in: %w[Yes No] }
 

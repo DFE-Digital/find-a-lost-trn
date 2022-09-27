@@ -23,7 +23,7 @@ http_interactions:
         Content-Type:
           - application/json; charset=utf-8
         Date:
-          - Wed, 28 Sep 2022 11:06:45 GMT
+          - Thu, 29 Sep 2022 11:46:37 GMT
         Transfer-Encoding:
           - chunked
         Request-Context:
@@ -41,21 +41,21 @@ http_interactions:
         Referrer-Policy:
           - no-referrer
         Content-Security-Policy:
-          - default-src 'self';script-src 'self' 'sha256-j7OoGArf6XW6YY4cAyS3riSSvrJRqpSi1fOF9vQ5SrI='
-            'nonce-pR2Mpgh2fhtmOfqmibwz/8egKfjZVlnoeN21g5xtdaI='
+          - default-src 'self';script-src 'self' 'sha256-l1eTVSK8DTnK8+yloud7wZUqFrI0atVo6VlC6PJvYaQ='
+            'sha256-wmo5EWLjw+Yuj9jZzGNNeSsUOBQmBvE1pvSPVNQzJ34=' 'nonce-CwbJ32SbiR56XFnrBpQ8gBqSJHFoYRiB59zBetCJvok='
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
           - "299"
         X-Rate-Limit-Reset:
-          - "2022-09-28T11:07:00.0000000Z"
+          - "2022-09-29T11:47:00.0000000Z"
       body:
         encoding: UTF-8
         string: '{"userId":"37ee5357-fb84-478e-b750-bf552e5c8eed","email":"paul.hayes@digital.education.gov.uk","firstName":"Jane","lastName":"Doess","dateOfBirth":"1901-01-01","trn":null}'
-    recorded_at: Wed, 28 Sep 2022 11:06:46 GMT
+    recorded_at: Thu, 29 Sep 2022 11:46:39 GMT
   - request:
       method: get
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v1/teachers/2921020?birthdate=1990-01-01
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/2921020
       body:
         encoding: US-ASCII
         string: ""
@@ -80,7 +80,7 @@ http_interactions:
         Connection:
           - keep-alive
         Date:
-          - Wed, 28 Sep 2022 11:06:46 GMT
+          - Thu, 29 Sep 2022 11:46:40 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -92,32 +92,26 @@ http_interactions:
         X-Rate-Limit-Remaining:
           - "299"
         X-Rate-Limit-Reset:
-          - "2022-09-28T11:07:00.0000000Z"
+          - "2022-09-29T11:47:00.0000000Z"
         X-Vcap-Request-Id:
-          - d9d45c55-861c-4ff6-53ad-26f755c2bce0
+          - a594157e-fc31-4d77-69f2-3dc19a4a147a
         X-Xss-Protection:
           - "0"
         X-Cache:
           - Miss from cloudfront
         Via:
-          - 1.1 b1c64361268fcbad3c03abbe37eb5cfa.cloudfront.net (CloudFront)
+          - 1.1 2eb19ccd40bc3ab33c9eed96d984c41e.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - FRA60-P4
+          - LHR61-P2
         X-Amz-Cf-Id:
-          - ubDgMz8sbnesxK7AUjIKyPG7zwGQzoDepnITVdCcFMvm9n_tOuWT0A==
+          - 0vnWPI6V4h1uDaR0BpUo7vVn8uW_XIayRnJ6R1n3na6czeN0oDKYHw==
       body:
         encoding: UTF-8
-        string:
-          '{"trn":"2921020","ni_number":"AA123456A","qualified_teacher_status":{"name":"Trainee
-          Teacher:DMS","state":"Active","state_name":"Active","qts_date":null},"induction":null,"initial_teacher_training":{"state":"Active","state_code":"Active","programme_start_date":"2020-04-01T00:00:00Z","programme_end_date":"2020-10-10T00:00:00Z","programme_type":"Graduate
-          Teacher Programme","result":"In Training","subject1":"computer science","subject2":null,"subject3":null,"qualification":null,"subject1_code":"100366","subject2_code":null,"subject3_code":null},"qualifications":[{"name":"Higher
-          Education","date_awarded":"2021-05-03T00:00:00Z","he_qualification_name":"First
-          Degree","he_subject1":"computer science","he_subject2":null,"he_subject3":null,"he_subject1_code":"100366","he_subject2_code":null,"he_subject3_code":null,"class":"FirstClassHonours"}],"name":"Kevin
-          E","dob":"1990-01-01T00:00:00","active_alert":false,"state":"Active","state_name":"Active"}'
-    recorded_at: Wed, 28 Sep 2022 11:06:46 GMT
+        string: '{"trn":"2921020","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","hasActiveSanctions":false,"qtsDate":null,"eytsDate":null,"earlyYearsStatus":null,"initialTeacherTraining":[{"programmeStartDate":"2020-04-01","programmeEndDate":"2020-10-10","programmeType":"GraduateTeacherProgramme","result":"InTraining"}]}'
+    recorded_at: Thu, 29 Sep 2022 11:46:40 GMT
   - request:
       method: get
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v1/teachers/2921020?birthdate=1990-01-01
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/2921020
       body:
         encoding: US-ASCII
         string: ""
@@ -142,7 +136,7 @@ http_interactions:
         Connection:
           - keep-alive
         Date:
-          - Wed, 28 Sep 2022 11:06:47 GMT
+          - Thu, 29 Sep 2022 11:46:40 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -154,29 +148,23 @@ http_interactions:
         X-Rate-Limit-Remaining:
           - "298"
         X-Rate-Limit-Reset:
-          - "2022-09-28T11:07:00.0000000Z"
+          - "2022-09-29T11:47:00.0000000Z"
         X-Vcap-Request-Id:
-          - 87a5d0b6-ae5c-4483-67c7-5e87f1d5c060
+          - c426d00a-bb05-4ecb-5eaa-831ff865dc3c
         X-Xss-Protection:
           - "0"
         X-Cache:
           - Miss from cloudfront
         Via:
-          - 1.1 ba67e20db38657ee5cb05d05b3da9d70.cloudfront.net (CloudFront)
+          - 1.1 c95a5eca41e6f68aefa257f8122f6ae4.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - FRA60-P4
+          - LHR61-P2
         X-Amz-Cf-Id:
-          - hWtc6v9Oji-Bu0RK5TmIBSqFY13GgTeig_5rY7ZOJksjMQNwgA4fQA==
+          - dt7RhUcqERLObEY8gPKBxdqdOwXsbzayyd0K2y5hhK8fvUJcSTQaEw==
       body:
         encoding: UTF-8
-        string:
-          '{"trn":"2921020","ni_number":"AA123456A","qualified_teacher_status":{"name":"Trainee
-          Teacher:DMS","state":"Active","state_name":"Active","qts_date":null},"induction":null,"initial_teacher_training":{"state":"Active","state_code":"Active","programme_start_date":"2020-04-01T00:00:00Z","programme_end_date":"2020-10-10T00:00:00Z","programme_type":"Graduate
-          Teacher Programme","result":"In Training","subject1":"computer science","subject2":null,"subject3":null,"qualification":null,"subject1_code":"100366","subject2_code":null,"subject3_code":null},"qualifications":[{"name":"Higher
-          Education","date_awarded":"2021-05-03T00:00:00Z","he_qualification_name":"First
-          Degree","he_subject1":"computer science","he_subject2":null,"he_subject3":null,"he_subject1_code":"100366","he_subject2_code":null,"he_subject3_code":null,"class":"FirstClassHonours"}],"name":"Kevin
-          E","dob":"1990-01-01T00:00:00","active_alert":false,"state":"Active","state_name":"Active"}'
-    recorded_at: Wed, 28 Sep 2022 11:06:47 GMT
+        string: '{"trn":"2921020","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","hasActiveSanctions":false,"qtsDate":null,"eytsDate":null,"earlyYearsStatus":null,"initialTeacherTraining":[{"programmeStartDate":"2020-04-01","programmeEndDate":"2020-10-10","programmeType":"GraduateTeacherProgramme","result":"InTraining"}]}'
+    recorded_at: Thu, 29 Sep 2022 11:46:40 GMT
   - request:
       method: get
       uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed
@@ -200,7 +188,7 @@ http_interactions:
         Content-Type:
           - application/json; charset=utf-8
         Date:
-          - Wed, 28 Sep 2022 11:06:47 GMT
+          - Thu, 29 Sep 2022 11:46:39 GMT
         Transfer-Encoding:
           - chunked
         Request-Context:
@@ -218,16 +206,16 @@ http_interactions:
         Referrer-Policy:
           - no-referrer
         Content-Security-Policy:
-          - default-src 'self';script-src 'self' 'sha256-j7OoGArf6XW6YY4cAyS3riSSvrJRqpSi1fOF9vQ5SrI='
-            'nonce-Wgb/rF3wwPfXtIjv+7UOird3eANoeYxOdTaiRtUpNnM='
+          - default-src 'self';script-src 'self' 'sha256-l1eTVSK8DTnK8+yloud7wZUqFrI0atVo6VlC6PJvYaQ='
+            'sha256-wmo5EWLjw+Yuj9jZzGNNeSsUOBQmBvE1pvSPVNQzJ34=' 'nonce-J94hF94vAwzRdT0asgEYlmq6fEZqknzFq9vSgf1+VZQ='
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
           - "298"
         X-Rate-Limit-Reset:
-          - "2022-09-28T11:07:00.0000000Z"
+          - "2022-09-29T11:47:00.0000000Z"
       body:
         encoding: UTF-8
         string: '{"userId":"37ee5357-fb84-478e-b750-bf552e5c8eed","email":"paul.hayes@digital.education.gov.uk","firstName":"Jane","lastName":"Doess","dateOfBirth":"1901-01-01","trn":null}'
-    recorded_at: Wed, 28 Sep 2022 11:06:48 GMT
+    recorded_at: Thu, 29 Sep 2022 11:46:41 GMT
 recorded_with: VCR 6.1.0
