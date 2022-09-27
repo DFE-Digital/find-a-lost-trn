@@ -3,6 +3,8 @@ module SupportInterface
   class UsersController < SupportInterfaceController
     include Pagy::Backend
 
+    layout "two_thirds", only: %i[edit update]
+
     def index
       @all_users ||= IdentityApi.get_users
       @total = @all_users.size
@@ -11,21 +13,35 @@ module SupportInterface
 
     def show
       @user = IdentityApi.get_user(uuid)
-      @dqt_record = DqtApi.find_teacher!(date_of_birth:, trn:) if @user.trn
+      @dqt_record = DqtApi.find_teacher_by_trn!(trn: @user.trn) if @user.trn
+    end
+
+    def edit
+      @trn_form = TrnForm.new
+      @uuid = uuid
+    end
+
+    def update
+      @trn_form = TrnForm.new(import_params)
+      if @trn_form.save
+        redirect_to edit_support_interface_dqt_record_path(
+                      id: uuid,
+                      trn: @trn_form.trn,
+                    )
+      else
+        @uuid = uuid
+        render :edit
+      end
     end
 
     private
 
-    def date_of_birth
-      "1990-01-01"
-    end
-
-    def trn
-      "2921020"
-    end
-
     def uuid
-      params.require(:uuid)
+      params.require(:id)
+    end
+
+    def import_params
+      params.require(:support_interface_trn_form).permit(:trn)
     end
   end
 end

@@ -49,8 +49,10 @@ module ApplicationHelper
           text: "Features",
         )
         header.navigation_item(
-          active: request.path.start_with?("/support/identity"),
-          href: support_interface_identity_users_path,
+          active:
+            request.path.start_with?("/support/identity") ||
+              request.path.start_with?("/support/dqt_record"),
+          href: support_interface_identity_user_index_path,
           text: "Identity",
         )
         header.navigation_item(

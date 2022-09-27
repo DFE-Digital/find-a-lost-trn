@@ -1,7 +1,7 @@
 <% content_for :page_title, 'Teachers' %>
 
 <% content_for :before_content do %>
-  <%= govuk_breadcrumbs(breadcrumbs: { "Support" => support_interface_identity_users_path, @user.full_name => nil }) %>
+  <%= govuk_breadcrumbs(breadcrumbs: { "Support" => support_interface_identity_user_index_path, @user.full_name => nil }) %>
 <% end %>
 
 <h1 class="govuk-heading-xl">
@@ -11,7 +11,7 @@
 <% content_for :name_row_value do %>
   <p>
     <%= @user.full_name %>
-    <%= govuk_tag(text: "Unverified", colour: "grey") %>
+    <%= user_verification_status(@user) %>
   </p>
 
   <span class="govuk-!-font-size-16 govuk-hint">
@@ -38,13 +38,9 @@
   },
   {
     key: { text: "DQT record" },
-    value: { text: "No record linked" },
+    value: { text: dqt_record_text(@user) },
     actions: [].tap do |ary|
-      if @user.trn
-        ary << { text: "Change record", href: "#" }
-      else
-        ary << { text: "Add record", href: edit_support_interface_dqt_record_path(@user.uuid) }
-      end
+      ary << { text: dqt_record_link_text(@user), href: edit_support_interface_identity_user_path(@user.uuid) }
     end
   }
 ] %>

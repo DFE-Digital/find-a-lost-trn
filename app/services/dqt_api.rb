@@ -43,6 +43,13 @@ class DqtApi
     response.body
   end
 
+  def self.find_teacher_by_trn!(trn:)
+    response = new.client.get("/v2/teachers/#{trn}")
+    raise NoResults if response.status == 404
+    raise ApiError unless response.status == 200
+    response.body
+  end
+
   def self.get_itt_providers
     response = new.client.get("/v2/itt-providers", {})
     raise ApiError unless response.status == 200

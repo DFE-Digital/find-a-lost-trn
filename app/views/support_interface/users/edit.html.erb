@@ -1,0 +1,8 @@
+<% content_for :page_title, "#{'Error: ' if @trn_form.errors.any?}What is their TRN?" %>
+<% content_for :back_link_url, back_link_url %>
+
+<%= form_with model: @trn_form, url: support_interface_identity_user_path(@uuid), method: :put do |f| %>
+  <%= f.govuk_error_summary %>
+  <%= f.govuk_text_field(:trn, label: { size: 'xl', text: "What is their teacher reference number (TRN)?" }) %>
+  <%= f.govuk_submit prevent_double_click: false %>
+<% end %>
