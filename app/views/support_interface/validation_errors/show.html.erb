@@ -1,6 +1,9 @@
 <% content_for :page_title, "Validation errors for #{@form_object}" %>
 
-<%= govuk_breadcrumbs(breadcrumbs: { "Validation errors" => support_interface_validation_errors_path, @form_object => nil }) %>
+<% content_for :before_content do %>
+  <%= govuk_breadcrumbs(breadcrumbs: { "Validation errors" => support_interface_validation_errors_path, @form_object => nil }) %>
+<% end %>
+
 <h1 class="govuk-heading-xl">
   Validation errors for <%= @form_object %>
 </h1>
