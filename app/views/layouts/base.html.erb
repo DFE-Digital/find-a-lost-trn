@@ -38,6 +38,9 @@
         <% end %>
       <% end %>
       <%= govuk_back_link(href: yield(:back_link_url)) unless yield(:back_link_url).blank? %>
+
+      <%= yield(:before_content) %>
+
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <%= render(FlashMessageComponent.new(flash: flash)) %>
         <%= content_for?(:content) ? yield(:content) : yield %>
