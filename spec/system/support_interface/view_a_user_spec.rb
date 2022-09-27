@@ -46,8 +46,8 @@ RSpec.describe "User page in support", vcr: true, type: :system do
 
   def then_i_can_see_the_users_details
     expect(current_path).to eq support_interface_user_path(@uuid)
-    within first(".x-govuk-summary-card") do
-      within(".x-govuk-summary-card__header") do
+    within first(".app-govuk-summary-card") do
+      within(".app-govuk-summary-card__header") do
         expect(page).to have_content "Get an identity details"
       end
       expect(page).to have_content "Kevin E"
@@ -56,8 +56,8 @@ RSpec.describe "User page in support", vcr: true, type: :system do
   end
 
   def and_i_can_see_the_users_dqt_details
-    within all(".x-govuk-summary-card").last do
-      within(".x-govuk-summary-card__header") do
+    within all(".app-govuk-summary-card").last do
+      within(".app-govuk-summary-card__header") do
         expect(page).to have_content "DQT record"
       end
       expect(page).to have_content "Official name"
@@ -72,13 +72,13 @@ RSpec.describe "User page in support", vcr: true, type: :system do
   end
 
   def and_i_can_see_a_link_to_change_the_dqt_record
-    within first(".x-govuk-summary-card") do
+    within first(".app-govuk-summary-card") do
       expect(page).to have_link "Change record"
     end
   end
 
   def then_i_cannot_see_the_users_dqt_section
-    within all(".x-govuk-summary-card__header").last do
+    within all(".app-govuk-summary-card__header").last do
       expect(page).to_not have_content "DQT record"
     end
   end

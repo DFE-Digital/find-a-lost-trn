@@ -8,14 +8,14 @@
   <%= @user.full_name %>
 </h1>
 
-<section class="x-govuk-summary-card govuk-!-margin-bottom-9">
-  <header class="x-govuk-summary-card__header">
-    <h2 class="x-govuk-summary-card__title">
+<section class="app-govuk-summary-card govuk-!-margin-bottom-9">
+  <header class="app-govuk-summary-card__header">
+    <h2 class="app-govuk-summary-card__title">
       Get an identity details
     </h2>
   </header>
 
-  <div class="x-govuk-summary-card__body">
+  <div class="app-govuk-summary-card__body">
     <%= govuk_summary_list do |list| %>
       <% list.row do |row| %>
         <% row.key { "Official name" } %>
