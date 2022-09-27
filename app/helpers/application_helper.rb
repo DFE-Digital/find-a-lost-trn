@@ -49,9 +49,7 @@ module ApplicationHelper
           text: "Features",
         )
         header.navigation_item(
-          active:
-            current_page?(support_interface_identity_users_path) ||
-              current_page?(support_interface_identity_path),
+          active: current_page_for_identity_support?,
           href: support_interface_identity_users_path,
           text: "Identity",
         )
@@ -89,5 +87,12 @@ module ApplicationHelper
 
   def is_identity_journey?
     !!session[:identity_journey_id]
+  end
+
+  def current_page_for_identity_support?
+    current_page?(support_interface_identity_path) ||
+      current_page?(support_interface_identity_users_path) ||
+      current_page?(support_interface_identity_user_path) ||
+      current_page?(support_interface_identity_simulate_path)
   end
 end
