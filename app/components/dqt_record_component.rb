@@ -19,4 +19,24 @@ class DqtRecordComponent < ViewComponent::Base
   def trn
     @dqt_record["trn"]
   end
+
+  def rows
+    [name_row, date_of_birth_row, nino_row, trn_row]
+  end
+
+  def name_row
+    { key: { text: "Official name" }, value: { text: full_name } }
+  end
+
+  def date_of_birth_row
+    { key: { text: "Date of birth" }, value: { text: date_of_birth } }
+  end
+
+  def nino_row
+    { key: { text: "National insurance number" }, value: { text: nino } }
+  end
+
+  def trn_row
+    { key: { text: "TRN" }, value: { text: trn } }
+  end
 end

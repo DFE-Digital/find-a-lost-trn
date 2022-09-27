@@ -60,14 +60,16 @@ RSpec.describe "User page in support", vcr: true, type: :system do
       within(".app-govuk-summary-card__header") do
         expect(page).to have_content "DQT record"
       end
-      expect(page).to have_content "Official name"
-      expect(page).to have_content "Kevin E"
-      expect(page).to have_content "Date of birth"
-      expect(page).to have_content "1 January 1990"
-      expect(page).to have_content "National insurance number"
-      expect(page).to have_content "Given"
-      expect(page).to have_content "TRN"
-      expect(page).to have_content "2921020"
+      within(".govuk-summary-list") do
+        expect(page).to have_content "Official name"
+        expect(page).to have_content "Kevin E"
+        expect(page).to have_content "Date of birth"
+        expect(page).to have_content "1 January 1990"
+        expect(page).to have_content "National insurance number"
+        expect(page).to have_content "Given"
+        expect(page).to have_content "TRN"
+        expect(page).to have_content "2921020"
+      end
     end
   end
 
