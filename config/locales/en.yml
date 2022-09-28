@@ -91,3 +91,7 @@ en:
               blank: Enter your TRN number
               too_long: Enter a TRN number that is 7 digits long
               wrong_length: Your TRN number should contain 7 digits
+        support_interface/confirm_dqt_record_form:
+          attributes:
+            add_dqt_record:
+              inclusion: Tell us if this is the right DQT record

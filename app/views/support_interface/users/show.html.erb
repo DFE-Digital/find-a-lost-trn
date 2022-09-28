@@ -43,7 +43,7 @@
       if @user.trn
         ary << { text: "Change record", href: "#" }
       else
-        ary << { text: "Add record", href: support_interface_identity_user_update_path(uuid: @user.uuid, trn: "2921020") }
+        ary << { text: "Add record", href: edit_support_interface_dqt_record_path(@user.uuid) }
       end
     end
   }

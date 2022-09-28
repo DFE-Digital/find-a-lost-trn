@@ -20,7 +20,12 @@ module SupportInterfaceHelper
     if user.trn
       tag.span("Yes")
     else
-      "#{tag.span("No")} #{govuk_link_to("(Add a DQT record)", "#")}".html_safe
+      link =
+        govuk_link_to(
+          "(Add a DQT record)",
+          edit_support_interface_dqt_record_path(user.uuid),
+        )
+      "#{tag.span("No")} #{link}".html_safe
     end
   end
 end
