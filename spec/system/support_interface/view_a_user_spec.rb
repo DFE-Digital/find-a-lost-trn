@@ -24,8 +24,7 @@ RSpec.describe "User page in support", vcr: true, type: :system do
 
     it "when_i_click_on_add_record" do
       and_i_click_on_add_record
-      then_i_see_an_add_dqt_success_message
-      and_i_can_see_the_users_dqt_details
+      then_i_see_the_confirm_dqt_page
     end
   end
 
@@ -89,7 +88,7 @@ RSpec.describe "User page in support", vcr: true, type: :system do
     click_on "Add record"
   end
 
-  def then_i_see_an_add_dqt_success_message
-    expect(page).to have_content("DQT record added")
+  def then_i_see_the_confirm_dqt_page
+    expect(page).to have_content("Do you want to add this DQT record?")
   end
 end

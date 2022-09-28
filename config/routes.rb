@@ -43,6 +43,8 @@ Rails.application.routes.draw do
     get "/identity/users", to: "users#index"
     get "/identity/users/:uuid", to: "users#show", as: :identity_user
 
+    resources :dqt_records, only: %i[edit update]
+
     get "/users/:uuid", to: "users#show", as: :user
 
     resources :trn_requests, only: [] do

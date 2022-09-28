@@ -1,0 +1,272 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Date:
+          - Wed, 28 Sep 2022 11:07:19 GMT
+        Transfer-Encoding:
+          - chunked
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-j7OoGArf6XW6YY4cAyS3riSSvrJRqpSi1fOF9vQ5SrI='
+            'nonce-8Y1yLybvRgEwW5xK3Q50NAk5D6rGh5lSdkkWt8U+sS8='
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "294"
+        X-Rate-Limit-Reset:
+          - "2022-09-28T11:08:00.0000000Z"
+      body:
+        encoding: UTF-8
+        string: '{"userId":"37ee5357-fb84-478e-b750-bf552e5c8eed","email":"paul.hayes@digital.education.gov.uk","firstName":"Jane","lastName":"Doess","dateOfBirth":"1901-01-01","trn":null}'
+    recorded_at: Wed, 28 Sep 2022 11:07:20 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v1/teachers/2921020?birthdate=1990-01-01
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Wed, 28 Sep 2022 11:07:20 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "295"
+        X-Rate-Limit-Reset:
+          - "2022-09-28T11:08:00.0000000Z"
+        X-Vcap-Request-Id:
+          - cfceadbd-ee3f-4f92-6d33-41f04ef0860e
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 816b7f4e336674d9d7828ef4700482e8.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - FRA60-P4
+        X-Amz-Cf-Id:
+          - z1PXonq1bSiYh6OdfL9BPJG-Ha3NSE4Klkd4VddQVHAh3m4xTxD18g==
+      body:
+        encoding: UTF-8
+        string:
+          '{"trn":"2921020","ni_number":"AA123456A","qualified_teacher_status":{"name":"Trainee
+          Teacher:DMS","state":"Active","state_name":"Active","qts_date":null},"induction":null,"initial_teacher_training":{"state":"Active","state_code":"Active","programme_start_date":"2020-04-01T00:00:00Z","programme_end_date":"2020-10-10T00:00:00Z","programme_type":"Graduate
+          Teacher Programme","result":"In Training","subject1":"computer science","subject2":null,"subject3":null,"qualification":null,"subject1_code":"100366","subject2_code":null,"subject3_code":null},"qualifications":[{"name":"Higher
+          Education","date_awarded":"2021-05-03T00:00:00Z","he_qualification_name":"First
+          Degree","he_subject1":"computer science","he_subject2":null,"he_subject3":null,"he_subject1_code":"100366","he_subject2_code":null,"he_subject3_code":null,"class":"FirstClassHonours"}],"name":"Kevin
+          E","dob":"1990-01-01T00:00:00","active_alert":false,"state":"Active","state_name":"Active"}'
+    recorded_at: Wed, 28 Sep 2022 11:07:20 GMT
+  - request:
+      method: put
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed/trn
+      body:
+        encoding: UTF-8
+        string: '{"trn":"2921020"}'
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Content-Type:
+          - application/json
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 204
+        message: No Content
+      headers:
+        Date:
+          - Tue, 27 Sep 2022 09:49:10 GMT
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=2592000
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-j7OoGArf6XW6YY4cAyS3riSSvrJRqpSi1fOF9vQ5SrI='
+            'nonce-asHF58N2tfVs09Qp6CCdpo8wjBe7yTKknLFuN/6luKE='
+      body:
+        encoding: UTF-8
+        string: ""
+    recorded_at: Tue, 27 Sep 2022 09:49:10 GMT
+  - request:
+      method: get
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Date:
+          - Tue, 27 Sep 2022 09:49:11 GMT
+        Transfer-Encoding:
+          - chunked
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=2592000
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-j7OoGArf6XW6YY4cAyS3riSSvrJRqpSi1fOF9vQ5SrI='
+            'nonce-PKZKUDo3fRLRxCkipnItYBeBBbyg2l6xuIyVmNjwElM='
+      body:
+        encoding: UTF-8
+        string: '{"userId":"37ee5357-fb84-478e-b750-bf552e5c8eed","email":"paul.hayes@digital.education.gov.uk","firstName":"Jane","lastName":"Doess","dateOfBirth":"1901-01-01","trn":"2921020"}'
+    recorded_at: Tue, 27 Sep 2022 09:49:11 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v1/teachers/2921020?birthdate=1990-01-01
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Wed, 28 Sep 2022 11:20:06 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-09-28T11:21:00.0000000Z"
+        X-Vcap-Request-Id:
+          - d18f7535-03ef-4772-5f7a-b5a9703e3c8a
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 72e8bbddfffeeec486003f867d631024.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - FRA56-C1
+        X-Amz-Cf-Id:
+          - tx67tKkNqske8e-F6vsWwy11tZ9g033nixVAofKvkV0-_oUT_Gtiag==
+      body:
+        encoding: UTF-8
+        string:
+          '{"trn":"2921020","ni_number":"AA123456A","qualified_teacher_status":{"name":"Trainee
+          Teacher:DMS","state":"Active","state_name":"Active","qts_date":null},"induction":null,"initial_teacher_training":{"state":"Active","state_code":"Active","programme_start_date":"2020-04-01T00:00:00Z","programme_end_date":"2020-10-10T00:00:00Z","programme_type":"Graduate
+          Teacher Programme","result":"In Training","subject1":"computer science","subject2":null,"subject3":null,"qualification":null,"subject1_code":"100366","subject2_code":null,"subject3_code":null},"qualifications":[{"name":"Higher
+          Education","date_awarded":"2021-05-03T00:00:00Z","he_qualification_name":"First
+          Degree","he_subject1":"computer science","he_subject2":null,"he_subject3":null,"he_subject1_code":"100366","he_subject2_code":null,"he_subject3_code":null,"class":"FirstClassHonours"}],"name":"Kevin
+          E","dob":"1990-01-01T00:00:00","active_alert":false,"state":"Active","state_name":"Active"}'
+    recorded_at: Wed, 28 Sep 2022 11:20:06 GMT
+recorded_with: VCR 6.1.0
