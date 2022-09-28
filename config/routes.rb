@@ -42,9 +42,6 @@ Rails.application.routes.draw do
     get "/identity/simulate", to: "identity#new"
     get "/identity/users", to: "users#index"
     get "/identity/users/:uuid", to: "users#show", as: :identity_user
-    get "/identity/users/update/:uuid",
-        to: "users#update",
-        as: :identity_user_update
 
     get "/users/:uuid", to: "users#show", as: :user
 
