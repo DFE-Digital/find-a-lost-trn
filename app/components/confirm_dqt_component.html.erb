@@ -1,0 +1,22 @@
+<%
+  teacher_rows = []
+
+  teacher_name_row = {
+    key: { text: 'Official name' },
+    value: { text: teacher_full_name },
+  }
+
+  teacher_email_row = {
+    key: { text: 'Email address' },
+    value: { text: teacher_email },
+  }
+
+  teacher_rows.push(teacher_name_row)
+  teacher_rows.push(teacher_email_row)
+%>
+
+<%= render(SummaryCardComponent.new(rows: teacher_rows)) do %>
+  <%= render SummaryCardHeaderComponent.new(title: 'Get an identity') %>
+<% end %>
+
+<%= render(DqtRecordComponent.new(dqt_record: @dqt_record)) %>
