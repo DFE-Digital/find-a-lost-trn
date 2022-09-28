@@ -11,21 +11,21 @@ module SupportInterface
 
     def show
       @user = IdentityApi.get_user(uuid)
-      @dqt_record =
-        DqtApi.find_teacher!(
-          date_of_birth: @user.date_of_birth,
-          trn: @user.trn,
-        ) if @user.trn
+      @dqt_record = DqtApi.find_teacher!(date_of_birth:, trn:) if @user.trn
     end
 
     private
 
-    def uuid
-      params.require(:uuid)
+    def date_of_birth
+      "1990-01-01"
     end
 
     def trn
-      params.require(:trn)
+      "2921020"
+    end
+
+    def uuid
+      params.require(:uuid)
     end
   end
 end
