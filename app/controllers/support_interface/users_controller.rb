@@ -18,13 +18,6 @@ module SupportInterface
         ) if @user.trn
     end
 
-    def update
-      IdentityApi.update_user_trn(uuid, trn)
-
-      flash[:success] = "DQT record added"
-      redirect_to support_interface_identity_user_path(uuid:)
-    end
-
     private
 
     def uuid
