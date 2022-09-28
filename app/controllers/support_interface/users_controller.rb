@@ -10,7 +10,7 @@ module SupportInterface
     end
 
     def show
-      @user = IdentityApi.get_teacher(uuid)
+      @user = IdentityApi.get_user(uuid)
       @dqt_record =
         DqtApi.find_teacher!(
           date_of_birth: @user.date_of_birth,
