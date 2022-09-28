@@ -5,12 +5,12 @@ class IdentityApi
 
   FIVE_SECONDS = 5
 
-  def self.get_teacher(uuid)
+  def self.get_user(uuid)
     if FeatureFlag.active?(:identity_api_always_timeout)
       raise Faraday::TimeoutError, "Time-out feature flag enabled"
     end
 
-    response = new.client.get("/api/v1/teachers/#{uuid}")
+    response = new.client.get("/api/v1/users/#{uuid}")
 
     raise ApiError, response.reason_phrase unless response.status == 200
 
