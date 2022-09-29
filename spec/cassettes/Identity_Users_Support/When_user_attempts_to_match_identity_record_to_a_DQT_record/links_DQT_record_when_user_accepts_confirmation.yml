@@ -129,7 +129,7 @@ http_interactions:
     response:
       status:
         code: 204
-        message: OK
+        message: No Content
       headers:
         Content-Type:
           - application/problem+json; charset=utf-8
@@ -162,7 +162,7 @@ http_interactions:
           - "2022-09-29T11:31:00.0000000Z"
       body:
         encoding: UTF-8
-        string: "{}"
+        string: ""
     recorded_at: Thu, 29 Sep 2022 11:30:19 GMT
   - request:
       method: get
