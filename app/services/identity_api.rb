@@ -64,6 +64,7 @@ class IdentityApi
       lastName: trn_request.last_name,
       trn: trn_request.trn,
       dateOfBirth: trn_request.date_of_birth&.to_date&.to_s,
+      nationalInsuranceNumber: trn_request.ni_number,
     }.compact
   end
 
