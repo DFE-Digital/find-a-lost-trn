@@ -7,7 +7,7 @@ module SupportInterface
       @dqt_record = DqtApi.find_teacher_by_trn!(trn:)
     rescue DqtApi::NoResults
       flash[:notice] = "TRN does not exist"
-      redirect_to edit_support_interface_identity_user_index_path(uuid)
+      redirect_to edit_support_interface_identity_user_path(uuid)
     end
 
     def update

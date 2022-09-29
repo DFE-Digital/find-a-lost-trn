@@ -1,0 +1,114 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Date:
+          - Thu, 29 Sep 2022 17:05:02 GMT
+        Transfer-Encoding:
+          - chunked
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-l1eTVSK8DTnK8+yloud7wZUqFrI0atVo6VlC6PJvYaQ='
+            'sha256-wmo5EWLjw+Yuj9jZzGNNeSsUOBQmBvE1pvSPVNQzJ34=' 'nonce-xCoiHImg1cZF7q2yLTzYuTA7/bxv4mULNl/zr9xOvyI='
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-09-29T17:06:00.0000000Z"
+      body:
+        encoding: UTF-8
+        string: '{"userId":"37ee5357-fb84-478e-b750-bf552e5c8eed","email":"paul.hayes@digital.education.gov.uk","firstName":"Jane","lastName":"Doess","dateOfBirth":"1901-01-01","trn":null}'
+    recorded_at: Thu, 29 Sep 2022 17:05:02 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/2222234
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 404
+        message: Not Found
+      headers:
+        Content-Type:
+          - application/problem+json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Thu, 29 Sep 2022 17:05:03 GMT
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-09-29T17:06:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 60d73613-4135-4cef-4443-82350e810735
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Error from cloudfront
+        Via:
+          - 1.1 e3572bc2867545c7e2bf0953e1795990.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-C1
+        X-Amz-Cf-Id:
+          - Ecgvj8f7WKRwjgA7Cv4yEy23kMm6tr0SjHbSaC8BpupnJ-L_GL4qpA==
+      body:
+        encoding: UTF-8
+        string:
+          '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not
+          Found","status":404,"traceId":"00-36f2dee0caea62c698934b2c15b99b1e-2c00167268ce107b-00"}'
+    recorded_at: Thu, 29 Sep 2022 17:05:03 GMT
+recorded_with: VCR 6.1.0

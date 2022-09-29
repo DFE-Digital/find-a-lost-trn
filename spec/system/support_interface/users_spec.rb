@@ -108,13 +108,23 @@ RSpec.describe "Identity Users Support", type: :system do
     end
 
     context "invalid trn" do
-      it "redirects to the confirmation page", vcr: true do
+      it "shows an error message if the trn is too long" do
+        given_i_am_authorized_as_a_support_user
+        when_i_visit_the_identity_users_support_page
+        and_i_proceed_to_add_a_dqt_record
+        and_i_add_a_trn_with_invalid_formatting
+        and_i_click_continue
+        then_i_should_see_an_error_message
+      end
+
+      it "redirects to the user page if the trn does not exist", vcr: true do
         given_i_am_authorized_as_a_support_user
         when_i_visit_the_identity_users_support_page
         and_i_proceed_to_add_a_dqt_record
         and_i_add_an_invalid_trn
         and_i_click_continue
-        then_i_should_see_an_error_message
+        then_i_should_see_the_add_trn_page
+        and_i_should_see_a_notification
       end
     end
 
@@ -224,9 +234,13 @@ RSpec.describe "Identity Users Support", type: :system do
     fill_in "What is their teacher reference number (TRN)?", with: "2921020"
   end
 
-  def and_i_add_an_invalid_trn
+  def and_i_add_a_trn_with_invalid_formatting
     fill_in "What is their teacher reference number (TRN)?",
             with: "292102012345"
+  end
+
+  def and_i_add_an_invalid_trn
+    fill_in "What is their teacher reference number (TRN)?", with: "2222234"
   end
 
   def then_i_should_see_an_error_message
@@ -236,6 +250,10 @@ RSpec.describe "Identity Users Support", type: :system do
         "is the wrong length (should be 7 characters)",
       )
     end
+  end
+
+  def and_i_should_see_a_notification
+    expect(page).to have_content("TRN does not exist")
   end
 
   def and_i_click_continue
