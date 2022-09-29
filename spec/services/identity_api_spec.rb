@@ -38,4 +38,52 @@ RSpec.describe IdentityApi do
       end
     end
   end
+
+  describe ".trn_request_params" do
+    context "when there is a NI number on the trn request" do
+      let(:trn_request) do
+        TrnRequest.new(
+          first_name: "John",
+          last_name: "Smith",
+          date_of_birth: Time.zone.local(2000, 1, 1),
+          ni_number: "QQ123456C",
+          trn: "2921020",
+        )
+      end
+
+      it "the params contain the NI number" do
+        expect(IdentityApi.trn_request_params(trn_request)).to eq(
+          {
+            firstName: "John",
+            lastName: "Smith",
+            dateOfBirth: "2000-01-01",
+            trn: "2921020",
+            nationalInsuranceNumber: "QQ123456C",
+          },
+        )
+      end
+    end
+
+    context "when there is no NI number on the trn request" do
+      let(:trn_request) do
+        TrnRequest.new(
+          first_name: "John",
+          last_name: "Smith",
+          date_of_birth: Time.zone.local(2000, 1, 1),
+          trn: "2921020",
+        )
+      end
+
+      it "the params do not contain the NI number" do
+        expect(IdentityApi.trn_request_params(trn_request)).to eq(
+          {
+            firstName: "John",
+            lastName: "Smith",
+            dateOfBirth: "2000-01-01",
+            trn: "2921020",
+          },
+        )
+      end
+    end
+  end
 end
