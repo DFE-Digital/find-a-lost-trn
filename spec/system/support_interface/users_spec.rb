@@ -89,6 +89,45 @@ RSpec.describe "Identity Users Support", type: :system do
       allow(IdentityApi).to receive(:get_users).and_return([User.new(user)])
     end
 
+    it "shows the add TRN page", vcr: true do
+      given_i_am_authorized_as_a_support_user
+      when_i_visit_the_identity_users_support_page
+      and_i_proceed_to_add_a_dqt_record
+      then_i_should_see_the_add_trn_page
+    end
+
+    context "valid trn" do
+      it "redirects to the confirmation page", vcr: true do
+        given_i_am_authorized_as_a_support_user
+        when_i_visit_the_identity_users_support_page
+        and_i_proceed_to_add_a_dqt_record
+        and_i_add_a_trn
+        and_i_click_continue
+        then_i_should_see_the_confirmation_page
+      end
+    end
+
+    context "invalid trn" do
+      it "shows an error message if the trn is too long" do
+        given_i_am_authorized_as_a_support_user
+        when_i_visit_the_identity_users_support_page
+        and_i_proceed_to_add_a_dqt_record
+        and_i_add_a_trn_with_invalid_formatting
+        and_i_click_continue
+        then_i_should_see_an_error_message
+      end
+
+      it "redirects to the user page if the trn does not exist", vcr: true do
+        given_i_am_authorized_as_a_support_user
+        when_i_visit_the_identity_users_support_page
+        and_i_proceed_to_add_a_dqt_record
+        and_i_add_an_invalid_trn
+        and_i_click_continue
+        then_i_should_see_the_add_trn_page
+        and_i_should_see_a_notification
+      end
+    end
+
     it "links DQT record when user accepts confirmation", vcr: true do
       given_i_am_authorized_as_a_support_user
       when_i_visit_the_identity_users_support_page
@@ -106,15 +145,18 @@ RSpec.describe "Identity Users Support", type: :system do
     it "Asks user to select an option if they have non selected", vcr: true do
       given_i_am_authorized_as_a_support_user
       when_i_visit_the_identity_users_support_page
-      when_i_proceed_to_add_a_dqt_record
+      and_i_proceed_to_add_a_dqt_record
+      and_i_add_a_trn
       and_i_click_continue
-      then_should_be_asked_to_select_an_option
+      then_i_should_see_the_confirmation_page
+      and_i_click_continue
+      then_i_should_be_asked_to_select_an_option
     end
 
     it "Navigates us to the previous page", vcr: true do
       given_i_am_authorized_as_a_support_user
       when_i_visit_the_identity_users_support_page
-      when_i_proceed_to_add_a_dqt_record
+      and_i_proceed_to_add_a_dqt_record
       and_i_press_the_back_link
       then_i_should_be_on_the_identity_users_support_page
     end
@@ -130,7 +172,7 @@ RSpec.describe "Identity Users Support", type: :system do
   end
 
   def when_i_visit_the_identity_users_support_page
-    visit support_interface_identity_users_path
+    visit support_interface_identity_user_index_path
   end
 
   def then_i_should_see_a_user
@@ -178,7 +220,40 @@ RSpec.describe "Identity Users Support", type: :system do
 
   def when_i_proceed_to_add_a_dqt_record
     click_on "Add a DQT record"
-    expect(page).to have_content("Do you want to add this DQT record?")
+  end
+  alias_method :and_i_proceed_to_add_a_dqt_record,
+               :when_i_proceed_to_add_a_dqt_record
+
+  def then_i_should_see_the_add_trn_page
+    expect(page).to have_content(
+      "What is their teacher reference number (TRN)?",
+    )
+  end
+
+  def and_i_add_a_trn
+    fill_in "What is their teacher reference number (TRN)?", with: "2921020"
+  end
+
+  def and_i_add_a_trn_with_invalid_formatting
+    fill_in "What is their teacher reference number (TRN)?",
+            with: "292102012345"
+  end
+
+  def and_i_add_an_invalid_trn
+    fill_in "What is their teacher reference number (TRN)?", with: "2222234"
+  end
+
+  def then_i_should_see_an_error_message
+    within(".govuk-error-summary") do
+      expect(page).to have_content("There is a problem")
+      expect(page).to have_content(
+        "is the wrong length (should be 7 characters)",
+      )
+    end
+  end
+
+  def and_i_should_see_a_notification
+    expect(page).to have_content("TRN does not exist")
   end
 
   def and_i_click_continue
@@ -187,6 +262,8 @@ RSpec.describe "Identity Users Support", type: :system do
 
   def and_i_confirm_addition_of_a_dqt_record
     when_i_proceed_to_add_a_dqt_record
+    and_i_add_a_trn
+    and_i_click_continue
     choose "Yes, add this record", visible: false
     and_i_click_continue
     expect(page).to have_content("DQT Record added")
@@ -194,6 +271,8 @@ RSpec.describe "Identity Users Support", type: :system do
 
   def and_i_reject_addition_of_a_dqt_record
     when_i_proceed_to_add_a_dqt_record
+    and_i_add_a_trn
+    and_i_click_continue
     choose "No, this is the wrong record", visible: false
     and_i_click_continue
     expect(page).to_not have_content("DQT Record added")
@@ -223,13 +302,21 @@ RSpec.describe "Identity Users Support", type: :system do
     expect(page).to have_link("Add record")
   end
 
-  def then_should_be_asked_to_select_an_option
+  def then_i_should_see_the_confirmation_page
+    within(".govuk-heading-xl") do
+      expect(page).to have_content(
+        "We found a DQT record, is it the right one?",
+      )
+    end
+  end
+
+  def then_i_should_be_asked_to_select_an_option
     within(".govuk-error-message") do
       expect(page).to have_content("Tell us if this is the right DQT record")
     end
   end
 
   def then_i_should_be_on_the_identity_users_support_page
-    expect(current_path).to eq(support_interface_identity_users_path)
+    expect(current_path).to eq(support_interface_identity_user_index_path)
   end
 end

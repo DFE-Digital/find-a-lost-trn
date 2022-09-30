@@ -41,12 +41,12 @@ Rails.application.routes.draw do
     post "/identity/confirm", to: "identity#confirm"
     get "/identity/simulate/callback", to: "identity#callback"
     get "/identity/simulate", to: "identity#new"
-    get "/identity/users", to: "users#index"
-    get "/identity/users/:uuid", to: "users#show", as: :identity_user
 
+    resources :users,
+              except: :destroy,
+              path: "/identity/users",
+              as: :identity_user
     resources :dqt_records, only: %i[edit update]
-
-    get "/users/:uuid", to: "users#show", as: :user
 
     resources :trn_requests, only: [] do
       resource :zendesk_sync, only: [:create], controller: "zendesk_sync"

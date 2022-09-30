@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/29e9e624-073e-41f5-b1b3-8164ce3a5233
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed
       body:
         encoding: US-ASCII
         string: ""
@@ -23,7 +23,7 @@ http_interactions:
         Content-Type:
           - application/json; charset=utf-8
         Date:
-          - Wed, 28 Sep 2022 17:27:02 GMT
+          - Thu, 29 Sep 2022 17:05:02 GMT
         Transfer-Encoding:
           - chunked
         Request-Context:
@@ -41,21 +41,21 @@ http_interactions:
         Referrer-Policy:
           - no-referrer
         Content-Security-Policy:
-          - default-src 'self';script-src 'self' 'sha256-j7OoGArf6XW6YY4cAyS3riSSvrJRqpSi1fOF9vQ5SrI='
-            'nonce-N3RhSF1UwVExudySWBiRH/PwW9Mu+J/SO7I5DIan5os='
+          - default-src 'self';script-src 'self' 'sha256-l1eTVSK8DTnK8+yloud7wZUqFrI0atVo6VlC6PJvYaQ='
+            'sha256-wmo5EWLjw+Yuj9jZzGNNeSsUOBQmBvE1pvSPVNQzJ34=' 'nonce-xCoiHImg1cZF7q2yLTzYuTA7/bxv4mULNl/zr9xOvyI='
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
           - "299"
         X-Rate-Limit-Reset:
-          - "2022-09-28T17:28:00.0000000Z"
+          - "2022-09-29T17:06:00.0000000Z"
       body:
         encoding: UTF-8
-        string: '{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kevin.e@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
-    recorded_at: Wed, 28 Sep 2022 17:27:03 GMT
+        string: '{"userId":"37ee5357-fb84-478e-b750-bf552e5c8eed","email":"paul.hayes@digital.education.gov.uk","firstName":"Jane","lastName":"Doess","dateOfBirth":"1901-01-01","trn":null}'
+    recorded_at: Thu, 29 Sep 2022 17:05:02 GMT
   - request:
       method: get
-      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/2921020
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/2222234
       body:
         encoding: US-ASCII
         string: ""
@@ -70,17 +70,17 @@ http_interactions:
           - "*/*"
     response:
       status:
-        code: 200
-        message: OK
+        code: 404
+        message: Not Found
       headers:
         Content-Type:
-          - application/json; charset=utf-8
+          - application/problem+json; charset=utf-8
         Transfer-Encoding:
           - chunked
         Connection:
           - keep-alive
         Date:
-          - Wed, 28 Sep 2022 17:27:03 GMT
+          - Thu, 29 Sep 2022 17:05:03 GMT
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -92,21 +92,23 @@ http_interactions:
         X-Rate-Limit-Remaining:
           - "299"
         X-Rate-Limit-Reset:
-          - "2022-09-28T17:28:00.0000000Z"
+          - "2022-09-29T17:06:00.0000000Z"
         X-Vcap-Request-Id:
-          - 219d85ae-8a2e-402e-5f97-6c7f06027f75
+          - 60d73613-4135-4cef-4443-82350e810735
         X-Xss-Protection:
           - "0"
         X-Cache:
-          - Miss from cloudfront
+          - Error from cloudfront
         Via:
-          - 1.1 1c6be95f21b3cc0cf77147b4aa61e7c2.cloudfront.net (CloudFront)
+          - 1.1 e3572bc2867545c7e2bf0953e1795990.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - LHR61-P2
+          - LHR61-C1
         X-Amz-Cf-Id:
-          - hkOfohaA67lIN3q-2cS3kMuh-ipP6fY2kJ_ACkybVkr3Hs9ZXKgX9A==
+          - Ecgvj8f7WKRwjgA7Cv4yEy23kMm6tr0SjHbSaC8BpupnJ-L_GL4qpA==
       body:
         encoding: UTF-8
-        string: '{"trn":"2921020","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","hasActiveSanctions":false,"qtsDate":null,"eytsDate":null,"earlyYearsStatus":null,"initialTeacherTraining":[{"programmeStartDate":"2020-04-01","programmeEndDate":"2020-10-10","programmeType":"GraduateTeacherProgramme","result":"InTraining"}]}'
-    recorded_at: Wed, 28 Sep 2022 17:27:03 GMT
+        string:
+          '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not
+          Found","status":404,"traceId":"00-36f2dee0caea62c698934b2c15b99b1e-2c00167268ce107b-00"}'
+    recorded_at: Thu, 29 Sep 2022 17:05:03 GMT
 recorded_with: VCR 6.1.0
