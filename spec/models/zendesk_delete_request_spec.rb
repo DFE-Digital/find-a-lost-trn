@@ -59,5 +59,25 @@ RSpec.describe ZendeskDeleteRequest, type: :model do
     it "sets group_name" do
       expect(subject.group_name).to eq "Some group"
     end
+
+    context "when the ticket has no group" do
+      let(:ticket) do
+        ZendeskAPI::Ticket.new(
+          GDS_ZENDESK_CLIENT,
+          id: 42,
+          custom_fields: [
+            { id: 4_419_328_659_089, value: "Foo" },
+            { id: 4_562_126_876_049, value: "Bar" },
+          ],
+          group: nil,
+          created_at: 6.months.ago + 7.days,
+          updated_at: 6.months.ago + 1.day,
+        )
+      end
+
+      it "sets group_name to nil" do
+        expect(deleted_zendesk_ticket.group_name).to be_nil
+      end
+    end
   end
 end
