@@ -42,18 +42,25 @@ class ZendeskDeleteRequest < ApplicationRecord
   end
 
   def self.to_csv(scope = no_duplicates)
-    attributes = %w[
-      ticket_id
-      group_name
-      received_at
-      closed_at
-      enquiry_type
-      no_action_required
-    ]
     CSV.generate(headers: true) do |csv|
-      csv << attributes.map(&:titleize)
+      csv << %w[
+        ticket_id
+        group_name
+        received_at
+        closed_at
+        enquiry_type
+        no_action_required
+      ].map(&:titleize)
+
       scope.find_each do |request|
-        csv << attributes.map { |attr| request.send(attr) }
+        csv << [
+          request.ticket_id,
+          request.group_name,
+          request.received_at.in_time_zone("London").strftime("%Y-%m-%d %H:%M"),
+          request.closed_at.in_time_zone("London").strftime("%Y-%m-%d %H:%M"),
+          request.enquiry_type&.titleize,
+          request.no_action_required == "t" ? "No action required" : nil,
+        ]
       end
     end
   end
