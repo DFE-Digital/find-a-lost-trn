@@ -30,7 +30,7 @@ class ZendeskDeleteRequest < ApplicationRecord
         .custom_fields
         .find { |field| field.id == NO_ACTION_REQUIRED_FIELD_ID }
         .value
-    self.group_name = ticket.group.name
+    self.group_name = ticket.group&.name
     self
   end
 
