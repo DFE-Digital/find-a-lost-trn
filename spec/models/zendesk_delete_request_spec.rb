@@ -91,16 +91,36 @@ RSpec.describe ZendeskDeleteRequest, type: :model do
     end
 
     context "when there is a ZendeskDeleteRequest" do
-      before { create(:zendesk_delete_request) }
+      before do
+        create(
+          :zendesk_delete_request,
+          enquiry_type: "change_of_details",
+          no_action_required: "t",
+        )
+      end
+
+      let(:closed_at) do
+        27.weeks.ago.in_time_zone("London").strftime("%Y-%m-%d %H:%M")
+      end
+      let(:received_at) do
+        28.weeks.ago.in_time_zone("London").strftime("%Y-%m-%d %H:%M")
+      end
 
       it "returns the record" do
         is_expected.to include(
-          "42,QTS Enquiries,#{28.weeks.ago},#{27.weeks.ago},trn,\n",
+          "42,QTS Enquiries,#{received_at},#{closed_at},Change Of Details,No action required",
         )
       end
     end
 
     context "when there are duplicate ticket IDs in the ZendeskDeleteRequests" do
+      let(:closed_at) do
+        27.weeks.ago.in_time_zone("London").strftime("%Y-%m-%d %H:%M")
+      end
+      let(:received_at) do
+        28.weeks.ago.in_time_zone("London").strftime("%Y-%m-%d %H:%M")
+      end
+
       before do
         create(:zendesk_delete_request)
         create(:zendesk_delete_request)
@@ -108,7 +128,10 @@ RSpec.describe ZendeskDeleteRequest, type: :model do
 
       it "returns the records de-duped" do
         is_expected.to eq(
-          "Ticket,Group Name,Received At,Closed At,Enquiry Type,No Action Required\n42,QTS Enquiries,#{28.weeks.ago},#{27.weeks.ago},trn,\n",
+          [
+            "Ticket,Group Name,Received At,Closed At,Enquiry Type,No Action Required",
+            "42,QTS Enquiries,#{received_at},#{closed_at},Trn,\n",
+          ].join("\n"),
         )
       end
     end
