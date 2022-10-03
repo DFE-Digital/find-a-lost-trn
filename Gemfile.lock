@@ -169,7 +169,7 @@ GEM
       websocket-driver (>= 0.6, < 0.8)
     ffi (1.15.5)
     foreman (0.87.2)
-    fugit (1.5.3)
+    fugit (1.7.1)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     gds_zendesk (3.3.0)
@@ -415,7 +415,7 @@ GEM
       connection_pool (>= 2.2.5)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
-    sidekiq-cron (1.7.0)
+    sidekiq-cron (1.8.0)
       fugit (~> 1)
       sidekiq (>= 4.2.1)
     snaky_hash (2.0.1)
@@ -552,7 +552,7 @@ DEPENDENCIES
   sentry-rails
   shoulda-matchers (~> 5.2)
   sidekiq
-  sidekiq-cron (~> 1.7)
+  sidekiq-cron (~> 1.8)
   solargraph
   solargraph-rails
   spring
