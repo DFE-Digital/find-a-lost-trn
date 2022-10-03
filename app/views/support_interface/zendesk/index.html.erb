@@ -85,7 +85,7 @@
 <p><%= govuk_link_to "Import from CSV", new_support_interface_zendesk_import_path %></p>
 
 <% unless @zendesk_delete_requests.size.zero? %>
-  <p><%= govuk_link_to "Export to CSV", support_interface_zendesk_export_path(format: :csv) %></p>
+  <p><%= govuk_button_to "Export to CSV", support_interface_zendesk_exports_path(format: :csv), method: :post %></p>
 
   <%= govuk_pagination(pagy: @pagy) %>
 
