@@ -60,4 +60,37 @@ RSpec.describe ZendeskDeleteRequest, type: :model do
       expect(subject.group_name).to eq "Some group"
     end
   end
+
+  describe ".to_csv" do
+    subject { described_class.to_csv }
+
+    it "returns the attribute headers" do
+      is_expected.to eq(
+        "Ticket,Group Name,Received At,Closed At,Enquiry Type,No Action Required\n",
+      )
+    end
+
+    context "when there is a ZendeskDeleteRequest" do
+      before { create(:zendesk_delete_request) }
+
+      it "returns the record" do
+        is_expected.to include(
+          "42,QTS Enquiries,#{28.weeks.ago},#{27.weeks.ago},trn,\n",
+        )
+      end
+    end
+
+    context "when there are duplicate ticket IDs in the ZendeskDeleteRequests" do
+      before do
+        create(:zendesk_delete_request)
+        create(:zendesk_delete_request)
+      end
+
+      it "returns the records de-duped" do
+        is_expected.to eq(
+          "Ticket,Group Name,Received At,Closed At,Enquiry Type,No Action Required\n42,QTS Enquiries,#{28.weeks.ago},#{27.weeks.ago},trn,\n",
+        )
+      end
+    end
+  end
 end

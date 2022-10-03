@@ -12,9 +12,16 @@
 #  updated_at         :datetime         not null
 #  ticket_id          :integer          not null
 #
+
+require "csv"
+
 class ZendeskDeleteRequest < ApplicationRecord
   ENQUIRY_TYPE_FIELD_ID = 4_419_328_659_089
   NO_ACTION_REQUIRED_FIELD_ID = 4_562_126_876_049
+
+  scope :duplicate_ids,
+        -> { select("MAX(id) as id").group(:ticket_id).having("count(*) > 1") }
+  scope :no_duplicates, -> { where.not(id: duplicate_ids) }
 
   def from(ticket)
     self.ticket_id = ticket.id
@@ -34,7 +41,7 @@ class ZendeskDeleteRequest < ApplicationRecord
     self
   end
 
-  def self.to_csv
+  def self.to_csv(scope = no_duplicates)
     attributes = %w[
       ticket_id
       group_name
@@ -45,7 +52,7 @@ class ZendeskDeleteRequest < ApplicationRecord
     ]
     CSV.generate(headers: true) do |csv|
       csv << attributes.map(&:titleize)
-      all.find_each do |request|
+      scope.find_each do |request|
         csv << attributes.map { |attr| request.send(attr) }
       end
     end
