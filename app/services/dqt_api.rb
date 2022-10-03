@@ -73,7 +73,7 @@ class DqtApi
 
   def self.trn_request_params(trn_request)
     {
-      dateOfBirth: trn_request.date_of_birth,
+      dateOfBirth: trn_request.date_of_birth&.to_date&.iso8601,
       emailAddress: trn_request.email,
       firstName: trn_request.first_name,
       ittProviderName: trn_request.itt_provider_name_for_dqt,

@@ -8,7 +8,7 @@ RSpec.describe DqtApi do
 
     let(:trn_request) do
       TrnRequest.new(
-        date_of_birth: "1990-01-01",
+        date_of_birth: Date.new(1990, 1, 1),
         email: "kevin.e@example.com",
         first_name: "kevin",
         ni_number: "AA123456A",
