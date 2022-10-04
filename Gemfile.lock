@@ -156,7 +156,7 @@ GEM
       railties (>= 5.0.0)
     faker (2.23.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.5.2)
+    faraday (2.6.0)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-multipart (1.0.4)
@@ -526,7 +526,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
-  faraday (~> 2.5)
+  faraday (~> 2.6)
   foreman (~> 0.87.2)
   gds_zendesk
   govuk-components (~> 3.1.5)
