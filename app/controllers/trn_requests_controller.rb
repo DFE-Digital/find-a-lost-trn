@@ -16,7 +16,7 @@ class TrnRequestsController < ApplicationController
     redirect_to root_url unless trn_request
     session[:form_complete] = false
 
-    update_trn_request
+    update_answers_checked_on_trn_request
 
     begin
       find_trn_using_api unless trn_request.trn
@@ -66,12 +66,12 @@ class TrnRequestsController < ApplicationController
 
   private
 
-  def trn_request_params
+  def answers_checked_params
     params.require(:trn_request).permit(:answers_checked)
   end
 
-  def update_trn_request
-    trn_request.update(trn_request_params)
+  def update_answers_checked_on_trn_request
+    trn_request.update(answers_checked_params)
   end
 
   def find_trn_using_api
