@@ -215,7 +215,7 @@ GEM
     kramdown-parser-gfm (1.1.0)
       kramdown (~> 2.0)
     logstop (0.3.0)
-    loofah (2.18.0)
+    loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -404,10 +404,10 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    sentry-rails (5.4.2)
+    sentry-rails (5.5.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.4.2)
-    sentry-ruby (5.4.2)
+      sentry-ruby (~> 5.5.0)
+    sentry-ruby (5.5.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
     shoulda-matchers (5.2.0)
       activesupport (>= 5.2.0)
@@ -495,7 +495,7 @@ GEM
       nokogiri (~> 1.8)
     yard (0.9.28)
       webrick (~> 1.7.0)
-    zeitwerk (2.6.0)
+    zeitwerk (2.6.1)
     zendesk_api (1.38.0.rc1)
       faraday (> 2.0.0)
       faraday-multipart
