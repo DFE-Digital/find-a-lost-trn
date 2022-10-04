@@ -66,44 +66,12 @@ RSpec.describe "Identity", type: :system do
       end
     end
 
-    context "when there is no trn match", vcr: true do
+    context "when there is no trn match", vcr: { record: :once } do
       before do
         allow(DqtApi).to receive(:find_trn!).and_raise(DqtApi::NoResults)
       end
 
-      it "asks for the TRN" do
-        when_i_access_the_identity_endpoint
-        and_i_complete_and_submit_the_name_form
-        and_i_complete_and_submit_my_date_of_birth
-        and_i_have_a_ni_number
-        and_i_complete_and_submit_my_ni_number
-        then_i_see_the_ask_trn_page
-
-        when_i_do_not_know_the_trn
-        then_i_see_the_have_awarded_qts_page
-
-        when_i_have_not_been_awarded_qts
-        then_i_see_the_check_answers_page
-      end
-
-      it "sends a blank trn to Get an Identity and redirects back Get An Identity" do
-        when_i_access_the_identity_endpoint
-        and_i_complete_and_submit_the_name_form
-        and_i_complete_and_submit_my_date_of_birth
-        and_i_have_a_ni_number
-        and_i_complete_and_submit_my_ni_number
-        and_i_do_not_know_the_trn
-        and_i_have_not_been_awarded_qts
-        then_i_see_the_check_answers_page
-
-        when_i_press_the_continue_button
-        then_i_see_the_no_match_page
-
-        when_i_submit_anyway
-        then_i_am_redirected_to_the_callback
-      end
-
-      it "has the correct no match page copy for Get an Identity journey" do
+      it "sends a blank trn to Get an Identity and redirects to the client callback URL" do
         when_i_access_the_identity_endpoint
         and_i_complete_and_submit_the_name_form
         and_i_complete_and_submit_my_date_of_birth
@@ -116,28 +84,12 @@ RSpec.describe "Identity", type: :system do
         when_i_press_the_continue_button
         then_i_see_the_no_match_page
         and_i_see_the_correct_no_match_content
-      end
 
-      context "after being redirected to the callback" do
-        it "cannot go back to the check answers page" do
-          when_i_access_the_identity_endpoint
-          and_i_complete_and_submit_the_name_form
-          and_i_complete_and_submit_my_date_of_birth
-          and_i_have_a_ni_number
-          and_i_complete_and_submit_my_ni_number
-          and_i_do_not_know_the_trn
-          and_i_have_not_been_awarded_qts
-          then_i_see_the_check_answers_page
+        when_i_submit_anyway
+        then_i_am_redirected_to_the_callback
 
-          when_i_press_the_continue_button
-          then_i_see_the_no_match_page
-
-          when_i_submit_anyway
-          then_i_am_redirected_to_the_callback
-
-          when_i_try_to_go_to_the_check_answers_page
-          then_i_am_redirected_to_the_callback
-        end
+        when_i_try_to_go_to_the_check_answers_page
+        then_i_am_redirected_to_the_callback
       end
     end
 
