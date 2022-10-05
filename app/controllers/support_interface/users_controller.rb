@@ -2,17 +2,18 @@
 module SupportInterface
   class UsersController < SupportInterfaceController
     include Pagy::Backend
+    include ConsumesIdentityUsersApi
 
     layout "two_thirds", only: %i[edit update]
 
     def index
-      @all_users ||= IdentityApi.get_users
+      @all_users ||= identity_users_api.get_users
       @total = @all_users.size
       @pagy, @users = pagy_array(@all_users)
     end
 
     def show
-      @user = IdentityApi.get_user(uuid)
+      @user = identity_users_api.get_user(uuid)
       @dqt_record = DqtApi.find_teacher_by_trn!(trn: @user.trn) if @user.trn
     end
 
