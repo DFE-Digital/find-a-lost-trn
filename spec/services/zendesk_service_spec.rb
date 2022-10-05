@@ -41,6 +41,16 @@ RSpec.describe ZendeskService do
         expect(ticket_content.dig(:custom_fields, :id)).to eq("4419328659089")
         expect(ticket_content.dig(:custom_fields, :value)).to eq("request_from_identity_auth_service")
       end
+
+      it "includes the user-provided TRN if present" do
+        trn_request = create(:trn_request, :from_get_an_identity, trn_from_user: nil)
+        ticket_content = described_class.ticket_template(trn_request)
+        expect(ticket_content.dig(:comment, :value)).to include("User-provided TRN: Not provided")
+
+        trn_request = create(:trn_request, :from_get_an_identity, trn_from_user: "123ABCD")
+        ticket_content = described_class.ticket_template(trn_request)
+        expect(ticket_content.dig(:comment, :value)).to include("User-provided TRN: 123ABCD")
+      end
     end
   end
 
