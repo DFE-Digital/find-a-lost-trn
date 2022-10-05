@@ -52,7 +52,8 @@ class ZendeskService
         "\nPrevious name: #{trn_request.previous_name? ? trn_request.previous_name : "None"}" \
         "\nDate of birth: #{trn_request.date_of_birth.strftime("%d %B %Y")}" \
         "\nNI number: #{trn_request.ni_number || "Not provided"}" \
-        "\nITT provider: #{trn_request.itt_provider_name || "Not provided"}\n",
+        "\nITT provider: #{trn_request.itt_provider_name || "Not provided"}" \
+        "\nUser-provided TRN: #{trn_request.trn_from_user || "Not provided"}\n",
       },
       requester: {
         email: trn_request.email,
