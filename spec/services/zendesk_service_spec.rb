@@ -7,8 +7,17 @@ RSpec.describe ZendeskService do
   let(:zendesk_api_ticket) { ZendeskAPI::Ticket }
 
   describe ".ticket_template" do
+    it "has the correct custom field values" do
+      trn_request = create(:trn_request, date_of_birth: 20.years.ago )
+
+      ticket_content = described_class.ticket_template(trn_request)
+
+      expect(ticket_content.dig(:custom_fields, :id)).to eq("4419328659089")
+      expect(ticket_content.dig(:custom_fields, :value)).to eq("request_from_find_a_lost_trn_app")
+    end
+
     it "correctly formats a TRN request with no NI number" do
-      trn_request = TrnRequest.new(date_of_birth: 20.years.ago)
+      trn_request = create(:trn_request, date_of_birth: 20.years.ago)
 
       expect(
         described_class.ticket_template(trn_request)[:comment][:value],
@@ -16,11 +25,22 @@ RSpec.describe ZendeskService do
     end
 
     it "correctly formats a TRN request with no ITT provider" do
-      trn_request = TrnRequest.new(date_of_birth: 20.years.ago)
+      trn_request = create(:trn_request, date_of_birth: 20.years.ago)
 
       expect(
         described_class.ticket_template(trn_request)[:comment][:value],
       ).to include("ITT provider: Not provided")
+    end
+
+    context "when TRN request is from Identity auth flow" do
+      it "has the correct custom field values" do
+        trn_request = create(:trn_request, :from_get_an_identity)
+
+        ticket_content = described_class.ticket_template(trn_request)
+
+        expect(ticket_content.dig(:custom_fields, :id)).to eq("4419328659089")
+        expect(ticket_content.dig(:custom_fields, :value)).to eq("request_from_identity_auth_service")
+      end
     end
   end
 

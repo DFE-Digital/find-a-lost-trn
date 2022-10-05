@@ -33,5 +33,9 @@ FactoryBot.define do
       trn { nil }
       zendesk_ticket_id { Faker::Number.number(digits: 4) }
     end
+
+    trait :from_get_an_identity do
+      from_get_an_identity { true }
+    end
   end
 end
