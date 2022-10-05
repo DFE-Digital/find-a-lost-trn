@@ -134,7 +134,17 @@ RSpec.describe "Staff support", type: :system do
     OmniAuth.config.test_mode = true
     OmniAuth.config.add_mock(
       :identity,
-      { uid: nil, credentials: { token: "1234567890" }, extra: { raw_info: { email: "new@example.com" } } },
+      {
+        uid: nil,
+        credentials: {
+          token: "1234567890",
+        },
+        extra: {
+          raw_info: {
+            email: "new@example.com",
+          },
+        },
+      },
     )
   end
 

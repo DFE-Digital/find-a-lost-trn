@@ -5,18 +5,6 @@ class IdentityApi
 
   FIVE_SECONDS = 5
 
-  def self.get_user(uuid)
-    if FeatureFlag.active?(:identity_api_always_timeout)
-      raise Faraday::TimeoutError, "Time-out feature flag enabled"
-    end
-
-    response = new.client.get("/api/v1/users/#{uuid}")
-
-    raise ApiError, response.reason_phrase unless response.status == 200
-
-    User.new(response.body)
-  end
-
   def self.submit_trn!(trn_request, journey_id)
     if FeatureFlag.active?(:identity_api_always_timeout)
       raise Faraday::TimeoutError, "Time-out feature flag enabled"
@@ -31,31 +19,6 @@ class IdentityApi
     raise ApiError, response.reason_phrase unless response.status == 204
 
     response.body
-  end
-
-  def self.update_user_trn(uuid, trn)
-    if FeatureFlag.active?(:identity_api_always_timeout)
-      raise Faraday::TimeoutError, "Time-out feature flag enabled"
-    end
-
-    response = new.client.put("/api/v1/users/#{uuid}/trn", { trn: })
-
-    raise ApiError, response.reason_phrase unless response.status == 204
-
-    response.body
-  end
-
-  def self.get_users
-    if FeatureFlag.active?(:identity_api_always_timeout)
-      raise Faraday::TimeoutError, "Time-out feature flag enabled"
-    end
-
-    response = new.client.get("/api/v1/teachers")
-
-    raise ApiError, response.reason_phrase unless response.status == 200
-
-    users = response.body.fetch("users", [])
-    users.map { |user| User.new(user) }
   end
 
   def self.trn_request_params(trn_request)
@@ -76,9 +39,7 @@ class IdentityApi
           timeout: FIVE_SECONDS,
         },
       ) do |faraday|
-        faraday.request :authorization,
-                        "Bearer",
-                        ENV.fetch("IDENTITY_API_KEY", nil)
+        faraday.request :authorization, "Bearer", access_token
         faraday.request :json
         faraday.response :json
         faraday.response :logger,
@@ -91,5 +52,9 @@ class IdentityApi
         end
         faraday.adapter Faraday.default_adapter
       end
+  end
+
+  def access_token
+    ENV.fetch("IDENTITY_API_KEY", nil)
   end
 end
