@@ -1,0 +1,54 @@
+---
+http_interactions:
+  - request:
+      method: put
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/29e9e624-073e-41f5-b1b3-8164ce3a5233/trn
+      body:
+        encoding: UTF-8
+        string: '{"trn":"2921020"}'
+      headers:
+        User-Agent:
+          - Faraday v2.6.0
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Content-Type:
+          - application/json
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 204
+        message: No Content
+      headers:
+        Date:
+          - Thu, 06 Oct 2022 12:43:04 GMT
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-l1eTVSK8DTnK8+yloud7wZUqFrI0atVo6VlC6PJvYaQ='
+            'sha256-wmo5EWLjw+Yuj9jZzGNNeSsUOBQmBvE1pvSPVNQzJ34=' 'nonce-15NjqkiH2uK56VTYxLh4N6bELtPmt0sXXbAw2x5CQJA='
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-10-06T12:44:00.0000000Z"
+      body:
+        encoding: UTF-8
+        string: ""
+    recorded_at: Thu, 06 Oct 2022 12:43:05 GMT
+recorded_with: VCR 6.1.0

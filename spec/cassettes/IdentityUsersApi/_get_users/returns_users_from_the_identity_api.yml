@@ -1,0 +1,56 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/teachers
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.6.0
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Date:
+          - Wed, 05 Oct 2022 14:11:03 GMT
+        Transfer-Encoding:
+          - chunked
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-l1eTVSK8DTnK8+yloud7wZUqFrI0atVo6VlC6PJvYaQ='
+            'sha256-wmo5EWLjw+Yuj9jZzGNNeSsUOBQmBvE1pvSPVNQzJ34=' 'nonce-G7iwU2XgLOE7mz0tBNmAuGleIySeIu7dsIKrqewKFHQ='
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-10-05T14:12:00.0000000Z"
+      body:
+        encoding: UTF-8
+        string: '{"users":[{"userId":"37ee5357-fb84-478e-b750-bf552e5c8eed","email":"paul.hayes@digital.education.gov.uk","firstName":"Jane","lastName":"Doess","dateOfBirth":"1901-01-01","trn":null},{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"jake.benilov@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"},{"userId":"51a31384-113d-4c84-adae-0de84a686fc0","email":"tarikjohnston@gmail.com","firstName":"tarik","lastName":"johnston","dateOfBirth":"1980-01-31","trn":null},{"userId":"f3ef3547-071e-4fbd-8a85-4faeaf788a51","email":"naomi@lockyy.com","firstName":"Naomi","lastName":"Lockhart","dateOfBirth":"1992-02-17","trn":null}]}'
+    recorded_at: Wed, 05 Oct 2022 14:11:03 GMT
+recorded_with: VCR 6.1.0
