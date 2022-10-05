@@ -87,7 +87,7 @@ end
 group :test do
   gem "capybara", "~> 3.36"
   gem "capybara-email"
-  gem "cuprite", "~> 0.13"
+  gem "cuprite", "~> 0.14"
   gem "faker"
   gem "rspec"
   gem "rspec-rails"
