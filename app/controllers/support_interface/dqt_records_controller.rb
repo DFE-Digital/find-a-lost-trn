@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 module SupportInterface
   class DqtRecordsController < ApplicationController
+    include ConsumesIdentityUsersApi
+
     def edit
       @confirm_dqt_record_form = ConfirmDqtRecordForm.new(trn:)
-      @user = IdentityApi.get_user(uuid)
+      @user = identity_users_api.get_user(uuid)
       @dqt_record = DqtApi.find_teacher_by_trn!(trn:)
     rescue DqtApi::NoResults
       flash[:notice] = "TRN does not exist"
@@ -15,7 +17,7 @@ module SupportInterface
         ConfirmDqtRecordForm.new(confirm_dqt_record_params)
       if @confirm_dqt_record_form.valid?
         if @confirm_dqt_record_form.confirmed?
-          IdentityApi.update_user_trn(uuid, @confirm_dqt_record_form.trn)
+          identity_users_api.update_user_trn(uuid, @confirm_dqt_record_form.trn)
 
           flash[:success] = "DQT Record added"
         else
@@ -26,7 +28,7 @@ module SupportInterface
       else
         @dqt_record =
           DqtApi.find_teacher_by_trn!(trn: @confirm_dqt_record_form.trn)
-        @user = IdentityApi.get_user(uuid)
+        @user = identity_users_api.get_user(uuid)
         render :edit
       end
     end

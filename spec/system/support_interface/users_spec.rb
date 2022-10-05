@@ -10,7 +10,12 @@ RSpec.describe "Identity Users Support", type: :system do
     "trn" => nil,
   }
 
+  let(:identity_api) { IdentityUsersApi.new(ENV["IDENTITY_USER_TOKEN"]) }
+
+  before { allow(IdentityUsersApi).to receive(:new).and_return(identity_api) }
+
   it "displays a list of users", vcr: true, download: true do
+    allow(identity_api).to receive(:get_users).and_return([User.new(user)])
     given_i_am_authorized_as_a_support_user
     when_i_visit_the_identity_users_support_page
     then_i_should_see_a_user
@@ -19,7 +24,7 @@ RSpec.describe "Identity Users Support", type: :system do
   context "when there are more than 100 users" do
     before do
       users = 150.times.map { User.new(user) }
-      allow(IdentityApi).to receive(:get_users).and_return(users)
+      allow(identity_api).to receive(:get_users).and_return(users)
     end
 
     it "shows the Identity users paginated" do
@@ -34,7 +39,7 @@ RSpec.describe "Identity Users Support", type: :system do
   context "when there is an unverified user" do
     before do
       user["nameVerified"] = false
-      allow(IdentityApi).to receive(:get_users).and_return([User.new(user)])
+      allow(identity_api).to receive(:get_users).and_return([User.new(user)])
     end
 
     it "shows an unverified user" do
@@ -47,7 +52,7 @@ RSpec.describe "Identity Users Support", type: :system do
   context "when there is an verified user" do
     before do
       user["nameVerified"] = true
-      allow(IdentityApi).to receive(:get_users).and_return([User.new(user)])
+      allow(identity_api).to receive(:get_users).and_return([User.new(user)])
     end
 
     it "shows an unverified user" do
@@ -60,7 +65,7 @@ RSpec.describe "Identity Users Support", type: :system do
   context "when the user does not have a DQT record" do
     before do
       user["trn"] = nil
-      allow(IdentityApi).to receive(:get_users).and_return([User.new(user)])
+      allow(identity_api).to receive(:get_users).and_return([User.new(user)])
     end
 
     it "shows a link to add a DQT record" do
@@ -73,7 +78,7 @@ RSpec.describe "Identity Users Support", type: :system do
   context "when the user has a DQT record" do
     before do
       user["trn"] = "12345"
-      allow(IdentityApi).to receive(:get_users).and_return([User.new(user)])
+      allow(identity_api).to receive(:get_users).and_return([User.new(user)])
     end
 
     it "shows a link to add a DQT record" do
@@ -86,7 +91,7 @@ RSpec.describe "Identity Users Support", type: :system do
   context "When user attempts to match identity record to a DQT record" do
     before do
       user["trn"] = nil
-      allow(IdentityApi).to receive(:get_users).and_return([User.new(user)])
+      allow(identity_api).to receive(:get_users).and_return([User.new(user)])
     end
 
     it "shows the add TRN page", vcr: true do
@@ -176,7 +181,7 @@ RSpec.describe "Identity Users Support", type: :system do
   end
 
   def then_i_should_see_a_user
-    expect(page).to have_content "Jane Doess"
+    expect(page).to have_content "Kevin E"
   end
 
   def then_i_should_see_an_unverified_user
