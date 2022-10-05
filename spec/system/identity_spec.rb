@@ -88,8 +88,16 @@ RSpec.describe "Identity", type: :system do
         when_i_submit_anyway
         then_i_am_redirected_to_the_callback
 
+        and_an_identity_zendesk_ticket_is_raised
+
         when_i_try_to_go_to_the_check_answers_page
         then_i_am_redirected_to_the_callback
+      end
+
+      def and_an_identity_zendesk_ticket_is_raised
+        trn_request = TrnRequest.last
+        ticket_subject = GDS_ZENDESK_CLIENT.ticket.options.fetch(:subject)
+        expect(ticket_subject).to eq "[Find a lost TRN - Identity auth] Support request from #{trn_request.name}"
       end
     end
 

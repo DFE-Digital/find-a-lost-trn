@@ -19,7 +19,9 @@ class NoMatchController < ApplicationController
           IdentityApi.submit_trn!(trn_request, session[:identity_journey_id])
           session[:identity_trn_request_sent] = true
 
-          # Send the user back to Get an Identity
+          create_zendesk_ticket_for_identity_user
+
+          # Send the user to the redirect url specified by the client app
           redirect_to session[:identity_redirect_url], allow_other_host: true
           session[:identity_client_title] = nil
         rescue IdentityApi::ApiError,
@@ -49,6 +51,11 @@ class NoMatchController < ApplicationController
   def create_zendesk_ticket
     ZendeskService.create_ticket!(trn_request)
     TeacherMailer.information_received(trn_request).deliver_later
+    CheckZendeskTicketForTrnJob.set(wait: 2.days).perform_later(trn_request.id)
+  end
+
+  def create_zendesk_ticket_for_identity_user
+    ZendeskService.create_ticket!(trn_request)
     CheckZendeskTicketForTrnJob.set(wait: 2.days).perform_later(trn_request.id)
   end
 end
