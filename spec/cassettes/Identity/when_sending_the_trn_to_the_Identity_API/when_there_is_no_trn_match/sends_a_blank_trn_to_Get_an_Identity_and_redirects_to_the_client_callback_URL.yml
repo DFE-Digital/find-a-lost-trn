@@ -1,48 +1,48 @@
 ---
 http_interactions:
-- request:
-    method: put
-    uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/find-trn/user/9ddccb62-ec13-4ea7-a163-c058a19b8222
-    body:
-      encoding: UTF-8
-      string: '{"firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A"}'
-    headers:
-      User-Agent:
-      - Faraday v2.5.2
-      Authorization:
-      - Bearer <BEARER_TOKEN_REDACTED>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 204
-      message: No Content
-    headers:
-      Date:
-      - Tue, 04 Oct 2022 12:53:42 GMT
-      Request-Context:
-      - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Frame-Options:
-      - DENY
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Content-Type-Options:
-      - nosniff
-      X-Permitted-Cross-Domain-Policies:
-      - none
-      Referrer-Policy:
-      - no-referrer
-      Content-Security-Policy:
-      - default-src 'self';script-src 'self' 'sha256-l1eTVSK8DTnK8+yloud7wZUqFrI0atVo6VlC6PJvYaQ='
-        'sha256-wmo5EWLjw+Yuj9jZzGNNeSsUOBQmBvE1pvSPVNQzJ34=' 'nonce-xQpFOs1ivcsTvPOQ0e//FLrs/+iGQBGG9PIcPLq2Oiw='
-    body:
-      encoding: UTF-8
-      string: ''
-  recorded_at: Tue, 04 Oct 2022 12:53:43 GMT
+  - request:
+      method: put
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/find-trn/user/9ddccb62-ec13-4ea7-a163-c058a19b8222
+      body:
+        encoding: UTF-8
+        string: '{"firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A"}'
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Content-Type:
+          - application/json
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 204
+        message: No Content
+      headers:
+        Date:
+          - Tue, 04 Oct 2022 12:53:42 GMT
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-l1eTVSK8DTnK8+yloud7wZUqFrI0atVo6VlC6PJvYaQ='
+            'sha256-wmo5EWLjw+Yuj9jZzGNNeSsUOBQmBvE1pvSPVNQzJ34=' 'nonce-xQpFOs1ivcsTvPOQ0e//FLrs/+iGQBGG9PIcPLq2Oiw='
+      body:
+        encoding: UTF-8
+        string: ""
+    recorded_at: Tue, 04 Oct 2022 12:53:43 GMT
 recorded_with: VCR 6.1.0

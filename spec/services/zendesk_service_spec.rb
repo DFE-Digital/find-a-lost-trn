@@ -8,12 +8,14 @@ RSpec.describe ZendeskService do
 
   describe ".ticket_template" do
     it "has the correct custom field values" do
-      trn_request = create(:trn_request, date_of_birth: 20.years.ago )
+      trn_request = create(:trn_request, date_of_birth: 20.years.ago)
 
       ticket_content = described_class.ticket_template(trn_request)
 
       expect(ticket_content.dig(:custom_fields, :id)).to eq("4419328659089")
-      expect(ticket_content.dig(:custom_fields, :value)).to eq("request_from_find_a_lost_trn_app")
+      expect(ticket_content.dig(:custom_fields, :value)).to eq(
+        "request_from_find_a_lost_trn_app",
+      )
     end
 
     it "correctly formats a TRN request with no NI number" do
@@ -39,17 +41,25 @@ RSpec.describe ZendeskService do
         ticket_content = described_class.ticket_template(trn_request)
 
         expect(ticket_content.dig(:custom_fields, :id)).to eq("4419328659089")
-        expect(ticket_content.dig(:custom_fields, :value)).to eq("request_from_identity_auth_service")
+        expect(ticket_content.dig(:custom_fields, :value)).to eq(
+          "request_from_identity_auth_service",
+        )
       end
 
       it "includes the user-provided TRN if present" do
-        trn_request = create(:trn_request, :from_get_an_identity, trn_from_user: nil)
+        trn_request =
+          create(:trn_request, :from_get_an_identity, trn_from_user: nil)
         ticket_content = described_class.ticket_template(trn_request)
-        expect(ticket_content.dig(:comment, :value)).to include("User-provided TRN: Not provided")
+        expect(ticket_content.dig(:comment, :value)).to include(
+          "User-provided TRN: Not provided",
+        )
 
-        trn_request = create(:trn_request, :from_get_an_identity, trn_from_user: "123ABCD")
+        trn_request =
+          create(:trn_request, :from_get_an_identity, trn_from_user: "123ABCD")
         ticket_content = described_class.ticket_template(trn_request)
-        expect(ticket_content.dig(:comment, :value)).to include("User-provided TRN: 123ABCD")
+        expect(ticket_content.dig(:comment, :value)).to include(
+          "User-provided TRN: 123ABCD",
+        )
       end
     end
   end

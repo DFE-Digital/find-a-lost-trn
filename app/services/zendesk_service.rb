@@ -42,18 +42,19 @@ class ZendeskService
 
   def self.identity_ticket_template(trn_request)
     {
-      subject: "[Find a lost TRN - Identity auth] Support request from #{trn_request.name}",
+      subject:
+        "[Find a lost TRN - Identity auth] Support request from #{trn_request.name}",
       comment: {
         value:
-        "A user has submitted a request to find their lost TRN. Their " \
-        "information is:\n" \
-        "\nName: #{trn_request.name}" \
-        "\nEmail: #{trn_request.email}" \
-        "\nPrevious name: #{trn_request.previous_name? ? trn_request.previous_name : "None"}" \
-        "\nDate of birth: #{trn_request.date_of_birth.strftime("%d %B %Y")}" \
-        "\nNI number: #{trn_request.ni_number || "Not provided"}" \
-        "\nITT provider: #{trn_request.itt_provider_name || "Not provided"}" \
-        "\nUser-provided TRN: #{trn_request.trn_from_user || "Not provided"}\n",
+          "A user has submitted a request to find their lost TRN. Their " \
+            "information is:\n" \
+            "\nName: #{trn_request.name}" \
+            "\nEmail: #{trn_request.email}" \
+            "\nPrevious name: #{trn_request.previous_name? ? trn_request.previous_name : "None"}" \
+            "\nDate of birth: #{trn_request.date_of_birth.strftime("%d %B %Y")}" \
+            "\nNI number: #{trn_request.ni_number || "Not provided"}" \
+            "\nITT provider: #{trn_request.itt_provider_name || "Not provided"}" \
+            "\nUser-provided TRN: #{trn_request.trn_from_user || "Not provided"}\n",
       },
       requester: {
         email: trn_request.email,
