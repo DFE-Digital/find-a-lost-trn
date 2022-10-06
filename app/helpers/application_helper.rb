@@ -35,7 +35,11 @@ module ApplicationHelper
   end
 
   def custom_header
-    govuk_header(service_name:, service_url: start_path) do |header|
+    govuk_header(
+      homepage_url: t("govuk.url"),
+      service_name:,
+      service_url: start_path,
+    ) do |header|
       case try(:current_namespace)
       when "support_interface"
         header.navigation_item(

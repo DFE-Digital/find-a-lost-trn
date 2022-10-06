@@ -1,4 +1,6 @@
 en:
+  govuk:
+    url: https://www.gov.uk
   service:
     email: qts.enquiries@education.gov.uk
     name: Find a lost teacher reference number (TRN)
