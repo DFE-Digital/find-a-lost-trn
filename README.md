@@ -8,10 +8,12 @@ A service that allows teachers to find their Teacher Reference Number (TRN).
 
 | Name       | URL                                               | Deployment | PaaS space       | PaaS application             |
 | ---------- | ------------------------------------------------- | ---------- | ---------------- | ---------------------------- |
-| Production | https://find-a-lost-trn.education.gov.uk/         | Manual     | `tra-production` | `find-a-lost-trn-production` |
-| Preprod    | https://preprod-find-a-lost-trn.education.gov.uk/ | Manual     | `tra-test`       | `find-a-lost-trn-preprod`    |
-| Test       | https://test-find-a-lost-trn.education.gov.uk/    | Manual     | `tra-test`       | `find-a-lost-trn-test`       |
+| Production | https://find-a-lost-trn.education.gov.uk/         | Automatic  | `tra-production` | `find-a-lost-trn-production` |
+| Preprod    | https://preprod-find-a-lost-trn.education.gov.uk/ | Automatic  | `tra-test`       | `find-a-lost-trn-preprod`    |
+| Test       | https://test-find-a-lost-trn.education.gov.uk/    | Automatic  | `tra-test`       | `find-a-lost-trn-test`       |
 | Dev        | https://dev-find-a-lost-trn.education.gov.uk/     | Automatic  | `tra-dev`        | `find-a-lost-trn-dev`        |
+
+All environments have continuous deployment, the state of which can be inspected in Github Actions.
 
 ### Details and configuration
 
