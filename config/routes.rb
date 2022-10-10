@@ -12,6 +12,9 @@ Rails.application.routes.draw do
                sessions: "staff/sessions",
                unlocks: "staff/unlocks",
              }
+  devise_scope :staff do
+    get "/staff/sign_out", to: "staff/sessions#destroy"
+  end
 
   namespace :support_interface, path: "/support" do
     get "/", to: redirect("/support/trn-requests")

@@ -79,6 +79,11 @@ module ApplicationHelper
           href: support_interface_zendesk_path,
           text: "Zendesk",
         )
+        if current_staff
+          header.navigation_item(href: staff_sign_out_path, text: "Sign out")
+        else
+          header.navigation_item(href: new_staff_session_path, text: "Sign in")
+        end
       end
     end
   end
