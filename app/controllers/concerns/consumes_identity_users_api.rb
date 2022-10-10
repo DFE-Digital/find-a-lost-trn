@@ -9,7 +9,7 @@ module ConsumesIdentityUsersApi
 
   def identity_users_api_access_token
     if FeatureFlag.active?("identity_auth_service")
-      session[:identity_users_api_access_token]
+      session[:identity_users_api_access_token]["access_token"]
     else
       ENV.fetch("IDENTITY_USER_TOKEN", nil)
     end

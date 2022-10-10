@@ -12,7 +12,7 @@ module Omniauth
       option :pkce, true
       option :scope, "get-an-identity:support"
 
-      credentials { { token: access_token.token } }
+      credentials { { token: access_token } }
       info { { name: raw_info["name"], email: raw_info["email"] } }
 
       extra { { "raw_info" => raw_info } }
