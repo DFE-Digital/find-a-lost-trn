@@ -102,26 +102,6 @@ RSpec.describe "Identity", type: :system do
         ).to eq "[Find a lost TRN - Identity auth] Support request from #{trn_request.name}"
       end
     end
-
-    context "when there is an Identity API error" do
-      before do
-        allow(Sentry).to receive(:capture_exception)
-        FeatureFlag.activate(:identity_api_always_timeout)
-      end
-
-      after { FeatureFlag.deactivate(:identity_api_always_timeout) }
-
-      it "redirects to the error page", vcr: true do
-        when_i_access_the_identity_endpoint
-        and_i_complete_and_submit_the_name_form
-        and_i_complete_and_submit_my_date_of_birth
-        then_i_see_the_check_answers_page
-
-        when_i_press_the_continue_button
-        then_sentry_receives_a_warning_about_the_failure
-        and_i_am_redirected_to_the_error_page
-      end
-    end
   end
 
   context "ask for TRN page" do
@@ -334,10 +314,6 @@ RSpec.describe "Identity", type: :system do
     )
   end
 
-  def then_sentry_receives_a_warning_about_the_failure
-    expect(Sentry).to have_received(:capture_exception)
-  end
-
   def then_i_should_see_the_client_title_from_get_an_identity
     expect(page).to have_content("")
   end
@@ -349,10 +325,6 @@ RSpec.describe "Identity", type: :system do
     expect(page).to have_content("Check your answers")
     expect(page).not_to have_content("We could not find your TRN")
     expect(page).not_to have_content("Check your details")
-  end
-
-  def and_i_am_redirected_to_the_error_page
-    expect(page).to have_content("Sorry")
   end
 
   def when_i_submit_anyway

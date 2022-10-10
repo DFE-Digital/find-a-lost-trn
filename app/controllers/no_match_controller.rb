@@ -14,24 +14,15 @@ class NoMatchController < ApplicationController
       redirect_to check_answers_path
     elsif @no_match_form.valid?
       if trn_request.from_get_an_identity?
-        begin
-          # Send a request to Get An Identity API with no TRN found
-          IdentityApi.submit_trn!(trn_request, session[:identity_journey_id])
-          session[:identity_trn_request_sent] = true
+        # Send a request to Get An Identity API with no TRN found
+        IdentityApi.submit_trn!(trn_request, session[:identity_journey_id])
+        session[:identity_trn_request_sent] = true
 
-          create_zendesk_ticket_for_identity_user
+        create_zendesk_ticket_for_identity_user
 
-          # Send the user to the redirect url specified by the client app
-          redirect_to session[:identity_redirect_url], allow_other_host: true
-          session[:identity_client_title] = nil
-        rescue IdentityApi::ApiError,
-               Faraday::ConnectionFailed,
-               Faraday::TimeoutError,
-               ActionController::ActionControllerError => e
-          Sentry.capture_exception(e)
-          # Do not redirect back to Get An Identity
-          render "errors/internal_server_error", status: :internal_server_error
-        end
+        # Send the user to the redirect url specified by the client app
+        redirect_to session[:identity_redirect_url], allow_other_host: true
+        session[:identity_client_title] = nil
       else
         create_zendesk_ticket
 
