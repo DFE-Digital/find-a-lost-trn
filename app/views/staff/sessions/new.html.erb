@@ -1,16 +1,26 @@
 <h1 class="govuk-heading-l">Log in</h1>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <%= f.govuk_email_field :email, autofocus: true, autocomplete: "email", label: { text: "Email" } %>
-  <%= f.govuk_password_field :password, autocomplete: "current-password", label: { text: "Password" } %>
-
-  <% if devise_mapping.rememberable? %>
-    <%= f.govuk_check_boxes_fieldset :remember_me, multiple: false, legend: nil do %>
-      <%= f.govuk_check_box :remember_me, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Remember me?" } %>
+<% if FeatureFlag.active?(:identity_auth_service) %>
+  <%- if devise_mapping.omniauthable? %>
+    <%- resource_class.omniauth_providers.each do |provider| %>
+      <% if FeatureFlag.active?(:identity_auth_service) %>
+        <%= govuk_button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), method: :post %><br />
+      <% end %>
     <% end %>
   <% end %>
+<% else %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= f.govuk_email_field :email, autofocus: true, autocomplete: "email", label: { text: "Email" } %>
+    <%= f.govuk_password_field :password, autocomplete: "current-password", label: { text: "Password" } %>
 
-  <%= f.govuk_submit "Log in" %>
+    <% if devise_mapping.rememberable? %>
+      <%= f.govuk_check_boxes_fieldset :remember_me, multiple: false, legend: nil do %>
+        <%= f.govuk_check_box :remember_me, 1, 0, multiple: false, link_errors: true, small: true, label: { text: "Remember me?" } %>
+      <% end %>
+    <% end %>
+
+    <%= f.govuk_submit "Log in" %>
+  <% end %>
+
+  <%= render "staff/shared/links" %>
 <% end %>
-
-<%= render "staff/shared/links" %>
