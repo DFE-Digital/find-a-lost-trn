@@ -137,7 +137,10 @@ RSpec.describe "Staff support", type: :system do
       {
         uid: nil,
         credentials: {
-          token: "1234567890",
+          token: {
+            access_token: "1234567890",
+            expires_at: 1.minute.from_now.to_i,
+          },
         },
         extra: {
           raw_info: {
