@@ -1,4 +1,4 @@
-<h1 class="govuk-heading-l">Log in</h1>
+<h1 class="govuk-heading-l">Sign in</h1>
 
 <% if FeatureFlag.active?(:identity_auth_service) %>
   <%- if devise_mapping.omniauthable? %>
@@ -19,7 +19,7 @@
       <% end %>
     <% end %>
 
-    <%= f.govuk_submit "Log in" %>
+    <%= f.govuk_submit "Sign in" %>
   <% end %>
 
   <%= render "staff/shared/links" %>
