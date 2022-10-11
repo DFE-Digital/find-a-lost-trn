@@ -27,7 +27,7 @@
 <h2 class="govuk-heading-m">
   List of tickets to be deleted
   <span class="govuk-caption-m">
-    Showing <%= @zendesk_tickets.size %> total
+    Showing <%= @zendesk_tickets.size %> of <%= @zendesk_tickets_total %> total
   </span>
 </h2>
 
@@ -78,7 +78,7 @@
 <h2 class="govuk-heading-m">
   Tickets that have been requested for deletion
   <span class="govuk-caption-m">
-    Showing <%= @zendesk_delete_requests.size %> of <%= @total %> total
+    Showing <%= @zendesk_delete_requests.size %> of <%= @zendesk_delete_requests_total %> total
   </span>
 </h2>
 

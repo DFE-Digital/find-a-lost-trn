@@ -5,12 +5,13 @@ module SupportInterface
     include Pagy::Backend
 
     def index
+      closed_tickets = ZendeskService.find_closed_tickets_from_6_months_ago
       @zendesk_tickets =
-        ZendeskService.find_closed_tickets_from_6_months_ago.map do |t|
-          ZendeskDeleteRequest.new.from(t)
-        end
+        closed_tickets.map { |t| ZendeskDeleteRequest.new.from(t) }
 
-      @total = ZendeskDeleteRequest.count
+      @zendesk_tickets_total = closed_tickets.count
+
+      @zendesk_delete_requests_total = ZendeskDeleteRequest.count
 
       @pagy, @zendesk_delete_requests =
         pagy(ZendeskDeleteRequest.order(closed_at: :desc))
