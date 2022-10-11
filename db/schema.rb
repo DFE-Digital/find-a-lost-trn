@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_16_130312) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_11_085154) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -162,7 +162,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_130312) do
     t.integer "ticket_id", null: false
     t.string "enquiry_type"
     t.string "no_action_required"
-    t.string "group_name", null: false
+    t.string "group_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
