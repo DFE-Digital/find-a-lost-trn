@@ -25,10 +25,8 @@ module SupportInterface
     def update
       @trn_form = TrnForm.new(import_params)
       if @trn_form.save
-        redirect_to edit_support_interface_dqt_record_path(
-                      id: uuid,
-                      trn: @trn_form.trn,
-                    )
+        session[:support_interface_trn_form_trn] = @trn_form.trn
+        redirect_to edit_support_interface_dqt_record_path(id: uuid)
       else
         @uuid = uuid
         render :edit

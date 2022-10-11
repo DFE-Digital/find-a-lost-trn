@@ -10,6 +10,8 @@ module SupportInterface
     rescue DqtApi::NoResults
       flash[:notice] = "TRN does not exist"
       redirect_to edit_support_interface_identity_user_path(uuid)
+    ensure
+      session.delete(:support_interface_trn_form_trn)
     end
 
     def update
@@ -40,7 +42,7 @@ module SupportInterface
     end
 
     def trn
-      params.require(:trn)
+      session[:support_interface_trn_form_trn]
     end
 
     def confirm_dqt_record_params
