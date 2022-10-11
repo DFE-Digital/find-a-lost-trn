@@ -7,4 +7,6 @@ production:
 :max_retries: 1
 
 :queues:
+  - critical
   - default
+  - low

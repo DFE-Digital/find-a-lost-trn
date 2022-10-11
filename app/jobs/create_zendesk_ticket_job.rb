@@ -1,5 +1,6 @@
 class CreateZendeskTicketJob < ApplicationJob
   discard_on ActiveRecord::RecordNotFound
+  sidekiq_options queue: "critical"
 
   def perform(trn_request_id)
     trn_request = TrnRequest.find(trn_request_id)
