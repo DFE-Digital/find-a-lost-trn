@@ -142,9 +142,11 @@ Run the application on `http://localhost:3000`:
 bin/dev
 ```
 
-### Basic Auth
+### Authentication
 
 Due to the `Service open` feature flag which is set to `false` by default across all environments except Production, you will be asked to sign in with basic auth. You can find credentials in the .env._environment_ file stored in the ENV variables `SUPPORT_USERNAME` and `SUPPORT_PASSWORD`. You can toggle the `Service open` feature flag to `true` when developing locally to switch off basic auth.
+
+The support interface for this service sits behind an auth system detailed [here](docs/staff-authentication.md).
 
 ### Notify
 
