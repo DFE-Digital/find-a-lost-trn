@@ -1,4 +1,6 @@
 class DeleteOldZendeskTicketsJob < ApplicationJob
+  sidekiq_options queue: "low"
+
   def perform
     return unless HostingEnvironment.production?
 
