@@ -21,9 +21,9 @@ environment:
 - Activate the `identity_auth_service` feature
 - Set an IDENTITY_CLIENT_ID environment variable with value `get-an-identity-support`
 - Set a valid IDENTITY_CLIENT_SECRET (ask a tech lead)
-- Set IDENTITY_API_URL to https://preprod.teaching-identity.education.gov.uk
+- Set IDENTITY_API_URL (eg — use https://preprod.teaching-identity.education.gov.uk in dev)
 - Ask an Identity API team member to set up a user with your DfE email address
-  on the Identity preprod environment
+  on the environment specified by IDENTITY_API_URL
 
 Following this, you can:
 
@@ -34,4 +34,6 @@ Following this, you can:
 Note that if `staff_http_basic_auth` is active at the same time as
 `identity_auth_service`, signing out functionality may appear to be broken.
 This is merely the StaffHttpBasicAuthStrategy behaving as designed and
-authenticating each request regardless of what's in the session.
+authenticating each request regardless of what's in the session. In nearly
+all scenarios, you'll want to deactivate `staff_http_basic_auth` if
+`identity_auth_service` is active.
