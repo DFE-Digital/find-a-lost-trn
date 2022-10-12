@@ -97,15 +97,23 @@ class DqtApi
         faraday.request :authorization, "Bearer", ENV.fetch("DQT_API_KEY", nil)
         faraday.request :json
         faraday.response :json
-        faraday.response :logger,
-                         nil,
-                         { bodies: true, headers: true } do |logger|
-          logger.filter(
-            /((emailAddress|firstName|lastName|nationalInsuranceNumber|previousFirstName|previousLastName)=)([^&]+)/,
-            '\1[REDACTED]',
-          )
+        if faraday_log_output_enabled?
+          faraday.response(
+            :logger,
+            nil,
+            { bodies: true, headers: true },
+          ) do |logger|
+            logger.filter(
+              /((emailAddress|firstName|lastName|nationalInsuranceNumber|previousFirstName|previousLastName)=)([^&]+)/,
+              '\1[REDACTED]',
+            )
+          end
         end
         faraday.adapter Faraday.default_adapter
       end
+  end
+
+  def faraday_log_output_enabled?
+    ActiveRecord::Type::Boolean.new.cast(ENV.fetch("FARADAY_LOG_OUTPUT", true))
   end
 end
