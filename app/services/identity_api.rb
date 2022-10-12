@@ -42,13 +42,17 @@ class IdentityApi
         faraday.request :authorization, "Bearer", access_token
         faraday.request :json
         faraday.response :json
-        faraday.response :logger,
-                         nil,
-                         { bodies: true, headers: true } do |logger|
-          logger.filter(
-            /((given_name|family_name|birthdate|nino|trn)=)([^&]+)/,
-            '\1[REDACTED]',
-          )
+        if faraday_log_output_enabled?
+          faraday.response(
+            :logger,
+            nil,
+            { bodies: true, headers: true },
+          ) do |logger|
+            logger.filter(
+              /((given_name|family_name|birthdate|nino|trn)=)([^&]+)/,
+              '\1[REDACTED]',
+            )
+          end
         end
         faraday.adapter Faraday.default_adapter
       end
@@ -56,5 +60,9 @@ class IdentityApi
 
   def access_token
     ENV.fetch("IDENTITY_API_KEY", nil)
+  end
+
+  def faraday_log_output_enabled?
+    ActiveRecord::Type::Boolean.new.cast(ENV.fetch("FARADAY_LOG_OUTPUT", true))
   end
 end
