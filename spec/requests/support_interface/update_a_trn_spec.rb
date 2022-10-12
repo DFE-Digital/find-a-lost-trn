@@ -1,35 +1,69 @@
 require "rails_helper"
 
-RSpec.describe "PUT update a TRN" do
+RSpec.describe "PUT update a TRN", type: :request do
+  include Capybara::RSpecMatchers
   include IdentityAuthServiceHelper
 
+  let(:uuid) { SecureRandom.uuid }
+  let(:trn) { "7654321" }
+  let(:user) { User.new("userId" => uuid, "email" => "someone@somewhere.com") }
+
+  before { authenticate_staff_with_mock_identity_provider }
+  after { reset_mock_identity_provider_authentication }
+
   context "with a valid TRN" do
-    let(:uuid) { SecureRandom.uuid }
-
-    before { authenticate_staff_with_mock_identity_provider }
-    after { reset_mock_identity_provider_authentication }
-
-    it "stores the TRN in the current session" do
-      put "/support/identity/users/#{uuid}",
-          params: {
-            support_interface_trn_form: {
-              trn: "7654321",
-            },
-          }
-
-      expect(session[:support_interface_trn_form_trn]).to eq("7654321")
+    let(:identity_users_api) do
+      instance_double(IdentityUsersApi, get_user: user)
+    end
+    before do
+      allow(IdentityUsersApi).to receive(:new).and_return(identity_users_api)
+      allow(DqtApi).to receive(:find_teacher_by_trn!).and_return(
+        "firstName" => "Some",
+        "lastName" => "One",
+        "dateOfBirth" => "2000-01-01",
+      )
     end
 
-    it "redirects to the edit DQT record path" do
+    it "renders the edit DQT record page" do
       put "/support/identity/users/#{uuid}",
           params: {
             support_interface_trn_form: {
-              trn: "7654321",
+              trn:,
             },
           }
 
-      expect(response).to redirect_to(
-        edit_support_interface_dqt_record_path(id: uuid),
+      expect(response).to be_successful
+      expect(response.body).to have_selector(
+        "h2.app-govuk-summary-card__title",
+        text: "Get an identity",
+      )
+      expect(response.body).to have_selector(
+        "h2.app-govuk-summary-card__title",
+        text: "DQT record",
+      )
+      expect(response.body).to have_selector(
+        "dd.govuk-summary-list__value",
+        text: "Some One",
+      )
+      expect(response.body).to have_selector(
+        "dd.govuk-summary-list__value",
+        text: "1 January 2000",
+      )
+    end
+  end
+
+  context "with an invalid TRN" do
+    it "renders an error on the TRN form" do
+      put "/support/identity/users/#{uuid}",
+          params: {
+            support_interface_trn_form: {
+              trn: "oioi",
+            },
+          }
+
+      expect(response).to be_successful
+      expect(response.body).to match(
+        /is the wrong length \(should be 7 characters\)/,
       )
     end
   end

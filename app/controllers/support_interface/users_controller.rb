@@ -25,12 +25,20 @@ module SupportInterface
     def update
       @trn_form = TrnForm.new(import_params)
       if @trn_form.save
-        session[:support_interface_trn_form_trn] = @trn_form.trn
-        redirect_to edit_support_interface_dqt_record_path(id: uuid)
+        @confirm_dqt_record_form = ConfirmDqtRecordForm.new(trn: @trn_form.trn)
+        @user = identity_users_api.get_user(uuid)
+        @dqt_record = DqtApi.find_teacher_by_trn!(trn: @trn_form.trn)
+
+        render "support_interface/dqt_records/edit",
+               id: uuid,
+               trn: @trn_form.trn
       else
         @uuid = uuid
         render :edit
       end
+    rescue DqtApi::NoResults
+      flash[:notice] = "TRN does not exist"
+      redirect_to edit_support_interface_identity_user_path(uuid)
     end
 
     private
