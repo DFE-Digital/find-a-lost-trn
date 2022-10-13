@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module SupportInterface
-  class DqtRecordsController < ApplicationController
+  class DqtRecordsController < SupportInterfaceController
     include ConsumesIdentityUsersApi
 
     def edit
