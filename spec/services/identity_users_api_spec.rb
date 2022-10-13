@@ -36,4 +36,18 @@ RSpec.describe IdentityUsersApi do
       expect(response).to be_empty
     end
   end
+
+  describe "#update_user(uuid, user_attributes)", vcr: true do
+    let(:uuid) { "29e9e624-073e-41f5-b1b3-8164ce3a5233" }
+    let(:user_attributes) { { "email" => "kev.ine@digital.education.gov.uk" } }
+
+    it "updates the user's details" do
+      updated_user =
+        described_class.new(ENV["IDENTITY_USER_TOKEN"]).update_user(
+          uuid,
+          user_attributes,
+        )
+      expect(updated_user.email).to eq("kev.ine@digital.education.gov.uk")
+    end
+  end
 end

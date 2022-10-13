@@ -1,0 +1,62 @@
+---
+http_interactions:
+  - request:
+      method: patch
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/29e9e624-073e-41f5-b1b3-8164ce3a5233
+      body:
+        encoding: UTF-8
+        string: '{"email":"kev.ine@digital.education.gov.uk"}'
+      headers:
+        User-Agent:
+          - Faraday v2.6.0
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Content-Type:
+          - application/json
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Transfer-Encoding:
+          - chunked
+        Content-Type:
+          - application/json; charset=utf-8
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-l1eTVSK8DTnK8+yloud7wZUqFrI0atVo6VlC6PJvYaQ='
+            'sha256-wmo5EWLjw+Yuj9jZzGNNeSsUOBQmBvE1pvSPVNQzJ34=' 'nonce-IFcVC56S/gxWDgUDIguRFtlsUtdDtaAm8vKvn8h4BaY='
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "297"
+        X-Rate-Limit-Reset:
+          - "2022-10-13T11:03:00.0000000Z"
+        X-Cache:
+          - CONFIG_NOCACHE
+        X-Azure-Ref:
+          - 0XvBHYwAAAACZgzeJ7Cr1QKFtfVvOprOCTFRTRURHRTEzMTUAZjIzNzI3NjQtZmE3MS00NWI4LTg2NWYtOTk3ZTEyZWIzOGZm
+        Date:
+          - Thu, 13 Oct 2022 11:02:54 GMT
+      body:
+        encoding: UTF-8
+        string: '{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kev.ine@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
+    recorded_at: Thu, 13 Oct 2022 11:02:54 GMT
+recorded_with: VCR 6.1.0
