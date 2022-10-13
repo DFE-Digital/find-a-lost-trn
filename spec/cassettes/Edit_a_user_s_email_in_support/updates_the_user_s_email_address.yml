@@ -1,0 +1,233 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/29e9e624-073e-41f5-b1b3-8164ce3a5233
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+        Date:
+          - Thu, 13 Oct 2022 11:02:54 GMT
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Date:
+          - Thu, 13 Oct 2022 11:02:54 GMT
+        Transfer-Encoding:
+          - chunked
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-j7OoGArf6XW6YY4cAyS3riSSvrJRqpSi1fOF9vQ5SrI='
+            'nonce-N3RhSF1UwVExudySWBiRH/PwW9Mu+J/SO7I5DIan5os='
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-09-28T17:28:00.0000000Z"
+      body:
+        encoding: UTF-8
+        string: '{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kevin.e@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
+    recorded_at: Wed, 28 Sep 2022 17:27:03 GMT
+  - request:
+      method: get
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/v2/teachers/2921020
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+        Date:
+          - Thu, 13 Oct 2022 11:02:54 GMT
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Date:
+          - Thu, 13 Oct 2022 11:02:54 GMT
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-09-28T17:28:00.0000000Z"
+        X-Vcap-Request-Id:
+          - 219d85ae-8a2e-402e-5f97-6c7f06027f75
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 1c6be95f21b3cc0cf77147b4aa61e7c2.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-P2
+        X-Amz-Cf-Id:
+          - hkOfohaA67lIN3q-2cS3kMuh-ipP6fY2kJ_ACkybVkr3Hs9ZXKgX9A==
+      body:
+        encoding: UTF-8
+        string: '{"trn":"2921020","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","nationalInsuranceNumber":"AA123456A","hasActiveSanctions":false,"qtsDate":null,"eytsDate":null,"earlyYearsStatus":null,"initialTeacherTraining":[{"programmeStartDate":"2020-04-01","programmeEndDate":"2020-10-10","programmeType":"GraduateTeacherProgramme","result":"InTraining"}]}'
+
+    recorded_at: Thu, 13 Oct 2022 11:02:54 GMT
+  - request:
+      method: patch
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/29e9e624-073e-41f5-b1b3-8164ce3a5233
+      body:
+        encoding: UTF-8
+        string: '{"email":"kev.ine@digital.education.gov.uk"}'
+      headers:
+        User-Agent:
+          - Faraday v2.6.0
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Content-Type:
+          - application/json
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+        Date:
+          - Thu, 13 Oct 2022 11:02:54 GMT
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Transfer-Encoding:
+          - chunked
+        Content-Type:
+          - application/json; charset=utf-8
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-l1eTVSK8DTnK8+yloud7wZUqFrI0atVo6VlC6PJvYaQ='
+            'sha256-wmo5EWLjw+Yuj9jZzGNNeSsUOBQmBvE1pvSPVNQzJ34=' 'nonce-IFcVC56S/gxWDgUDIguRFtlsUtdDtaAm8vKvn8h4BaY='
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "297"
+        X-Rate-Limit-Reset:
+          - "2022-10-13T11:03:00.0000000Z"
+        X-Cache:
+          - CONFIG_NOCACHE
+        X-Azure-Ref:
+          - 0XvBHYwAAAACZgzeJ7Cr1QKFtfVvOprOCTFRTRURHRTEzMTUAZjIzNzI3NjQtZmE3MS00NWI4LTg2NWYtOTk3ZTEyZWIzOGZm
+        Date:
+          - Thu, 13 Oct 2022 11:02:54 GMT
+      body:
+        encoding: UTF-8
+        string: '{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kev.ine@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
+    recorded_at: Thu, 13 Oct 2022 11:02:54 GMT
+  - request:
+      method: get
+      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/29e9e624-073e-41f5-b1b3-8164ce3a5233
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.5.2
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+        Date:
+          - Thu, 13 Oct 2022 11:02:54 GMT
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Date:
+          - Thu, 13 Oct 2022 11:02:54 GMT
+        Transfer-Encoding:
+          - chunked
+        Request-Context:
+          - appId=cid-v1:0fe7bfa3-0ff2-4116-972e-452718582ac6
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Frame-Options:
+          - DENY
+        X-Xss-Protection:
+          - 1; mode=block
+        X-Content-Type-Options:
+          - nosniff
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - no-referrer
+        Content-Security-Policy:
+          - default-src 'self';script-src 'self' 'sha256-j7OoGArf6XW6YY4cAyS3riSSvrJRqpSi1fOF9vQ5SrI='
+            'nonce-N3RhSF1UwVExudySWBiRH/PwW9Mu+J/SO7I5DIan5os='
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "299"
+        X-Rate-Limit-Reset:
+          - "2022-09-28T17:28:00.0000000Z"
+      body:
+        encoding: UTF-8
+        string: '{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kev.ine@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
+    recorded_at: Wed, 28 Sep 2022 17:27:03 GMT
+recorded_with: VCR 6.1.0
