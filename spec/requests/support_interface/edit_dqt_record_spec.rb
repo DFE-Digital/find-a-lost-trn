@@ -37,7 +37,7 @@ RSpec.describe "GET edit DQT record", type: :request do
       )
     end
 
-    it "renders a flash message" do
+    it "redirects to the edit user form" do
       get edit_support_interface_dqt_record_path(id: uuid, trn:)
 
       expect(response).to redirect_to(
