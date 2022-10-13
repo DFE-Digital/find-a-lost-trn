@@ -33,7 +33,11 @@
     key: { text: "Email address" },
     value: { text: @user.email },
     actions: [
-      { text: "Change", href: "#", visually_hidden_text: "name" },
+      {
+        text: "Change",
+        href: support_interface_identity_user_email_path(@user.uuid),
+        visually_hidden_text: "email address",
+      },
     ],
   },
   {

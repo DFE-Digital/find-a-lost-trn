@@ -4,7 +4,7 @@ module SupportInterface
     include Pagy::Backend
     include ConsumesIdentityUsersApi
 
-    layout "two_thirds", only: %i[edit update]
+    layout "two_thirds", only: %i[edit update email update_email]
 
     def index
       @all_users ||= identity_users_api.get_users
@@ -41,6 +41,24 @@ module SupportInterface
       redirect_to edit_support_interface_identity_user_path(uuid)
     end
 
+    def email
+      @email_form = EmailForm.new
+      @uuid = uuid
+    end
+
+    def update_email
+      @email_form = EmailForm.new(email_form_params)
+      if @email_form.save
+        @user =
+          identity_users_api.update_user(uuid, { email: @email_form.email })
+        flash[:success] = "Email changed successfully"
+        redirect_to support_interface_identity_user_path(uuid)
+      else
+        @uuid = uuid
+        render :email
+      end
+    end
+
     private
 
     def uuid
@@ -49,6 +67,10 @@ module SupportInterface
 
     def import_params
       params.require(:support_interface_trn_form).permit(:trn)
+    end
+
+    def email_form_params
+      params.require(:support_interface_email_form).permit(:email)
     end
   end
 end

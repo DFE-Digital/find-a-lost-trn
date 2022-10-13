@@ -49,6 +49,11 @@ Rails.application.routes.draw do
               except: :destroy,
               path: "/identity/users",
               as: :identity_user
+    get "/identity/users/:id/email", to: "users#email", as: :identity_user_email
+    put "/identity/users/:id/email/update",
+        to: "users#update_email",
+        as: :update_identity_user_email
+
     resources :dqt_records, only: %i[edit update]
 
     resources :trn_requests, only: [] do
