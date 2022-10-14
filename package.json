@@ -3,7 +3,7 @@
   "private": "true",
   "dependencies": {
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete",
-    "esbuild": "^0.15.10",
+    "esbuild": "^0.15.11",
     "govuk-frontend": "^4.3.1",
     "sass": "^1.55.0"
   },
