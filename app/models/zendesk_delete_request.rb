@@ -20,7 +20,13 @@ class ZendeskDeleteRequest < ApplicationRecord
   NO_ACTION_REQUIRED_FIELD_ID = 4_562_126_876_049
 
   scope :duplicate_ids,
-        -> { select("MAX(id) as id").group(:ticket_id).having("count(*) > 1") }
+        -> {
+          select("ARRAY_REMOVE(ARRAY_AGG(id), MAX(id)) as duplicate_ids")
+            .group(:ticket_id)
+            .having("count(*) > 1")
+            .map(&:duplicate_ids)
+            .flatten
+        }
   scope :no_duplicates, -> { where.not(id: duplicate_ids) }
 
   def from(ticket)
