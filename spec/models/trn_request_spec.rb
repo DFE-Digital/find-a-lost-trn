@@ -19,6 +19,8 @@
 #  last_name             :string(510)
 #  name_changed          :boolean
 #  ni_number             :string(510)
+#  preferred_first_name  :string
+#  preferred_last_name   :string
 #  previous_first_name   :string(510)
 #  previous_last_name    :string(510)
 #  trn                   :string
