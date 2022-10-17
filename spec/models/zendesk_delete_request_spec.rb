@@ -124,13 +124,16 @@ RSpec.describe ZendeskDeleteRequest, type: :model do
       before do
         create(:zendesk_delete_request)
         create(:zendesk_delete_request)
+        create(:zendesk_delete_request)
+        create(:zendesk_delete_request, ticket_id: 43)
       end
 
       it "returns the records de-duped" do
         is_expected.to eq(
           [
             "Ticket,Group Name,Received At,Closed At,Enquiry Type,No Action Required",
-            "42,QTS Enquiries,#{received_at},#{closed_at},Trn,\n",
+            "42,QTS Enquiries,#{received_at},#{closed_at},Trn,",
+            "43,QTS Enquiries,#{received_at},#{closed_at},Trn,\n",
           ].join("\n"),
         )
       end
