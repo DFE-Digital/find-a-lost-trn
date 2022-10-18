@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe "Identity", type: :system, pending: true do
+RSpec.describe "Identity", type: :system do
   before do
-    skip # TODO: fix these tests following implementation of preferred name page
-
     given_the_service_is_open
     given_i_am_authorized_as_a_support_user
     given_the_identity_endpoint_is_open
@@ -30,21 +28,11 @@ RSpec.describe "Identity", type: :system, pending: true do
     then_i_see_the_name_page
   end
 
-  it "does not ask for an email address", vcr: true do
-    when_i_access_the_identity_endpoint
-    then_i_see_the_name_page
-
-    when_i_complete_and_submit_the_name_form
-    then_i_see_the_date_of_birth_page
-
-    when_i_complete_and_submit_my_date_of_birth
-    then_i_see_the_check_answers_page
-  end
-
   context "when sending the trn to the Identity API" do
     it "redirects back to Get An Identity", vcr: true do
       when_i_access_the_identity_endpoint
       and_i_complete_and_submit_the_name_form
+      when_i_complete_and_submit_the_preferred_name_form
       and_i_complete_and_submit_my_date_of_birth
       then_i_see_the_check_answers_page
 
@@ -57,6 +45,7 @@ RSpec.describe "Identity", type: :system, pending: true do
       it "cannot go back to the check answers page", vcr: true do
         when_i_access_the_identity_endpoint
         and_i_complete_and_submit_the_name_form
+        when_i_complete_and_submit_the_preferred_name_form
         and_i_complete_and_submit_my_date_of_birth
         then_i_see_the_check_answers_page
 
@@ -68,7 +57,7 @@ RSpec.describe "Identity", type: :system, pending: true do
       end
     end
 
-    context "when there is no trn match", vcr: { record: :once } do
+    context "when there is no trn match", vcr: true do
       before do
         allow(DqtApi).to receive(:find_trn!).and_raise(DqtApi::NoResults)
       end
@@ -76,6 +65,7 @@ RSpec.describe "Identity", type: :system, pending: true do
       it "sends a blank trn to Get an Identity and redirects to the client callback URL" do
         when_i_access_the_identity_endpoint
         and_i_complete_and_submit_the_name_form
+        when_i_complete_and_submit_the_preferred_name_form
         and_i_complete_and_submit_my_date_of_birth
         and_i_have_a_ni_number
         and_i_complete_and_submit_my_ni_number
@@ -112,6 +102,7 @@ RSpec.describe "Identity", type: :system, pending: true do
       then_i_see_the_name_page
 
       when_i_complete_and_submit_the_name_form
+      when_i_complete_and_submit_the_preferred_name_form
       then_i_see_the_date_of_birth_page
 
       when_i_complete_and_submit_my_wrong_date_of_birth
@@ -129,6 +120,7 @@ RSpec.describe "Identity", type: :system, pending: true do
       then_i_see_the_name_page
 
       when_i_complete_and_submit_the_name_form
+      when_i_complete_and_submit_the_preferred_name_form
       then_i_see_the_date_of_birth_page
 
       when_i_complete_and_submit_my_date_of_birth
@@ -140,6 +132,7 @@ RSpec.describe "Identity", type: :system, pending: true do
       then_i_see_the_name_page
 
       when_i_complete_and_submit_the_name_form
+      when_i_complete_and_submit_the_preferred_name_form
       then_i_see_the_date_of_birth_page
 
       when_i_complete_and_submit_my_wrong_date_of_birth
@@ -200,6 +193,11 @@ RSpec.describe "Identity", type: :system, pending: true do
   end
   alias_method :and_i_complete_and_submit_the_name_form,
                :when_i_complete_and_submit_the_name_form
+
+  def when_i_complete_and_submit_the_preferred_name_form
+    choose "Yes", visible: false
+    click_on "Continue"
+  end
 
   def when_i_complete_and_submit_my_date_of_birth
     fill_in "Day", with: "01"
