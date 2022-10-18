@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed
+      uri: https://preprod.teaching-identity.education.gov.uk/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed
       body:
         encoding: US-ASCII
         string: ""
@@ -111,7 +111,7 @@ http_interactions:
     recorded_at: Thu, 29 Sep 2022 11:30:17 GMT
   - request:
       method: put
-      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed/trn
+      uri: https://preprod.teaching-identity.education.gov.uk/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed/trn
       body:
         encoding: UTF-8
         string: '{"trn":"2921020"}'
@@ -166,7 +166,7 @@ http_interactions:
     recorded_at: Thu, 29 Sep 2022 11:30:19 GMT
   - request:
       method: get
-      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed
+      uri: https://preprod.teaching-identity.education.gov.uk/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed
       body:
         encoding: US-ASCII
         string: ""

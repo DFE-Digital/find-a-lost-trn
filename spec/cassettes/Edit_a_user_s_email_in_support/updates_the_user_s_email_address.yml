@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/29e9e624-073e-41f5-b1b3-8164ce3a5233
+      uri: https://preprod.teaching-identity.education.gov.uk/api/v1/users/29e9e624-073e-41f5-b1b3-8164ce3a5233
       body:
         encoding: US-ASCII
         string: ""
@@ -57,7 +57,7 @@ http_interactions:
     recorded_at: Wed, 28 Sep 2022 17:27:03 GMT
   - request:
       method: get
-      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/v2/teachers/2921020
+      uri: https://preprod.teaching-identity.education.gov.uk/v2/teachers/2921020
       body:
         encoding: US-ASCII
         string: ""
@@ -116,7 +116,7 @@ http_interactions:
     recorded_at: Thu, 13 Oct 2022 11:02:54 GMT
   - request:
       method: patch
-      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/29e9e624-073e-41f5-b1b3-8164ce3a5233
+      uri: https://preprod.teaching-identity.education.gov.uk/api/v1/users/29e9e624-073e-41f5-b1b3-8164ce3a5233
       body:
         encoding: UTF-8
         string: '{"email":"kev.ine@digital.education.gov.uk"}'
@@ -177,7 +177,7 @@ http_interactions:
     recorded_at: Thu, 13 Oct 2022 11:02:54 GMT
   - request:
       method: get
-      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/29e9e624-073e-41f5-b1b3-8164ce3a5233
+      uri: https://preprod.teaching-identity.education.gov.uk/api/v1/users/29e9e624-073e-41f5-b1b3-8164ce3a5233
       body:
         encoding: US-ASCII
         string: ""

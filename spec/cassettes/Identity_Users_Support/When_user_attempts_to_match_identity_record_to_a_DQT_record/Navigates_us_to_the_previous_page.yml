@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://s165t01-getanid-preprod-auths-app.azurewebsites.net/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed
+      uri: https://preprod.teaching-identity.education.gov.uk/api/v1/users/37ee5357-fb84-478e-b750-bf552e5c8eed
       body:
         encoding: US-ASCII
         string: ""
