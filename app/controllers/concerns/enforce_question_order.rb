@@ -11,7 +11,7 @@ module EnforceQuestionOrder
     end
     redirect_to(start_url) and return if start_page_is_required?
     return if all_questions_answered?
-    return if previous_question_answered?
+    return if previous_questions_answered?
 
     redirect_to next_question_path if request.path != next_question_path
   end
@@ -70,7 +70,7 @@ module EnforceQuestionOrder
     questions.none? { |q| q[:needs_answer] }
   end
 
-  def previous_question_answered?
+  def previous_questions_answered?
     requested_question_index =
       questions.find_index { |q| q[:path] == request.path }
 
@@ -80,9 +80,8 @@ module EnforceQuestionOrder
     is_first_question = requested_question_index.zero?
     return true if is_first_question
 
-    previous_question = questions[requested_question_index - 1]
-
-    previous_question[:needs_answer] == false
+    previous_questions = questions[0...requested_question_index]
+    previous_questions.all? { |q| q[:needs_answer] == false }
   end
 
   def ask_for_name?
