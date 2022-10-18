@@ -19,6 +19,12 @@
     actions: [{ href: name_path, visually_hidden_text: 'previous name' }]
   }
 
+  preferred_name_row = {
+    key: { text: 'Preferred name' },
+    value: { text: preferred_name },
+    actions: [{ href: preferred_name_path, visually_hidden_text: 'preferred name' }]
+  }
+
   date_of_birth_row = {
     key: { text: 'Date of birth' },
     value: { text: date_of_birth },
@@ -52,6 +58,7 @@
   rows.push(email_row)
   rows.push(name_row)
   rows.push(previous_name_row) if @trn_request.previous_name?
+  rows.push(preferred_name_row) if @trn_request.preferred_name?
   rows.push(date_of_birth_row)
   rows.push(ni_row)
   rows.push(ask_trn_row) if @trn_request.from_get_an_identity? && !@trn_request.trn_from_user.nil?

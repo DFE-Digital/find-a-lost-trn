@@ -23,12 +23,18 @@ RSpec.describe TrnDetailsComponent, type: :component do
       ni_number:,
       previous_last_name: "Smith",
       trn_from_user:,
+      preferred_first_name: "Ray",
+      preferred_last_name: "Purchase"
     )
   end
   let(:component) { render_inline(described_class.new(trn_request:)) }
 
   it "renders name" do
     expect(component.text).to include("Test User")
+  end
+
+  it "renders preferred name" do
+    expect(component.text).to include("Ray Purchase")
   end
 
   it "renders previous name" do
@@ -121,6 +127,10 @@ RSpec.describe TrnDetailsComponent, type: :component do
 
     it "renders anonymised name" do
       expect(component.text).to include("T**** U****")
+    end
+
+    it "renders anonymised preferred name" do
+      expect(component.text).to include("R**** P****")
     end
 
     it "renders anonymised previous name" do
