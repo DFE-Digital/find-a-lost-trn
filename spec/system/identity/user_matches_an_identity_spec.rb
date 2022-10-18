@@ -2,7 +2,9 @@
 require "rails_helper"
 
 RSpec.feature "Get an identity", type: :system do
-  scenario "User matches an identity", vcr: { record: :all }, pending: true do
+  include SummaryListHelpers
+
+  scenario "User matches an identity", vcr: { record: :once } do
     given_the_service_is_open
     given_i_am_authorized_as_a_support_user
     given_the_identity_endpoint_is_open
@@ -12,9 +14,6 @@ RSpec.feature "Get an identity", type: :system do
     and_submit_my_preferred_name
     and_submit_my_dob
     and_submit_my_nino
-    and_submit_my_trn
-    and_confirm_i_have_qts
-    and_submit_where_i_received_qts
     then_the_check_answers_page_contains_the_answers_i_submitted
 
     when_i_press_the_continue_button
@@ -41,13 +40,58 @@ RSpec.feature "Get an identity", type: :system do
 
   def and_submit_my_official_name
     expect(page.current_path).to eq name_path
-    expect(page).to have_content "What’s your name?"
-    expect(page).to have_content "Use the name on your official documents"
 
-    fill_in "First name", with: "Kevin"
-    fill_in "Last name", with: "E"
+    fill_in "First name", with: "Steven"
+    fill_in "Last name", with: "Toast"
     choose "No, I’ve not changed my name", visible: false
     click_on "Continue"
+  end
+
+  def and_submit_my_preferred_name
+    expect(page.current_path).to eq preferred_name_path
+    expect(page).to have_content "Is Steven Toast your preferred name?"
+
+    choose "No", visible: false
+    fill_in "Preferred first name", with: "Kevin"
+    fill_in "Preferred last name", with: "E"
+    click_on "Continue"
+  end
+
+  def and_submit_my_dob
+    expect(page.current_path).to eq date_of_birth_path
+
+    fill_in "Day", with: "01"
+    fill_in "Month", with: "01"
+    fill_in "Year", with: "1990"
+    click_on "Continue"
+  end
+
+  def and_submit_my_nino
+    expect(page.current_path).to eq have_ni_number_path
+
+    choose "Yes", visible: false
+    click_on "Continue"
+    fill_in "What is your National Insurance number?", with: "AA123456A"
+    click_on "Continue"
+  end
+
+  def then_the_check_answers_page_contains_the_answers_i_submitted
+    expect(page.current_path).to eq check_answers_path
+
+    within_summary_row("Name") { expect(page).to have_content "Steven Toast" }
+    within_summary_row("Preferred name") { expect(page).to have_content "Kevin E" }
+    within_summary_row("Date of birth") { expect(page).to have_content "1 January 1990" }
+    within_summary_row("National Insurance number") { expect(page).to have_content "AA 12 34 56 A" }
+  end
+
+  def when_i_press_the_continue_button
+    click_on "Continue"
+  end
+
+  def then_i_am_redirected_to_the_callback
+    expect(page).to have_content(
+      "You have completed a simulated Identity journey",
+    )
   end
 end
 
