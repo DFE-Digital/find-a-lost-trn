@@ -75,6 +75,10 @@ class TrnRequest < ApplicationRecord
     [preferred_first_name, preferred_last_name].compact.join(" ")
   end
 
+  def preferred_name?
+    preferred_name.present?
+  end
+
   def ni_number_answered?
     return ni_number.present? if has_ni_number
 

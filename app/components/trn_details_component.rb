@@ -19,6 +19,14 @@ class TrnDetailsComponent < ViewComponent::Base
     end
   end
 
+  def preferred_name
+    if @anonymise
+      @trn_request.preferred_name.split.map { |name| "#{name.first}****" }.join(" ")
+    else
+      @trn_request.preferred_name
+    end
+  end
+
   def date_of_birth
     if @anonymise
       "** ** ****"
