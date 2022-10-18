@@ -9,7 +9,8 @@ class PreferredNameController < ApplicationController
   end
 
   def update
-    @preferred_name_form = PreferredNameForm.new(preferred_name_params.merge(trn_request:))
+    @preferred_name_form =
+      PreferredNameForm.new(preferred_name_params.merge(trn_request:))
     if @preferred_name_form.save!
       next_question
     else

@@ -24,7 +24,7 @@ RSpec.describe TrnDetailsComponent, type: :component do
       previous_last_name: "Smith",
       trn_from_user:,
       preferred_first_name: "Ray",
-      preferred_last_name: "Purchase"
+      preferred_last_name: "Purchase",
     )
   end
   let(:component) { render_inline(described_class.new(trn_request:)) }
