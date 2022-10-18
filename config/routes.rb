@@ -73,6 +73,9 @@ Rails.application.routes.draw do
   get "/name", to: "name#edit"
   post "/name", to: "name#update"
 
+  get "/preferred-name", to: "preferred_name#edit"
+  post "/preferred-name", to: "preferred_name#update"
+
   get "/date-of-birth", to: "date_of_birth#edit"
   post "/date-of-birth", to: "date_of_birth#update"
 

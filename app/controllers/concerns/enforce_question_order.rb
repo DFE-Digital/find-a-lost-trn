@@ -50,6 +50,7 @@ module EnforceQuestionOrder
     [
       { path: email_path, needs_answer: ask_for_email? },
       { path: name_path, needs_answer: ask_for_name? },
+      { path: preferred_name_path, needs_answer: ask_for_preferred_name? },
       { path: date_of_birth_path, needs_answer: ask_for_date_of_birth? },
       { path: have_ni_number_path, needs_answer: ask_if_has_ni_number? },
       { path: ni_number_path, needs_answer: ask_for_ni_number? },
@@ -86,6 +87,12 @@ module EnforceQuestionOrder
 
   def ask_for_name?
     trn_request.first_name.nil?
+  end
+
+  def ask_for_preferred_name?
+    return false unless trn_request.from_get_an_identity?
+
+    trn_request.preferred_first_name.nil?
   end
 
   def ask_for_date_of_birth?
