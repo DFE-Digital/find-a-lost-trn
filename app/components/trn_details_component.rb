@@ -21,7 +21,11 @@ class TrnDetailsComponent < ViewComponent::Base
 
   def preferred_name
     if @anonymise
-      @trn_request.preferred_name.split.map { |name| "#{name.first}****" }.join(" ")
+      @trn_request
+        .preferred_name
+        .split
+        .map { |name| "#{name.first}****" }
+        .join(" ")
     else
       @trn_request.preferred_name
     end

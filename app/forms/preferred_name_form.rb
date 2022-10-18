@@ -10,10 +10,7 @@ class PreferredNameForm
     :preferred_last_name,
   )
 
-  delegate(
-    :official_name,
-    to: :trn_request,
-  )
+  delegate(:official_name, to: :trn_request)
 
   def save!
     trn_request.preferred_first_name = preferred_first_name
@@ -21,4 +18,3 @@ class PreferredNameForm
     trn_request.save!
   end
 end
-

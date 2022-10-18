@@ -79,9 +79,15 @@ RSpec.feature "Get an identity", type: :system do
     expect(page.current_path).to eq check_answers_path
 
     within_summary_row("Name") { expect(page).to have_content "Steven Toast" }
-    within_summary_row("Preferred name") { expect(page).to have_content "Kevin E" }
-    within_summary_row("Date of birth") { expect(page).to have_content "1 January 1990" }
-    within_summary_row("National Insurance number") { expect(page).to have_content "AA 12 34 56 A" }
+    within_summary_row("Preferred name") do
+      expect(page).to have_content "Kevin E"
+    end
+    within_summary_row("Date of birth") do
+      expect(page).to have_content "1 January 1990"
+    end
+    within_summary_row("National Insurance number") do
+      expect(page).to have_content "AA 12 34 56 A"
+    end
   end
 
   def when_i_press_the_continue_button
@@ -94,4 +100,3 @@ RSpec.feature "Get an identity", type: :system do
     )
   end
 end
-
