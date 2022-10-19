@@ -91,7 +91,7 @@ class PerformanceStats
         sparse_request_counts_by_day
           .map(&:last)
           .collect { |attr| attr[key] }
-          .reduce(&:+)
+          .reduce(&:+) || 0
       end
   end
 
