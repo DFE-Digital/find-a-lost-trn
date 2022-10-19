@@ -98,6 +98,33 @@
   </div>
 </div>
 
+<div class="govuk-!-margin-top-7">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_table(classes: 'app-performance-table') do |table|
+          table.caption(size: 'm', text: "Accounts unlocked")
+
+          table.head do |head|
+          head.row do |row|
+          row.cell(header: true, text: 'Date')
+          row.cell(header: true) { 'Number of accounts unlocked' }
+
+          end; end; table.body do |body|
+            @duration_usage.each do |data_row|
+              body.row do |row|
+                row.cell { data_row[0] }
+                row.cell { data_row[1] }
+              end
+            end
+            body.row(classes: 'app-performance-table-total-row') do |row|
+              row.cell(header: true) { 'Total (this month and the last 12 months)' }
+              row.cell { @duration_averages[0] }
+            end
+         end; end %>
+    </div>
+  </div>
+</div>
+
 <h2 class="govuk-heading-m govuk-!-margin-top-7">About this service</h2>
 
 <div class="govuk-grid-row">
