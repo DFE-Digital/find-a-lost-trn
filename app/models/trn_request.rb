@@ -4,30 +4,31 @@
 #
 # Table name: trn_requests
 #
-#  id                    :bigint           not null, primary key
-#  awarded_qts           :boolean
-#  checked_at            :datetime
-#  date_of_birth         :date
-#  email                 :string(510)
-#  first_name            :string(510)
-#  from_get_an_identity  :boolean          default(FALSE)
-#  has_active_sanctions  :boolean
-#  has_ni_number         :boolean
-#  itt_provider_enrolled :boolean
-#  itt_provider_name     :string
-#  itt_provider_ukprn    :string
-#  last_name             :string(510)
-#  name_changed          :boolean
-#  ni_number             :string(510)
-#  preferred_first_name  :string
-#  preferred_last_name   :string
-#  previous_first_name   :string(510)
-#  previous_last_name    :string(510)
-#  trn                   :string
-#  trn_from_user         :string
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  zendesk_ticket_id     :integer
+#  id                      :bigint           not null, primary key
+#  awarded_qts             :boolean
+#  checked_at              :datetime
+#  date_of_birth           :date
+#  email                   :string(510)
+#  first_name              :string(510)
+#  from_get_an_identity    :boolean          default(FALSE)
+#  has_active_sanctions    :boolean
+#  has_ni_number           :boolean
+#  itt_provider_enrolled   :boolean
+#  itt_provider_name       :string
+#  itt_provider_ukprn      :string
+#  last_name               :string(510)
+#  name_changed            :boolean
+#  ni_number               :string(510)
+#  official_name_preferred :boolean
+#  preferred_first_name    :string
+#  preferred_last_name     :string
+#  previous_first_name     :string(510)
+#  previous_last_name      :string(510)
+#  trn                     :string
+#  trn_from_user           :string
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  zendesk_ticket_id       :integer
 #
 class TrnRequest < ApplicationRecord
   encrypts :email, deterministic: true
