@@ -784,8 +784,8 @@ RSpec.describe "TRN requests", type: :system do
 
   def then_i_see_the_name_page
     expect(page).to have_current_path("/name")
-    expect(page.driver.browser.current_title).to start_with("Your name")
-    expect(page).to have_content("Your name")
+    expect(page.driver.browser.current_title).to start_with("What’s your name?")
+    expect(page).to have_content("What’s your name?")
   end
   alias_method :then_i_am_redirected_to_the_name_page, :then_i_see_the_name_page
 
