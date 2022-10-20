@@ -35,7 +35,6 @@ RSpec.describe PreferredNameForm, type: :model do
       end
     end
 
-
     context "when form value official_name_preferred is true" do
       let(:trn_request) { build(:trn_request) }
       let(:form) do
@@ -62,14 +61,11 @@ RSpec.describe PreferredNameForm, type: :model do
           :trn_request,
           official_name_preferred: false,
           preferred_first_name: "Ray",
-          preferred_last_name: "Purchase"
+          preferred_last_name: "Purchase",
         )
       end
       let(:form) do
-        described_class.new(
-          trn_request:,
-          official_name_preferred: "true",
-        )
+        described_class.new(trn_request:, official_name_preferred: "true")
       end
 
       it "previously saved preferred names are discarded" do
@@ -86,11 +82,12 @@ RSpec.describe PreferredNameForm, type: :model do
     describe "#official_name_preferred" do
       it "validates return value is not blank" do
         trn_request = build(:trn_request)
-        form = described_class.new(
-          trn_request:,
-          preferred_first_name: "Ray",
-          preferred_last_name: "Purchase",
-        )
+        form =
+          described_class.new(
+            trn_request:,
+            preferred_first_name: "Ray",
+            preferred_last_name: "Purchase",
+          )
 
         ["arbitrary_string", "false", true, false].each do |assigned_value|
           form.official_name_preferred = assigned_value
@@ -100,7 +97,9 @@ RSpec.describe PreferredNameForm, type: :model do
         [nil, ""].each do |assigned_value|
           form.official_name_preferred = assigned_value
           expect(form).not_to be_valid
-          expect(form.errors[:official_name_preferred]).to include "Tell us if this is your preferred name"
+          expect(
+            form.errors[:official_name_preferred],
+          ).to include "Tell us if this is your preferred name"
         end
       end
     end
@@ -115,7 +114,9 @@ RSpec.describe PreferredNameForm, type: :model do
 
         form.official_name_preferred = false
         expect(form).not_to be_valid
-        expect(form.errors.messages[:preferred_first_name]).to include "Enter your preferred first name"
+        expect(
+          form.errors.messages[:preferred_first_name],
+        ).to include "Enter your preferred first name"
       end
     end
 
@@ -129,7 +130,9 @@ RSpec.describe PreferredNameForm, type: :model do
 
         form.official_name_preferred = false
         expect(form).not_to be_valid
-        expect(form.errors.messages[:preferred_first_name]).to include "Enter your preferred first name"
+        expect(
+          form.errors.messages[:preferred_first_name],
+        ).to include "Enter your preferred first name"
       end
     end
   end
