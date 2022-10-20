@@ -11,11 +11,15 @@ class TrnDetailsComponent < ViewComponent::Base
     end
   end
 
-  def name
+  def official_name
     if @anonymise
-      @trn_request.name.split.map { |name| "#{name.first}****" }.join(" ")
+      @trn_request
+        .official_name
+        .split
+        .map { |name| "#{name.first}****" }
+        .join(" ")
     else
-      @trn_request.name
+      @trn_request.official_name
     end
   end
 

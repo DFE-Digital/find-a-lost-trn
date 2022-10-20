@@ -7,9 +7,9 @@
     actions: @trn_request.from_get_an_identity? ? [] : [{ href: email_path, visually_hidden_text: 'email address' }]
   }
 
-  name_row = {
-    key: { text: 'Name' },
-    value: { text: name },
+  official_name_row = {
+    key: { text: 'Official name' },
+    value: { text: official_name },
     actions: [{ href: name_path, visually_hidden_text: 'name' }]
   }
 
@@ -56,7 +56,7 @@
   }
 
   rows.push(email_row)
-  rows.push(name_row)
+  rows.push(official_name_row)
   rows.push(previous_name_row) if @trn_request.previous_name?
   rows.push(preferred_name_row) if @trn_request.preferred_name?
   rows.push(date_of_birth_row)

@@ -65,11 +65,13 @@ class TrnRequest < ApplicationRecord
   end
 
   def name
-    [first_name, last_name].compact.join(" ")
+    return preferred_name if preferred_name?
+
+    official_name
   end
 
   def official_name
-    name
+    [first_name, last_name].compact.join(" ")
   end
 
   def preferred_name

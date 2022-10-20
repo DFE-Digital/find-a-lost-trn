@@ -71,6 +71,14 @@ RSpec.describe TrnRequest, type: :model do
     end
 
     it { is_expected.to eq("John Doe") }
+
+    context "when preferred name is set" do
+      before { trn_request.preferred_first_name = "Jimmy" }
+
+      it "returns the preferred name" do
+        expect(subject).to eq "Jimmy"
+      end
+    end
   end
 
   describe "#previous_name?" do
