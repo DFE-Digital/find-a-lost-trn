@@ -85,7 +85,9 @@ RSpec.feature "Get an identity", type: :system do
   def then_the_check_answers_page_contains_the_answers_i_submitted
     expect(page.current_path).to eq check_answers_path
 
-    within_summary_row("Name") { expect(page).to have_content "Steven Toast" }
+    within_summary_row("Official name") do
+      expect(page).to have_content "Steven Toast"
+    end
     within_summary_row("Preferred name") do
       expect(page).to have_content "Kevin E"
     end
