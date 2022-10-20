@@ -91,7 +91,7 @@ module EnforceQuestionOrder
   def ask_for_preferred_name?
     return false unless trn_request.from_get_an_identity?
 
-    trn_request.preferred_first_name.nil?
+    trn_request.official_name_preferred.nil?
   end
 
   def ask_for_date_of_birth?

@@ -68,6 +68,14 @@ en:
               too_long: Enter a previous last name that is less than 255 letters long
             name_changed:
               present: Tell us if you have changed your name
+        preferred_name_form:
+          attributes:
+            official_name_preferred:
+              inclusion: Tell us if this is your preferred name
+            preferred_first_name:
+              blank: Enter your preferred first name
+            preferred_last_name:
+              blank: Enter your preferred last name
         ni_number_form:
           attributes:
             ni_number:
