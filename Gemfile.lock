@@ -283,7 +283,7 @@ GEM
     parser (3.1.2.1)
       ast (~> 2.4.1)
     pg (1.4.4)
-    prettier_print (1.0.0)
+    prettier_print (1.0.2)
     public_suffix (5.0.0)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -540,7 +540,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   pagy
   pg (~> 1.4)
-  prettier_print (~> 1.0.0)
+  prettier_print (~> 1.0.2)
   puma (~> 5.6)
   rack-attack
   rails (~> 7.0.4)
