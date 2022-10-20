@@ -1,5 +1,7 @@
 <% content_for :page_title, "#{'Error: ' if date_of_birth_form.errors.any?}Your date of birth" %>
-<% content_for :back_link_url, back_link_url(name_path) %>
+<% content_for :back_link_url, back_link_url(
+  @trn_request.from_get_an_identity ? preferred_name_path : name_path
+) %>
 
 <%= form_with model: date_of_birth_form, url: date_of_birth_path do |f| %>
   <%= f.govuk_error_summary %>
