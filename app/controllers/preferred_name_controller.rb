@@ -11,6 +11,7 @@ class PreferredNameController < ApplicationController
   def update
     @preferred_name_form =
       PreferredNameForm.new(preferred_name_params.merge(trn_request:))
+
     if @preferred_name_form.save!
       next_question
     else
@@ -22,7 +23,7 @@ class PreferredNameController < ApplicationController
 
   def preferred_name_params
     params.require(:preferred_name_form).permit(
-      :official_name_is_preferred,
+      :official_name_preferred,
       :preferred_first_name,
       :preferred_last_name,
     )

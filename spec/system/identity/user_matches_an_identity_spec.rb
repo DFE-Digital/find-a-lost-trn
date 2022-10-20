@@ -51,6 +51,13 @@ RSpec.feature "Get an identity", type: :system do
     expect(page.current_path).to eq preferred_name_path
     expect(page).to have_content "Is Steven Toast your preferred name?"
 
+    click_on "Continue"
+    expect(page).to have_content "Tell us if this is your preferred name"
+    choose "No", visible: false
+    click_on "Continue"
+    expect(page).to have_content "Enter your preferred first name"
+    expect(page).to have_content "Enter your preferred last name"
+
     choose "No", visible: false
     fill_in "Preferred first name", with: "Kevin"
     fill_in "Preferred last name", with: "E"
