@@ -3,9 +3,7 @@ class PreferredNameForm
   include ActiveModel::Model
   include LogErrors
 
-  attr_accessor(
-    :trn_request,
-  )
+  attr_accessor(:trn_request)
 
   attr_writer(
     :official_name_preferred,
@@ -16,7 +14,10 @@ class PreferredNameForm
   delegate(:official_name, to: :trn_request)
 
   validates :official_name_preferred, inclusion: [true, false]
-  validates :preferred_first_name, presence: { unless: :official_name_preferred }
+  validates :preferred_first_name,
+            presence: {
+              unless: :official_name_preferred,
+            }
   validates :preferred_last_name, presence: { unless: :official_name_preferred }
 
   def save!
