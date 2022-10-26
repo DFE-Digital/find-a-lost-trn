@@ -22,7 +22,7 @@
           tag.span("Name")
         end
         row.cell(header: true, width: 'one-quarter') do
-          tag.span("Name verified?")
+          tag.span("Email")
         end
         row.cell(header: true, width: 'one-quarter') do
           tag.span("DQT record")
@@ -40,7 +40,7 @@
             user_info_link(user)
           end
           row.cell do
-            user_verification_status(user)
+            user.email
           end
           row.cell do
             user_dqt_record_status(user)
