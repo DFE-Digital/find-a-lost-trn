@@ -28,7 +28,7 @@ class DqtRecordComponent < ViewComponent::Base
   end
 
   def name_row
-    { key: { text: "Official name" }, value: { text: full_name } }
+    { key: { text: "DQT name" }, value: { text: full_name } }
   end
 
   def date_of_birth_row
