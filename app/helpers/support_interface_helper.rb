@@ -8,14 +8,6 @@ module SupportInterfaceHelper
     )
   end
 
-  def user_verification_status(user)
-    if user.name_verified?
-      govuk_tag(colour: "green", text: "VERIFIED")
-    else
-      govuk_tag(colour: "grey", text: "UNVERIFIED")
-    end
-  end
-
   def user_dqt_record_status(user)
     if user.trn
       tag.span("Yes")
