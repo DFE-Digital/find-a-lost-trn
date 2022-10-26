@@ -36,32 +36,6 @@ RSpec.describe "Identity Users Support", type: :system do
     end
   end
 
-  context "when there is an unverified user" do
-    before do
-      user["nameVerified"] = false
-      allow(identity_api).to receive(:get_users).and_return([User.new(user)])
-    end
-
-    it "shows an unverified user" do
-      given_i_am_authorized_as_a_support_user
-      when_i_visit_the_identity_users_support_page
-      then_i_should_see_an_unverified_user
-    end
-  end
-
-  context "when there is an verified user" do
-    before do
-      user["nameVerified"] = true
-      allow(identity_api).to receive(:get_users).and_return([User.new(user)])
-    end
-
-    it "shows an unverified user" do
-      given_i_am_authorized_as_a_support_user
-      when_i_visit_the_identity_users_support_page
-      then_i_should_see_a_verified_user
-    end
-  end
-
   context "when the user does not have a DQT record" do
     before do
       user["trn"] = nil
@@ -288,7 +262,7 @@ RSpec.describe "Identity Users Support", type: :system do
       within(".app-govuk-summary-card__header") do
         expect(page).to have_content "DQT record"
       end
-      expect(page).to have_content "Official name"
+      expect(page).to have_content "DQT name"
       expect(page).to have_content "Kevin E"
       expect(page).to have_content "Date of birth"
       expect(page).to have_content "1 January 1990"
