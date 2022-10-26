@@ -60,7 +60,7 @@ RSpec.describe "User page in support", vcr: true, type: :system do
         expect(page).to have_content "DQT record"
       end
       within(".govuk-summary-list") do
-        expect(page).to have_content "Official name"
+        expect(page).to have_content "DQT name"
         expect(page).to have_content "Kevin E"
         expect(page).to have_content "Date of birth"
         expect(page).to have_content "1 January 1990"
