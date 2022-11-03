@@ -18,7 +18,7 @@ class User
     @trn = attributes.fetch("trn", nil)
     @name_verified = attributes.fetch("nameVerified", false)
     @created_at =
-      Time.zone.parse(attributes.fetch("created", nil)).to_fs(:long_ordinal_uk)
+      Time.zone.parse(attributes.fetch("created", ""))&.to_fs(:long_ordinal_uk)
     @from_client = attributes.fetch("registeredWithClientDisplayName", nil)
   end
 
