@@ -51,6 +51,8 @@ RSpec.describe "User page in support", vcr: true, type: :system do
       end
       expect(page).to have_content "Kevin E"
       expect(page).to have_content "kevin.e@digital.education.gov.uk"
+      expect(page).to have_content "10 October 2022"
+      expect(page).to have_content "Development test client"
     end
   end
 
