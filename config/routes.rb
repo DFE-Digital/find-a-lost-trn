@@ -56,6 +56,10 @@ Rails.application.routes.draw do
 
     resources :dqt_records, only: %i[edit update]
 
+    resources :change_name,
+              path: "/identity/change-name/",
+              only: %i[show update]
+
     resources :trn_requests, only: [] do
       resource :zendesk_sync, only: [:create], controller: "zendesk_sync"
     end

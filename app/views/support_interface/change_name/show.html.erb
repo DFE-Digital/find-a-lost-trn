@@ -1,0 +1,22 @@
+<% content_for :page_title, "#{'Error: ' if @change_name_form.errors.any?}Change their preferred name" %>
+<% content_for :back_link_url, back_link_url %>
+
+<%= form_with model: @change_name_form, url: support_interface_change_name_path(@uuid), method: :put do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-xl">Change their preferred name</h1>
+
+  <p>Changes to a preferred name will not update DQT.</p>
+
+  <h2 class="govuk-heading-m">Current names</h2>
+
+  <%= render(SummaryCardComponent.new(rows: [
+    { key: { text: 'Preferred name' }, value: { text: @user.full_name } }
+  ])) %>
+
+  <h2 class="govuk-heading-m">New preferred name</h2>
+
+  <%= f.govuk_text_field(:first_name, label: { size: 's', text: "First name" }) %>
+  <%= f.govuk_text_field(:last_name, label: { size: 's', text: "Last name" }) %>
+  <%= f.govuk_submit prevent_double_click: false %>
+<% end %>

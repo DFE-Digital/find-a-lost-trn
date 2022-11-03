@@ -25,7 +25,7 @@
     key: { text: "Preferred name" },
     value: { text: yield(:name_row_value) },
     actions: [
-      { text: "Change", href: "#", visually_hidden_text: "name" },
+      { text: "Change", href: support_interface_change_name_path(@user.uuid), visually_hidden_text: "name" },
     ],
   },
   {
