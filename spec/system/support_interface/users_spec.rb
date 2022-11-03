@@ -8,6 +8,8 @@ RSpec.describe "Identity Users Support", type: :system do
     "lastName" => "E",
     "dateOfBirth" => "1990-01-01",
     "trn" => nil,
+    "created" => "2022-10-10T15:01:22.692023Z",
+    "registeredWithClientDisplayName" => "Development test client",
   }
 
   let(:identity_api) { IdentityUsersApi.new(ENV["IDENTITY_USER_TOKEN"]) }

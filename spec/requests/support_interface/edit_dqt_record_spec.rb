@@ -5,7 +5,14 @@ RSpec.describe "GET edit DQT record", type: :request do
 
   let(:uuid) { SecureRandom.uuid }
   let(:trn) { "7654321" }
-  let(:user) { User.new("userId" => uuid, "email" => "someone@somewhere.com") }
+  let(:user) do
+    User.new(
+      "userId" => uuid,
+      "email" => "someone@somewhere.com",
+      "created" => "2022-10-10T15:01:22.692023Z",
+      "registeredWithClientDisplayName" => "Development test client",
+    )
+  end
   let(:identity_users_api) { instance_double(IdentityUsersApi, get_user: user) }
 
   before do

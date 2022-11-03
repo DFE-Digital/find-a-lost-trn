@@ -51,7 +51,7 @@ http_interactions:
           - "2022-09-29T11:47:00.0000000Z"
       body:
         encoding: UTF-8
-        string: '{"userId":"37ee5357-fb84-478e-b750-bf552e5c8eed","email":"paul.hayes@digital.education.gov.uk","firstName":"Jane","lastName":"Doess","dateOfBirth":"1901-01-01","trn":null}'
+        string: '{"created":"2022-10-10T15:01:22.692023Z","registeredWithClientId":"testclient","registeredWithClientDisplayName":"Development test client","userId":"37ee5357-fb84-478e-b750-bf552e5c8eed","email":"paul.hayes@digital.education.gov.uk","firstName":"Jane","lastName":"Doess","dateOfBirth":"1901-01-01","trn":null}'
     recorded_at: Thu, 29 Sep 2022 11:46:39 GMT
   - request:
       method: get
@@ -216,6 +216,6 @@ http_interactions:
           - "2022-09-29T11:47:00.0000000Z"
       body:
         encoding: UTF-8
-        string: '{"userId":"37ee5357-fb84-478e-b750-bf552e5c8eed","email":"paul.hayes@digital.education.gov.uk","firstName":"Jane","lastName":"Doess","dateOfBirth":"1901-01-01","trn":null}'
+        string: '{"created":"2022-10-10T15:01:22.692023Z","registeredWithClientId":"testclient","registeredWithClientDisplayName":"Development test client","userId":"37ee5357-fb84-478e-b750-bf552e5c8eed","email":"paul.hayes@digital.education.gov.uk","firstName":"Jane","lastName":"Doess","dateOfBirth":"1901-01-01","trn":null}'
     recorded_at: Thu, 29 Sep 2022 11:46:41 GMT
 recorded_with: VCR 6.1.0
