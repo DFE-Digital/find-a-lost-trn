@@ -5,7 +5,9 @@ class User
               :date_of_birth,
               :uuid,
               :trn,
-              :name_verified
+              :name_verified,
+              :created_at,
+              :from_client
 
   def initialize(attributes = {})
     @first_name = attributes.fetch("firstName", nil)
@@ -15,6 +17,9 @@ class User
     @uuid = attributes.fetch("userId", nil)
     @trn = attributes.fetch("trn", nil)
     @name_verified = attributes.fetch("nameVerified", false)
+    @created_at =
+      Time.zone.parse(attributes.fetch("created", nil)).to_fs(:long_ordinal_uk)
+    @from_client = attributes.fetch("registeredWithClientDisplayName", nil)
   end
 
   def full_name
