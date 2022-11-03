@@ -53,7 +53,7 @@ http_interactions:
           - "2022-09-28T17:28:00.0000000Z"
       body:
         encoding: UTF-8
-        string: '{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kevin.e@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
+        string: '{"created":"2022-10-10T15:01:22.692023Z","registeredWithClientId":"testclient","registeredWithClientDisplayName":"Development test client","userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kevin.e@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
     recorded_at: Wed, 28 Sep 2022 17:27:03 GMT
   - request:
       method: get
@@ -173,7 +173,7 @@ http_interactions:
           - Thu, 13 Oct 2022 11:02:54 GMT
       body:
         encoding: UTF-8
-        string: '{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kev.ine@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
+        string: '{"created":"2022-10-10T15:01:22.692023Z","registeredWithClientId":"testclient","registeredWithClientDisplayName":"Development test client","userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kev.ine@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
     recorded_at: Thu, 13 Oct 2022 11:02:54 GMT
   - request:
       method: get
@@ -228,6 +228,6 @@ http_interactions:
           - "2022-09-28T17:28:00.0000000Z"
       body:
         encoding: UTF-8
-        string: '{"userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kev.ine@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
+        string: '{"created":"2022-10-10T15:01:22.692023Z","registeredWithClientId":"testclient","registeredWithClientDisplayName":"Development test client","userId":"29e9e624-073e-41f5-b1b3-8164ce3a5233","email":"kev.ine@digital.education.gov.uk","firstName":"Kevin","lastName":"E","dateOfBirth":"1990-01-01","trn":"2921020"}'
     recorded_at: Wed, 28 Sep 2022 17:27:03 GMT
 recorded_with: VCR 6.1.0

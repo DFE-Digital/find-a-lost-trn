@@ -28,6 +28,8 @@ RSpec.describe "Edit a user's email in support", vcr: true, type: :system do
         "firstName" => "Kevin",
         "lastName" => "E",
         "email" => @email,
+        "created" => "2022-10-10T15:01:22.692023Z",
+        "registeredWithClientDisplayName" => "Development test client",
       )
 
     allow(DqtApi).to receive(:find_teacher_by_trn!)

@@ -28,7 +28,13 @@ RSpec.describe "PUT /users/:id/email/update" do
 
   context "with a valid email" do
     let(:email) { "email@domain.com" }
-    let(:user) { User.new("userId" => uuid, "email" => email) }
+    let(:user) do
+      User.new(
+        "userId" => uuid,
+        "email" => email,
+        "created" => "2022-10-10T15:01:22.692023Z",
+      )
+    end
     let(:identity_users_api) do
       instance_double(IdentityUsersApi, get_user: user, update_user: user)
     end

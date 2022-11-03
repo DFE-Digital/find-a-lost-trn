@@ -6,7 +6,14 @@ RSpec.describe "PUT update a TRN", type: :request do
 
   let(:uuid) { SecureRandom.uuid }
   let(:trn) { "7654321" }
-  let(:user) { User.new("userId" => uuid, "email" => "someone@somewhere.com") }
+  let(:user) do
+    User.new(
+      "userId" => uuid,
+      "email" => "someone@somewhere.com",
+      "created" => "2022-10-10T15:01:22.692023Z",
+      "registeredWithClientDisplayName" => "Development test client",
+    )
+  end
 
   before { authenticate_staff_with_mock_identity_provider }
   after { reset_mock_identity_provider_authentication }
