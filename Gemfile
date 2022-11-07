@@ -85,7 +85,7 @@ group :development do
 end
 
 group :test do
-  gem "capybara", "~> 3.36"
+  gem "capybara", "~> 3.38"
   gem "capybara-email"
   gem "cuprite", "~> 0.14"
   gem "faker"
