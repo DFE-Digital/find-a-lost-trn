@@ -43,7 +43,7 @@ RSpec.feature "Get an identity", type: :system do
 
     fill_in "First name", with: "Steven"
     fill_in "Last name", with: "Toast"
-    choose "No, I’ve not changed my name", visible: false
+    choose "No", visible: false
     click_on "Continue"
   end
 

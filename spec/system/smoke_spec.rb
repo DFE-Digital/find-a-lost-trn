@@ -142,7 +142,7 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
   def when_i_fill_in_the_name_form
     fill_in "First name", with: "Kevin"
     fill_in "Last name", with: "E"
-    choose "No, I’ve not changed my name", visible: false
+    choose "No", visible: false
     when_i_press_continue
   end
 

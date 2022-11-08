@@ -188,7 +188,7 @@ RSpec.describe "Identity", type: :system do
   def when_i_complete_and_submit_the_name_form
     fill_in "First name", with: "Kevin"
     fill_in "Last name", with: "E"
-    choose "No, I’ve not changed my name", visible: false
+    choose "No", visible: false
     click_on "Continue"
   end
   alias_method :and_i_complete_and_submit_the_name_form,
