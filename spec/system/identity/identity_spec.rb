@@ -305,7 +305,7 @@ RSpec.describe "Identity", type: :system do
   end
 
   def then_i_see_the_no_match_page
-    expect(page).to have_content("We could not match")
+    expect(page).to have_content("We could not find you")
   end
 
   def then_i_am_redirected_to_the_callback
@@ -319,9 +319,7 @@ RSpec.describe "Identity", type: :system do
   end
 
   def and_i_see_the_correct_no_match_content
-    expect(page).to have_content(
-      "We could not match your answers with our records",
-    )
+    expect(page).to have_content("We could not find you")
     expect(page).to have_content("Check your answers")
     expect(page).not_to have_content("We could not find your TRN")
     expect(page).not_to have_content("Check your details")

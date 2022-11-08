@@ -1,10 +1,10 @@
-<% content_for :page_title, "#{'Error: ' if @no_match_form.errors.any?}We could not match your answers with our records" %>
+<% content_for :page_title, "#{'Error: ' if @no_match_form.errors.any?}We could not find you in our records" %>
 <% content_for :back_link_url, check_answers_path %>
 
 <%= form_with model: @no_match_form, url: no_match_path do |f| %>
   <%= f.govuk_error_summary %>
 
-  <h1 class="govuk-heading-xl">We could not match your answers with our records</h1>
+  <h1 class="govuk-heading-xl">We could not find you in our records</h1>
 
   <p class="govuk-body">This could be because you:</p>
 
