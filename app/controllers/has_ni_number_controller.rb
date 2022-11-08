@@ -10,6 +10,7 @@ class HasNiNumberController < ApplicationController
   def update
     @has_ni_number_form = HasNiNumberForm.new(trn_request:)
     if @has_ni_number_form.update(has_ni_number_params)
+      session[:ni_number_not_known] = nil
       next_question
     else
       render :edit

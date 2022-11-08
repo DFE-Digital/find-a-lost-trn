@@ -189,7 +189,19 @@ RSpec.describe "TRN requests", type: :system do
 
     when_i_choose_yes
     and_i_press_continue
-    and_i_fill_in_my_ni_number
+    then_i_see_the_ni_number_page
+
+    when_i_click_on_the_forgotten_ni_number_link
+    and_i_press_continue_without_it
+    then_i_see_the_check_answers_page
+
+    when_i_press_change_ni_number
+    then_yes_should_be_checked
+
+    when_i_press_continue
+    then_i_see_the_ni_number_page
+
+    when_i_fill_in_my_ni_number
     and_i_press_continue
     then_i_see_the_updated_ni_number
   end
