@@ -78,7 +78,7 @@ RSpec.describe NameForm, type: :model do
       end
     end
 
-    context "when the previous names are present but name_changed is selected to 'No, I’ve not changed my name'" do
+    context "when the previous names are present but name_changed is selected to 'No'" do
       let(:name_form) do
         described_class.new(
           first_name: "John",
