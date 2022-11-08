@@ -12,11 +12,10 @@
   <%= f.govuk_radio_buttons_fieldset :official_name_preferred, legend: { hidden: true }  do %>
     <%= f.govuk_radio_button :official_name_preferred, true, label: { text: "Yes" }, link_errors: true %>
     <%= f.govuk_radio_button :official_name_preferred, false, label: { text: "No, I prefer to be known by another name" } do %>
-      <h2>What is your preferred name?</h2>
+      <h2 class="govuk-heading-m">What is your preferred name?</h2>
       <%= f.govuk_text_field(:preferred_first_name, label: { size: 's', text: 'Preferred first name' }) %>
       <%= f.govuk_text_field(:preferred_last_name, label: { size: 's', text: 'Preferred last name' }) %>
     <% end %>
   <% end %>
   <%= f.govuk_submit %>
 <% end %>
-
