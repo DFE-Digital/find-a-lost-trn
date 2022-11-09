@@ -80,8 +80,6 @@ RSpec.describe "Identity", type: :system do
         when_i_submit_anyway
         then_i_am_redirected_to_the_callback
 
-        and_an_identity_zendesk_ticket_is_raised
-
         when_i_try_to_go_to_the_check_answers_page
         then_i_am_redirected_to_the_callback
       end
