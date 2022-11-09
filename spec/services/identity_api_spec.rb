@@ -85,5 +85,29 @@ RSpec.describe IdentityApi do
         )
       end
     end
+
+    context "when there is a preferred name on the trn request" do
+      let(:trn_request) do
+        TrnRequest.new(
+          preferred_first_name: "Preferred",
+          preferred_last_name: "Name",
+          first_name: "John",
+          last_name: "Smith",
+          date_of_birth: Time.zone.local(2000, 1, 1),
+          trn: "2921020",
+        )
+      end
+
+      it "the params contain the preferred name" do
+        expect(IdentityApi.trn_request_params(trn_request)).to eq(
+          {
+            firstName: "Preferred",
+            lastName: "Name",
+            dateOfBirth: "2000-01-01",
+            trn: "2921020",
+          },
+        )
+      end
+    end
   end
 end
