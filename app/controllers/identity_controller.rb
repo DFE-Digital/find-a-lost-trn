@@ -27,6 +27,7 @@ class IdentityController < ApplicationController
 
     session[:trn_request_id] = @trn_request.id
     session[:identity_client_title] = recognised_params["client_title"]
+    session[:identity_client_id] = recognised_params["client_id"]
     session[:identity_client_url] = recognised_params["client_url"]
     session[:identity_journey_id] = recognised_params["journey_id"]
     session[:identity_previous_url] = recognised_params["previous_url"]
@@ -41,6 +42,7 @@ class IdentityController < ApplicationController
   def recognised_params
     params.permit(
       :client_title,
+      :client_id,
       :client_url,
       :email,
       :journey_id,
