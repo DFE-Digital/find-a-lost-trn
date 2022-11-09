@@ -15,6 +15,11 @@
         label: { size: 's', text: 'Client title' },
         hint: { text: 'Will be displayed in the page <title> and the header' }
       ) %>
+      <%= f.govuk_text_field(:client_id,
+        label: { size: 's', text: 'Client ID' },
+        hint: { text: "Is used to determine which Privacy and \
+                Accessibility pages to show" }
+      ) %>
       <%= f.govuk_text_field(:email,
         label: { size: 's', text: 'Email' },
         hint: { text: 'Used by matching' }
@@ -24,28 +29,28 @@
         label: { size: 's', text: 'Journey ID' },
         hint: { text: "Used by Get an Identity to match up the user’s \
                 session. Editing is disabled for simulated journeys  \
-                because we don’t use it." }
+                because we don’t use it" }
       ) %>
       <%= f.govuk_text_field(:redirect_url,
         disabled: true,
         label: { size: 's', text: 'Redirect URL' },
         hint: { text: "Callback URL to the Identity server. Editing is \
                 disabled for simulated journeys because simulated journeys \
-                should always return to Find." }
+                should always return to Find" }
       ) %>
       <%= f.govuk_text_field(:client_url,
         disabled: true,
         label: { size: 's', text: 'Client URL' },
         hint: { text: "Will be linked to from the header. Editing is \
                 disabled for simulated journeys because simulated journeys \
-                should always return to Find." }
+                should always return to Find" }
       ) %>
       <%= f.govuk_text_field(:previous_url,
         disabled: true,
         label: { size: 's', text: 'Previous URL' },
         hint: { text: "Linked to from the back button on the Name page. Editing \
                 is disabled for simulated journeys because simulated journeys \
-                should always return to Find." }
+                should always return to Find" }
       ) %>
       <%= f.govuk_submit "Continue", prevent_double_click: false %>
     <% end %>
