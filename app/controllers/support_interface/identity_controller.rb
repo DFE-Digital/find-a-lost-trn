@@ -4,6 +4,7 @@ module SupportInterface
       @identity_params = IdentityParamsForm.new
       @identity_params.client_title =
         "Register for a National Professional Qualification"
+      @identity_params.client_id = "register-for-npq"
       @identity_params.client_url = client_url
       @identity_params.email = "kevin.e@example.com"
       @identity_params.journey_id = journey_id
@@ -14,6 +15,7 @@ module SupportInterface
     def confirm
       @identity_params = {
         client_title: create_params[:client_title],
+        client_id: create_params[:client_id],
         client_url:,
         email: create_params[:email],
         journey_id:,
@@ -35,6 +37,7 @@ module SupportInterface
     def create_params
       params.require(:support_interface_identity_params_form).permit(
         :client_title,
+        :client_id,
         :email,
       )
     end
