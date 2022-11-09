@@ -450,8 +450,8 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     strscan (3.0.4)
-    syntax_tree (4.3.0)
-      prettier_print (>= 1.0.2)
+    syntax_tree (5.0.0)
+      prettier_print (>= 1.1.0)
     syntax_tree-haml (2.0.0)
       haml (>= 5.2, != 6.0.0)
       prettier_print (>= 1.0.0)
@@ -559,7 +559,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   sprockets-rails
-  syntax_tree (~> 4.3)
+  syntax_tree (~> 5.0)
   syntax_tree-haml (~> 2.0)
   syntax_tree-rbs (~> 0.5.1)
   tzinfo-data
