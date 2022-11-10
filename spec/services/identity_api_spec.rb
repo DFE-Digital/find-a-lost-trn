@@ -54,8 +54,8 @@ RSpec.describe IdentityApi do
       it "the params contain the NI number" do
         expect(IdentityApi.trn_request_params(trn_request)).to eq(
           {
-            firstName: "John",
-            lastName: "Smith",
+            officialFirstName: "John",
+            officialLastName: "Smith",
             dateOfBirth: "2000-01-01",
             trn: "2921020",
             nationalInsuranceNumber: "QQ123456C",
@@ -77,8 +77,8 @@ RSpec.describe IdentityApi do
       it "the params do not contain the NI number" do
         expect(IdentityApi.trn_request_params(trn_request)).to eq(
           {
-            firstName: "John",
-            lastName: "Smith",
+            officialFirstName: "John",
+            officialLastName: "Smith",
             dateOfBirth: "2000-01-01",
             trn: "2921020",
           },
@@ -101,8 +101,8 @@ RSpec.describe IdentityApi do
       it "the params contain the preferred name" do
         expect(IdentityApi.trn_request_params(trn_request)).to eq(
           {
-            firstName: "John",
-            lastName: "Smith",
+            officialFirstName: "John",
+            officialLastName: "Smith",
             preferredFirstName: "Preferred",
             preferredLastName: "Name",
             dateOfBirth: "2000-01-01",

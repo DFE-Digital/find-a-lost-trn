@@ -23,8 +23,8 @@ class IdentityApi
 
   def self.trn_request_params(trn_request)
     {
-      firstName: trn_request.first_name,
-      lastName: trn_request.last_name,
+      officialFirstName: trn_request.first_name,
+      officialLastName: trn_request.last_name,
       preferredFirstName: trn_request.preferred_first_name,
       preferredLastName: trn_request.preferred_last_name,
       trn: trn_request.trn,
