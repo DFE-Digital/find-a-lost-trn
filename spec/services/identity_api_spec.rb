@@ -101,8 +101,10 @@ RSpec.describe IdentityApi do
       it "the params contain the preferred name" do
         expect(IdentityApi.trn_request_params(trn_request)).to eq(
           {
-            firstName: "Preferred",
-            lastName: "Name",
+            firstName: "John",
+            lastName: "Smith",
+            preferredFirstName: "Preferred",
+            preferredLastName: "Name",
             dateOfBirth: "2000-01-01",
             trn: "2921020",
           },
