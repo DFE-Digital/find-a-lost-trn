@@ -10,7 +10,7 @@ module Omniauth
                token_url: "/connect/token",
              }
       option :pkce, true
-      option :scope, "get-an-identity:support"
+      option :scope, "get-an-identity:support user:write"
 
       credentials { { token: access_token } }
       info { { name: raw_info["name"], email: raw_info["email"] } }
