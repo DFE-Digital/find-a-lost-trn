@@ -2,7 +2,7 @@
 http_interactions:
   - request:
       method: get
-      uri: https://preprod.teaching-identity.education.gov.uk/api/v1/teachers
+      uri: https://preprod.teaching-identity.education.gov.uk/api/v1/users
       body:
         encoding: US-ASCII
         string: ""

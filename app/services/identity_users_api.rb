@@ -30,7 +30,7 @@ class IdentityUsersApi < IdentityApi
   def get_users
     raise_if_timeout_feature_flag_active!
 
-    response = client.get("/api/v1/teachers")
+    response = client.get("/api/v1/users")
 
     raise ApiError, response.reason_phrase unless response.status == 200
 
