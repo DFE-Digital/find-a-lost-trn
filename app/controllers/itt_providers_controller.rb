@@ -15,6 +15,7 @@ class IttProvidersController < ApplicationController
   def update
     @itt_provider_form = IttProviderForm.new(itt_provider_params)
     if @itt_provider_form.save
+      reset_and_attempt_to_find_a_trn
       next_question
     else
       if FeatureFlag.active?(:use_dqt_api_itt_providers)

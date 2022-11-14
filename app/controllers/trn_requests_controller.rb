@@ -65,14 +65,6 @@ class TrnRequestsController < ApplicationController
     trn_request.update(answers_checked_params)
   end
 
-  def find_trn_using_api
-    response = DqtApi.find_trn!(trn_request)
-    trn_request.update!(
-      trn: response["trn"],
-      has_active_sanctions: response["hasActiveSanctions"],
-    )
-  end
-
   def create_zendesk_ticket
     ZendeskService.create_ticket!(trn_request)
     TeacherMailer.information_received(trn_request).deliver_later

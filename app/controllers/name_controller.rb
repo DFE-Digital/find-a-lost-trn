@@ -11,6 +11,7 @@ class NameController < ApplicationController
   def update
     @name_form = NameForm.new(name_params.merge(trn_request:))
     if @name_form.save
+      reset_and_attempt_to_find_a_trn
       next_question
     else
       render :edit

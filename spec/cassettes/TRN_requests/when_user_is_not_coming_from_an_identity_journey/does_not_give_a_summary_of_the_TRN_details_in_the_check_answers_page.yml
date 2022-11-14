@@ -8,7 +8,7 @@ http_interactions:
         string: ""
       headers:
         User-Agent:
-          - Faraday v1.10.1
+          - Faraday v2.7.1
         Authorization:
           - Bearer <BEARER_TOKEN_REDACTED>
         Accept-Encoding:
@@ -17,15 +17,19 @@ http_interactions:
           - "*/*"
     response:
       status:
-        code: 401
-        message: Unauthorized
+        code: 200
+        message: OK
       headers:
-        Content-Length:
-          - "0"
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
         Connection:
           - keep-alive
         Date:
-          - Tue, 23 Aug 2022 22:11:39 GMT
+          - Tue, 22 Nov 2022 17:14:10 GMT
+        Request-Context:
+          - appId=cid-v1:f9db7469-45f5-4353-b71c-0f3799d59997
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -35,23 +39,23 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - "298"
+          - "274"
         X-Rate-Limit-Reset:
-          - "2022-08-23T22:12:00.0000000Z"
+          - "2022-11-22T17:15:00.0000000Z"
         X-Vcap-Request-Id:
-          - 321562d1-ba3b-4b8e-6130-924d344ba95d
+          - d0f90e88-ce6d-4c66-6d6a-cb4b389ded70
         X-Xss-Protection:
           - "0"
         X-Cache:
-          - Error from cloudfront
+          - Miss from cloudfront
         Via:
-          - 1.1 37f5076aed3c638f4365df8e8944f880.cloudfront.net (CloudFront)
+          - 1.1 59fa46d1de0de203090eb7b35ddd85d0.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - LHR50-C1
+          - LHR61-P2
         X-Amz-Cf-Id:
-          - YMziCJSHBlRbIlCmQMMt509vWAjMGRVJa_70Ovp4YRnN7NMJH-IU4Q==
+          - 0nxxg3HVGW2QH_5Q3Qm-Pzjsuo8u5RlrPJyAcPS98GIrJc7TXsHFRg==
       body:
         encoding: UTF-8
-        string: ""
-    recorded_at: Tue, 23 Aug 2022 22:11:39 GMT
+        string: '{"results":[]}'
+    recorded_at: Tue, 22 Nov 2022 17:14:10 GMT
 recorded_with: VCR 6.1.0
