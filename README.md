@@ -17,12 +17,12 @@ All environments have continuous deployment, the state of which can be inspected
 
 ### Details and configuration
 
-| Name       | Description                                   | Zendesk | Notify   | `qualified-teachers-api` |
-| ---------- | --------------------------------------------- | ------- | -------- | ------------------------ |
-| Production | Public site                                   | Live    | Live key | Production               |
-| Preprod    | For internal use by DfE to test deploys       | Live    | Live key | Production               |
-| Test       | For external use by 3rd parties to run audits | Stubbed | Live key | Preprod                  |
-| Dev        | For internal use by DfE for testing           | Stubbed | Test key | Preprod                  |
+| Name       | Description                                   | Zendesk | Notify   | `qualified-teachers-api` | Identity   |
+| ---------- | --------------------------------------------- | ------- | -------- | ------------------------ | ---------- |
+| Production | Public site                                   | Live    | Live key | Production               | Production |
+| Preprod    | For internal use by DfE to test deploys       | Live    | Live key | Production               | Production |
+| Test       | For external use by 3rd parties to run audits | Stubbed | Live key | Preprod                  | Preprod    |
+| Dev        | For internal use by DfE for testing           | Stubbed | Test key | Preprod                  | Preprod    |
 
 Gotchas:
 
