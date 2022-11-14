@@ -8,7 +8,7 @@ http_interactions:
         string: ""
       headers:
         User-Agent:
-          - Faraday v1.10.1
+          - Faraday v2.7.1
         Authorization:
           - Bearer <BEARER_TOKEN_REDACTED>
         Accept-Encoding:
@@ -27,7 +27,9 @@ http_interactions:
         Connection:
           - keep-alive
         Date:
-          - Mon, 15 Aug 2022 10:49:30 GMT
+          - Tue, 22 Nov 2022 17:13:47 GMT
+        Request-Context:
+          - appId=cid-v1:f9db7469-45f5-4353-b71c-0f3799d59997
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -37,23 +39,81 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - "298"
+          - "294"
         X-Rate-Limit-Reset:
-          - "2022-08-15T10:50:00.0000000Z"
+          - "2022-11-22T17:14:00.0000000Z"
         X-Vcap-Request-Id:
-          - 0a698eb7-7351-4247-7b28-223a2562b374
+          - ca451423-4ab9-47f6-5100-5461c3067cba
         X-Xss-Protection:
           - "0"
         X-Cache:
           - Miss from cloudfront
         Via:
-          - 1.1 3bc52f7e0135d4a9f867e6a9ee5796b0.cloudfront.net (CloudFront)
+          - 1.1 ca8dbf5658b41cf179a2ae3717fdfcca.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - LHR50-C1
+          - LHR61-P2
         X-Amz-Cf-Id:
-          - 5AoP--QZBJxeGsL-qp8u68BNwYG84iVOP6lGtYOvpDSwtdn_b5SYUA==
+          - HY7yR4t1bndXHjszY24FtOOzC1IO-pff7qnMZJmUGoqtqZCnpo5t0Q==
       body:
         encoding: UTF-8
         string: '{"results":[]}'
-    recorded_at: Mon, 15 Aug 2022 10:49:30 GMT
+    recorded_at: Tue, 22 Nov 2022 17:13:47 GMT
+  - request:
+      method: get
+      uri: https://preprod-teacher-qualifications-api.education.gov.uk/v2/teachers/find?dateOfBirth=1990-01-01&emailAddress=new@example.com&firstName=Kevin&lastName=E
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        User-Agent:
+          - Faraday v2.7.1
+        Authorization:
+          - Bearer <BEARER_TOKEN_REDACTED>
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        Date:
+          - Tue, 22 Nov 2022 17:13:48 GMT
+        Request-Context:
+          - appId=cid-v1:f9db7469-45f5-4353-b71c-0f3799d59997
+        Strict-Transport-Security:
+          - max-age=31536000; includeSubDomains; preload
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - deny
+        X-Rate-Limit-Limit:
+          - 60s
+        X-Rate-Limit-Remaining:
+          - "293"
+        X-Rate-Limit-Reset:
+          - "2022-11-22T17:14:00.0000000Z"
+        X-Vcap-Request-Id:
+          - ea26fa55-d327-4082-75f1-aef55aa8febb
+        X-Xss-Protection:
+          - "0"
+        X-Cache:
+          - Miss from cloudfront
+        Via:
+          - 1.1 c79c2a81ac4d9188a11e797e452b6892.cloudfront.net (CloudFront)
+        X-Amz-Cf-Pop:
+          - LHR61-P2
+        X-Amz-Cf-Id:
+          - of-KeSxQRsregTZDDR9dISwOLSGBn-ocut4Aq19mTxxIgSGcHSNjTA==
+      body:
+        encoding: UTF-8
+        string: '{"results":[]}'
+    recorded_at: Tue, 22 Nov 2022 17:13:48 GMT
 recorded_with: VCR 6.1.0

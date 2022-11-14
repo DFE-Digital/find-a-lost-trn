@@ -31,6 +31,31 @@ module EnforceQuestionOrder
       session[:identity_trn_request_sent]
   end
 
+  def reset_and_attempt_to_find_a_trn
+    return unless at_least_3_matching_criteria_are_present?
+
+    session[:form_complete] = false
+    trn_request.update!(trn: nil)
+
+    begin
+      find_trn_using_api
+    rescue DqtApi::ApiError,
+           Faraday::ConnectionFailed,
+           Faraday::TimeoutError => e
+      Sentry.capture_exception(e)
+    rescue DqtApi::TooManyResults, DqtApi::NoResults
+      # Do nothing.
+    end
+  end
+
+  def find_trn_using_api
+    response = DqtApi.find_trn!(trn_request)
+    trn_request.update!(
+      trn: response["trn"],
+      has_active_sanctions: response["hasActiveSanctions"],
+    )
+  end
+
   private
 
   def trn_request
@@ -64,6 +89,10 @@ module EnforceQuestionOrder
     questions.each { |q| return q[:path] if q[:needs_answer] }
 
     check_answers_path
+  end
+
+  def at_least_3_matching_criteria_are_present?
+    !ask_for_date_of_birth?
   end
 
   def all_questions_answered?

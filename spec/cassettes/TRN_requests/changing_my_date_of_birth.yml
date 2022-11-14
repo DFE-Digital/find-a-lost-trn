@@ -8,7 +8,7 @@ http_interactions:
         string: ""
       headers:
         User-Agent:
-          - Faraday v1.10.1
+          - Faraday v2.7.1
         Authorization:
           - Bearer <BEARER_TOKEN_REDACTED>
         Accept-Encoding:
@@ -27,7 +27,9 @@ http_interactions:
         Connection:
           - keep-alive
         Date:
-          - Mon, 15 Aug 2022 10:50:15 GMT
+          - Tue, 22 Nov 2022 17:13:45 GMT
+        Request-Context:
+          - appId=cid-v1:f9db7469-45f5-4353-b71c-0f3799d59997
         Strict-Transport-Security:
           - max-age=31536000; includeSubDomains; preload
         X-Content-Type-Options:
@@ -37,23 +39,23 @@ http_interactions:
         X-Rate-Limit-Limit:
           - 60s
         X-Rate-Limit-Remaining:
-          - "298"
+          - "295"
         X-Rate-Limit-Reset:
-          - "2022-08-15T10:51:00.0000000Z"
+          - "2022-11-22T17:14:00.0000000Z"
         X-Vcap-Request-Id:
-          - eb43b007-783e-4f42-490b-4570a7fd5dac
+          - 2ddc890f-4741-4a54-5844-3df1ae664a50
         X-Xss-Protection:
           - "0"
         X-Cache:
           - Miss from cloudfront
         Via:
-          - 1.1 089ee28df029aa2f4878a528c124aaf8.cloudfront.net (CloudFront)
+          - 1.1 ca8dbf5658b41cf179a2ae3717fdfcca.cloudfront.net (CloudFront)
         X-Amz-Cf-Pop:
-          - LHR50-C1
+          - LHR61-P2
         X-Amz-Cf-Id:
-          - vV0SiO2tfGtxB-oDqp6yIZitEdbM4gTNUAhiW9v-2ou0EcMc3KsLFQ==
+          - 5CBD9XMblPTrs_Cf1eHOHmQVHYWEX0S57eFcwZdGTMnhdUuvlVefbA==
       body:
         encoding: UTF-8
         string: '{"results":[]}'
-    recorded_at: Mon, 15 Aug 2022 10:50:15 GMT
+    recorded_at: Tue, 22 Nov 2022 17:13:45 GMT
 recorded_with: VCR 6.1.0
