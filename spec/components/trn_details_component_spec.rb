@@ -9,6 +9,8 @@ RSpec.describe TrnDetailsComponent, type: :component do
   let(:awarded_qts) { true }
   let(:trn_from_user) { "1234567" }
   let(:from_get_an_identity) { false }
+  let(:preferred_first_name) { "Ray" }
+  let(:preferred_last_name) { "Purchase" }
   let(:trn_request) do
     TrnRequest.new(
       awarded_qts:,
@@ -23,8 +25,8 @@ RSpec.describe TrnDetailsComponent, type: :component do
       ni_number:,
       previous_last_name: "Smith",
       trn_from_user:,
-      preferred_first_name: "Ray",
-      preferred_last_name: "Purchase",
+      preferred_first_name:,
+      preferred_last_name:,
     )
   end
   let(:component) { render_inline(described_class.new(trn_request:)) }
@@ -161,6 +163,15 @@ RSpec.describe TrnDetailsComponent, type: :component do
           described_class.new(trn_request:, anonymise: true, actions: true),
         )
       }.to raise_error(ArgumentError)
+    end
+  end
+
+  context "when preferred name is same as name" do
+    let(:preferred_first_name) { "" }
+    let(:preferred_last_name) { "" }
+
+    it 'renders "Same as name"' do
+      expect(component.text).to include("Same as name")
     end
   end
 

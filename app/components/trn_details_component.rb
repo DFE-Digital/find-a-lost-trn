@@ -24,6 +24,7 @@ class TrnDetailsComponent < ViewComponent::Base
   end
 
   def preferred_name
+    return "Same as name" if @trn_request.preferred_name.blank?
     if @anonymise
       @trn_request
         .preferred_name
