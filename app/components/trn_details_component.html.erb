@@ -58,7 +58,7 @@
   rows.push(email_row)
   rows.push(official_name_row)
   rows.push(previous_name_row) if @trn_request.previous_name?
-  rows.push(preferred_name_row)
+  rows.push(preferred_name_row) if @trn_request.from_get_an_identity?
   rows.push(date_of_birth_row)
   rows.push(ni_row) unless @trn_request.has_ni_number.nil?
   rows.push(ask_trn_row) if @trn_request.from_get_an_identity? && !@trn_request.trn_from_user.nil?
