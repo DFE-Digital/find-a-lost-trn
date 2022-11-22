@@ -35,10 +35,6 @@ RSpec.describe TrnDetailsComponent, type: :component do
     expect(component.text).to include("Test User")
   end
 
-  it "renders preferred name" do
-    expect(component.text).to include("Ray Purchase")
-  end
-
   it "renders previous name" do
     expect(component.text).to include("Test Smith")
   end
@@ -72,8 +68,12 @@ RSpec.describe TrnDetailsComponent, type: :component do
     context "when from Get An Identity" do
       let(:from_get_an_identity) { true }
 
-      it "does render TRN from user" do
+      it "renders TRN from user" do
         expect(component.text).to include("1234567")
+      end
+
+      it "renders preferred name" do
+        expect(component.text).to include("Ray Purchase")
       end
     end
   end
@@ -123,6 +123,7 @@ RSpec.describe TrnDetailsComponent, type: :component do
   end
 
   context "with anonymised data" do
+    let(:from_get_an_identity) { true }
     let(:component) do
       render_inline(described_class.new(trn_request:, anonymise: true))
     end
@@ -167,6 +168,7 @@ RSpec.describe TrnDetailsComponent, type: :component do
   end
 
   context "when preferred name is same as name" do
+    let(:from_get_an_identity) { true }
     let(:preferred_first_name) { "" }
     let(:preferred_last_name) { "" }
 
