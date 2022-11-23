@@ -112,7 +112,7 @@ GEM
     colorize (0.8.1)
     concurrent-ruby (1.1.10)
     connection_pool (2.3.0)
-    console1984 (0.1.25)
+    console1984 (0.1.26)
       colorize
       parser
     crack (0.4.5)
@@ -513,7 +513,7 @@ DEPENDENCIES
   bootsnap
   capybara (~> 3.38)
   capybara-email
-  console1984 (~> 0.1.25)
+  console1984 (~> 0.1.26)
   cssbundling-rails
   cuprite (~> 0.14)
   data_migrate
