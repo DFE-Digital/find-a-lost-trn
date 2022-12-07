@@ -1,0 +1,3 @@
+Contact: mailto:tra-digital+security@digital.ducation.gov.uk
+Expires: 2023-12-07T23:00:00.000Z
+Policy: https://github.com/ukncsc/Vulnerability-Disclosure/blob/master/UK-Government-Vulnerability-Disclosure-Policy.md
