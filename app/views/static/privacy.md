@@ -1,123 +1,119 @@
 <% content_for :page_title, 'Privacy notice' %>
 
-# Privacy notice
+# Privacy policy
 
-## Who we are
+When you request a reminder of your teacher reference number (TRN), the Department for Education (DfE) collects and processes some of your personal data.
 
-The Find a lost TRN service is run by the [Teaching Regulation Agency
-(TRA)](https://www.gov.uk/government/organisations/teaching-regulation-agency/about),
-an executive agency of the Department for Education (DfE).
+DfE is the data controller for your information, as defined by data protection law.
 
-Our service allows anyone with a teacher reference number (TRN) to get a
-reminder of their TRN by email.
+DfE is referred to as ‘we’, ‘us’ and ‘our’ in this privacy policy.
 
-For the purpose of data protection legislation, DfE is the data controller for
-the data we hold and process.
+We share your data with the following data processors:
 
-## What data we collect
+- TRN providers and their delivery partners (referred to as ‘TRN providers’ in this policy)
+- auditors and evaluators who quality assure TRNs and TRN providers
+- Our lawful basis for our use of your data is the Public Task Article 6(1)(e) of the General Data Protection Regulation (GDPR).
 
-We collect your:
+## What personal data we collect
 
-- full name
+When you request a reminder of your TRN we may collect the following information about you:
+
+- name
+- email address
+- teacher reference number (TRN)
 - date of birth
 - National Insurance number
-- initial teacher training (ITT) provider (where you gained qualified teacher
+- the initial teacher training (ITT) provider (where you gained qualified teacher
   status (QTS) or early years teacher status (EYTS))
-- email address
 
-### Why we need your data
+## How we use your personal data
 
-We need to collect this data so we can find your TRN in our records.
+We use your personal data for the following purposes.
 
-## Our legal basis for processing your data
+### Finding your TRN
 
-So that our use of your personal data is lawful, we need to meet one (or more)
-conditions in the data protection legislation. For our service, this is:
+This includes:
 
-- article 6(1)(e) UK General Data Protection Regulation (UK GDPR), to perform a
-  public task carried out in the public interest as part of our function as a
-  department
+- validating your teacher reference number (TRN)
+- comparing your data to other data we hold
+- getting in touch if there’s a security issue concerning your data
 
-### What we do with your data
+### Running and improving our services
 
-We use the data you give us to try and find your TRN in our records. If we can
-match your data to our records, we’ll email your TRN to you. This allows you to
-apply for teaching jobs or access other DfE services.
+We use your data to run and improve our services.
 
-We might also use your details when analysing data to improve the service.
+We may contact you about taking part in user research and look at any feedback you share - for example, through website surveys.
 
-We use GOV.UK PaaS to run the service. [Visit the GOV.UK PaaS
-website](https://www.cloud.service.gov.uk/privacy-notice/#what-data-we-collect-from-end-users)
-to find out how they use and look after your data.
+### Getting insight to inform government policy
 
-If we cannot find your TRN, you can either:
+Your data contributes to our understanding of education, training and care in England, helping us to inform government policy.
 
-- call our helpdesk during working hours
-- submit a service request to our helpdesk
+### Identifying you so that you can access DfE services
 
-If you do this, we will either:
+If we do not already hold your data on our records, we’ll add you to our database of educational professionals.
 
-- use the CX One telephony management service to handle your call to the
-  helpdesk. CX One is managed by NICE Systems Ltd. [Visit the NICE
-  website](https://www.nice.com/websites/CXone-WFO/privacy-policy.html) to find
-  out how they look after your data.
-- use the Zendesk customer management service to manage and respond to your
-  query. [Visit the Zendesk
-  website](https://www.zendesk.co.uk/company/privacy-and-data-protection/#faq-general-1)
-  to find out how they look after your data.
+We use this to identify you so that you can access relevant DfE services.
 
-## How long we keep your data
+### Inform you of relevant government policies
 
-We’ll keep a record of who has made a request for a TRN reminder, and how many
-requests have been made, for up to 2 years.
+We may contact you to inform you of government policies which are relevant to you. You can opt out of this if you’re contacted.
 
-## Your data protection rights
+## Who we share your data with
 
-You have the right:
+We need to share personal data for the purposes mentioned above.
 
-- to ask us what information we hold about you
-- to have your personal data rectified if it is inaccurate or incomplete
-- to request the deletion or removal of personal data where there is no
-  compelling reason for its continued processing
-- to restrict our processing of your personal data (for instance allow us to
-  store it but not process it further)
-- to object to direct marketing (including profiling) and processing for the
-  purposes of scientific or historical research and statistics
-- not to be subject to decisions based purely on automated processing where it
-  produces a legal or similarly significant effect on you
+We do so under section 132 of the Education Act 2002, together with regulation 5 of the Education (School Teachers’ Qualifications) (England) Regulations 2003.
 
-If you have any questions about how we’ll use your personal information,
-email [qts.enquiries@education.gov.uk](mailto:qts.enquiries@education.gov.uk)
-and enter ‘Data protection enquiry’ as a reference.
+### Customer service systems
 
-You can also contact the Data Protection Office by emailing
-[dataprotection.office@education.gov.uk](mailto:dataprotection.office@education.gov.uk).
+We may use customer service management systems to process some personal data, such as feedback you send us.
 
-You can find further information about your data protection rights on
-the [Information Commissioner’s
-website](https://ico.org.uk/for-organisations/guide-to-data-protection/principle-6-rights/).
+Zendesk is currently our preferred customer service management system because it uses various safeguards to look after your data.
 
-### Consent and how to make a complaint
+### Google
 
-As we have a clear purpose for processing your personal data, we would not
-explicitly seek your consent to process your data.
+We’ll ask if you agree to cookies so that we can get statistics from Google Analytics. If you consent, Google may be able to get your IP address. We use Google Analytics for statistics and will not identify you personally from these.
 
-If you’re unhappy with our use of your personal data, please
-email [qts.enquiries@education.gov.uk](mailto:qts.enquiries@education.gov.uk).
+We also use Google’s G Suite to process some personal data. Google processes your data according to our instructions.
 
-You can also contact the DfE Data Protection Office:
+### Hosting services
 
-Deputy Director, Departmental Data Protection Officer<br />
-Wellington Place<br />
-Leeds<br />
-LS1 4AP<br />
-[data.protection@education.gov.uk](mailto:data.protection@education.gov.uk)
+We host our services on GOV.UK PaaS, which encrypts your data to prevent it being accessed by unauthorised people.
 
-Alternatively, you have the right to raise any concerns with the [Information
-Commissioner’s Office (ICO)](https://ico.org.uk/concerns/).
+### Auditors
 
-## Changes to this notice
+We use external auditors to quality assure our service.
 
-We’ll update this privacy notice when required. You should review it at least once a year.
+## How long we keep your personal data for
 
-This version was last updated on 17 May 2022.
+We will only keep your personal data for as long as necessary for the purpose for which it was obtained.
+
+## Your rights
+
+Under the Data Protection Act 2018, you have the right to:
+
+- be informed about how your data is being used
+- access personal data
+- have incorrect data updated
+- have data erased
+- stop or restrict the processing of your data
+- get and reuse your data for different services
+- object to how your data is processed in certain circumstances
+
+You can find more information about how we handle personal data in our [personal information charter](https://www.gov.uk/government/organisations/department-for-education/about/personal-information-charter).
+
+## Get help
+
+Contact the Department for Education if you want to ask us to remove your data or get access to the data we have about you.
+
+For further information or to raise a concern, visit the Information Commissioner’s Office (ICO).
+
+## Changes to this privacy policy
+
+We reserve the right to update this policy at any time.
+
+We’ll provide you with a new policy if we make substantial updates.
+
+We may also notify you in other ways about the processing of your personal information.
+
+This version was last updated on 9 December 2022.
