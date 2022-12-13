@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     post "/zendesk/exports", to: "zendesk_csv_exports#create"
     get "/zendesk/confirm-deletion", to: "zendesk#confirm_deletion"
     post "/zendesk/confirm-deletion", to: "zendesk#destroy"
+    get "/zendesk/performance", to: "zendesk_performance#index"
 
     resources :zendesk_imports, only: %i[new create]
 

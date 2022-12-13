@@ -28,6 +28,13 @@ class ZendeskService
     )
   end
 
+  def self.find_closed_tickets_since(date)
+    GDS_ZENDESK_CLIENT.zendesk_client.search(
+      query: "created>#{date.strftime("%Y-%m-%d")} type:ticket status:closed",
+      include: "tickets(groups)",
+    )
+  end
+
   def self.destroy_tickets!(ids)
     ZendeskAPI::Ticket.destroy_many!(GDS_ZENDESK_CLIENT.zendesk_client, ids)
   end
