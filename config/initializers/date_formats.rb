@@ -6,3 +6,6 @@ Date::DATE_FORMATS[:weekday_day_and_month] = "%A %-d %B"
 
 Time::DATE_FORMATS[:month_and_year] = "%B %Y"
 Date::DATE_FORMATS[:month_and_year] = "%B %Y"
+
+Time::DATE_FORMATS[:week_and_year] = "Week %W %Y"
+Date::DATE_FORMATS[:week_and_year] = "Week %W %Y"
