@@ -3,9 +3,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl">
-        <%= t('service.name') %>
-      </span>
       Zendesk performance dashboard
     </h1>
   </div>
@@ -13,7 +10,7 @@
 
 <h2 class="govuk-heading-m">Total tickets deleted</h2>
 
-<div class="govuk-!-margin-bottom-4">
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
   <div class="govuk-grid-column-one-half">
     <%= render TileComponent.new(
                 count: @total,
