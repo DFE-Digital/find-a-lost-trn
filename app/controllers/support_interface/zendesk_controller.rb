@@ -33,7 +33,7 @@ module SupportInterface
         )
 
       if @delete_form.valid?
-        DeleteOldZendeskTicketsJob.perform_later
+        ScheduleZendeskTicketsForDeletionJob.perform_later
         flash[:success] = "Scheduled #{@ticket_count} tickets for deletion"
         redirect_to support_interface_zendesk_path
       else

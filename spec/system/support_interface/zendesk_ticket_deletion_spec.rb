@@ -114,7 +114,7 @@ RSpec.describe "Zendesk ticket deletion", type: :system do
   end
 
   def and_a_job_to_delete_tickets_is_queued
-    expect(DeleteOldZendeskTicketsJob).to have_been_enqueued
+    expect(ScheduleZendeskTicketsForDeletionJob).to have_been_enqueued
   end
 
   def then_i_should_see_the_latest_delete_request
