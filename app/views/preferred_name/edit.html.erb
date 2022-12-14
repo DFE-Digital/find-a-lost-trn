@@ -7,7 +7,9 @@
     <%= "Is #{@preferred_name_form.official_name} your preferred name?" %>
   </h1>
 
-  <p>We can use a different name in correspondence, and tell people what you prefer to be called.</p>
+  <p>You can tell us what you prefer to be called if it's different from the name on your offcial documents.</p>
+
+  <p>For example, if your name is Joanne and you preferred to be called Jo.</p>
 
   <%= f.govuk_radio_buttons_fieldset :official_name_preferred, legend: { hidden: true }  do %>
     <%= f.govuk_radio_button :official_name_preferred, true, label: { text: "Yes" }, link_errors: true %>
