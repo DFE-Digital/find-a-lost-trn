@@ -14,14 +14,14 @@
 <h2 class="govuk-heading-m">Total tickets deleted</h2>
 
 <div class="govuk-!-margin-bottom-4">
-  <%= render TileComponent.new(
+  <div class="govuk-grid-column-one-half">
+    <%= render TileComponent.new(
                 count: @total,
                 label: "tickets deleted",
                 colour: :blue) %>
-</div>
+  </div>
 
-<div class="govuk-grid-row govuk-!-margin-bottom-4">
-  <div class="govuk-grid-column-one-third">
+  <div class="govuk-grid-column-one-half">
     <%= render TileComponent.new(count: @last_7_days, label: "in the last 7 days", colour: :green) %>
   </div>
 </div>
