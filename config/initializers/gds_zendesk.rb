@@ -2,6 +2,16 @@
 require "gds_zendesk/client"
 require "gds_zendesk/dummy_client"
 
+module DummyCollectionExtensions
+  def page(_)
+    self
+  end
+
+  def per_page(_)
+    self
+  end
+end
+
 class ExtendedDummyClient
   def initialize(logger)
     @logger = logger
@@ -108,6 +118,14 @@ module GDSZendesk
 
   class DummyTicket
     prepend DummyTicketExtensions
+  end
+end
+
+if HostingEnvironment.test_environment?
+  module ZendeskAPI
+    class Collection
+      prepend DummyCollectionExtensions
+    end
   end
 end
 
