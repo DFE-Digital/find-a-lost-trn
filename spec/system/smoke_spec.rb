@@ -94,7 +94,7 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
   end
 
   def then_i_see_the_name_page
-    expect(page).to have_content("Your name")
+    expect(page).to have_content("What’s your name?")
   end
 
   def then_i_see_the_start_page
