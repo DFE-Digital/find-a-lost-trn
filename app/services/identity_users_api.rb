@@ -27,15 +27,19 @@ class IdentityUsersApi < IdentityApi
     response.body
   end
 
-  def get_users
+  def get_users(page: 1, per_page: 100)
     raise_if_timeout_feature_flag_active!
 
-    response = client.get("/api/v1/users")
+    response =
+      client.get("/api/v1/users", { pageNumber: page, pageSize: per_page })
 
     raise ApiError, response.reason_phrase unless response.status == 200
 
     users = response.body.fetch("users", [])
-    users.map { |user| User.new(user) }
+    {
+      users: users.map { |user| User.new(user) },
+      total: response.body["total"],
+    }
   end
 
   def update_user(uuid, user_attributes)

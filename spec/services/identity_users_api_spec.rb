@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe IdentityUsersApi do
   describe "#get_users", vcr: true do
     it "returns users from the identity api" do
-      users = described_class.new(ENV["IDENTITY_USER_TOKEN"]).get_users
+      users = described_class.new(ENV["IDENTITY_USER_TOKEN"]).get_users[:users]
 
       expect(users.map(&:uuid)).to include(
         "29e9e624-073e-41f5-b1b3-8164ce3a5233",

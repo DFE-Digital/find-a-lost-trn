@@ -17,7 +17,9 @@ RSpec.describe "Identity Users Support", type: :system do
   before { allow(IdentityUsersApi).to receive(:new).and_return(identity_api) }
 
   it "displays a list of users", vcr: true, download: true do
-    allow(identity_api).to receive(:get_users).and_return([User.new(user)])
+    allow(identity_api).to receive(:get_users).and_return(
+      { total: 1, users: [User.new(user)] },
+    )
     given_i_am_authorized_as_a_support_user
     when_i_visit_the_identity_users_support_page
     then_i_should_see_a_user
@@ -25,8 +27,10 @@ RSpec.describe "Identity Users Support", type: :system do
 
   context "when there are more than 100 users" do
     before do
-      users = 150.times.map { User.new(user) }
-      allow(identity_api).to receive(:get_users).and_return(users)
+      users = 100.times.map { User.new(user) }
+      allow(identity_api).to receive(:get_users).and_return(
+        { total: 150, users: },
+      )
     end
 
     it "shows the Identity users paginated" do
@@ -41,7 +45,9 @@ RSpec.describe "Identity Users Support", type: :system do
   context "when the user does not have a DQT record" do
     before do
       user["trn"] = nil
-      allow(identity_api).to receive(:get_users).and_return([User.new(user)])
+      allow(identity_api).to receive(:get_users).and_return(
+        { total: 1, users: [User.new(user)] },
+      )
     end
 
     it "shows a link to add a DQT record" do
@@ -54,7 +60,9 @@ RSpec.describe "Identity Users Support", type: :system do
   context "when the user has a DQT record" do
     before do
       user["trn"] = "12345"
-      allow(identity_api).to receive(:get_users).and_return([User.new(user)])
+      allow(identity_api).to receive(:get_users).and_return(
+        { total: 1, users: [User.new(user)] },
+      )
     end
 
     it "shows a link to add a DQT record" do
@@ -67,7 +75,9 @@ RSpec.describe "Identity Users Support", type: :system do
   context "When user attempts to match identity record to a DQT record" do
     before do
       user["trn"] = nil
-      allow(identity_api).to receive(:get_users).and_return([User.new(user)])
+      allow(identity_api).to receive(:get_users).and_return(
+        { total: 1, users: [User.new(user)] },
+      )
     end
 
     it "shows the add TRN page", vcr: true do
