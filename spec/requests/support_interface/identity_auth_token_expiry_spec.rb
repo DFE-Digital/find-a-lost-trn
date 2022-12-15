@@ -36,7 +36,7 @@ RSpec.describe "GET /support with identity_auth_service feature enabled",
 
   context "with an access token which is valid" do
     let(:identity_users_api) do
-      instance_double(IdentityUsersApi, get_users: [])
+      instance_double(IdentityUsersApi, get_users: { total: 0, users: [] })
     end
 
     it "allows access to support pages" do

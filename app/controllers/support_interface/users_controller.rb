@@ -7,9 +7,11 @@ module SupportInterface
     layout "two_thirds", only: %i[edit update email update_email]
 
     def index
-      @all_users ||= identity_users_api.get_users
-      @total = @all_users.size
-      @pagy, @users = pagy_array(@all_users)
+      page = params[:page] || 1
+      @all_users ||= identity_users_api.get_users(page:)
+      @total = @all_users[:total]
+      @pagy = Pagy.new(count: @total, page:)
+      @users = @all_users[:users]
     end
 
     def show
