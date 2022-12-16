@@ -48,7 +48,7 @@ class ZendeskDeleteRequest < ApplicationRecord
     self
   end
 
-  def self.to_csv(scope = no_duplicates)
+  def self.to_csv(scope = no_duplicates.since_launch)
     CSV.generate(headers: true) do |csv|
       csv << %w[
         ticket_id

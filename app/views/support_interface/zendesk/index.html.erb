@@ -91,7 +91,12 @@
 <p><%= govuk_link_to "Import from CSV", new_support_interface_zendesk_import_path %></p>
 
 <% unless @zendesk_delete_requests.size.zero? %>
-  <p><%= govuk_button_to "Export to CSV", support_interface_zendesk_exports_path(format: :csv), method: :post %></p>
+  <p>
+    <%= form_with model: @export_form, url: support_interface_zendesk_exports_path(format: :csv) do |f| %>
+      <%= f.govuk_collection_select :time_period, @export_form.months, :last, :first, include_blank: true, label: { text: "Which month do you want to export?" } %>
+      <%= f.govuk_submit "Export to CSV" %>
+    <% end %>
+  </p>
 
   <%= govuk_pagination(pagy: @pagy) %>
 
