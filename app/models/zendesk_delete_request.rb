@@ -28,6 +28,7 @@ class ZendeskDeleteRequest < ApplicationRecord
             .flatten
         }
   scope :no_duplicates, -> { where.not(id: duplicate_ids) }
+  scope :since_launch, -> { where(closed_at: PerformanceStats::LAUNCH_DATE..) }
 
   def from(ticket)
     self.ticket_id = ticket.id
