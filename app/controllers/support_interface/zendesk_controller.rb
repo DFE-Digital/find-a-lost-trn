@@ -15,6 +15,8 @@ module SupportInterface
 
       @pagy, @zendesk_delete_requests =
         pagy(ZendeskDeleteRequest.order(closed_at: :desc))
+
+      @export_form = SupportInterface::ZendeskExportForm.new
     end
 
     def confirm_deletion
