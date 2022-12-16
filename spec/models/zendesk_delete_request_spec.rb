@@ -139,4 +139,23 @@ RSpec.describe ZendeskDeleteRequest, type: :model do
       end
     end
   end
+
+  describe ".since_launch" do
+    subject { described_class.since_launch }
+
+    let(:prelaunch) { create(:zendesk_delete_request, closed_at: 1.day.ago) }
+    let(:postlaunch) do
+      create(:zendesk_delete_request, closed_at: Time.current)
+    end
+
+    before do
+      travel_to PerformanceStats::LAUNCH_DATE
+      prelaunch
+      postlaunch
+    end
+
+    after { travel_back }
+
+    it { is_expected.to eq [postlaunch] }
+  end
 end
