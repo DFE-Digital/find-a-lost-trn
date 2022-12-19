@@ -98,7 +98,7 @@ en:
             do_you_know_your_trn:
               inclusion: Tell us if you know your TRN number
             trn_from_user:
-              blank: Enter your TRN number
+              blank: Enter your TRN
               too_long: Enter a TRN number that is 7 digits long
               wrong_length: Your TRN number should contain 7 digits
         support_interface/confirm_dqt_record_form:
