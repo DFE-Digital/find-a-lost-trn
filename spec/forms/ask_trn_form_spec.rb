@@ -58,9 +58,7 @@ RSpec.describe AskTrnForm, type: :model do
       end
       it "adds an error" do
         update!
-        expect(ask_trn_form.errors[:trn_from_user]).to include(
-          "Enter your TRN number",
-        )
+        expect(ask_trn_form.errors[:trn_from_user]).to include("Enter your TRN")
       end
       it "logs a validation error" do
         expect { update! }.to change(ValidationError, :count).by(1)
