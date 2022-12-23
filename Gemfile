@@ -72,7 +72,7 @@ group :development do
   gem "spring-commands-rspec"
 
   gem "annotate", require: false
-  gem "prettier_print", "~> 1.1.0", require: false
+  gem "prettier_print", "~> 1.2.0", require: false
   gem "rubocop-govuk", require: false
   gem "solargraph", require: false
   gem "solargraph-rails", require: false
