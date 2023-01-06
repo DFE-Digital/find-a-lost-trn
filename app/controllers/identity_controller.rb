@@ -25,6 +25,8 @@ class IdentityController < ApplicationController
         from_get_an_identity: true,
       )
 
+    reset_session
+
     session[:trn_request_id] = @trn_request.id
     session[:identity_client_title] = recognised_params["client_title"]
     session[:identity_client_id] = recognised_params["client_id"]
