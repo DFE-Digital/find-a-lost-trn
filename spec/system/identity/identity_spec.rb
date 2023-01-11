@@ -165,6 +165,7 @@ RSpec.describe "Identity", type: :system do
 
   def when_i_access_the_identity_endpoint
     visit support_interface_identity_simulate_path
+    fill_in "Session ID", with: "test-123"
     click_on "Continue"
     click_on "Submit"
   end
@@ -308,7 +309,7 @@ RSpec.describe "Identity", type: :system do
 
   def then_i_am_redirected_to_the_callback
     expect(page).to have_content(
-      "You have completed a simulated Identity journey",
+      "You have completed a simulated Identity journey with session ID test-123",
     )
   end
 

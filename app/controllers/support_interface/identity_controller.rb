@@ -10,6 +10,7 @@ module SupportInterface
       @identity_params.journey_id = journey_id
       @identity_params.previous_url = previous_url
       @identity_params.redirect_url = redirect_url
+      @identity_params.session_id = SecureRandom.uuid
     end
 
     def confirm
@@ -21,13 +22,16 @@ module SupportInterface
         journey_id:,
         previous_url:,
         redirect_url:,
+        session_id: create_params[:session_id],
       }
       sig = Identity.signature_from(@identity_params)
       @identity_params[:sig] = sig
     end
 
     def callback
-      flash[:success] = "You have completed a simulated Identity journey"
+      flash[
+        :success
+      ] = "You have completed a simulated Identity journey with session ID #{params[:session_id]}"
 
       redirect_to support_interface_identity_simulate_path
     end
@@ -39,6 +43,7 @@ module SupportInterface
         :client_title,
         :client_id,
         :email,
+        :session_id,
       )
     end
 
