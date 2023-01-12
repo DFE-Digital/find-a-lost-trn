@@ -52,12 +52,6 @@
                 is disabled for simulated journeys because simulated journeys \
                 should always return to Find" }
       ) %>
-      <%= f.govuk_text_field(:session_id,
-        label: { size: 's', text: 'Session ID' },
-        hint: { 
-          text: "An extra ID field using by Get an Identity. Find simply passes it back via the callback URL"
-        }
-      ) %>
       <%= f.govuk_submit "Continue", prevent_double_click: false %>
     <% end %>
   </div>
