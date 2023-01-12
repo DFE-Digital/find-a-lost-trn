@@ -20,7 +20,9 @@ class TrnRequestsController < ApplicationController
 
     begin
       find_trn_using_api unless trn_request.trn
-      raise TrnHasAlert if trn_request.has_active_sanctions
+      if trn_request.has_active_sanctions && !trn_request.from_get_an_identity?
+        raise TrnHasAlert
+      end
 
       if trn_request.from_get_an_identity?
         # Send a request to Get An Identity API with the TRN for the journey
@@ -44,8 +46,8 @@ class TrnRequestsController < ApplicationController
       begin
         create_zendesk_ticket
         redirect_to helpdesk_request_submitted_path
-      rescue ZendeskService::ConnectionError => exception
-        Sentry.capture_exception(exception)
+      rescue ZendeskService::ConnectionError => e
+        Sentry.capture_exception(e)
         CreateZendeskTicketJob.set(wait: 5.minutes).perform_later(
           trn_request.id,
         )

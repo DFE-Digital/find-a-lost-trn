@@ -94,6 +94,22 @@ RSpec.describe "Identity", type: :system do
     end
   end
 
+  context "when there are active sanctions" do
+    it "sends the TRN to Get an Identity and redirects to the client callback URL",
+       vcr: true do
+      when_i_access_the_identity_endpoint
+      and_i_complete_and_submit_the_name_form
+      when_i_complete_and_submit_the_preferred_name_form
+      and_i_complete_and_submit_my_date_of_birth
+      then_i_see_the_check_answers_page
+
+      and_i_have_active_sanctions
+
+      when_i_press_the_continue_button
+      then_i_am_redirected_to_the_callback
+    end
+  end
+
   context "ask for TRN page" do
     it "matches if they don't match on other criteria", vcr: true do
       when_i_access_the_identity_endpoint
@@ -161,6 +177,10 @@ RSpec.describe "Identity", type: :system do
   end
 
   private
+
+  def and_i_have_active_sanctions
+    TrnRequest.last.update(has_active_sanctions: true)
+  end
 
   def when_i_access_the_identity_endpoint
     visit support_interface_identity_simulate_path
