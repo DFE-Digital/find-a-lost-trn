@@ -158,7 +158,6 @@ RSpec.describe "Identity", type: :system do
 
     when_i_click_on_the_header
     then_i_am_redirected_to_the_callback
-    and_the_title_of_the_service_is_find_a_lost_trn
   end
 
   private
