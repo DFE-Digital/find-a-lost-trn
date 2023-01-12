@@ -30,16 +30,10 @@ class IdentityController < ApplicationController
     session[:trn_request_id] = @trn_request.id
     session[:identity_client_title] = recognised_params["client_title"]
     session[:identity_client_id] = recognised_params["client_id"]
-    session[:identity_client_url] = [
-      recognised_params["client_url"],
-      "session_id=#{recognised_params["session_id"]}",
-    ].join("?")
+    session[:identity_client_url] = recognised_params["client_url"]
     session[:identity_journey_id] = recognised_params["journey_id"]
     session[:identity_previous_url] = recognised_params["previous_url"]
-    session[:identity_redirect_url] = [
-      recognised_params["redirect_url"],
-      "session_id=#{recognised_params["session_id"]}",
-    ].join("?")
+    session[:identity_redirect_url] = recognised_params["redirect_url"]
     session[:identity_api_request_sent] = false
 
     redirect_to next_question_path
@@ -56,7 +50,6 @@ class IdentityController < ApplicationController
       :journey_id,
       :previous_url,
       :redirect_url,
-      :session_id,
       :sig,
     )
   end
