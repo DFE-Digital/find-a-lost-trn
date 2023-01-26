@@ -76,7 +76,7 @@ group :development do
   gem "rubocop-govuk", require: false
   gem "solargraph", require: false
   gem "solargraph-rails", require: false
-  gem "syntax_tree", "~> 5.2", require: false
+  gem "syntax_tree", "~> 5.3", require: false
   gem "syntax_tree-haml", "~> 3.0", require: false
   gem "syntax_tree-rbs", "~> 0.5.1", require: false
 
