@@ -23,7 +23,7 @@ class DqtApi
     results = response.body["results"]
     raise TooManyResults if results.size > 1
 
-    raise NoResults if results.size.zero?
+    raise NoResults if results.empty?
 
     teacher_account = results.first
 
