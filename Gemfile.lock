@@ -281,7 +281,7 @@ GEM
     pg (1.4.5)
     prettier_print (1.2.0)
     public_suffix (5.0.0)
-    puma (6.0.2)
+    puma (6.1.0)
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.6.2)
@@ -539,7 +539,7 @@ DEPENDENCIES
   pagy
   pg (~> 1.4)
   prettier_print (~> 1.2.0)
-  puma (~> 6.0)
+  puma (~> 6.1)
   rack-attack
   rails (~> 7.0.4)
   rails-erd
