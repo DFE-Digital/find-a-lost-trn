@@ -1,88 +1,105 @@
 <% content_for :page_title, 'TRN Requests' %>
 
-<h1 class="govuk-heading-l">
-  TRN Requests
-  <span class="govuk-caption-l">
-    Ordered by last updated, showing <%= "#{[100, TrnRequest.count].min} of #{TrnRequest.count}" %> total
-  </span>
-</h1>
 
-<% @trn_requests.each do |trn_request| %>
-  <h2 class="govuk-heading-m">TRN Request #<%= trn_request.id %></h2>
-  <%= govuk_summary_list do |summary_list|
-    summary_list.row do |row|
-      row.key(text: 'Created at')
-      row.value(text: trn_request.created_at)
-    end
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      TRN Requests
+      <span class="govuk-caption-l">
+        Ordered by last updated, showing <%= "#{[100, TrnRequest.count].min} of #{TrnRequest.count}" %> total
+      </span>
+    </h1>
 
-    summary_list.row do |row|
-      row.key(text: 'Updated at')
-      row.value(text: trn_request.updated_at)
-    end
-
-    summary_list.row do |row|
-      row.key(text: 'Submitted at')
-      row.value do
-        if trn_request.checked_at
-          trn_request.checked_at.to_s
-        else
-          govuk_tag(colour: 'grey', text: 'Not yet submitted')
-        end
-      end
-    end
-
-    if trn_request.checked_at
-      summary_list.row do |row|
-        row.key(text: 'TRN')
-        row.value do
-          if trn_request.trn
-            govuk_tag(colour: 'green', text: 'Found 🎉')
-          else
-            govuk_tag(colour: 'yellow', text: 'Not found')
-          end
-        end
-      end
-
-      if !trn_request.zendesk_ticket_id && !trn_request.trn
+    <% @trn_requests.each do |trn_request| %>
+      <h2 class="govuk-heading-m">TRN Request #<%= trn_request.id %></h2>
+      <%= govuk_summary_list do |summary_list|
         summary_list.row do |row|
-          row.key(text: 'Zendesk ticket')
-          row.value do
-            govuk_tag(colour: 'grey', text: 'Not submitted')
-          end
+          row.key(text: 'Created at')
+          row.value(text: trn_request.created_at)
         end
-      end
 
-      if trn_request.zendesk_ticket_id
         summary_list.row do |row|
-          row.key(text: 'Zendesk ticket')
-          row.value do
-            tag.a "Ticket #{trn_request.zendesk_ticket_id}", class: 'govuk-link', href: "https://teachingregulationagency.zendesk.com/agent/tickets/#{trn_request.zendesk_ticket_id}"
-          end
+          row.key(text: 'Updated at')
+          row.value(text: trn_request.updated_at)
         end
 
-        unless trn_request.trn
-          summary_list.row do |row|
-            row.key(text: 'Actions')
-            row.value do
-              govuk_button_to("Sync from Zendesk", [:support_interface, trn_request, :zendesk_sync], secondary: true, class: 'govuk-!-margin-bottom-0')
+        summary_list.row do |row|
+          row.key(text: 'Submitted at')
+          row.value do
+            if trn_request.checked_at
+              trn_request.checked_at.to_s
+            else
+              govuk_tag(colour: 'grey', text: 'Not yet submitted')
             end
           end
         end
-      end
-    end
-  end %>
 
-  <% if Rails.env.production? %>
-    <h3 class="govuk-heading-s">Anonymised information</h3>
-  <% else %>
-    <h3 class="govuk-heading-s">
-      <%= govuk_tag(colour: 'blue', text: 'Development only') %>
-      Information
-    </h3>
-  <% end %>
+        if trn_request.checked_at
+          summary_list.row do |row|
+            row.key(text: 'TRN')
+            row.value do
+              if trn_request.trn
+                govuk_tag(colour: 'green', text: 'Found 🎉')
+              else
+                govuk_tag(colour: 'yellow', text: 'Not found')
+              end
+            end
+          end
 
-  <% if trn_request.trn_responses.any? %>
-    <%= render(TrnResponseComponent.new(trn_response: trn_request.trn_responses.last, anonymise: Rails.env.production?)) %>
-  <% end %>
-  <%= render(TrnDetailsComponent.new(trn_request: trn_request, anonymise: Rails.env.production?)) %>
-<% end %>
+          if !trn_request.zendesk_ticket_id && !trn_request.trn
+            summary_list.row do |row|
+              row.key(text: 'Zendesk ticket')
+              row.value do
+                govuk_tag(colour: 'grey', text: 'Not submitted')
+              end
+            end
+          end
+
+          if trn_request.zendesk_ticket_id
+            summary_list.row do |row|
+              row.key(text: 'Zendesk ticket')
+              row.value do
+                tag.a "Ticket #{trn_request.zendesk_ticket_id}", class: 'govuk-link', href: "https://teachingregulationagency.zendesk.com/agent/tickets/#{trn_request.zendesk_ticket_id}"
+              end
+            end
+
+            unless trn_request.trn
+              summary_list.row do |row|
+                row.key(text: 'Actions')
+                row.value do
+                  govuk_button_to("Sync from Zendesk", [:support_interface, trn_request, :zendesk_sync], secondary: true, class: 'govuk-!-margin-bottom-0')
+                end
+              end
+            end
+          end
+        end
+      end %>
+
+      <% if Rails.env.production? %>
+        <h3 class="govuk-heading-s">Anonymised information</h3>
+      <% else %>
+        <h3 class="govuk-heading-s">
+          <%= govuk_tag(colour: 'blue', text: 'Development only') %>
+          Information
+        </h3>
+      <% end %>
+
+      <% if trn_request.trn_responses.any? %>
+        <%= render(TrnResponseComponent.new(trn_response: trn_request.trn_responses.last, anonymise: Rails.env.production?)) %>
+      <% end %>
+      <%= render(TrnDetailsComponent.new(trn_request: trn_request, anonymise: Rails.env.production?)) %>
+    <% end %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-l">Export TRN Requests</h2>
+    <p>
+      <%= form_with model: @export_form, url: support_interface_trn_requests_exports_path(format: :csv) do |f| %>
+        <%= f.govuk_collection_select :time_period, @export_form.months, :last, :first, include_blank: true, label: { text: "Which month do you want to export?" } %>
+        <%= f.govuk_submit "Export to CSV" %>
+      <% end %>
+    </p>
+  </div>
+</div>

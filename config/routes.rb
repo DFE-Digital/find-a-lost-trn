@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   namespace :support_interface, path: "/support" do
     get "/", to: redirect("/support/trn-requests")
     get "/trn-requests", to: "trn_requests#index"
+    post "/trn-requests/exports", to: "trn_request_csv_exports#create"
 
     get "/features", to: "feature_flags#index"
     post "/features/:feature_name/activate",

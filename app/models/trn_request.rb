@@ -42,6 +42,7 @@ class TrnRequest < ApplicationRecord
   has_many :account_unlock_events
 
   scope :with_zendesk_ticket, -> { where.not(zendesk_ticket_id: nil) }
+  scope :since_launch, -> { where(created_at: PerformanceStats::LAUNCH_DATE..) }
 
   def answers_checked=(value)
     return unless value
@@ -96,5 +97,17 @@ class TrnRequest < ApplicationRecord
 
   def itt_provider_name_for_dqt
     itt_provider_ukprn.present? ? nil : itt_provider_name
+  end
+
+  def self.to_csv(scope = since_launch)
+    attributes = %w[id trn email created_at updated_at]
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes.map(&:titleize)
+
+      scope.find_each do |trn_request|
+        csv << attributes.map { |attr| trn_request.send(attr) }
+      end
+    end
   end
 end
