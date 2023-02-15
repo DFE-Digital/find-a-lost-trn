@@ -8,7 +8,7 @@ RSpec.describe SupportInterface::TrnRequestExportForm, type: :model do
       ).filename
     end
 
-    it { is_expected.to eq("2022_12_01_trn_requests.csv") }
+    it { is_expected.to eq("2022_12_31_trn_requests.csv") }
   end
 
   describe "#months" do
