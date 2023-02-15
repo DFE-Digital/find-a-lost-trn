@@ -7,7 +7,8 @@ module SupportInterface
     attr_accessor :time_period
 
     def filename
-      time_period_string = time_period.to_time&.strftime("%Y_%m_%d") || "all"
+      time_period_string =
+        time_period.to_time&.end_of_month&.strftime("%Y_%m_%d") || "all"
 
       "#{time_period_string}_trn_requests.csv"
     end

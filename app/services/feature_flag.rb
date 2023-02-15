@@ -64,6 +64,11 @@ class FeatureFlag
       "Unlock a teacher's self service portal account if their TRN is found",
       "Ransom Voke Anighoro",
     ],
+    [
+      :automated_trn_exports,
+      "Automatically export TRN requests to Slack",
+      "Felix Clack",
+    ],
   ].freeze
 
   FEATURES =
