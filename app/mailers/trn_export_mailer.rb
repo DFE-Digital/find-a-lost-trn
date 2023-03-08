@@ -12,7 +12,7 @@ class TrnExportMailer < ApplicationMailer
 
     mailer_options = {
       subject: "TRN requests export",
-      to: ENV.fetch("TRN_EXPORT_RECIPIENT", "test@example.com"),
+      to: Rails.application.credentials.trn_export_recipient,
       personalisation: {
         link_to_file:,
       },
