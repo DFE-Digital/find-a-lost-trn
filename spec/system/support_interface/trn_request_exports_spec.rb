@@ -54,8 +54,8 @@ RSpec.feature "Trn Request exports", type: :system do
     )
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
     expect(download_content).to eq(
-      "Id,Trn,Email,Created At,Updated At\n" \
-        "1,123456,trn@example.com,2022-11-18 12:00:00 UTC,2022-11-18 12:00:00 UTC\n",
+      "Id,Trn,Email,First Unlocked At,Created At,Updated At\n" \
+        "1,123456,trn@example.com,,2022-11-18 12:00:00 UTC,2022-11-18 12:00:00 UTC\n",
     )
   end
 

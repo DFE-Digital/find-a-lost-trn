@@ -99,8 +99,12 @@ class TrnRequest < ApplicationRecord
     itt_provider_ukprn.present? ? nil : itt_provider_name
   end
 
+  def first_unlocked_at
+    account_unlock_events.order(created_at: :asc).first&.created_at
+  end
+
   def self.to_csv(scope = since_launch)
-    attributes = %w[id trn email created_at updated_at]
+    attributes = %w[id trn email first_unlocked_at created_at updated_at]
 
     CSV.generate(headers: true) do |csv|
       csv << attributes.map(&:titleize)

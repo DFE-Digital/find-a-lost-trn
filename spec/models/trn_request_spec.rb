@@ -198,4 +198,38 @@ RSpec.describe TrnRequest, type: :model do
       it { expect(trn_request.previous_trn_success_for_email?).to be_falsey }
     end
   end
+
+  describe "#first_unlocked_at" do
+    subject { trn_request.first_unlocked_at }
+
+    let(:trn_request) { create(:trn_request) }
+
+    context "when the trn request has not been unlocked" do
+      it { is_expected.to be_nil }
+    end
+
+    context "when the trn request has been unlocked" do
+      before { create(:account_unlock_event, trn_request:) }
+
+      it { is_expected.to be_present }
+    end
+
+    context "when the trn request has been unlocked multiple times" do
+      let(:first_unlocked_at) { 1.day.ago }
+
+      before do
+        freeze_time
+        create(
+          :account_unlock_event,
+          trn_request:,
+          created_at: first_unlocked_at,
+        )
+        create(:account_unlock_event, trn_request:)
+      end
+
+      after { travel_back }
+
+      it { is_expected.to eq(first_unlocked_at) }
+    end
+  end
 end

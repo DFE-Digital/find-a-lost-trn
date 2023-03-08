@@ -28,11 +28,12 @@ RSpec.describe TrnRequestExportJob, type: :job do
             trn_request.id,
             trn_request.trn,
             trn_request.email,
+            nil,
             trn_request.created_at,
             trn_request.updated_at,
           ].join(",")
           expect(TrnExportMailer).to have_received(:monthly_report).with(
-            "Id,Trn,Email,Created At,Updated At\n#{trn_request_row}\n",
+            "Id,Trn,Email,First Unlocked At,Created At,Updated At\n#{trn_request_row}\n",
           )
         end
       end
