@@ -77,7 +77,7 @@ group :development do
   gem "solargraph", require: false
   gem "solargraph-rails", require: false
   gem "syntax_tree", "~> 6.0", require: false
-  gem "syntax_tree-haml", "~> 3.0", require: false
+  gem "syntax_tree-haml", "~> 4.0", require: false
   gem "syntax_tree-rbs", "~> 1.0.0", require: false
 
   gem "rails-erd"
