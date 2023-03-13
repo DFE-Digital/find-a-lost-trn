@@ -110,7 +110,7 @@ GEM
       mail
     choice (0.2.0)
     colorize (0.8.1)
-    concurrent-ruby (1.2.0)
+    concurrent-ruby (1.2.2)
     connection_pool (2.3.0)
     console1984 (0.1.26)
       colorize
@@ -168,7 +168,7 @@ GEM
       websocket-driver (>= 0.6, < 0.8)
     ffi (1.15.5)
     foreman (0.87.2)
-    fugit (1.8.0)
+    fugit (1.8.1)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     gds_zendesk (3.3.0)
@@ -327,7 +327,7 @@ GEM
     rake (13.0.6)
     rbs (3.0.3)
     redcarpet (3.6.0)
-    redis (4.8.0)
+    redis (4.8.1)
     regexp_parser (2.7.0)
     reline (0.3.2)
       io-console (~> 0.5)
@@ -413,9 +413,10 @@ GEM
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
-    sidekiq-cron (1.9.1)
+    sidekiq-cron (1.10.0)
       fugit (~> 1.8)
-      sidekiq (>= 4.2.1)
+      globalid (>= 1.0.1)
+      sidekiq (>= 6)
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
@@ -550,7 +551,7 @@ DEPENDENCIES
   sentry-rails
   shoulda-matchers (~> 5.3)
   sidekiq
-  sidekiq-cron (~> 1.9)
+  sidekiq-cron (~> 1.10)
   solargraph
   solargraph-rails
   spring
