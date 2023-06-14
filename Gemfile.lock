@@ -111,7 +111,7 @@ GEM
     choice (0.2.0)
     colorize (0.8.1)
     concurrent-ruby (1.2.2)
-    connection_pool (2.4.0)
+    connection_pool (2.4.1)
     console1984 (0.1.26)
       colorize
       parser
@@ -410,7 +410,7 @@ GEM
       concurrent-ruby (~> 1.0, >= 1.0.2)
     shoulda-matchers (5.3.0)
       activesupport (>= 5.2.0)
-    sidekiq (6.5.8)
+    sidekiq (6.5.9)
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
