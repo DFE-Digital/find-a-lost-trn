@@ -7,7 +7,7 @@ ruby "3.1.1"
 
 gem "audits1984", "~> 0.1.4"
 gem "bootsnap", require: false
-gem "console1984", "~> 0.1.28"
+gem "console1984", "~> 0.1.29"
 gem "cssbundling-rails"
 gem "data_migrate"
 gem "devise"

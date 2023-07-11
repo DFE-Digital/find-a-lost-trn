@@ -110,7 +110,7 @@ GEM
     choice (0.2.0)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
-    console1984 (0.1.28)
+    console1984 (0.1.29)
       parser
       rainbow
     crack (0.4.5)
@@ -511,7 +511,7 @@ DEPENDENCIES
   bootsnap
   capybara (~> 3.39)
   capybara-email
-  console1984 (~> 0.1.28)
+  console1984 (~> 0.1.29)
   cssbundling-rails
   cuprite (~> 0.14)
   data_migrate
