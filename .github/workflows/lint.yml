@@ -19,7 +19,7 @@ jobs:
         uses: ./.github/actions/prepare-app-env
 
       - name: Run Prettier
-        run: yarn prettier --check --ignore-unknown --loglevel warn '**/*'
+        run: yarn prettier --check --ignore-unknown --log-level warn '**/*'
 
   rubocop:
     name: Rubocop
