@@ -9,7 +9,7 @@ dfeAutocomplete({ autoselect: false });
 // being submitted.
 function disableIttProviderSelect() {
   var $ittProviderSelect = document.querySelector(
-    'select[name="itt_provider_form[itt_provider_name]"'
+    'select[name="itt_provider_form[itt_provider_name]"',
   );
   if (!$ittProviderSelect) return;
 
