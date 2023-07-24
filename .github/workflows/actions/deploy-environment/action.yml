@@ -47,7 +47,7 @@ runs:
       shell: bash
       env:
         TFVARS: ${{ inputs.terraform_vars }}
-      working-directory: terraform
+      working-directory: terraform/paas
 
     - uses: Azure/login@v1
       with:

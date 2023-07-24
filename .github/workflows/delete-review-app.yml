@@ -32,7 +32,7 @@ jobs:
         shell: bash
         env:
           TFVARS: workspace_variables/review.tfvars.json
-        working-directory: terraform
+        working-directory: terraform/paas
 
       - uses: Azure/login@v1
         with:
