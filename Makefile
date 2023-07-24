@@ -61,13 +61,13 @@ tags: ##Tags that will be added to resource group on it's creation in ARM templa
 
 .PHONY: read-keyvault-config
 read-keyvault-config:
-	$(eval KEY_VAULT_NAME=$(shell jq -r '.key_vault_name' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval KEY_VAULT_NAME=$(shell jq -r '.key_vault_name' terraform/paas/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval KEY_VAULT_SECRET_NAME=INFRASTRUCTURE)
 
 read-deployment-config:
-	$(eval SPACE=$(shell jq -r '.paas_space' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
-	$(eval POSTGRES_DATABASE_NAME=$(shell jq -r '.postgres_database_name' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
-	$(eval FLT_APP_NAME=$(shell jq -r '.flt_app_name' terraform/workspace_variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval SPACE=$(shell jq -r '.paas_space' terraform/paas/workspace_variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval POSTGRES_DATABASE_NAME=$(shell jq -r '.postgres_database_name' terraform/paas/workspace_variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval FLT_APP_NAME=$(shell jq -r '.flt_app_name' terraform/paas/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 
 ##@ Query parameter store to display environment variables. Requires Azure credentials
 set-azure-account: ${environment}
@@ -140,19 +140,19 @@ restore-data-from-backup: read-deployment-config # make production restore-data-
 terraform-init:
 	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	[[ "${SP_AUTH}" != "true" ]] && az account set -s $(AZURE_SUBSCRIPTION) || true
-	terraform -chdir=terraform init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars $(backend_config) -upgrade -reconfigure
+	terraform -chdir=terraform/paas init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars $(backend_config) -upgrade -reconfigure
 
 terraform-plan: terraform-init
-	terraform -chdir=terraform plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
+	terraform -chdir=terraform/paas plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
 
 terraform-apply: terraform-init
-	terraform -chdir=terraform apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/paas apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
 terraform-apply-replace-redis: terraform-init # make dev terraform-apply-replace-redis PASSCODE="XXX"
-	terraform -chdir=terraform apply -replace="cloudfoundry_service_instance.redis" -replace="cloudfoundry_app.app" -replace="cloudfoundry_service_key.redis_key" -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/paas apply -replace="cloudfoundry_service_instance.redis" -replace="cloudfoundry_app.app" -replace="cloudfoundry_service_key.redis_key" -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
 terraform-destroy: terraform-init
-	terraform -chdir=terraform destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+	terraform -chdir=terraform/paas destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
 tags: ##Tags that will be added to resource group on it's creation in ARM template
 	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Find a Lost TRN", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Find a Lost TRN", "Environment" : "$(ENV_TAG)"}' | jq . ))
