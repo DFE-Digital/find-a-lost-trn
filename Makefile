@@ -172,7 +172,7 @@ set-what-if:
 
 .PHONY: faltrn_domain
 faltrn_domain:   ## runs a script to config variables for setting up dns
-	$(eval include global_config/domain.sh)
+	$(eval include global_config/domains.sh)
 	echo "processed script"
 
 .PHONY: set-resource-group-name
