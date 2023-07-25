@@ -68,7 +68,7 @@ runs:
       id: terraform
       run: |
         make ci ${{ inputs.environment_name }} terraform-apply
-        cd terraform && echo ::set-output name=url::https://$(terraform output -raw flt_fqdn)/
+        cd terraform/paas && echo ::set-output name=url::https://$(terraform output -raw flt_fqdn)/
       env:
         ARM_ACCESS_KEY: ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }}
         TF_VAR_azure_sp_credentials_json: ${{ inputs.azure_credentials }}
