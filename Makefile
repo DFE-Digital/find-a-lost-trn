@@ -7,6 +7,9 @@ help: ## Show this help
 	@grep -E '^[a-zA-Z\.\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 ##@ Set environment and corresponding configuration
+
+SERVICE_SHORT=faltrn
+
 .PHONY: dev
 dev:
 	$(eval DEPLOY_ENV=dev)
@@ -164,7 +167,9 @@ deploy-azure-resources: set-azure-account tags # make dev deploy-azure-resources
 validate-azure-resources: set-azure-account  tags# make dev validate-azure-resources
 	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/main/azure/resourcedeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-faltrn-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" "tfStorageAccountName=${RESOURCE_NAME_PREFIX}faltrntfstate${ENV_SHORT}" "tfStorageContainerName=faltrn-tfstate" "dbBackupStorageAccountName=false" "dbBackupStorageContainerName=false" "keyVaultName=${RESOURCE_NAME_PREFIX}-faltrn-${ENV_SHORT}-kv" --what-if
 
-SERVICE_SHORT=faltrn
+.PHONY: set-azure-template-tag
+set-azure-template-tag:
+	$(eval ARM_TEMPLATE_TAG=1.1.6)
 
 .PHONY: set-what-if
 set-what-if:
@@ -172,7 +177,7 @@ set-what-if:
 
 .PHONY: faltrn_domain
 faltrn_domain:   ## runs a script to config variables for setting up dns
-	$(eval include global_config/domains.sh)
+	$(eval include global_config/domain.sh)
 	echo "processed script"
 
 .PHONY: set-resource-group-name
@@ -194,4 +199,4 @@ domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resou
 	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
 	az deployment sub create -l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--name "${DNS_ZONE}domains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-rg" 'tags=${RG_TAGS}' \
-			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}${DNS_ZONE}domainstf" "tfStorageContainerName=${DNS_ZONE}domains-tf"  "keyVaultName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-kv" ${WHAT_IF} --what-if
+			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}${DNS_ZONE}domainstf" "tfStorageContainerName=${DNS_ZONE}domains-tf"  "keyVaultName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-kv" ${WHAT_IF}
