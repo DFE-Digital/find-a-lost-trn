@@ -2,7 +2,7 @@ en:
   govuk:
     url: https://www.gov.uk
   service:
-    email: qts.enquiries@education.gov.uk
+    email: teaching.status@education.gov.uk
     name: Find a lost teacher reference number (TRN)
     tel: 020 7593 5394
     url: https://find-a-lost-trn.education.gov.uk/
