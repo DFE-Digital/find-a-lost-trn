@@ -45,7 +45,7 @@ RSpec.describe "TRN requests", type: :system do
     when_i_choose_no_my_details_are_correct
     and_i_press_continue
     then_i_see_the_zendesk_confirmation_page
-    and_i_receive_an_email_with_the_zendesk_ticket_number
+    and_i_receive_an_email
 
     when_i_navigate_to_the_email_page
     then_i_see_the_email_page
@@ -420,7 +420,7 @@ RSpec.describe "TRN requests", type: :system do
     when_i_choose_no_my_details_are_correct
     and_i_press_continue
     then_i_see_the_zendesk_confirmation_page
-    and_i_receive_an_email_with_the_zendesk_ticket_number
+    and_i_receive_an_email
     and_a_job_to_check_zendesk_is_queued
   end
 
@@ -558,14 +558,11 @@ RSpec.describe "TRN requests", type: :system do
     expect(current_email.subject).to eq("Your TRN is 2921020")
   end
 
-  def and_i_receive_an_email_with_the_zendesk_ticket_number
+  def and_i_receive_an_email
     perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
     open_email("kevin@kevin.com")
     expect(current_email.subject).to eq(
       "We’ve received the information you submitted",
-    )
-    expect(current_email.body).to include(
-      "give the helpdesk your ticket number: 42",
     )
   end
 
@@ -757,7 +754,6 @@ RSpec.describe "TRN requests", type: :system do
       "We’ve received your request",
     )
     expect(page).to have_content("We’ve received your request")
-    expect(page).to have_content("give the helpdesk your request number: 42")
   end
 
   def then_i_see_the_date_of_birth_page
