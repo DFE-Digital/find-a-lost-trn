@@ -64,7 +64,7 @@
           row.cell do
             tag.a("Ticket #{ticket.ticket_id}",
               class: 'govuk-link',
-              href: "https://teachingregulationagency.zendesk.com/agent/tickets/#{ticket.ticket_id}") +
+              href: "#{ENV["ZENDESK_URL"]}/agent/tickets/#{ticket.ticket_id}") +
               tag.span(ticket.group_name, class: 'govuk-caption-m')
           end
           row.cell do
@@ -124,7 +124,7 @@
           row.cell do
             tag.a("Ticket #{ticket.ticket_id}",
               class: 'govuk-link',
-              href: "https://teachingregulationagency.zendesk.com/agent/tickets/#{ticket.ticket_id}") +
+              href: "#{ENV["ZENDESK_URL"]}/agent/tickets/#{ticket.ticket_id}") +
               tag.span(ticket.group_name, class: 'govuk-caption-m')
           end
           row.cell do

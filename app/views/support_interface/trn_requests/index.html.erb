@@ -59,7 +59,7 @@
             summary_list.row do |row|
               row.key(text: 'Zendesk ticket')
               row.value do
-                tag.a "Ticket #{trn_request.zendesk_ticket_id}", class: 'govuk-link', href: "https://teachingregulationagency.zendesk.com/agent/tickets/#{trn_request.zendesk_ticket_id}"
+                tag.a "Ticket #{trn_request.zendesk_ticket_id}", class: 'govuk-link', href: "#{ENV["ZENDESK_URL"]}/agent/tickets/#{trn_request.zendesk_ticket_id}"
               end
             end
 
