@@ -6,10 +6,6 @@ zendesk_health_alert:
   cron: "0 10 * * *"
   class: "ZendeskHealthJob"
 
-zendesk_delete:
-  cron: "0 11 * * *"
-  class: "ScheduleZendeskTicketsForDeletionJob"
-
 trn_request_monthly:
   cron: "0 12 1 * *"
   class: "TrnRequestExportJob"
