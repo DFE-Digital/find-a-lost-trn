@@ -1,7 +1,7 @@
 variable "zone" {
   type        = string
   description = "Name of DNS zone"
-  default     = "find-a-lost-trn-in-england.education.gov.uk"
+  default     = "find-a-lost-trn.education.gov.uk"
 }
 
 variable "front_door_name" {
