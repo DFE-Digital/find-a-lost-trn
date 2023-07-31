@@ -157,9 +157,6 @@ terraform-apply-replace-redis: terraform-init # make dev terraform-apply-replace
 terraform-destroy: terraform-init
 	terraform -chdir=terraform/paas destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
-tags: ##Tags that will be added to resource group on it's creation in ARM template
-	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Find a Lost TRN", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Find a Lost TRN", "Environment" : "$(ENV_TAG)"}' | jq . ))
-
 deploy-azure-resources: set-azure-account tags # make dev deploy-azure-resources CONFIRM_DEPLOY=1
 	$(if $(CONFIRM_DEPLOY), , $(error can only run with CONFIRM_DEPLOY))
 	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/main/azure/resourcedeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-faltrn-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" "tfStorageAccountName=${RESOURCE_NAME_PREFIX}faltrntfstate${ENV_SHORT}" "tfStorageContainerName=faltrn-tfstate" "dbBackupStorageAccountName=false" "dbBackupStorageContainerName=false" "keyVaultName=${RESOURCE_NAME_PREFIX}-faltrn-${ENV_SHORT}-kv"
@@ -200,3 +197,13 @@ domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resou
 	az deployment sub create -l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--name "${DNS_ZONE}domains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-rg" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}${DNS_ZONE}domainstf" "tfStorageContainerName=${DNS_ZONE}domains-tf"  "keyVaultName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-kv" ${WHAT_IF}
+
+
+domains-infra-init: faltrn_domain set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
+	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
+
+domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
+	terraform -chdir=terraform/domains/infrastructure plan -var-file config/zones.tfvars.json
+
+domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
+	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
