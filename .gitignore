@@ -62,3 +62,19 @@ dump.rdb
 bin/fetch_config.rb
 
 /config/credentials/production.key
+
+
+# Terraform
+*.tfstate
+.terraform
+.terraform/
+terraform/*token*
+terraform/*/vendor
+terraform/*/.terraform
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
