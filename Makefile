@@ -10,6 +10,15 @@ help: ## Show this help
 
 SERVICE_SHORT=faltrn
 
+
+.PHONY: aks
+aks:  ## Sets environment variables for aks deployment
+	$(eval PLATFORM=aks)
+	$(eval REGION=UK South)
+	$(eval STORAGE_ACCOUNT_SUFFIX=sa)
+	$(eval KEY_VAULT_SECRET_NAME=APPLICATION)
+	$(eval KEY_VAULT_PURGE_PROTECTION=false)
+
 .PHONY: dev
 dev:
 	$(eval DEPLOY_ENV=dev)
@@ -17,6 +26,11 @@ dev:
 	$(eval RESOURCE_NAME_PREFIX=s165d01)
 	$(eval ENV_SHORT=dv)
 	$(eval ENV_TAG=dev)
+
+
+.PHONY: development_aks
+development_aks: aks ## Specify development aks environment
+	$(eval include global_config/development_aks.sh)
 
 .PHONY: test
 test:
@@ -185,6 +199,9 @@ set-resource-group-name:
 set-azure-resource-group-tags: ##Tags that will be added to resource group on its creation in ARM template
 	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Find a Lost TRN", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Find a Lost TRN", "Environment" : "$(ENV_TAG)"}' | jq . ))
 
+.PHONY: set-storage-account-name
+set-storage-account-name:
+	$(eval STORAGE_ACCOUNT_NAME=$(AZURE_RESOURCE_PREFIX)$(SERVICE_SHORT)tfstate$(CONFIG_SHORT)sa)
 
 .PHONY: set-key-vault-names
 set-key-vault-names:
@@ -207,3 +224,27 @@ domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
 
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
+
+
+######################################
+
+domains-init: faltrn_domain set-azure-account ## terraform init for dns resources: make <env>  domains-init
+	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=$(or $(DOMAINS_TERRAFORM_BACKEND_KEY),faltrndomains_$(DEPLOY_ENV).tfstate)
+
+domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
+	terraform -chdir=terraform/domains/environment_domains plan -var-file config/$(DEPLOY_ENV).tfvars.json
+
+domains-apply: domains-init ## terraform apply for dns resources
+	terraform -chdir=terraform/domains/environment_domains apply -var-file config/$(DEPLOY_ENV).tfvars.json ${AUTO_APPROVE}
+
+domains-destroy: domains-init ## terraform destroy for dns resources
+	terraform -chdir=terraform/domains/environment_domains destroy -var-file config/$(DEPLOY_ENV).tfvars.json
+
+
+arm-deployment: set-resource-group-name set-storage-account-name set-azure-template-tag set-azure-account set-azure-resource-group-tags set-key-vault-names ## deploy container/kv to store terraform state for each environment
+	az deployment sub create --name "resourcedeploy-tsc-$(shell date +%Y%m%d%H%M%S)" \
+		-l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
+		--parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" 'tags=${RG_TAGS}' \
+			"tfStorageAccountName=${STORAGE_ACCOUNT_NAME}" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
+			keyVaultNames='("${KEY_VAULT_APPLICATION_NAME}", "${KEY_VAULT_INFRASTRUCTURE_NAME}")' \
+			"enableKVPurgeProtection=${KEY_VAULT_PURGE_PROTECTION}" ${WHAT_IF}
