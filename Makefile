@@ -52,6 +52,10 @@ preprod:
 	$(eval ENV_SHORT=pp)
 	$(eval ENV_TAG=pre-prod)
 
+.PHONY: preproduction_aks
+preproduction_aks: aks ## Specify preproduction aks environment
+	$(eval include global_config/preproduction_aks.sh)
+
 .PHONY: production
 production:
 	$(eval DEPLOY_ENV=production)
