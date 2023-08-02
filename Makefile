@@ -66,6 +66,10 @@ production:
 	$(eval AZURE_BACKUP_STORAGE_ACCOUNT_NAME=s165p01dbbackup)
 	$(eval AZURE_BACKUP_STORAGE_CONTAINER_NAME=find-a-lost-trn)
 
+.PHONY: production_aks
+production_aks: aks ## Specify production aks environment
+	$(eval include global_config/production_aks.sh)
+
 .PHONY: review
 review:
 	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
