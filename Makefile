@@ -40,6 +40,10 @@ test:
 	$(eval ENV_SHORT=ts)
 	$(eval ENV_TAG=test)
 
+.PHONY: test_aks
+test_aks: aks ## Specify test aks environment
+	$(eval include global_config/test_aks.sh)
+
 .PHONY: preprod
 preprod:
 	$(eval DEPLOY_ENV=preprod)
