@@ -10,6 +10,21 @@ help: ## Show this help
 
 SERVICE_SHORT=faltrn
 
+.PHONY: paas
+paas:  # Set the PaaS platform variables
+	$(eval PLATFORM=paas)
+	## WIP $(eval REGION=West Europe)
+	## WIP $(eval KEY_VAULT_SECRET_NAME=APPLY-QTS-APP-VARIABLES)
+	## WIP $(eval KEY_VAULT_PURGE_PROTECTION=true)
+
+.PHONY: aks
+aks:  ## Sets environment variables for aks deployment
+	$(eval PLATFORM=aks)
+	## WIP $(eval REGION=UK South)
+	## WIP $(eval STORAGE_ACCOUNT_SUFFIX=sa)
+	## WIP $(eval KEY_VAULT_SECRET_NAME=APPLICATION)
+	## WIP $(eval KEY_VAULT_PURGE_PROTECTION=false)
+
 .PHONY: dev
 dev:
 	$(eval DEPLOY_ENV=dev)
