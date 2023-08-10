@@ -71,6 +71,7 @@ bin/fetch_config.rb
 terraform/*token*
 terraform/*/vendor
 terraform/*/.terraform
+bin/terrafile
 
 # Local .terraform directories
 **/.terraform/*
