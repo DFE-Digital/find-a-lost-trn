@@ -1,4 +1,4 @@
-
+TERRAFILE_VERSION=0.8
 .DEFAULT_GOAL		:=help
 SHELL				:=/bin/bash
 
@@ -19,7 +19,7 @@ aks:  ## Sets environment variables for aks deployment
 	$(eval KEY_VAULT_SECRET_NAME=APPLICATION)
 	$(eval KEY_VAULT_PURGE_PROTECTION=false)
 
-.PHONY: dev
+.PHONY: dev ## For Paas only
 dev:
 	$(eval DEPLOY_ENV=dev)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
@@ -27,11 +27,10 @@ dev:
 	$(eval ENV_SHORT=dv)
 	$(eval ENV_TAG=dev)
 
-
-.PHONY: development_aks
+.PHONY: development_aks ## For AKS
 development_aks: aks ## Specify development aks environment
 	$(eval include global_config/development_aks.sh)
-
+	
 .PHONY: test
 test:
 	$(eval DEPLOY_ENV=test)
@@ -84,6 +83,10 @@ ci:	## Run in automation environment
 	$(eval DISABLE_PASSCODE=true)
 	$(eval AUTO_APPROVE=-auto-approve)
 	$(eval SP_AUTH=true)
+
+bin/terrafile: ## Install terrafile to manage terraform modules
+	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
+		| tar xz -C ./bin terrafile
 
 tags: ##Tags that will be added to resource group on it's creation in ARM template
 	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Find a Lost TRN", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Find a Lost TRN", "Environment" : "$(ENV_TAG)"}' | jq . ))
@@ -182,6 +185,21 @@ terraform-apply-replace-redis: terraform-init # make dev terraform-apply-replace
 
 terraform-destroy: terraform-init
 	terraform -chdir=terraform/paas destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
+
+terraform-init-aks: bin/terrafile
+	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
+	[[ "${SP_AUTH}" != "true" ]] && az account set -s $(AZURE_SUBSCRIPTION) || true
+	./bin/terrafile -p terraform/aks/vendor/modules -f terraform/aks/workspace_variables/$(CONFIG)_Terrafile
+	terraform -chdir=terraform/aks init -backend-config workspace_variables/$(CONFIG).backend.tfvars $(backend_config) -upgrade -reconfigure
+
+terraform-plan-aks: terraform-init-aks
+	terraform -chdir=terraform/aks plan -var-file workspace_variables/$(CONFIG).tfvars.json
+
+terraform-apply-aks: terraform-init-aks
+	terraform -chdir=terraform/aks apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
+
+terraform-destroy-aks: terraform-init-aks
+	terraform -chdir=terraform/aks destroy -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 deploy-azure-resources: set-azure-account tags # make dev deploy-azure-resources CONFIRM_DEPLOY=1
 	$(if $(CONFIRM_DEPLOY), , $(error can only run with CONFIRM_DEPLOY))
