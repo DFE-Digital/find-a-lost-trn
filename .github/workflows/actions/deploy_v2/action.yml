@@ -1,0 +1,68 @@
+name: Deploy to AKS
+description: deploys application
+inputs:
+  environment:
+    description: Environment to deploy to
+    required: true
+  docker_image:
+    description: Docker image to be deployed
+    required: true
+  azure-credentials:
+    description: Credentials for azure
+    required: true
+  arm-access-key:
+    required: true
+  pr-id:
+    description: PR number for the review app
+    required: false
+outputs:
+  deploy-url:
+    value: ${{ steps.set_env_var.outputs.deploy_url }}
+runs:
+  using: composite
+  steps:
+    - name: Set Environment variables
+      id: set_env_var
+      shell: bash
+      run: |
+        tf_vars_file=terraform/aks/workspace_variables/${{ inputs.environment }}.tfvars.json
+        terraform_version=$(awk '/{/{f=/^terraform/;next}f' terraform/aks/terraform.tf | grep -o [0-9\.]*)
+        echo "cluster=$(jq -r '.cluster' ${tf_vars_file})" >> $GITHUB_ENV
+        echo "TERRAFORM_VERSION=$terraform_version" >> $GITHUB_ENV
+        echo "namespace=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
+
+        if [ -n "${{ inputs.pr-id }}" ]; then
+          APP_NAME=pr-${{ inputs.pr-id }}
+          echo "deploy_url=https://find-a-lost-trn-review-${APP_NAME}.test.teacherservices.cloud" >> $GITHUB_OUTPUT
+        else
+          aks_app_environment=$(jq -r '.app_environment' ${tf_vars_file})
+          hostname=$(jq -r '.gov_uk_host_names[0]' ${tf_vars_file})
+          if [[ $hostname != null ]]; then
+            echo "deploy_url=https://${hostname}" >> $GITHUB_OUTPUT
+          else
+            if [[ $cluster == 'production' ]]; then
+              echo "deploy_url=https://find-a-lost-trn-${aks_app_environment}.teacherservices.cloud" >> $GITHUB_OUTPUT
+            else
+              echo "deploy_url=https://find-a-lost-trn-${aks_app_environment}.${cluster}.teacherservices.cloud" >> $GITHUB_OUTPUT
+            fi
+          fi
+        fi
+
+    - name: Use Terraform ${{ env.TERRAFORM_VERSION }}
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ inputs.azure-credentials }}
+
+    - name: Terraform init, plan & apply
+      shell: bash
+      run: make ci ${{ inputs.environment }} terraform-apply-aks
+      env:
+        ARM_ACCESS_KEY: ${{ inputs.arm-access-key }}
+        DOCKER_IMAGE: ${{ inputs.docker_image }}
+        pr_id: ${{ inputs.pr-id }}
+        TF_VAR_azure_credentials: ${{ inputs.azure-credentials }}
+        CONFIRM_PRODUCTION: true

@@ -1,0 +1,7 @@
+CONFIG=review_aks
+DEPLOY_ENV=review
+CONFIG_SHORT=rv
+AZURE_SUBSCRIPTION=s189-teacher-services-cloud-test
+AZURE_RESOURCE_PREFIX=s189t01
+ENV_TAG=Test
+DOMAINS_TERRAFORM_BACKEND_KEY=faltrndomains_review.tfstate

@@ -21,7 +21,7 @@ env:
 jobs:
   docker:
     name: Docker build and push
-    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
+    if: contains(github.event.pull_request.labels.*.name, 'deploy') || contains(github.event.pull_request.labels.*.name, 'deploy_v2') || github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     outputs:
       docker_image: ${{ steps.dockerimage.outputs.docker_image_tag }}
@@ -59,6 +59,58 @@ jobs:
         with:
           message: |
             Review app deployed to ${{ steps.deploy.outputs.environment_url }}
+
+  deploy_v2_review:
+    name: Deploy to review_aks environment
+    concurrency: deploy_v2_review_${{ github.event.pull_request.number }}
+    needs: [docker]
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'deploy_v2')
+    environment:
+      name: review_aks
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/actions/deploy_v2
+        id: deploy_v2
+        with:
+          environment: review_aks
+          docker_image: ${{ needs.docker.outputs.docker_image }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
+          pr-id: ${{ github.event.pull_request.number }}
+
+      - name: Post sticky pull request comment
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            AKS review app deployed to ${{ steps.deploy_v2.outputs.environment_url }}
+
+  deploy_v2_dev:
+    name: Deploy to development_aks environment
+    concurrency: deploy_v2_development
+    needs: [docker]
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: development_aks
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/actions/deploy_v2
+        id: deploy_v2
+        with:
+          environment: development_aks
+          docker_image: ${{ needs.docker.outputs.docker_image }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
+      - uses: ./.github/workflows/actions/smoke-test-v2
+        id: smoke-test
+        with:
+          environment: development
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
   deploy_nonprod:
     name: Deploy to ${{ matrix.environment }} environment

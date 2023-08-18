@@ -6,7 +6,7 @@ on:
         description: "Deploy environment ( dev, test, preprod or production )"
         required: true
         default: dev
-        type: environment
+        type: choice
         options:
           - dev
           - test
