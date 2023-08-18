@@ -1,4 +1,43 @@
 locals {
   environment  = "${var.app_environment}${var.app_suffix}"
   service_name = "find-a-lost-trn"
+  app_secrets = {
+    DATABASE_URL = var.deploy_postgres ? module.postgres.url : "${data.azurerm_key_vault_secret.db_url[0].value}"
+    REDIS_URL    = var.deploy_redis ?  module.redis[0].url : "${data.azurerm_key_vault_secret.redis_url[0].value}"
+  }
+}
+
+module "web_application" {
+  source = "./vendor/modules/aks//aks/application"
+
+  is_web = true
+
+  namespace    = var.namespace
+  environment  = var.app_environment
+  service_name = local.service_name
+
+  cluster_configuration_map = module.cluster_data.configuration_map
+
+  kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
+  kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
+
+  docker_image           = var.paas_app_docker_image
+  max_memory             = var.memory_max
+  replicas               = var.replicas
+  web_external_hostnames = var.gov_uk_host_names
+  web_port               = 3000
+  probe_path             = "/health"
+}
+
+module "application_configuration" {
+  source = "./vendor/modules/aks//aks/application_configuration"
+
+  namespace              = var.namespace
+  environment            = var.app_environment
+  azure_resource_prefix  = var.azure_resource_prefix
+  service_short          = var.service_short
+  config_short           = var.config_short
+  config_variables       = { AKS_ENV_NAME = var.file_environment, EnableMetrics = false }
+  secret_variables       = local.app_secrets
+  secret_key_vault_short = "app"
 }
