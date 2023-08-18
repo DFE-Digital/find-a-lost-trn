@@ -30,7 +30,7 @@ dev:
 .PHONY: development_aks ## For AKS
 development_aks: aks ## Specify development aks environment
 	$(eval include global_config/development_aks.sh)
-	
+
 .PHONY: test
 test:
 	$(eval DEPLOY_ENV=test)
@@ -78,7 +78,15 @@ review:
 	$(eval backend_config=-backend-config="key=review/review$(env).tfstate")
 	$(eval export TF_VAR_app_suffix=$(env))
 
+.PHONY: review_aks
+review_aks: aks ## Specify review aks environment
+	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
+	$(eval include global_config/review_aks.sh)
+	$(eval env=-pr-$(pr_id))
+	$(eval backend_config=-backend-config="key=review_aks$(env).tfstate")
+	$(eval export TF_VAR_app_suffix=$(env))
 
+.PHONY: ci
 ci:	## Run in automation environment
 	$(eval DISABLE_PASSCODE=true)
 	$(eval AUTO_APPROVE=-auto-approve)
@@ -207,7 +215,7 @@ deploy-azure-resources: set-azure-account tags # make dev deploy-azure-resources
 	$(if $(CONFIRM_DEPLOY), , $(error can only run with CONFIRM_DEPLOY))
 	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/main/azure/resourcedeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-faltrn-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" "tfStorageAccountName=${RESOURCE_NAME_PREFIX}faltrntfstate${ENV_SHORT}" "tfStorageContainerName=faltrn-tfstate" "dbBackupStorageAccountName=false" "dbBackupStorageContainerName=false" "keyVaultName=${RESOURCE_NAME_PREFIX}-faltrn-${ENV_SHORT}-kv"
 
-validate-azure-resources: set-azure-account  tags# make dev validate-azure-resources
+validate-azure-resources: set-azure-account tags # make dev validate-azure-resources
 	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/main/azure/resourcedeploy.json" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-faltrn-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" "tfStorageAccountName=${RESOURCE_NAME_PREFIX}faltrntfstate${ENV_SHORT}" "tfStorageContainerName=faltrn-tfstate" "dbBackupStorageAccountName=false" "dbBackupStorageContainerName=false" "keyVaultName=${RESOURCE_NAME_PREFIX}-faltrn-${ENV_SHORT}-kv" --what-if
 
 .PHONY: set-azure-template-tag

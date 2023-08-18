@@ -1,0 +1,57 @@
+name: Run smoke test
+
+inputs:
+  environment:
+    description: The name of the environment
+    required: true
+  azure_credentials:
+    description: JSON object containing a service principal that can read from Azure Key Vault
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    - uses: Azure/login@v1
+      with:
+        creds: ${{ inputs.azure_credentials }}
+
+    - name: Prepare application environment
+      uses: ./.github/actions/prepare-app-env
+
+    - name: Set environment variables
+      shell: bash
+      run: |
+        tf_vars_file=terraform/aks/workspace_variables/${{ inputs.environment }}.tfvars.json
+        echo "APP_KEY_VAULT=$(jq -r '.app_key_vault' ${tf_vars_file})" >> $GITHUB_ENV
+
+    - name: Retrieve Secrets from KV
+      uses: azure/CLI@v1
+      id: retrieve-secrets
+      with:
+        inlineScript: |
+          HOSTING_DOMAIN=$(az keyvault secret show --name HOSTING-DOMAIN --vault-name "${{ env.APP_KEY_VAULT}}" --query 'value' -o tsv)
+          echo "::add-mask::$HOSTING_DOMAIN"
+          echo "HOSTING_DOMAIN=$HOSTING_DOMAIN" >> $GITHUB_OUTPUT
+          GOVUK_NOTIFY_API_KEY=$(az keyvault secret show --name GOVUK-NOTIFY-API-KEY --vault-name "${{ env.APP_KEY_VAULT}}" --query 'value' -o tsv)
+          echo "::add-mask::$GOVUK_NOTIFY_API_KEY"
+          echo "GOVUK_NOTIFY_API_KEY=$GOVUK_NOTIFY_API_KEY" >> $GITHUB_OUTPUT
+          HOSTING_ENVIRONMENT_NAME=$(az keyvault secret show --name HOSTING-ENVIRONMENT-NAME --vault-name "${{ env.APP_KEY_VAULT}}" --query 'value' -o tsv)
+          echo "::add-mask::$HOSTING_ENVIRONMENT_NAME"
+          echo "HOSTING_ENVIRONMENT_NAME=$HOSTING_ENVIRONMENT_NAME" >> $GITHUB_OUTPUT
+          SUPPORT_USERNAME=$(az keyvault secret show --name SUPPORT-USERNAME --vault-name "${{ env.APP_KEY_VAULT}}" --query 'value' -o tsv)
+          echo "::add-mask::$SUPPORT_USERNAME"
+          echo "SUPPORT_USERNAME=$SUPPORT_USERNAME" >> $GITHUB_OUTPUT
+          SUPPORT_PASSWORD=$(az keyvault secret show --name SUPPORT-PASSWORD --vault-name "${{ env.APP_KEY_VAULT}}" --query 'value' -o tsv)
+          echo "::add-mask::$SUPPORT_PASSWORD"
+          echo "SUPPORT_PASSWORD=$SUPPORT_PASSWORD" >> $GITHUB_OUTPUT
+
+    - name: Run deployment smoke test
+      shell: bash
+      run: bin/smoke
+      env:
+        HOSTING_DOMAIN: ${{ steps.retrieve-secrets.outputs.HOSTING_DOMAIN }}
+        RAILS_ENV: ${{ steps.retrieve-secrets.outputs.HOSTING_ENVIRONMENT_NAME }}
+        GOVUK_NOTIFY_API_KEY: ${{ steps.retrieve-secrets.outputs.GOVUK_NOTIFY_API_KEY }}
+        SUPPORT_USERNAME: ${{ steps.retrieve-secrets.outputs.SUPPORT_USERNAME }}
+        SUPPORT_PASSWORD: ${{ steps.retrieve-secrets.outputs.SUPPORT_PASSWORD }}
