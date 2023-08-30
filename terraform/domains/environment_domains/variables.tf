@@ -38,3 +38,19 @@ variable "origin_hostname" {
 locals {
   hostname = "${var.domains[0]}.${var.zone}"
 }
+
+variable "hosted_zone" {
+  type    = map(any)
+  default = {}
+}
+
+variable "null_host_header" {
+  default     = false
+  description = "The origin_host_header for the azurerm_cdn_frontdoor_origin resource will be var.host_name (if false) or null (if true). If null then the host name from the incoming request will be used."
+}
+
+variable "cached_paths" {
+  type        = list(string)
+  default     = []
+  description = "List of path patterns such as /assets/* that front door will cache"
+}
