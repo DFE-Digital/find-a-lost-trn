@@ -252,15 +252,15 @@ set-key-vault-names:
 	$(eval KEY_VAULT_APPLICATION_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-app-kv)
 	$(eval KEY_VAULT_INFRASTRUCTURE_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-inf-kv)
 
-
 domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags ## deploy container to store terraform state for all dns resources -run validate first
 	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
 	az deployment sub create -l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--name "${DNS_ZONE}domains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-rg" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}${DNS_ZONE}domainstf" "tfStorageContainerName=${DNS_ZONE}domains-tf"  "keyVaultName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-kv" ${WHAT_IF}
 
+domains-infra-init: bin/terrafile faltrn_domain set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
+	./bin/terrafile -p terraform/domains/infrastructure/vendor/modules -f terraform/domains/infrastructure/config/zones_Terrafile
 
-domains-infra-init: faltrn_domain set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
 	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
@@ -269,10 +269,11 @@ domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
 
-
 ######################################
 
-domains-init: faltrn_domain set-azure-account ## terraform init for dns resources: make <env>  domains-init
+domains-init: bin/terrafile faltrn_domain set-azure-account ## terraform init for dns resources: make <env>  domains-init
+	./bin/terrafile -p terraform/domains/environment_domains/vendor/modules -f terraform/domains/environment_domains/config/${CONFIG}_Terrafile
+
 	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=$(or $(DOMAINS_TERRAFORM_BACKEND_KEY),faltrndomains_$(DEPLOY_ENV).tfstate)
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
@@ -283,7 +284,6 @@ domains-apply: domains-init ## terraform apply for dns resources
 
 domains-destroy: domains-init ## terraform destroy for dns resources
 	terraform -chdir=terraform/domains/environment_domains destroy -var-file config/$(DEPLOY_ENV).tfvars.json
-
 
 arm-deployment: set-resource-group-name set-storage-account-name set-azure-template-tag set-azure-account set-azure-resource-group-tags set-key-vault-names ## deploy container/kv to store terraform state for each environment
 	az deployment sub create --name "resourcedeploy-tsc-$(shell date +%Y%m%d%H%M%S)" \

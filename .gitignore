@@ -69,7 +69,7 @@ bin/fetch_config.rb
 .terraform
 .terraform/
 terraform/*token*
-terraform/*/vendor
+terraform/**/vendor/
 terraform/*/.terraform
 bin/terrafile
 bin/konduit.sh
