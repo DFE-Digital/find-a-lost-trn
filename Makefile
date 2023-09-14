@@ -92,6 +92,10 @@ ci:	## Run in automation environment
 	$(eval AUTO_APPROVE=-auto-approve)
 	$(eval SP_AUTH=true)
 
+bin/konduit.sh:
+	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
+		&& chmod +x bin/konduit.sh
+
 bin/terrafile: ## Install terrafile to manage terraform modules
 	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
 		| tar xz -C ./bin terrafile
