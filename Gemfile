@@ -17,7 +17,7 @@ gem "dfe-autocomplete",
     github: "DFE-Digital/dfe-autocomplete"
 gem "faraday", "~> 2.7"
 gem "gds_zendesk"
-gem "govuk-components", "~> 3.3.0"
+gem "govuk-components", "~> 4.1.1"
 gem "govuk_design_system_formbuilder"
 gem "govuk_markdown", "~> 2.0"
 gem "jsbundling-rails"
