@@ -18,7 +18,7 @@ jobs:
     environment: ${{ inputs.environment }}
 
     outputs:
-      ENVIRONMENT_NAME: ${{ env.ENVIRONMENT_NAME }}
+      ENVIRONMENT_AKS: ${{ steps.set_aks_env_name.outputs.ENVIRONMENT_AKS }}
 
     steps:
       - uses: actions/checkout@v4
@@ -67,10 +67,12 @@ jobs:
           path: backup.sql.gz
           retention-days: 1
 
-      - run: |
-          case "${ENVIRONMENT_NAME}" in
+      - name: Set AKS environment name
+        id: set_aks_env_name
+        run: |
+          case "${{ inputs.environment }}" in
           dev)
-            echo "ENVIRONMENT_NAME=development_aks" >> $GITHUB_ENV
+            echo "ENVIRONMENT_AKS=development_aks" >> $GITHUB_OUTPUT
             ;;
           *)
             echo "unknown cluster"
@@ -82,10 +84,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: backup
 
-    environment: ${{ needs.backup.outputs.ENVIRONMENT_NAME }}
+    environment: ${{ needs.backup.outputs.ENVIRONMENT_AKS }}
 
     env:
-      ENVIRONMENT_NAME: ${{ needs.backup.outputs.ENVIRONMENT_NAME }}
+      ENVIRONMENT_NAME: ${{ needs.backup.outputs.ENVIRONMENT_AKS }}
 
     steps:
       - uses: actions/checkout@v4
