@@ -67,6 +67,17 @@ variable "memory_max" {
   description = "Max memory size"
 }
 
+variable "worker_replicas" { 
+  default = 1 
+  type = number
+}
+
+variable "worker_memory_max" { 
+  default = "1Gi" 
+  type = string
+  description = "Max memory size of worker"
+}
+
 variable "gov_uk_host_names" {
   default = []
   type    = list(any)
