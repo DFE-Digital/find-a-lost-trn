@@ -203,8 +203,7 @@ terraform-init-aks: bin/terrafile
 	[[ "${SP_AUTH}" != "true" ]] && az account set -s $(AZURE_SUBSCRIPTION) || true
 	./bin/terrafile -p terraform/aks/vendor/modules -f terraform/aks/workspace_variables/$(CONFIG)_Terrafile
 	terraform -chdir=terraform/aks init -backend-config workspace_variables/$(CONFIG).backend.tfvars $(backend_config) -upgrade -reconfigure
-	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=2ad42e8958a4d63ed295a58a0847430705725ba8))
-	$(eval export TF_VAR_paas_app_docker_image=ghcr.io/dfe-digital/find-a-lost-trn:$(IMAGE_TAG))
+	$(if $(DOCKER_IMAGE), $(eval export TF_VAR_paas_app_docker_image=$(DOCKER_IMAGE)), $(error Missing environment variable "DOCKER_IMAGE"))
 
 terraform-plan-aks: terraform-init-aks
 	terraform -chdir=terraform/aks plan -var-file workspace_variables/$(CONFIG).tfvars.json
