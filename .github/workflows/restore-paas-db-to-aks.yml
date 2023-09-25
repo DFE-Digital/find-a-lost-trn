@@ -11,9 +11,10 @@ on:
         type: choice
         options:
           - dev
+          - test
 
 env:
-  BACKUP_ARTIFACT_NAME: dev-backup
+  BACKUP_ARTIFACT_NAME: ${{ inputs.environment }}-backup
 
 jobs:
   backup:
@@ -78,6 +79,9 @@ jobs:
           dev)
             echo "ENVIRONMENT_AKS=development_aks" >> $GITHUB_OUTPUT
             ;;
+          test)
+            echo "ENVIRONMENT_AKS=test_aks" >> $GITHUB_OUTPUT
+            ;;
           *)
             echo "unknown cluster"
             ;;
@@ -114,6 +118,11 @@ jobs:
             echo "cluster_rg=$test_cluster_rg" >> $GITHUB_ENV
             echo "cluster_name=$test_cluster_name" >> $GITHUB_ENV
             echo "app_name=find-a-lost-trn-development" >> $GITHUB_ENV
+            ;;
+          test_aks)
+            echo "cluster_rg=$test_cluster_rg" >> $GITHUB_ENV
+            echo "cluster_name=$test_cluster_name" >> $GITHUB_ENV
+            echo "app_name=find-a-lost-trn-test" >> $GITHUB_ENV
             ;;
           *)
             echo "unknown cluster"
