@@ -87,54 +87,36 @@ jobs:
           message: |
             AKS review app deployed to ${{ steps.deploy_v2.outputs.environment_url }}
 
-  deploy_v2_dev:
-    name: Deploy to development_aks environment
-    concurrency: deploy_v2_development
-    needs: [docker]
+  deploy_v2_nonprod:
+    name: Deploy to ${{ matrix.environment }} environment
     runs-on: ubuntu-latest
     continue-on-error: true
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    concurrency: deploy_${{ matrix.environment }}
+    needs: [docker]
+    strategy:
+      max-parallel: 1
+      matrix:
+        environment: [development_aks, test_aks, preproduction_aks]
     environment:
-      name: development_aks
+      name: ${{ matrix.environment }}
+      url: ${{ steps.deploy.outputs.environment_url }}
+    outputs:
+      environment_url: ${{ steps.deploy.outputs.environment_url }}
 
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/deploy_v2
         id: deploy_v2
         with:
-          environment: development_aks
+          environment: ${{ matrix.environment }}
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
       - uses: ./.github/workflows/actions/smoke-test-v2
         id: smoke-test
         with:
-          environment: development_aks
-          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-
-  deploy_v2_test:
-    name: Deploy to test_aks environment
-    concurrency: deploy_v2_test
-    needs: [docker]
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    environment:
-      name: test_aks
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/workflows/actions/deploy_v2
-        id: deploy_v2
-        with:
-          environment: test_aks
-          docker_image: ${{ needs.docker.outputs.docker_image }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
-      - uses: ./.github/workflows/actions/smoke-test-v2
-        id: smoke-test
-        with:
-          environment: test_aks
+          environment: ${{ matrix.environment }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
   deploy_nonprod:
