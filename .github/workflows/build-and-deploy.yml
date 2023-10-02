@@ -119,6 +119,30 @@ jobs:
           environment: ${{ matrix.environment }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
+  deploy_v2_production:
+    name: Deploy to production_aks environment
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: production_aks
+      url: ${{ steps.deploy_v2.outputs.environment_url }}
+    concurrency: deploy_production_aks
+    needs: [docker, deploy_v2_nonprod]
+
+    outputs:
+      environment_url: ${{ steps.deploy_v2.outputs.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/actions/deploy_v2
+        id: deploy_v2
+        with:
+          environment: production_aks
+          docker_image: ${{ needs.docker.outputs.docker_image }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
+
   deploy_nonprod:
     name: Deploy to ${{ matrix.environment }} environment
     runs-on: ubuntu-latest

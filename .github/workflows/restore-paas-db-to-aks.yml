@@ -13,6 +13,7 @@ on:
           - dev
           - test
           - preprod
+          - production
 
 env:
   BACKUP_ARTIFACT_NAME: ${{ inputs.environment }}-backup
@@ -86,6 +87,9 @@ jobs:
           preprod)
             echo "ENVIRONMENT_AKS=preproduction_aks" >> $GITHUB_OUTPUT
             ;;
+          production)
+            echo "ENVIRONMENT_AKS=production_aks" >> $GITHUB_OUTPUT
+            ;;
           *)
             echo "unknown cluster"
             ;;
@@ -132,6 +136,11 @@ jobs:
             echo "cluster_rg=$test_cluster_rg" >> $GITHUB_ENV
             echo "cluster_name=$test_cluster_name" >> $GITHUB_ENV
             echo "app_name=find-a-lost-trn-preproduction" >> $GITHUB_ENV
+            ;;
+          production_aks)
+            echo "cluster_rg=$production_cluster_rg" >> $GITHUB_ENV
+            echo "cluster_name=$production_cluster_name" >> $GITHUB_ENV
+            echo "app_name=find-a-lost-trn-production" >> $GITHUB_ENV
             ;;
           *)
             echo "unknown cluster"
