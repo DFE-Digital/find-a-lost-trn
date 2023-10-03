@@ -53,10 +53,6 @@ runs:
       with:
         terraform_version: ${{ env.TERRAFORM_VERSION }}
 
-    - uses: azure/login@v1
-      with:
-        creds: ${{ inputs.azure-credentials }}
-
     - name: Terraform init, plan & apply
       shell: bash
       run: make ci ${{ inputs.environment }} terraform-apply-aks

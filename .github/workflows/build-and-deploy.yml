@@ -51,6 +51,7 @@ jobs:
       - uses: Azure/login@v1
         with:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
+            
       - uses: ./.github/workflows/actions/deploy_v2
         id: deploy_v2
         with:
