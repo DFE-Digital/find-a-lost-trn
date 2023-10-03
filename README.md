@@ -217,3 +217,4 @@ Regenerate this diagram with `bundle exec rake erd`.
 ## Licence
 
 [MIT Licence](LICENCE).
+.
