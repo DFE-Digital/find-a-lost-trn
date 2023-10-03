@@ -138,7 +138,7 @@ jobs:
       - uses: ./.github/workflows/actions/deploy_v2
         id: deploy_v2
         with:
-          environment_name: production_aks
+          environment: production_aks
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
           arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
