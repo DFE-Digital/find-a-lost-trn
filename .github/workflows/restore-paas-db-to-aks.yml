@@ -120,6 +120,8 @@ jobs:
       - run: |
           test_cluster_rg=s189t01-tsc-ts-rg
           test_cluster_name=s189t01-tsc-test-aks
+          production_cluster_rg=s189p01-tsc-pd-rg
+          production_cluster_name=s189p01-tsc-production-aks
 
           case "${ENVIRONMENT_NAME}" in
           development_aks)
