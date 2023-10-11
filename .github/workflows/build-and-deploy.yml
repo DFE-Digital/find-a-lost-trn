@@ -152,7 +152,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        environment: [dev, test, preprod]
+        environment: [test, preprod]
     environment:
       name: ${{ matrix.environment }}
       url: ${{ steps.deploy.outputs.environment_url }}
