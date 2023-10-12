@@ -5,10 +5,9 @@ on:
       environment:
         description: "Deploy environment ( test, preprod or production )"
         required: true
-        default: test
+        default: preprod
         type: choice
         options:
-          - test
           - preprod
           - production
       sha:
