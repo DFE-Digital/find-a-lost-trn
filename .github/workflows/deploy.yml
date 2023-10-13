@@ -5,10 +5,9 @@ on:
       environment:
         description: "Deploy environment ( test, preprod or production )"
         required: true
-        default: preprod
+        default: production
         type: choice
         options:
-          - preprod
           - production
       sha:
         description: Commit sha to be deployed

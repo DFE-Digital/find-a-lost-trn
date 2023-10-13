@@ -10,7 +10,6 @@ on:
       environment:
         type: choice
         options:
-          - preprod
           - production
 
 env:
@@ -76,9 +75,6 @@ jobs:
         id: set_aks_env_name
         run: |
           case "${{ inputs.environment }}" in
-          preprod)
-            echo "ENVIRONMENT_AKS=preproduction_aks" >> $GITHUB_OUTPUT
-            ;;
           production)
             echo "ENVIRONMENT_AKS=production_aks" >> $GITHUB_OUTPUT
             ;;
@@ -116,11 +112,6 @@ jobs:
           production_cluster_name=s189p01-tsc-production-aks
 
           case "${ENVIRONMENT_NAME}" in
-          preproduction_aks)
-            echo "cluster_rg=$test_cluster_rg" >> $GITHUB_ENV
-            echo "cluster_name=$test_cluster_name" >> $GITHUB_ENV
-            echo "app_name=find-a-lost-trn-preproduction" >> $GITHUB_ENV
-            ;;
           production_aks)
             echo "cluster_rg=$production_cluster_rg" >> $GITHUB_ENV
             echo "cluster_name=$production_cluster_name" >> $GITHUB_ENV
