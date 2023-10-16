@@ -141,35 +141,3 @@ jobs:
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
-
-  deploy_production:
-    name: Deploy to production environment
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    environment:
-      name: production
-      url: ${{ steps.deploy.outputs.environment_url }}
-    concurrency: deploy_production
-    needs: [docker, deploy_v2_nonprod]
-
-    outputs:
-      environment_url: ${{ steps.deploy.outputs.environment_url }}
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Docker image tag
-        id: image
-        run: |
-          echo ::set-output name=tag::$CONTAINER_REGISTRY/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]'):$GITHUB_SHA
-        env:
-          CONTAINER_REGISTRY: ${{ env.CONTAINER_REGISTRY }}
-        shell: bash
-
-      - uses: ./.github/workflows/actions/deploy-environment
-        id: deploy
-        with:
-          environment_name: production
-          docker_image: ${{ steps.image.outputs.tag }}
-          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          terraform_vars: workspace_variables/production.tfvars.json
