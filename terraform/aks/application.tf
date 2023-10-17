@@ -2,8 +2,8 @@ locals {
   environment  = "${var.app_environment}${var.app_suffix}"
   service_name = "find-a-lost-trn"
   app_secrets = {
-    DATABASE_URL = var.deploy_postgres ? module.postgres.url : "${data.azurerm_key_vault_secret.db_url[0].value}"
-    REDIS_URL    = var.deploy_redis ?  module.redis[0].url : "${data.azurerm_key_vault_secret.redis_url[0].value}"
+    DATABASE_URL = var.deploy_postgres ? module.postgres.url : ""
+    REDIS_URL    = var.deploy_redis ?  module.redis[0].url : ""
   }
 }
 

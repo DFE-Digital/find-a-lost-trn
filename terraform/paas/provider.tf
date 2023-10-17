@@ -20,6 +20,3 @@ provider "cloudfoundry" {
   password = data.azurerm_key_vault_secret.secrets["PAAS-PASSWORD"].value
 }
 
-provider "statuscake" {
-  api_token = local.monitoring_secrets.STATUSCAKE_PASSWORD
-}
