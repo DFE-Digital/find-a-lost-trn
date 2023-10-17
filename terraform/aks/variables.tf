@@ -108,6 +108,11 @@ variable "key_vault_resource_group" {
   description = "the name of the key vault resorce group"
 }
 
+variable "inf_vault_name" {
+  default     = null
+  description = "infrastructure kv name"
+}
+
 variable "review_url_db_name" {
   default     = null
   description = "the name of the secret storing review db url"

@@ -19,3 +19,6 @@ provider "kubernetes" {
   cluster_ca_certificate = module.cluster_data.kubernetes_cluster_ca_certificate
 }
 
+provider "statuscake" {
+  api_token = data.azurerm_key_vault_secret.statuscake_password.value
+}
