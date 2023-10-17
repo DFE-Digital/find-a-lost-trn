@@ -117,3 +117,11 @@ variable "review_url_redis_name" {
     default     = null
   description = "the name of the secret storing review redis url"
 }
+
+# StatusCake variables
+variable "statuscake_alerts" {
+  type    = map(any)
+  default = {}
+}
+
+variable "api_token" { default = "" }
