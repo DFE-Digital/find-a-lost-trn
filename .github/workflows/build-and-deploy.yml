@@ -121,7 +121,6 @@ jobs:
   deploy_v2_production:
     name: Deploy to production_aks environment
     runs-on: ubuntu-latest
-    continue-on-error: true
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment:
       name: production_aks
