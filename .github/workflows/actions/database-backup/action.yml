@@ -1,0 +1,161 @@
+name: Backup AKS Database
+description: backs up AKS database to Azure Storage
+
+inputs:
+  environment:
+    description: "The name of the environment"
+    required: true
+  azure_credentials:
+    description: "JSON object containing a service principal that can read from Azure Key Vault"
+    required: true
+
+outputs:
+  backup_artifact:
+    description: "The backup artifact name"
+    value: ${{ inputs.environment }}-backup
+
+runs:
+  using: composite
+
+  steps:
+    - uses: actions/checkout@v4
+      id: Checkout
+
+    - name: Prepare application environment
+      uses: ./.github/actions/prepare-app-env
+
+    - name: Set KV environment variables
+      shell: bash
+      id: set_kv_env_vars
+      run: |
+        tf_vars_file=terraform/aks/workspace_variables/${{ inputs.environment }}_aks.tfvars.json
+        cat $tf_vars_file
+        INF_VAULT_NAME=$(jq -r '.inf_vault_name' ${tf_vars_file})
+        NAMESPACE=$(jq -r '.namespace' ${tf_vars_file})
+        APP_ENVIRONMENT=$(jq -r '.app_environment' ${tf_vars_file})
+        CLUSTER=$(jq -r '.cluster' ${tf_vars_file})
+
+        echo "INF_VAULT_NAME=$INF_VAULT_NAME" >> $GITHUB_ENV
+        echo "NAMESPACE=$NAMESPACE" >> $GITHUB_ENV
+        echo "CLUSTER=$CLUSTER" >> $GITHUB_ENV
+        echo "APP_ENVIRONMENT=$APP_ENVIRONMENT" >> $GITHUB_ENV
+
+        echo "envs are:  ${{ env.INF_VAULT_NAME }} ${{ env.NAMESPACE }}  ${{ env.APP_ENVIRONMENT }}  ${{ env.CLUSTER }}"
+
+    - uses: Azure/login@v1
+      with:
+        creds: ${{ inputs.azure_credentials }}
+
+    - name: Fetch slack web hook
+      uses: azure/CLI@v1
+      id: slack-web-hook
+      with:
+        inlineScript: |
+          SECRET_VALUE=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ env.INF_VAULT_NAME }}" --query "value" -o tsv)
+          echo "::add-mask::$SECRET_VALUE"
+          echo "SLACK-WEBHOOK=$SECRET_VALUE" >> $GITHUB_OUTPUT
+
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: "v1.26.1"
+
+    - name: Get environment variables
+      shell: bash
+      run: |
+        test_cluster_rg=s189t01-tsc-ts-rg
+        test_cluster_name=s189t01-tsc-test-aks
+        production_cluster_rg=s189p01-tsc-pd-rg
+        production_cluster_name=s189p01-tsc-production-aks
+        BACKUP_FILE_NAME=faltrn_${{ inputs.environment }}_$(date +"%F")
+        echo "BACKUP_FILE_NAME=$BACKUP_FILE_NAME" >> $GITHUB_ENV
+
+        case "${{ inputs.environment }}" in
+        development)
+            echo "cluster_rg=$test_cluster_rg" >> $GITHUB_ENV
+            echo "cluster_name=$test_cluster_name" >> $GITHUB_ENV
+            echo "app_name=find-a-lost-trn-development" >> $GITHUB_ENV
+            echo "storage_account=s189t01faltrndbbkpdvsa" >> $GITHUB_ENV
+            ;;
+        test)
+            echo "cluster_rg=$test_cluster_rg" >> $GITHUB_ENV
+            echo "cluster_name=$test_cluster_name" >> $GITHUB_ENV
+            echo "app_name=find-a-lost-trn-test" >> $GITHUB_ENV
+            echo "storage_account=s189t01faltrndbbkptssa" >> $GITHUB_ENV
+            ;;
+        preproduction)
+            echo "cluster_rg=$test_cluster_rg" >> $GITHUB_ENV
+            echo "cluster_name=$test_cluster_name" >> $GITHUB_ENV
+            echo "app_name=find-a-lost-trn-preproduction" >> $GITHUB_ENV
+            echo "storage_account=s189t01faltrndbbkpppsa" >> $GITHUB_ENV
+            ;;
+        production)
+            echo "cluster_rg=$production_cluster_rg" >> $GITHUB_ENV
+            echo "cluster_name=$production_cluster_name" >> $GITHUB_ENV
+            echo "app_name=find-a-lost-trn-production" >> $GITHUB_ENV
+            echo "storage_account=s189p01faltrndbbkppdsa" >> $GITHUB_ENV
+            ;;
+        *)
+            echo "unknown cluster"
+            ;;
+        esac
+
+    - uses: azure/setup-kubectl@v3
+
+    - name: K8 setup
+      shell: bash
+      run: |
+        az aks get-credentials -g ${{ env.cluster_rg }} -n ${{ env.cluster_name }}
+        make bin/konduit.sh
+
+    - name: Setup postgres client
+      uses: DFE-Digital/github-actions/install-postgres-client@master
+
+    - name: Set environment variable
+      shell: bash
+      run: |
+        BACKUP_FILE_NAME=faltrn_${{ inputs.environment }}_$(date +"%F")
+
+    - name: Backup ${{ inputs.environment }} DB
+      shell: bash
+      run: |
+        bin/konduit.sh find-a-lost-trn-${{ inputs.environment }} -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f ${BACKUP_FILE_NAME}.sql
+        tar -cvzf ${BACKUP_FILE_NAME}.tar.gz ${BACKUP_FILE_NAME}.sql
+
+    - name: Set Connection String
+      shell: bash
+      run: |
+        STORAGE_CONN_STR="$(az keyvault secret show --name FALTRN-BACKUP-STORAGE-CONNECTION-STRING-AKS --vault-name ${{ env.INF_VAULT_NAME }} | jq -r .value)"
+        echo "::add-mask::$STORAGE_CONN_STR"
+        echo "STORAGE_CONN_STR=$STORAGE_CONN_STR" >> $GITHUB_ENV
+
+    - name: Upload Backup to Azure Storage
+      shell: bash
+      run: |
+        az storage blob upload --account-name ${{ env.storage_account }} --container-name database-backup \
+        --file ${BACKUP_FILE_NAME}.tar.gz --name ${BACKUP_FILE_NAME}.tar.gz --overwrite \
+        --connection-string '${{ env.STORAGE_CONN_STR }}'
+        rm ${BACKUP_FILE_NAME}.tar.gz
+
+    - name: Disk cleanup
+      shell: bash
+      run: |
+        sudo rm -rf /usr/local/lib/android || true
+        sudo rm -rf /usr/share/dotnet || true
+        sudo rm -rf /opt/ghc || true
+
+    - name: Remove backup file
+      shell: bash
+      run: |
+        rm ${{ env.BACKUP_FILE_NAME }}.sql
+
+    - name: Check for Failure
+      if: ${{ failure() }}
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_USERNAME: CI Deployment
+        SLACK_TITLE: Database backup failure
+        SLACK_MESSAGE: ${{ inputs.environment }} database backup job failed
+        SLACK_WEBHOOK: ${{ steps.slack-web-hook.outputs.SLACK-WEBHOOK }}
+        SLACK_COLOR: failure
+        SLACK_FOOTER: Sent from backup job in database-backup workflow
