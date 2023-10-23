@@ -14,6 +14,8 @@ module "postgres" {
   azure_enable_monitoring   = var.enable_monitoring
   azure_extensions          = ["plpgsql", "citext", "uuid-ossp"]
   server_version            = "14"
+
+  azure_enable_backup_storage = var.azure_enable_backup_storage
 }
 
 module "redis" {

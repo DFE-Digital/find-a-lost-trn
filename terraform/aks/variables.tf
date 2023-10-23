@@ -113,6 +113,10 @@ variable "inf_vault_name" {
   description = "infrastructure kv name"
 }
 
+variable "azure_enable_backup_storage" {
+  default = false  
+}
+
 variable "review_url_db_name" {
   default     = null
   description = "the name of the secret storing review db url"
