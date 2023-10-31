@@ -125,7 +125,7 @@ runs:
     - name: Set Connection String
       shell: bash
       run: |
-        STORAGE_CONN_STR="$(az keyvault secret show --name FALTRN-BACKUP-STORAGE-CONNECTION-STRING-AKS --vault-name ${{ env.INF_VAULT_NAME }} | jq -r .value)"
+        STORAGE_CONN_STR="$(az keyvault secret show --name FALTRN-BACKUP-STORAGE-KEY-AKS --vault-name ${{ env.INF_VAULT_NAME }} | jq -r .value)"
         echo "::add-mask::$STORAGE_CONN_STR"
         echo "STORAGE_CONN_STR=$STORAGE_CONN_STR" >> $GITHUB_ENV
 
