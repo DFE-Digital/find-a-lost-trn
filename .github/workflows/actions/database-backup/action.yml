@@ -135,19 +135,12 @@ runs:
         az storage blob upload --account-name ${{ env.storage_account }} --container-name database-backup \
         --file ${{ env.BACKUP_FILE_NAME }}.tar.gz --name ${{ env.BACKUP_FILE_NAME }}.tar.gz --overwrite \
         --account-key '${{ env.STORAGE_CONN_STR }}'
-        rm ${BACKUP_FILE_NAME}.tar.gz
-
-    - name: Disk cleanup
-      shell: bash
-      run: |
-        sudo rm -rf /usr/local/lib/android || true
-        sudo rm -rf /usr/share/dotnet || true
-        sudo rm -rf /opt/ghc || true
 
     - name: Remove backup file
       shell: bash
       run: |
         rm ${{ env.BACKUP_FILE_NAME }}.sql
+        rm ${{ env.BACKUP_FILE_NAME }}.tar.gz
 
     - name: Check for Failure
       if: ${{ failure() }}
