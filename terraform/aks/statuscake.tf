@@ -5,6 +5,8 @@ module "statuscake" {
 
   uptime_urls    = each.value.website_url
   contact_groups = each.value.contact_group
+
+  confirmation = try(each.value.confirmations, 2)
 }
 
 resource "statuscake_ssl_check" "domain-alert" {
