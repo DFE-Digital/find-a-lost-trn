@@ -21,7 +21,7 @@ env:
 jobs:
   docker:
     name: Docker build and push
-    if: contains(github.event.pull_request.labels.*.name, 'deploy') || contains(github.event.pull_request.labels.*.name, 'deploy_v2') || github.event_name != 'pull_request'
+    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     outputs:
       docker_image: ${{ steps.dockerimage.outputs.docker_image_tag }}
@@ -44,37 +44,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/actions/deploy-environment
+      - uses: ./.github/workflows/actions/deploy
         id: deploy
         with:
-          environment_name: review
-          docker_image: ${{ needs.docker.outputs.docker_image }}
-          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          terraform_vars: workspace_variables/review.tfvars.json
-          pr_id: ${{ github.event.pull_request.number }}
-
-      - name: Post sticky pull request comment
-        if: github.event_name == 'pull_request'
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          message: |
-            Review app deployed to ${{ steps.deploy.outputs.environment_url }}
-
-  deploy_v2_review:
-    name: Deploy to review_aks environment
-    concurrency: deploy_v2_review_${{ github.event.pull_request.number }}
-    needs: [docker]
-    runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'deploy_v2')
-    environment:
-      name: review_aks
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/workflows/actions/deploy_v2
-        id: deploy_v2
-        with:
-          environment: review_aks
+          environment: review
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
@@ -85,9 +58,9 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
-            AKS review app deployed to ${{ steps.deploy_v2.outputs.environment_url }}
+            AKS review app deployed to ${{ steps.deploy.outputs.environment_url }}
 
-  deploy_v2_nonprod:
+  deploy_nonprod:
     name: Deploy to ${{ matrix.environment }} environment
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -96,7 +69,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        environment: [development_aks, test_aks, preproduction_aks]
+        environment: [development, test, preproduction]
     environment:
       name: ${{ matrix.environment }}
       url: ${{ steps.deploy.outputs.environment_url }}
@@ -105,38 +78,38 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/actions/deploy_v2
-        id: deploy_v2
+      - uses: ./.github/workflows/actions/deploy
+        id: deploy
         with:
           environment: ${{ matrix.environment }}
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
-      - uses: ./.github/workflows/actions/smoke-test-v2
+      - uses: ./.github/workflows/actions/smoke-test
         id: smoke-test
         with:
           environment: ${{ matrix.environment }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
-  deploy_v2_production:
-    name: Deploy to production_aks environment
+  deploy_production:
+    name: Deploy to production environment
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment:
-      name: production_aks
-      url: ${{ steps.deploy_v2.outputs.environment_url }}
-    concurrency: deploy_production_aks
-    needs: [docker, deploy_v2_nonprod]
+      name: production
+      url: ${{ steps.deploy.outputs.environment_url }}
+    concurrency: deploy_production
+    needs: [docker, deploy_nonprod]
 
     outputs:
-      environment_url: ${{ steps.deploy_v2.outputs.environment_url }}
+      environment_url: ${{ steps.deploy.outputs.environment_url }}
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/actions/deploy_v2
-        id: deploy_v2
+      - uses: ./.github/workflows/actions/deploy
+        id: deploy
         with:
-          environment: production_aks
+          environment: production
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}

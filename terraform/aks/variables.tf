@@ -1,21 +1,21 @@
 variable "app_environment" {
-  type = string
+  type        = string
   description = "Environment name in full e.g development"
 }
 
 variable "file_environment" {
-  type = string
+  type        = string
   description = "AKS environment name e.g dev"
 }
 
 variable "app_suffix" {
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
   description = "App suffix"
 }
 
 variable "azure_resource_prefix" {
-  type = string
+  type        = string
   description = "Standard resource prefix. Usually s189t01 (test) or s189p01 (production)"
 }
 
@@ -25,56 +25,56 @@ variable "azure_sp_credentials_json" {
 }
 
 variable "cluster" {
-  type = string
+  type        = string
   description = "AKS cluster where this app is deployed. Either 'test' or 'production'"
 }
 
 variable "config_short" {
-  type = string
+  type        = string
   description = "Short name of the environment configuration, e.g. dv, pp, pd..."
 }
 
 variable "deploy_azure_backing_services" {
-  type    = string
-  default = true
+  type        = string
+  default     = true
   description = "Deploy real Azure backing services like databases, as opposed to containers inside of AKS"
 }
 
 variable "enable_monitoring" {
-  type    = bool
-  default = true
+  type        = bool
+  default     = true
   description = "Enable monitoring and alerting"
 }
 
 variable "namespace" {
-  type = string
+  type        = string
   description = "AKS namespace where this app is deployed"
 }
 
 variable "service_short" {
-  type = string
+  type        = string
   description = "Short name to identify the service. Up to 6 charcters."
 }
 
-variable "replicas" { 
-  default = 1 
-  type = number
+variable "replicas" {
+  default = 1
+  type    = number
 }
 
-variable "memory_max" { 
-  default = "1Gi" 
-  type = string
+variable "memory_max" {
+  default     = "1Gi"
+  type        = string
   description = "Max memory size"
 }
 
-variable "worker_replicas" { 
-  default = 1 
-  type = number
+variable "worker_replicas" {
+  default = 1
+  type    = number
 }
 
-variable "worker_memory_max" { 
-  default = "1Gi" 
-  type = string
+variable "worker_memory_max" {
+  default     = "1Gi"
+  type        = string
   description = "Max memory size of worker"
 }
 
@@ -114,7 +114,7 @@ variable "inf_vault_name" {
 }
 
 variable "azure_enable_backup_storage" {
-  default = false  
+  default = false
 }
 
 variable "review_url_db_name" {
@@ -123,7 +123,7 @@ variable "review_url_db_name" {
 }
 
 variable "review_url_redis_name" {
-    default     = null
+  default     = null
   description = "the name of the secret storing review redis url"
 }
 

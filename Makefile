@@ -19,71 +19,28 @@ aks:  ## Sets environment variables for aks deployment
 	$(eval KEY_VAULT_SECRET_NAME=APPLICATION)
 	$(eval KEY_VAULT_PURGE_PROTECTION=false)
 
-.PHONY: dev ## For Paas only
-dev:
-	$(eval DEPLOY_ENV=dev)
-	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
-	$(eval RESOURCE_NAME_PREFIX=s165d01)
-	$(eval ENV_SHORT=dv)
-	$(eval ENV_TAG=dev)
-
-.PHONY: development_aks ## For AKS
-development_aks: aks ## Specify development aks environment
-	$(eval include global_config/development_aks.sh)
+.PHONY: development ## For AKS
+development: aks ## Specify development aks environment
+	$(eval include global_config/development.sh)
 
 .PHONY: test
-test:
-	$(eval DEPLOY_ENV=test)
-	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
-	$(eval RESOURCE_NAME_PREFIX=s165t01)
-	$(eval ENV_SHORT=ts)
-	$(eval ENV_TAG=test)
+test: aks ## Specify test aks environment
+	$(eval include global_config/test.sh)
 
-.PHONY: test_aks
-test_aks: aks ## Specify test aks environment
-	$(eval include global_config/test_aks.sh)
-
-.PHONY: preprod
-preprod:
-	$(eval DEPLOY_ENV=preprod)
-	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
-	$(eval RESOURCE_NAME_PREFIX=s165t01)
-	$(eval ENV_SHORT=pp)
-	$(eval ENV_TAG=pre-prod)
-
-.PHONY: preproduction_aks
-preproduction_aks: aks ## Specify preproduction aks environment
-	$(eval include global_config/preproduction_aks.sh)
+.PHONY: preproduction
+preproduction: aks ## Specify preproduction aks environment
+	$(eval include global_config/preproduction.sh)
 
 .PHONY: production
-production:
-	$(eval DEPLOY_ENV=production)
-	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-production)
-	$(eval RESOURCE_NAME_PREFIX=s165p01)
-	$(eval ENV_SHORT=pd)
-	$(eval ENV_TAG=prod)
-	$(eval AZURE_BACKUP_STORAGE_ACCOUNT_NAME=s165p01dbbackup)
-	$(eval AZURE_BACKUP_STORAGE_CONTAINER_NAME=find-a-lost-trn)
-
-.PHONY: production_aks
-production_aks: aks ## Specify production aks environment
-	$(eval include global_config/production_aks.sh)
+production: aks ## Specify production aks environment
+	$(eval include global_config/production.sh)
 
 .PHONY: review
-review:
+review: aks ## Specify review aks environment
 	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
-	$(eval DEPLOY_ENV=review)
-	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
+	$(eval include global_config/review.sh)
 	$(eval env=-pr-$(pr_id))
-	$(eval backend_config=-backend-config="key=review/review$(env).tfstate")
-	$(eval export TF_VAR_app_suffix=$(env))
-
-.PHONY: review_aks
-review_aks: aks ## Specify review aks environment
-	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
-	$(eval include global_config/review_aks.sh)
-	$(eval env=-pr-$(pr_id))
-	$(eval backend_config=-backend-config="key=review_aks$(env).tfstate")
+	$(eval backend_config=-backend-config="key=review$(env).tfstate")
 	$(eval export TF_VAR_app_suffix=$(env))
 
 .PHONY: ci
@@ -100,18 +57,13 @@ bin/terrafile: ## Install terrafile to manage terraform modules
 	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
 		| tar xz -C ./bin terrafile
 
+.PHONY: terrafile
+terrafile: bin/terrafile
+	./bin/terrafile -p terraform/aks/vendor/modules \
+		-f terraform/aks/workspace_variables/$(CONFIG)_Terrafile
+
 tags: ##Tags that will be added to resource group on it's creation in ARM template
 	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Find a Lost TRN", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Find a Lost TRN", "Environment" : "$(ENV_TAG)"}' | jq . ))
-
-.PHONY: read-keyvault-config
-read-keyvault-config:
-	$(eval KEY_VAULT_NAME=$(shell jq -r '.key_vault_name' terraform/paas/workspace_variables/$(DEPLOY_ENV).tfvars.json))
-	$(eval KEY_VAULT_SECRET_NAME=INFRASTRUCTURE)
-
-read-deployment-config:
-	$(eval SPACE=$(shell jq -r '.paas_space' terraform/paas/workspace_variables/$(DEPLOY_ENV).tfvars.json))
-	$(eval POSTGRES_DATABASE_NAME=$(shell jq -r '.postgres_database_name' terraform/paas/workspace_variables/$(DEPLOY_ENV).tfvars.json))
-	$(eval FLT_APP_NAME=$(shell jq -r '.flt_app_name' terraform/paas/workspace_variables/$(DEPLOY_ENV).tfvars.json))
 
 ##@ Query parameter store to display environment variables. Requires Azure credentials
 set-azure-account: ${environment}
@@ -162,18 +114,6 @@ rename-postgres-service: read-deployment-config ## make dev rename-postgres-serv
 	cf target -s ${SPACE} > /dev/null
 	cf rename-service  ${POSTGRES_DATABASE_NAME} ${POSTGRES_DATABASE_NAME}-$(NEW_NAME_SUFFIX)
 
-remove-postgres-tf-state: terraform-init ## make dev remove-postgres-tf-state PASSCODE=XXX
-	cd terraform && terraform state rm cloudfoundry_service_instance.postgres
-
-restore-postgres: terraform-init read-deployment-config ## make dev restore-postgres DB_INSTANCE_GUID="<cf service db-name --guid>" BEFORE_TIME="yyyy-MM-dd hh:mm:ss" TF_VAR_api_docker_image=ghcr.io/dfe-digital/find-a-lost-trn:<COMMIT_SHA> PASSCODE=<auth code from https://login.london.cloud.service.gov.uk/passcode>
-	cf target -s ${SPACE} > /dev/null
-	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${SPACE} get-postgres-instance-guid`))
-	$(if $(BEFORE_TIME), , $(error can only run with BEFORE_TIME, eg BEFORE_TIME="2021-09-14 16:00:00"))
-	$(eval export TF_VAR_paas_restore_db_from_db_instance=$(DB_INSTANCE_GUID))
-	$(eval export TF_VAR_paas_restore_db_from_point_in_time_before=$(BEFORE_TIME))
-	echo "Restoring ${POSTGRES_DATABASE_NAME} from $(TF_VAR_paas_restore_db_from_db_instance) before $(TF_VAR_paas_restore_db_from_point_in_time_before)"
-	make ${DEPLOY_ENV} terraform-apply
-
 restore-data-from-backup: read-deployment-config # make production restore-data-from-backup CONFIRM_RESTORE=YES BACKUP_FILENAME="find-a-lost-trn-production-pg-svc-2022-04-28-01"
 	@if [[ "$(CONFIRM_RESTORE)" != YES ]]; then echo "Please enter "CONFIRM_RESTORE=YES" to run workflow"; exit 1; fi
 	$(eval export AZURE_BACKUP_STORAGE_ACCOUNT_NAME=$(AZURE_BACKUP_STORAGE_ACCOUNT_NAME))
@@ -181,37 +121,19 @@ restore-data-from-backup: read-deployment-config # make production restore-data-
 	bin/download-db-backup ${AZURE_BACKUP_STORAGE_ACCOUNT_NAME} ${AZURE_BACKUP_STORAGE_CONTAINER_NAME} ${BACKUP_FILENAME}.tar.gz
 	bin/restore-db ${DEPLOY_ENV} ${CONFIRM_RESTORE} ${SPACE} ${BACKUP_FILENAME}.sql ${POSTGRES_DATABASE_NAME}
 
-terraform-init:
-	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
-	[[ "${SP_AUTH}" != "true" ]] && az account set -s $(AZURE_SUBSCRIPTION) || true
-	terraform -chdir=terraform/paas init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars $(backend_config) -upgrade -reconfigure
-
-terraform-plan: terraform-init
-	terraform -chdir=terraform/paas plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
-
-terraform-apply: terraform-init
-	terraform -chdir=terraform/paas apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
-
-terraform-apply-replace-redis: terraform-init # make dev terraform-apply-replace-redis PASSCODE="XXX"
-	terraform -chdir=terraform/paas apply -replace="cloudfoundry_service_instance.redis" -replace="cloudfoundry_app.app" -replace="cloudfoundry_service_key.redis_key" -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
-
-terraform-destroy: terraform-init
-	terraform -chdir=terraform/paas destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
-
-terraform-init-aks: bin/terrafile
-	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
+terraform-init: bin/terrafile
 	[[ "${SP_AUTH}" != "true" ]] && az account set -s $(AZURE_SUBSCRIPTION) || true
 	./bin/terrafile -p terraform/aks/vendor/modules -f terraform/aks/workspace_variables/$(CONFIG)_Terrafile
 	terraform -chdir=terraform/aks init -backend-config workspace_variables/$(CONFIG).backend.tfvars $(backend_config) -upgrade -reconfigure
 	$(if $(DOCKER_IMAGE), $(eval export TF_VAR_paas_app_docker_image=$(DOCKER_IMAGE)), $(error Missing environment variable "DOCKER_IMAGE"))
 
-terraform-plan-aks: terraform-init-aks
+terraform-plan: terraform-init
 	terraform -chdir=terraform/aks plan -var-file workspace_variables/$(CONFIG).tfvars.json
 
-terraform-apply-aks: terraform-init-aks
+terraform-apply: terraform-init
 	terraform -chdir=terraform/aks apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
-terraform-destroy-aks: terraform-init-aks
+terraform-destroy: terraform-init
 	terraform -chdir=terraform/aks destroy -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
 
 deploy-azure-resources: set-azure-account tags # make dev deploy-azure-resources CONFIRM_DEPLOY=1

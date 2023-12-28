@@ -3,7 +3,7 @@ locals {
   service_name = "find-a-lost-trn"
   app_secrets = {
     DATABASE_URL = var.deploy_postgres ? module.postgres.url : ""
-    REDIS_URL    = var.deploy_redis ?  module.redis[0].url : ""
+    REDIS_URL    = var.deploy_redis ? module.redis[0].url : ""
   }
 }
 
@@ -43,18 +43,18 @@ module "application_configuration" {
 }
 
 module "worker_application" {
-  source = "./vendor/modules/aks//aks/application"
-  name = "worker"
-  is_web = false
-  namespace    = var.namespace
-  environment  = local.environment
-  service_name = local.service_name
-  cluster_configuration_map = module.cluster_data.configuration_map
+  source                     = "./vendor/modules/aks//aks/application"
+  name                       = "worker"
+  is_web                     = false
+  namespace                  = var.namespace
+  environment                = local.environment
+  service_name               = local.service_name
+  cluster_configuration_map  = module.cluster_data.configuration_map
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
-  docker_image           = var.paas_app_docker_image
-  command       = ["bundle", "exec", "sidekiq", "-C", "./config/sidekiq.yml"]
-  probe_command = ["pgrep", "-f", "sidekiq"]
-  max_memory             = var.worker_memory_max
-  replicas               = var.worker_replicas
+  docker_image               = var.paas_app_docker_image
+  command                    = ["bundle", "exec", "sidekiq", "-C", "./config/sidekiq.yml"]
+  probe_command              = ["pgrep", "-f", "sidekiq"]
+  max_memory                 = var.worker_memory_max
+  replicas                   = var.worker_replicas
 }

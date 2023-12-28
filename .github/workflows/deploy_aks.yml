@@ -3,12 +3,12 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Deploy environment ( development_aks, test, preprod or production )"
+        description: "Deploy environment ( development, test, preprod or production )"
         required: true
-        default: development_aks
+        default: development
         type: choice
         options:
-          - development_aks
+          - development
       sha:
         description: Commit sha to be deployed
         required: true
@@ -20,11 +20,11 @@ env:
   CONTAINER_REGISTRY: ghcr.io
 
 jobs:
-  deploy_v2_environment:
-    name: Deploy to development_aks environment
+  deploy_environment:
+    name: Deploy to development environment
     runs-on: ubuntu-latest
     environment:
-      name: development_aks
+      name: development
     steps:
       - uses: actions/checkout@v3
 
@@ -37,16 +37,16 @@ jobs:
           INPUT_GITHUB_SHA: 588bfd4567e53f6b809d5ed107dc70b3d040710a
         shell: bash
 
-      - uses: ./.github/workflows/actions/deploy_v2
+      - uses: ./.github/workflows/actions/deploy
         id: deploy
         with:
-          environment: development_aks
+          environment: development
           docker_image: ${{ steps.image.outputs.tag }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
 
-      - uses: ./.github/workflows/actions/smoke-test-v2
+      - uses: ./.github/workflows/actions/smoke-test
         id: smoke-test
         with:
-          environment: development_aks
+          environment: development
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
