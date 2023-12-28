@@ -28,7 +28,7 @@ runs:
       shell: bash
       id: set_kv_env_vars
       run: |
-        tf_vars_file=terraform/aks/workspace_variables/${{ inputs.environment }}_aks.tfvars.json
+        tf_vars_file=terraform/aks/workspace_variables/${{ inputs.environment }}.tfvars.json
         cat $tf_vars_file
         INF_VAULT_NAME=$(jq -r '.inf_vault_name' ${tf_vars_file})
         NAMESPACE=$(jq -r '.namespace' ${tf_vars_file})

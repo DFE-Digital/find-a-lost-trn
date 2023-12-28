@@ -14,8 +14,8 @@ jobs:
       matrix:
         environment: [development, test, preproduction, production]
     environment:
-      name: ${{matrix.environment}}_aks
-    concurrency: ${{matrix.environment}}_${{github.event.number}}_aks
+      name: ${{matrix.environment}}
+    concurrency: ${{matrix.environment}}_${{github.event.number}}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4

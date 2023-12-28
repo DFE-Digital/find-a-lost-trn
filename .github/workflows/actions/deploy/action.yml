@@ -59,7 +59,7 @@ runs:
 
     - name: Terraform init, plan & apply
       shell: bash
-      run: make ci ${{ inputs.environment }} terraform-apply-aks
+      run: make ci ${{ inputs.environment }} terraform-apply
       env:
         ARM_ACCESS_KEY: ${{ inputs.arm-access-key }}
         DOCKER_IMAGE: ${{ inputs.docker_image }}

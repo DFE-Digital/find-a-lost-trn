@@ -41,19 +41,22 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.0.10
+          terraform_version: 1.5.0
 
       - name: Check formatting
-        run: terraform fmt -check
-        working-directory: terraform/paas
+        run: terraform fmt -check -recursive
+        working-directory: terraform
+
+      - name: Download vendor modules
+        run: make ci development terrafile
 
       - name: Validate
         run: |
           terraform init -backend=false
           terraform validate -no-color
-        working-directory: terraform/paas
+        working-directory: terraform/aks

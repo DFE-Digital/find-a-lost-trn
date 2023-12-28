@@ -1,4 +1,4 @@
-CONFIG=preproduction_aks
+CONFIG=preproduction
 DEPLOY_ENV=preproduction
 CONFIG_SHORT=pp
 AZURE_SUBSCRIPTION=s189-teacher-services-cloud-test

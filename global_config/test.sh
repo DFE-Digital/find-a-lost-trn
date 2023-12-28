@@ -1,4 +1,4 @@
-CONFIG=test_aks
+CONFIG=test
 DEPLOY_ENV=test
 CONFIG_SHORT=ts
 AZURE_SUBSCRIPTION=s189-teacher-services-cloud-test
