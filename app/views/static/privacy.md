@@ -78,7 +78,7 @@ We also use Google’s G Suite to process some personal data. Google processes y
 
 ### Hosting services
 
-We host our services on GOV.UK PaaS, which encrypts your data to prevent it being accessed by unauthorised people.
+We host our services on AKS which encrypts your data to prevent it being accessed by unauthorised people.
 
 ### Auditors
 

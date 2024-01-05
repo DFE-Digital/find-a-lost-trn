@@ -65,6 +65,9 @@ terrafile: bin/terrafile
 tags: ##Tags that will be added to resource group on it's creation in ARM template
 	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Find a Lost TRN", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Find a Lost TRN", "Environment" : "$(ENV_TAG)"}' | jq . ))
 
+clone:
+	$(eval CLONE_STRING=-clone)
+
 ##@ Query parameter store to display environment variables. Requires Azure credentials
 set-azure-account: ${environment}
 	echo "Logging on to ${AZURE_SUBSCRIPTION}"
@@ -125,7 +128,7 @@ terraform-init: bin/terrafile
 	[[ "${SP_AUTH}" != "true" ]] && az account set -s $(AZURE_SUBSCRIPTION) || true
 	./bin/terrafile -p terraform/aks/vendor/modules -f terraform/aks/workspace_variables/$(CONFIG)_Terrafile
 	terraform -chdir=terraform/aks init -backend-config workspace_variables/$(CONFIG).backend.tfvars $(backend_config) -upgrade -reconfigure
-	$(if $(DOCKER_IMAGE), $(eval export TF_VAR_paas_app_docker_image=$(DOCKER_IMAGE)), $(error Missing environment variable "DOCKER_IMAGE"))
+	$(if $(DOCKER_IMAGE), $(eval export TF_VAR_app_docker_image=$(DOCKER_IMAGE)), $(error Missing environment variable "DOCKER_IMAGE"))
 
 terraform-plan: terraform-init
 	terraform -chdir=terraform/aks plan -var-file workspace_variables/$(CONFIG).tfvars.json
@@ -189,6 +192,9 @@ domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
 
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
+
+get-cluster-credentials: set-azure-account ## make <config> get-cluster-credentials [ENVIRONMENT=<clusterX>]
+	az aks get-credentials --overwrite-existing -g ${RESOURCE_GROUP_NAME} -n ${RESOURCE_PREFIX}-tsc-${ENVIRONMENT}${CLONE_STRING}-aks
 
 ######################################
 

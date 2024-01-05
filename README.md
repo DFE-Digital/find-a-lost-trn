@@ -6,12 +6,12 @@ A service that allows teachers to find their Teacher Reference Number (TRN).
 
 ### Links and application names
 
-| Name       | URL                                               | Deployment | PaaS space       | PaaS application             |
-| ---------- | ------------------------------------------------- | ---------- | ---------------- | ---------------------------- |
-| Production | https://find-a-lost-trn.education.gov.uk/         | Automatic  | `tra-production` | `find-a-lost-trn-production` |
-| Preprod    | https://preprod-find-a-lost-trn.education.gov.uk/ | Automatic  | `tra-test`       | `find-a-lost-trn-preprod`    |
-| Test       | https://test-find-a-lost-trn.education.gov.uk/    | Automatic  | `tra-test`       | `find-a-lost-trn-test`       |
-| Dev        | https://dev-find-a-lost-trn.education.gov.uk/     | Automatic  | `tra-dev`        | `find-a-lost-trn-dev`        |
+| Name          | URL (Frontdoor)                                  | Deployment | AKS namespace     | Ingress URL                                                      |
+| ------------- | ------------------------------------------------ | ---------- | ----------------- | ---------------------------------------------------------------- |
+| Production    | https://find-a-lost-trn.education.gov.uk         | Automatic  | `tra-production`  | https://find-a-lost-trn-production.teacherservices.cloud         |
+| Preproduction | https://preprod.find-a-lost-trn.education.gov.uk | Automatic  | `tra-test`        | https://find-a-lost-trn-preproduction.test.teacherservices.cloud |
+| Test          | https://test.find-a-lost-trn.education.gov.uk    | Automatic  | `tra-test`        | http://find-a-lost-trn-test.test.teacherservices.cloud           |
+| Dev           | https://dev.find-a-lost-trn.education.gov.uk     | Automatic  | `tra-development` | https://find-a-lost-trn-development.test.teacherservices.cloud   |
 
 All environments have continuous deployment, the state of which can be inspected in Github Actions.
 
@@ -59,7 +59,7 @@ You can use this user to test that matching works against the preprod
 ## How the application works
 
 Find a lost TRN is a monolithic Rails app built with the GOVUK Design System and hosted on
-GOVUK PaaS.
+GOVUK AKS.
 
 We keep track of architecture decisions in [Architecture Decision Records
 (ADRs)](/adr/).

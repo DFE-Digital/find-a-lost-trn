@@ -19,8 +19,6 @@ We have considered:
 
 Considering the effort to deploy and maintain the infrastructure to run the jobs, we think it's better to use sidekiq/sidekiq_cron.
 
-The clockwork gem requires some workarounds to be able to run on PaaS.
-
 #### Pros
 
 - The sidekiq/sidekiq_cron combination is a proven, stable and scalable combination which can take us all the way to public launch and beyond.
