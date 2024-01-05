@@ -17,22 +17,22 @@ jobs:
       - name: Extract configuration from tfvars
         id: config
         run: |
-          KEY_VAULT_NAME=$(jq -r '.key_vault_name' $TFVARS)
-          PAAS_SPACE=$(jq -r '.paas_space' $TFVARS)
-          if [ -z "$KEY_VAULT_NAME" ]; then
-            echo "::error ::Failed to extract key_vault_name from $TFVARS"
+          APP_KEY_VAULT=$(jq -r '.app_key_vault' $TFVARS)
+          NAMESPACE=$(jq -r '.namespace' $TFVARS)
+          if [ -z "$APP_KEY_VAULT" ]; then
+            echo "::error ::Failed to extract app_key_vault from $TFVARS"
             exit 1
           fi
-          if [ -z "$PAAS_SPACE" ]; then
-            echo "::error ::Failed to extract paas_space from $TFVARS"
+          if [ -z "$NAMESPACE" ]; then
+            echo "::error ::Failed to extract namespace from $TFVARS"
             exit 1
           fi
-          echo ::set-output name=key_vault_name::$KEY_VAULT_NAME
-          echo ::set-output name=paas_space::$PAAS_SPACE
+          echo ::set-output name=app_key_vault::$APP_KEY_VAULT
+          echo ::set-output name=namespace::$NAMESPACE
         shell: bash
         env:
           TFVARS: workspace_variables/review.tfvars.json
-        working-directory: terraform/paas
+        working-directory: terraform/aks
 
       - uses: Azure/login@v1
         with:
@@ -41,7 +41,7 @@ jobs:
       - uses: Azure/get-keyvault-secrets@v1
         id: get_secrets
         with:
-          keyvault: ${{ steps.config.outputs.key_vault_name }}
+          keyvault: ${{ steps.config.outputs.app_key_vault }}
           secrets: "TFSTATE-CONTAINER-ACCESS-KEY,PAAS-USER,PAAS-PASSWORD"
 
       - uses: hashicorp/setup-terraform@v2
@@ -57,7 +57,7 @@ jobs:
           echo "TF_STATE_FILE=$TF_STATE_FILE" >> $GITHUB_ENV
           pr_state_file=$(az storage blob list -c faltrn-tfstate \
             --account-key ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }} \
-            --account-name "s165d01faltrntfstatedv" \
+            --account-name "s189t01faltrntfstatervsa" \
             --prefix $TF_STATE_FILE --query "[].name" -o tsv)
           if [ -n "$pr_state_file" ]; then echo "TF_STATE_EXISTS=true" >> $GITHUB_ENV; fi;
       - name: Terraform
@@ -77,4 +77,4 @@ jobs:
         run: |
           az storage blob delete -c faltrn-tfstate --name ${{ env.TF_STATE_FILE }} \
           --account-key ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }} \
-          --account-name "s165d01faltrntfstatedv"
+          --account-name "s189t01faltrntfstatervsa"

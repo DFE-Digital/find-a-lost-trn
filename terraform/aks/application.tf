@@ -21,7 +21,7 @@ module "web_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
-  docker_image           = var.paas_app_docker_image
+  docker_image           = var.app_docker_image
   max_memory             = var.memory_max
   replicas               = var.replicas
   web_external_hostnames = var.gov_uk_host_names
@@ -52,7 +52,7 @@ module "worker_application" {
   cluster_configuration_map  = module.cluster_data.configuration_map
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
-  docker_image               = var.paas_app_docker_image
+  docker_image               = var.app_docker_image
   command                    = ["bundle", "exec", "sidekiq", "-C", "./config/sidekiq.yml"]
   probe_command              = ["pgrep", "-f", "sidekiq"]
   max_memory                 = var.worker_memory_max

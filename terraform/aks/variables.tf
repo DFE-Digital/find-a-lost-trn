@@ -83,9 +83,8 @@ variable "gov_uk_host_names" {
   type    = list(any)
 }
 
-# PaaS variables
-variable "paas_app_docker_image" {
-  description = "PaaS image name and version "
+variable "app_docker_image" {
+  description = "image name and version "
 }
 
 variable "deploy_redis" {
