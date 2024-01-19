@@ -122,7 +122,7 @@ Rails.application.routes.draw do
 
   get "/accessibility", to: "static#accessibility"
   get "/cookies", to: "static#cookies"
-  get "/privacy", to: "static#privacy"
+  get "/privacy", to: redirect("https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers")
 
   get "/performance", to: "performance#index"
 

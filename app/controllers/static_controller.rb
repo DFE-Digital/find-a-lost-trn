@@ -9,11 +9,4 @@ class StaticController < ApplicationController
       render "register_for_npq_accessibility"
     end
   end
-
-  def privacy
-    case session[:identity_client_id]
-    when "register-for-npq"
-      render "register_for_npq_privacy"
-    end
-  end
 end
