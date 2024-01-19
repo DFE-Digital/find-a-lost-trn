@@ -153,12 +153,12 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.1)
       i18n (>= 1.8.11, < 2)
-    faraday (2.7.10)
-      faraday-net_http (>= 2.0, < 3.1)
-      ruby2_keywords (>= 0.0.4)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
     faraday-multipart (1.0.4)
       multipart-post (~> 2)
-    faraday-net_http (3.0.2)
+    faraday-net_http (3.1.0)
+      net-http
     ferrum (0.13)
       addressable (~> 2.5)
       concurrent-ruby (~> 1.1)
@@ -233,6 +233,8 @@ GEM
     msgpack (1.6.0)
     multi_xml (0.6.0)
     multipart-post (2.2.3)
+    net-http (0.4.1)
+      uri
     net-imap (0.3.6)
       date
       net-protocol
@@ -398,7 +400,6 @@ GEM
     ruby-graphviz (1.2.5)
       rexml
     ruby-progressbar (1.13.0)
-    ruby2_keywords (0.0.5)
     sentry-rails (5.10.0)
       railties (>= 5.0)
       sentry-ruby (~> 5.10.0)
@@ -467,6 +468,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
+    uri (0.13.0)
     vcr (6.2.0)
     version_gem (1.1.1)
     view_component (2.74.1)
@@ -522,7 +524,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
-  faraday (~> 2.7)
+  faraday (~> 2.9)
   foreman (~> 0.87.2)
   gds_zendesk
   govuk-components (~> 3.3.0)
