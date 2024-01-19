@@ -26,6 +26,7 @@ bin/dev
 data
 db/*.sqlite3
 db/schema.rb
+db/data_schema.rb
 log
 public/assets
 storage
