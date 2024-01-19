@@ -44,7 +44,7 @@ jobs:
           keyvault: ${{ steps.config.outputs.app_key_vault }}
           secrets: "TFSTATE-CONTAINER-ACCESS-KEY,PAAS-USER,PAAS-PASSWORD"
 
-      - uses: hashicorp/setup-terraform@v2
+      - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.0.10
           terraform_wrapper: false
