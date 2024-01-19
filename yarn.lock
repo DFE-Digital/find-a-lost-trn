@@ -194,10 +194,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@prettier/plugin-ruby@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@prettier/plugin-ruby/-/plugin-ruby-4.0.2.tgz#55bc899d2265de09c1f48493324c269ecb95126c"
-  integrity sha512-TOGsMoOLF0BLwRozqtTB/w7HpDHotDSBPfLsMBpCjlMONLSoCWBF1NhZQjiioyLim7tCltzFrCqZp11WcrPOzA==
+"@prettier/plugin-ruby@^4.0.4":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@prettier/plugin-ruby/-/plugin-ruby-4.0.4.tgz#73d85fc2a1731a3f62b57ac3116cf1c234027cb6"
+  integrity sha512-lCpvfS/dQU5WrwN3AQ5vR8qrvj2h5gE41X08NNzAAXvHdM4zwwGRcP2sHSxfu6n6No+ljWCVx95NvJPFTTjCTg==
 
 "@types/json5@^0.0.29":
   version "0.0.29"
