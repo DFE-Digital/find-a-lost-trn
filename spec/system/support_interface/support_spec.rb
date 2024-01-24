@@ -89,18 +89,18 @@ RSpec.describe "Support", type: :system do
 
   def then_the_slack_alerts_flag_is_on
     expect(page).to have_content("Feature “Slack alerts” activated")
-    expect(page).to have_content("Slack alerts\n- Active")
+    expect(page).to have_content("Slack alerts\n - Active")
   end
 
   def then_the_slack_alerts_flag_is_off
     expect(page).to have_content("Feature “Slack alerts” deactivated")
-    expect(page).to have_content("Slack alerts\n- Inactive")
+    expect(page).to have_content("Slack alerts\n - Inactive")
   end
 
   def and_there_is_a_trn_request_in_progress
     trn_request = TrnRequest.last
     expect(page).to have_content("TRN Request ##{trn_request.id}")
     expect(page).to have_content(trn_request.name.to_s)
-    expect(page).to have_content("NOT YET SUBMITTED")
+    expect(page).to have_content("Not yet submitted")
   end
 end

@@ -96,12 +96,12 @@ RSpec.describe "Staff support", type: :system do
 
   def then_i_see_the_invited_staff_user
     expect(page).to have_content("test@example.com")
-    expect(page).to have_content("NOT ACCEPTED")
+    expect(page).to have_content("Not accepted")
   end
 
   def then_i_see_the_accepted_staff_user
     expect(page).to have_content("test@example.com")
-    expect(page).to have_content("ACCEPTED")
+    expect(page).to have_content("Accepted")
   end
 
   def and_i_fill_password
