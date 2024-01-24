@@ -20,7 +20,7 @@
       table.body do |body|
         @validation_errors.each do |validation_error|
           body.row do |row|
-            row.cell(text: validation_error.created_at.to_s(:long_ordinal_uk))
+            row.cell(text: validation_error.created_at.to_fs(:long_ordinal_uk))
             row.cell(text: validation_error.trn_request.id)
             row.cell(classes: ['app-p0']) do
               validation_error.messages.map do |error, details|
