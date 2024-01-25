@@ -13,19 +13,19 @@
     <% @trn_requests.each do |trn_request| %>
       <h2 class="govuk-heading-m">TRN Request #<%= trn_request.id %></h2>
       <%= govuk_summary_list do |summary_list|
-        summary_list.row do |row|
-          row.key(text: 'Created at')
-          row.value(text: trn_request.created_at)
+        summary_list.with_row do |row|
+          row.with_key(text: 'Created at')
+          row.with_value(text: trn_request.created_at)
         end
 
-        summary_list.row do |row|
-          row.key(text: 'Updated at')
-          row.value(text: trn_request.updated_at)
+        summary_list.with_row do |row|
+          row.with_key(text: 'Updated at')
+          row.with_value(text: trn_request.updated_at)
         end
 
-        summary_list.row do |row|
-          row.key(text: 'Submitted at')
-          row.value do
+        summary_list.with_row do |row|
+          row.with_key(text: 'Submitted at')
+          row.with_value do
             if trn_request.checked_at
               trn_request.checked_at.to_s
             else
@@ -35,9 +35,9 @@
         end
 
         if trn_request.checked_at
-          summary_list.row do |row|
-            row.key(text: 'TRN')
-            row.value do
+          summary_list.with_row do |row|
+            row.with_key(text: 'TRN')
+            row.with_value do
               if trn_request.trn
                 govuk_tag(colour: 'green', text: 'Found 🎉')
               else
@@ -47,26 +47,26 @@
           end
 
           if !trn_request.zendesk_ticket_id && !trn_request.trn
-            summary_list.row do |row|
-              row.key(text: 'Zendesk ticket')
-              row.value do
+            summary_list.with_row do |row|
+              row.with_key(text: 'Zendesk ticket')
+              row.with_value do
                 govuk_tag(colour: 'grey', text: 'Not submitted')
               end
             end
           end
 
           if trn_request.zendesk_ticket_id
-            summary_list.row do |row|
-              row.key(text: 'Zendesk ticket')
-              row.value do
+            summary_list.with_row do |row|
+              row.with_key(text: 'Zendesk ticket')
+              row.with_value do
                 tag.a "Ticket #{trn_request.zendesk_ticket_id}", class: 'govuk-link', href: "#{ENV["ZENDESK_URL"]}/agent/tickets/#{trn_request.zendesk_ticket_id}"
               end
             end
 
             unless trn_request.trn
-              summary_list.row do |row|
-                row.key(text: 'Actions')
-                row.value do
+              summary_list.with_row do |row|
+                row.with_key(text: 'Actions')
+                row.with_value do
                   govuk_button_to("Sync from Zendesk", [:support_interface, trn_request, :zendesk_sync], secondary: true, class: 'govuk-!-margin-bottom-0')
                 end
               end

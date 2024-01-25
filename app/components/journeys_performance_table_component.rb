@@ -9,23 +9,23 @@ class JourneysPerformanceTableComponent < ViewComponent::Base
 
   def call
     govuk_table(classes: "app-performance-table") do |table|
-      table.caption(
+      table.with_caption(
         size: "m",
         text: "Journeys through Find a lost TRN (today and the last 7 days)",
       )
 
-      table.head do |head|
-        head.row do |row|
-          row.cell(header: true, text: "Number of questions asked")
-          row.cell(header: true, text: "Number of users")
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(header: true, text: "Number of questions asked")
+          row.with_cell(header: true, text: "Number of users")
         end
       end
-      table.body do |body|
-        body.row do |row|
-          row.cell do
+      table.with_body do |body|
+        body.with_row do |row|
+          row.with_cell do
             '3 questions<br /><span class="govuk-hint">Email address, name and date of birth</span>'.html_safe
           end
-          row.cell do
+          row.with_cell do
             number_with_percentage_cell(
               @which_questions_were_needed,
               :three_questions,
@@ -33,11 +33,11 @@ class JourneysPerformanceTableComponent < ViewComponent::Base
             )
           end
         end
-        body.row do |row|
-          row.cell do
+        body.with_row do |row|
+          row.with_cell do
             '4 questions<br /><span class="govuk-hint">+ National Insurance number</span>'.html_safe
           end
-          row.cell do
+          row.with_cell do
             number_with_percentage_cell(
               @which_questions_were_needed,
               :four_questions,
@@ -45,11 +45,11 @@ class JourneysPerformanceTableComponent < ViewComponent::Base
             )
           end
         end
-        body.row do |row|
-          row.cell do
+        body.with_row do |row|
+          row.with_cell do
             '5 questions (with a match)<br /><span class="govuk-hint">+ ITT provider</span>'.html_safe
           end
-          row.cell do
+          row.with_cell do
             number_with_percentage_cell(
               @which_questions_were_needed,
               :five_questions_matched,
@@ -57,11 +57,11 @@ class JourneysPerformanceTableComponent < ViewComponent::Base
             )
           end
         end
-        body.row do |row|
-          row.cell do
+        body.with_row do |row|
+          row.with_cell do
             '5 questions (without a match)<br /><span class="govuk-hint">+ ITT provider</span>'.html_safe
           end
-          row.cell do
+          row.with_cell do
             number_with_percentage_cell(
               @which_questions_were_needed,
               :five_questions_nomatch,
