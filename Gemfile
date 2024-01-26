@@ -14,7 +14,8 @@ gem "devise"
 gem "devise_invitable"
 gem "dfe-autocomplete",
     require: "dfe/autocomplete",
-    github: "DFE-Digital/dfe-autocomplete"
+    github: "DFE-Digital/dfe-autocomplete",
+    ref: "11738c0"
 gem "faraday", "~> 2.9"
 gem "gds_zendesk"
 gem "govuk-components", "~> 5.0.0"
