@@ -74,7 +74,7 @@ class ZendeskDeleteRequest < ApplicationRecord
 
   def self.from_csv(csv)
     CSV.foreach(csv.path, headers: true) do |row|
-      find_or_create_by(
+      find_or_create_by!(
         closed_at: row["Closed At"],
         enquiry_type: row["Enquiry Type"],
         group_name: row["Group Name"],
