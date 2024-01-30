@@ -1,4 +1,4 @@
-FROM ruby:3.1.1-alpine
+FROM ruby:3.3.0-alpine
 
 RUN apk -U upgrade && \
     apk add --update --no-cache gcc git libc6-compat libc-dev make nodejs \

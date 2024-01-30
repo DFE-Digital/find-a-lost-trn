@@ -10,6 +10,7 @@ module SupportInterface
       return false unless valid?
 
       ZendeskDeleteRequest.from_csv(file)
+      true
     end
   end
 end
