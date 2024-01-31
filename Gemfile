@@ -14,10 +14,11 @@ gem "devise"
 gem "devise_invitable"
 gem "dfe-autocomplete",
     require: "dfe/autocomplete",
-    github: "DFE-Digital/dfe-autocomplete"
+    github: "DFE-Digital/dfe-autocomplete",
+    ref: "11738c0"
 gem "faraday", "~> 2.9"
 gem "gds_zendesk"
-gem "govuk-components", "~> 3.3.0"
+gem "govuk-components", "~> 5.0.0"
 gem "govuk_design_system_formbuilder"
 gem "govuk_markdown", "~> 2.0"
 gem "jsbundling-rails"
@@ -26,17 +27,15 @@ gem "mail-notify"
 gem "okcomputer", "~> 1.18"
 gem "omniauth-oauth2", "~> 1.8"
 gem "omniauth-rails_csrf_protection"
-gem "pagy"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.4"
 gem "rack-attack"
-gem "rails", "~> 7.0.6"
+gem "rails", "~> 7.1.3"
 gem "sentry-rails"
 gem "sidekiq"
 gem "sidekiq-cron", "~> 1.10"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
-gem "view_component"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"

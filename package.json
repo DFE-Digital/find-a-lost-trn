@@ -2,17 +2,16 @@
   "name": "app",
   "private": "true",
   "dependencies": {
-    "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete",
+    "accessible-autocomplete": "^2.0.4",
+    "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete#main",
     "esbuild": "^0.19.12",
-    "govuk-frontend": "^4.6.0",
+    "govuk-frontend": "^5.0.0",
     "sass": "^1.70.0"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --target=ie11 --bundle --sourcemap --outdir=app/assets/builds",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
     "build:css": "sass ./app/assets/stylesheets/main.sass.scss ./app/assets/builds/main.css --no-source-map --quiet-deps --load-path=node_modules",
-    "lint": "eslint --ext .js,.ts,.tsx ./app/javascript",
-    "preinstall": "mkdir -p public/assets/fonts public/assets/images",
-    "postinstall": "cp -R node_modules/govuk-frontend/govuk/assets/fonts/. public/assets/fonts && cp -R node_modules/govuk-frontend/govuk/assets/images/. public/assets/images"
+    "lint": "eslint --ext .js,.ts,.tsx ./app/javascript"
   },
   "devDependencies": {
     "@prettier/plugin-ruby": "^4.0.4",

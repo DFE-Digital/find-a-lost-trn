@@ -63,31 +63,36 @@
 
 <div class="govuk-!-margin-top-7">
   <%= govuk_table(classes: 'app-performance-table') do |table|
-      table.caption(size: 'm', text: "How quickly did users get their TRN (today and the previous 7 days)")
+    table.with_caption(size: 'm', text: "How quickly did users get their TRN (today and the previous 7 days)")
 
-      table.head do |head|
-      head.row do |row|
-      row.cell(header: true, text: 'Date')
-      row.cell(header: true) { '90% of users<br>got their TRN within'.html_safe }
-      row.cell(header: true) { '75% of users<br>got their TRN within'.html_safe }
-      row.cell(header: true) { '50% of users<br>got their TRN within'.html_safe }
+    table.head do |head|
+      head.with_row do |row|
+        row.with_cell(header: true, text: 'Date')
+        row.with_cell(header: true) { '90% of users<br>got their TRN within'.html_safe }
+        row.with_cell(header: true) { '75% of users<br>got their TRN within'.html_safe }
+        row.with_cell(header: true) { '50% of users<br>got their TRN within'.html_safe }
 
-      end; end; table.body do |body|
-        @duration_usage.each do |data_row|
-          body.row do |row|
-            row.cell { data_row[0] }
-            row.cell { data_row[1] }
-            row.cell { data_row[2] }
-            row.cell { data_row[3] }
-          end
+      end; 
+    end; 
+
+    table.with_body do |body|
+      @duration_usage.each do |data_row|
+        body.with_row do |row|
+          row.with_cell { data_row[0] }
+          row.with_cell { data_row[1] }
+          row.with_cell { data_row[2] }
+          row.with_cell { data_row[3] }
         end
-        body.row(classes: 'app-performance-table-total-row') do |row|
-          row.cell(header: true) { 'Average (today and the last 7 days)' }
-          row.cell { @duration_averages[0] }
-          row.cell { @duration_averages[1] }
-          row.cell { @duration_averages[2] }
-        end
-     end; end %>
+      end
+
+      body.with_row(classes: 'app-performance-table-total-row') do |row|
+        row.with_cell(header: true) { 'Average (today and the last 7 days)' }
+        row.with_cell { @duration_averages[0] }
+        row.with_cell { @duration_averages[1] }
+        row.with_cell { @duration_averages[2] }
+      end
+    end; 
+  end %>
 </div>
 
 <div class="govuk-!-margin-top-7">

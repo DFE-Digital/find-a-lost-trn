@@ -11,60 +11,60 @@ class TrnRequestsPerformanceTableComponent < ViewComponent::Base
 
   def call
     govuk_table(classes: "app-performance-table") do |table|
-      table.head do |head|
-        head.row do |row|
-          row.cell(
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(
             header: true,
             text: "Date",
             classes:
               "app-performance-table-column-divider app-performance-table-date-column",
           )
-          row.cell(header: true, text: "TRN found")
-          row.cell(header: true, text: "No match")
-          row.cell(
+          row.with_cell(header: true, text: "TRN found")
+          row.with_cell(header: true, text: "No match")
+          row.with_cell(
             header: true,
             text: "Did not finish",
             classes: "app-performance-table-column-divider",
           )
-          row.cell(
+          row.with_cell(
             header: true,
             text: "Total",
             classes: "govuk-!-padding-left-2",
           )
         end
       end
-      table.body do |body|
+      table.with_body do |body|
         @grouped_request_counts.map do |period_label, counts|
-          body.row do |row|
-            row.cell(classes: "app-performance-table-column-divider") do
+          body.with_row do |row|
+            row.with_cell(classes: "app-performance-table-column-divider") do
               period_label
             end
-            row.cell { number_with_percentage_cell(counts, :cnt_trn_found) }
-            row.cell { number_with_percentage_cell(counts, :cnt_no_match) }
-            row.cell(classes: "app-performance-table-column-divider") do
+            row.with_cell { number_with_percentage_cell(counts, :cnt_trn_found) }
+            row.with_cell { number_with_percentage_cell(counts, :cnt_no_match) }
+            row.with_cell(classes: "app-performance-table-column-divider") do
               number_with_percentage_cell(counts, :cnt_did_not_finish)
             end
-            row.cell { "#{number_with_delimiter(counts[:total])} requests" }
+            row.with_cell { "#{number_with_delimiter(counts[:total])} requests" }
           end
         end
-        body.row(classes: "app-performance-table-total-row") do |row|
-          row.cell(
+        body.with_row(classes: "app-performance-table-total-row") do |row|
+          row.with_cell(
             header: true,
             classes: "app-performance-table-column-divider",
           ) { "Total (#{@since})" }
-          row.cell do
+          row.with_cell do
             number_with_percentage_cell(@total_grouped_requests, :cnt_trn_found)
           end
-          row.cell do
+          row.with_cell do
             number_with_percentage_cell(@total_grouped_requests, :cnt_no_match)
           end
-          row.cell(classes: "app-performance-table-column-divider") do
+          row.with_cell(classes: "app-performance-table-column-divider") do
             number_with_percentage_cell(
               @total_grouped_requests,
               :cnt_did_not_finish,
             )
           end
-          row.cell do
+          row.with_cell do
             "#{number_with_delimiter(@total_grouped_requests[:total])} requests"
           end
         end

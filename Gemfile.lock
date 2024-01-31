@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-autocomplete.git
-  revision: 36d80e6b5bba67c92cd9ec6982a4e536d1889aed
+  revision: 11738c0e25778162e26eb7ab5e22a6ffce671b08
+  ref: 11738c0
   specs:
     dfe-autocomplete (0.1.0)
       actionview (>= 7.0.2.3)
@@ -12,70 +13,79 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    actioncable (7.0.6)
-      actionpack (= 7.0.6)
-      activesupport (= 7.0.6)
+    actioncable (7.1.3)
+      actionpack (= 7.1.3)
+      activesupport (= 7.1.3)
       nio4r (~> 2.0)
       websocket-driver (>= 0.6.1)
-    actionmailbox (7.0.6)
-      actionpack (= 7.0.6)
-      activejob (= 7.0.6)
-      activerecord (= 7.0.6)
-      activestorage (= 7.0.6)
-      activesupport (= 7.0.6)
+      zeitwerk (~> 2.6)
+    actionmailbox (7.1.3)
+      actionpack (= 7.1.3)
+      activejob (= 7.1.3)
+      activerecord (= 7.1.3)
+      activestorage (= 7.1.3)
+      activesupport (= 7.1.3)
       mail (>= 2.7.1)
       net-imap
       net-pop
       net-smtp
-    actionmailer (7.0.6)
-      actionpack (= 7.0.6)
-      actionview (= 7.0.6)
-      activejob (= 7.0.6)
-      activesupport (= 7.0.6)
+    actionmailer (7.1.3)
+      actionpack (= 7.1.3)
+      actionview (= 7.1.3)
+      activejob (= 7.1.3)
+      activesupport (= 7.1.3)
       mail (~> 2.5, >= 2.5.4)
       net-imap
       net-pop
       net-smtp
-      rails-dom-testing (~> 2.0)
-    actionpack (7.0.6)
-      actionview (= 7.0.6)
-      activesupport (= 7.0.6)
-      rack (~> 2.0, >= 2.2.4)
+      rails-dom-testing (~> 2.2)
+    actionpack (7.1.3)
+      actionview (= 7.1.3)
+      activesupport (= 7.1.3)
+      nokogiri (>= 1.8.5)
+      racc
+      rack (>= 2.2.4)
+      rack-session (>= 1.0.1)
       rack-test (>= 0.6.3)
-      rails-dom-testing (~> 2.0)
-      rails-html-sanitizer (~> 1.0, >= 1.2.0)
-    actiontext (7.0.6)
-      actionpack (= 7.0.6)
-      activerecord (= 7.0.6)
-      activestorage (= 7.0.6)
-      activesupport (= 7.0.6)
+      rails-dom-testing (~> 2.2)
+      rails-html-sanitizer (~> 1.6)
+    actiontext (7.1.3)
+      actionpack (= 7.1.3)
+      activerecord (= 7.1.3)
+      activestorage (= 7.1.3)
+      activesupport (= 7.1.3)
       globalid (>= 0.6.0)
       nokogiri (>= 1.8.5)
-    actionview (7.0.6)
-      activesupport (= 7.0.6)
+    actionview (7.1.3)
+      activesupport (= 7.1.3)
       builder (~> 3.1)
-      erubi (~> 1.4)
-      rails-dom-testing (~> 2.0)
-      rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    activejob (7.0.6)
-      activesupport (= 7.0.6)
+      erubi (~> 1.11)
+      rails-dom-testing (~> 2.2)
+      rails-html-sanitizer (~> 1.6)
+    activejob (7.1.3)
+      activesupport (= 7.1.3)
       globalid (>= 0.3.6)
-    activemodel (7.0.6)
-      activesupport (= 7.0.6)
-    activerecord (7.0.6)
-      activemodel (= 7.0.6)
-      activesupport (= 7.0.6)
-    activestorage (7.0.6)
-      actionpack (= 7.0.6)
-      activejob (= 7.0.6)
-      activerecord (= 7.0.6)
-      activesupport (= 7.0.6)
+    activemodel (7.1.3)
+      activesupport (= 7.1.3)
+    activerecord (7.1.3)
+      activemodel (= 7.1.3)
+      activesupport (= 7.1.3)
+      timeout (>= 0.4.0)
+    activestorage (7.1.3)
+      actionpack (= 7.1.3)
+      activejob (= 7.1.3)
+      activerecord (= 7.1.3)
+      activesupport (= 7.1.3)
       marcel (~> 1.0)
-      mini_mime (>= 1.1.0)
-    activesupport (7.0.6)
+    activesupport (7.1.3)
+      base64
+      bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
+      connection_pool (>= 2.2.5)
+      drb
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
+      mutex_m
       tzinfo (~> 2.0)
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
@@ -89,8 +99,10 @@ GEM
       rouge
       turbo-rails
     backport (1.2.0)
+    base64 (0.2.0)
     bcrypt (3.1.18)
     benchmark (0.2.1)
+    bigdecimal (3.1.6)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -144,6 +156,8 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    drb (2.2.0)
+      ruby2_keywords
     e2mmap (0.1.0)
     erubi (1.12.0)
     et-orbi (1.2.7)
@@ -175,15 +189,15 @@ GEM
       zendesk_api (~> 1.27)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    govuk-components (3.3.0)
-      html-attributes-utils (~> 0.9, >= 0.9.2)
-      pagy (~> 5.10.1)
-      view_component (~> 2.74.1)
-    govuk_design_system_formbuilder (3.3.0)
+    govuk-components (5.0.2)
+      html-attributes-utils (~> 1.0.0, >= 1.0.0)
+      pagy (~> 6.0)
+      view_component (>= 3.9, < 3.10)
+    govuk_design_system_formbuilder (5.0.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
-      html-attributes-utils (~> 0.9, >= 0.9.2)
+      html-attributes-utils (~> 1)
     govuk_markdown (2.0.1)
       activesupport
       redcarpet
@@ -193,7 +207,7 @@ GEM
       tilt
     hashdiff (1.0.1)
     hashie (5.0.0)
-    html-attributes-utils (0.9.2)
+    html-attributes-utils (1.0.2)
       activesupport (>= 6.1.4.4)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
@@ -236,6 +250,7 @@ GEM
     msgpack (1.6.0)
     multi_xml (0.6.0)
     multipart-post (2.2.3)
+    mutex_m (0.2.0)
     net-http (0.4.1)
       uri
     net-imap (0.4.9.1)
@@ -276,8 +291,7 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
-    pagy (5.10.1)
-      activesupport
+    pagy (6.4.3)
     parallel (1.23.0)
     parser (3.2.2.3)
       ast (~> 2.4.1)
@@ -302,22 +316,27 @@ GEM
       rack (>= 1.0, < 4)
     rack-protection (3.0.1)
       rack
+    rack-session (1.0.2)
+      rack (< 3)
     rack-test (2.1.0)
       rack (>= 1.3)
-    rails (7.0.6)
-      actioncable (= 7.0.6)
-      actionmailbox (= 7.0.6)
-      actionmailer (= 7.0.6)
-      actionpack (= 7.0.6)
-      actiontext (= 7.0.6)
-      actionview (= 7.0.6)
-      activejob (= 7.0.6)
-      activemodel (= 7.0.6)
-      activerecord (= 7.0.6)
-      activestorage (= 7.0.6)
-      activesupport (= 7.0.6)
+    rackup (1.0.0)
+      rack (< 3)
+      webrick
+    rails (7.1.3)
+      actioncable (= 7.1.3)
+      actionmailbox (= 7.1.3)
+      actionmailer (= 7.1.3)
+      actionpack (= 7.1.3)
+      actiontext (= 7.1.3)
+      actionview (= 7.1.3)
+      activejob (= 7.1.3)
+      activemodel (= 7.1.3)
+      activerecord (= 7.1.3)
+      activestorage (= 7.1.3)
+      activesupport (= 7.1.3)
       bundler (>= 1.15.0)
-      railties (= 7.0.6)
+      railties (= 7.1.3)
     rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
@@ -330,13 +349,14 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
-    railties (7.0.6)
-      actionpack (= 7.0.6)
-      activesupport (= 7.0.6)
-      method_source
+    railties (7.1.3)
+      actionpack (= 7.1.3)
+      activesupport (= 7.1.3)
+      irb
+      rackup (>= 1.0.0)
       rake (>= 12.2)
-      thor (~> 1.0)
-      zeitwerk (~> 2.5)
+      thor (~> 1.0, >= 1.2.2)
+      zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.1.0)
     rbs (2.8.4)
@@ -413,6 +433,7 @@ GEM
     ruby-graphviz (1.2.5)
       rexml
     ruby-progressbar (1.13.0)
+    ruby2_keywords (0.0.5)
     sentry-rails (5.10.0)
       railties (>= 5.0)
       sentry-ruby (~> 5.10.0)
@@ -485,8 +506,8 @@ GEM
     uri (0.13.0)
     vcr (6.2.0)
     version_gem (1.1.1)
-    view_component (2.74.1)
-      activesupport (>= 5.0.0, < 8.0)
+    view_component (3.9.0)
+      activesupport (>= 5.2.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
     warden (1.2.9)
@@ -501,7 +522,7 @@ GEM
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     webrick (1.8.1)
-    websocket-driver (0.7.5)
+    websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     xpath (3.2.0)
@@ -518,6 +539,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  arm64-darwin-23
   x86_64-darwin-21
   x86_64-linux
 
@@ -541,7 +563,7 @@ DEPENDENCIES
   faraday (~> 2.9)
   foreman (~> 0.87.2)
   gds_zendesk
-  govuk-components (~> 3.3.0)
+  govuk-components (~> 5.0.0)
   govuk_design_system_formbuilder
   govuk_markdown (~> 2.0)
   jsbundling-rails
@@ -550,13 +572,12 @@ DEPENDENCIES
   okcomputer (~> 1.18)
   omniauth-oauth2 (~> 1.8)
   omniauth-rails_csrf_protection
-  pagy
   pg (~> 1.5)
   prettier_print (~> 1.2.1)
   pry-byebug
   puma (~> 6.4)
   rack-attack
-  rails (~> 7.0.6)
+  rails (~> 7.1.3)
   rails-erd
   rladr (~> 1.2)
   rspec
@@ -576,7 +597,6 @@ DEPENDENCIES
   syntax_tree-rbs (~> 1.0.0)
   tzinfo-data
   vcr (~> 6.2)
-  view_component
   web-console
   webmock (~> 3.18)
 

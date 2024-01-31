@@ -43,6 +43,9 @@ module FindALostTrn
 
     config.active_record.encryption.store_key_references = true
 
+    config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/images")
+    config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/fonts")
+
     config.exceptions_app = routes
     config.console1984.ask_for_username_if_empty = true
     config.audits1984.auditor_class = "Staff"
