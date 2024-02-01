@@ -58,7 +58,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
-            AKS review app deployed to ${{ steps.deploy.outputs.environment_url }}
+            AKS review app deployed to https://find-a-lost-trn-review-pr-${{ github.event.pull_request.number }}.test.teacherservices.cloud
 
   deploy_nonprod:
     name: Deploy to ${{ matrix.environment }} environment
