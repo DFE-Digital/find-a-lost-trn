@@ -5,6 +5,7 @@ locals {
     DATABASE_URL = var.deploy_postgres ? module.postgres.url : ""
     REDIS_URL    = var.deploy_redis ? module.redis[0].url : ""
   }
+  postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
 }
 
 module "web_application" {
@@ -32,14 +33,21 @@ module "web_application" {
 module "application_configuration" {
   source = "./vendor/modules/aks//aks/application_configuration"
 
-  namespace              = var.namespace
-  environment            = local.environment
-  azure_resource_prefix  = var.azure_resource_prefix
-  service_short          = var.service_short
-  config_short           = var.config_short
-  config_variables       = { AKS_ENV_NAME = var.file_environment, EnableMetrics = false }
+  namespace             = var.namespace
+  environment           = local.environment
+  azure_resource_prefix = var.azure_resource_prefix
+  service_short         = var.service_short
+  config_short          = var.config_short
+  config_variables = {
+    AKS_ENV_NAME     = var.file_environment
+    EnableMetrics    = false
+    ENVIRONMENT_NAME = local.environment
+    PGSSLMODE        = local.postgres_ssl_mode
+  }
   secret_variables       = local.app_secrets
   secret_key_vault_short = "app"
+
+  is_rails_application = true
 }
 
 module "worker_application" {

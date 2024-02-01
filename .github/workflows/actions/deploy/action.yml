@@ -57,6 +57,10 @@ runs:
       with:
         creds: ${{ inputs.azure-credentials }}
 
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+      with:
+        azure-credentials: ${{ inputs.azure_credentials }}
+
     - name: Terraform init, plan & apply
       shell: bash
       run: make ci ${{ inputs.environment }} terraform-apply

@@ -55,6 +55,10 @@ runs:
           echo "::add-mask::$SECRET_VALUE"
           echo "SLACK-WEBHOOK=$SECRET_VALUE" >> $GITHUB_OUTPUT
 
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+      with:
+        azure-credentials: ${{ inputs.azure_credentials }}
+
     - name: Install kubectl
       uses: azure/setup-kubectl@v3
       with:
@@ -105,7 +109,7 @@ runs:
     - name: K8 setup
       shell: bash
       run: |
-        az aks get-credentials -g ${{ env.cluster_rg }} -n ${{ env.cluster_name }}
+        make ${{ inputs.environment }} get-cluster-credentials
         make bin/konduit.sh
 
     - name: Setup postgres client

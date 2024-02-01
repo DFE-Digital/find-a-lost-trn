@@ -19,11 +19,6 @@ variable "azure_resource_prefix" {
   description = "Standard resource prefix. Usually s189t01 (test) or s189p01 (production)"
 }
 
-variable "azure_sp_credentials_json" {
-  type    = string
-  default = null
-}
-
 variable "cluster" {
   type        = string
   description = "AKS cluster where this app is deployed. Either 'test' or 'production'"
@@ -44,6 +39,11 @@ variable "enable_monitoring" {
   type        = bool
   default     = true
   description = "Enable monitoring and alerting"
+}
+
+variable "enable_postgres_ssl" {
+  default     = true
+  description = "Enforce SSL connection from the client side"
 }
 
 variable "namespace" {
