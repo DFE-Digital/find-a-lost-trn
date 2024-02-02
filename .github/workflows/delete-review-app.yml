@@ -14,70 +14,70 @@ jobs:
     environment: review
     steps:
       - uses: actions/checkout@v4
+
       - name: Extract configuration from tfvars
+        shell: bash
         id: config
         run: |
-          APP_KEY_VAULT=$(jq -r '.app_key_vault' $TFVARS)
-          NAMESPACE=$(jq -r '.namespace' $TFVARS)
-          if [ -z "$APP_KEY_VAULT" ]; then
-            echo "::error ::Failed to extract app_key_vault from $TFVARS"
-            exit 1
-          fi
-          if [ -z "$NAMESPACE" ]; then
-            echo "::error ::Failed to extract namespace from $TFVARS"
-            exit 1
-          fi
-          echo ::set-output name=app_key_vault::$APP_KEY_VAULT
-          echo ::set-output name=namespace::$NAMESPACE
-        shell: bash
-        env:
-          TFVARS: workspace_variables/review.tfvars.json
-        working-directory: terraform/aks
+          tf_vars_file=terraform/aks/workspace_variables/review.tfvars.json
+          cat $tf_vars_file
+          APP_VAULT_NAME=$(jq -r '.app_vault_name' ${tf_vars_file})
+          NAMESPACE=$(jq -r '.namespace' ${tf_vars_file})
+          APP_ENVIRONMENT=$(jq -r '.app_environment' ${tf_vars_file})
+          CLUSTER=$(jq -r '.cluster' ${tf_vars_file})
+
+          echo "APP_VAULT_NAME=$APP_VAULT_NAME" >> $GITHUB_ENV
+          echo "NAMESPACE=$NAMESPACE" >> $GITHUB_ENV
+          echo "CLUSTER=$CLUSTER" >> $GITHUB_ENV
+          echo "APP_ENVIRONMENT=$APP_ENVIRONMENT" >> $GITHUB_ENV
 
       - uses: Azure/login@v1
         with:
           creds: ${{ secrets.azure_credentials }}
 
-      - uses: Azure/get-keyvault-secrets@v1
+      - uses: azure/CLI@v1
         id: get_secrets
         with:
-          keyvault: ${{ steps.config.outputs.app_key_vault }}
-          secrets: "TFSTATE-CONTAINER-ACCESS-KEY,PAAS-USER,PAAS-PASSWORD"
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.0.10
-          terraform_wrapper: false
+          inlineScript: |
+            TFSTATE_CONTAINER_ACCESS_KEY=$(az keyvault secret show --name "TFSTATE-CONTAINER-ACCESS-KEY" --vault-name "${{ env.APP_VAULT_NAME }}" --query "value" -o tsv)
+            echo "::add-mask::$TFSTATE_CONTAINER_ACCESS_KEY"
+            echo "TFSTATE_CONTAINER_ACCESS_KEY=$TFSTATE_CONTAINER_ACCESS_KEY" >> $GITHUB_ENV
 
       - name: Set Environment variables
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
-          TF_STATE_FILE=review/review-pr-$PR_NUMBER.tfstate
+          TF_STATE_FILE=review-pr-$PR_NUMBER.tfstate
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
           echo "TF_STATE_FILE=$TF_STATE_FILE" >> $GITHUB_ENV
           pr_state_file=$(az storage blob list -c faltrn-tfstate \
-            --account-key ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }} \
+            --account-key ${{ env.TFSTATE_CONTAINER_ACCESS_KEY }} \
             --account-name "s189t01faltrntfstatervsa" \
             --prefix $TF_STATE_FILE --query "[].name" -o tsv)
-          if [ -n "$pr_state_file" ]; then echo "TF_STATE_EXISTS=true" >> $GITHUB_ENV; fi;
+          if [ ! -z "$pr_state_file" ]; then echo "TF_STATE_EXISTS=true" >> $GITHUB_ENV; fi;
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.0
+          terraform_wrapper: false
 
       - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+        if: ${{ env.TF_STATE_EXISTS }} == 'true'
         with:
           azure-credentials: ${{ secrets.azure_credentials }}
 
       - name: Terraform
-        if: env.TF_STATE_EXISTS == 'true'
+        if: ${{ env.TF_STATE_EXISTS }} == 'true'
         id: terraform
         run: |
           make ci review terraform-destroy
         env:
-          TF_VAR_flt_docker_image: "ghcr.io/dfe-digital/find-a-lost-trn:no-tag"
+          DOCKER_IMAGE: "ghcr.io/dfe-digital/find-a-lost-trn:no-tag"
           pr_id: ${{ github.event.pull_request.number }}
         shell: bash
 
       - name: Delete tf state file
-        if: env.TF_STATE_EXISTS == 'true'
+        if: ${{ env.TF_STATE_EXISTS }} == 'true'
         run: |
           az storage blob delete -c faltrn-tfstate --name ${{ env.TF_STATE_FILE }} \
-          --account-key ${{ steps.get_secrets.outputs.TFSTATE-CONTAINER-ACCESS-KEY }} \
+          --account-key ${{ env.TFSTATE_CONTAINER_ACCESS_KEY }} \
           --account-name "s189t01faltrntfstatervsa"
