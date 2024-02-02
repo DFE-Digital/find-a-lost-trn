@@ -32,7 +32,7 @@ gem "puma", "~> 6.4"
 gem "rack-attack"
 gem "rails", "~> 7.1.3"
 gem "sentry-rails"
-gem "sidekiq"
+gem "sidekiq", "< 7" # v7 requires Redis 6.2 that Azure doesn't support yet
 gem "sidekiq-cron", "~> 1.10"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
