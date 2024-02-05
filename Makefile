@@ -20,23 +20,23 @@ aks:  ## Sets environment variables for aks deployment
 	$(eval KEY_VAULT_PURGE_PROTECTION=false)
 
 .PHONY: development ## For AKS
-development: aks ## Specify development aks environment
+development: aks test-cluster## Specify development aks environment
 	$(eval include global_config/development.sh)
 
 .PHONY: test
-test: aks ## Specify test aks environment
+test: aks test-cluster ## Specify test aks environment
 	$(eval include global_config/test.sh)
 
 .PHONY: preproduction
-preproduction: aks ## Specify preproduction aks environment
+preproduction: aks test-cluster ## Specify preproduction aks environment
 	$(eval include global_config/preproduction.sh)
 
 .PHONY: production
-production: aks ## Specify production aks environment
+production: aks production-cluster ## Specify production aks environment
 	$(eval include global_config/production.sh)
 
 .PHONY: review
-review: aks ## Specify review aks environment
+review: aks test-cluster ## Specify review aks environment
 	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
 	$(eval include global_config/review.sh)
 	$(eval env=-pr-$(pr_id))
@@ -193,10 +193,6 @@ domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
 
-get-cluster-credentials: set-azure-account ## make <config> get-cluster-credentials [ENVIRONMENT=<clusterX>]
-	az aks get-credentials --overwrite-existing -g ${RESOURCE_GROUP_NAME} -n ${RESOURCE_PREFIX}-tsc-${ENVIRONMENT}${CLONE_STRING}-aks
-	kubelogin convert-kubeconfig -l $(if ${GITHUB_ACTIONS},spn,azurecli)
-
 ######################################
 
 domains-init: bin/terrafile faltrn_domain set-azure-account ## terraform init for dns resources: make <env>  domains-init
@@ -220,3 +216,15 @@ arm-deployment: set-resource-group-name set-storage-account-name set-azure-templ
 			"tfStorageAccountName=${STORAGE_ACCOUNT_NAME}" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
 			keyVaultNames='("${KEY_VAULT_APPLICATION_NAME}", "${KEY_VAULT_INFRASTRUCTURE_NAME}")' \
 			"enableKVPurgeProtection=${KEY_VAULT_PURGE_PROTECTION}" ${WHAT_IF}
+
+test-cluster:
+	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189t01-tsc-ts-rg)
+	$(eval CLUSTER_NAME=s189t01-tsc-test-aks)
+
+production-cluster:
+	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189p01-tsc-pd-rg)
+	$(eval CLUSTER_NAME=s189p01-tsc-production-aks)
+
+get-cluster-credentials: set-azure-account ## make <config> get-cluster-credentials [ENVIRONMENT=<clusterX>]
+	az aks get-credentials --overwrite-existing -g ${CLUSTER_RESOURCE_GROUP_NAME} -n ${CLUSTER_NAME}
+	kubelogin convert-kubeconfig -l $(if ${GITHUB_ACTIONS},spn,azurecli)
