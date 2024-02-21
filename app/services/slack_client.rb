@@ -17,7 +17,7 @@ class SlackClient
   private
 
   def client
-    Faraday.new(url: ENV.fetch("SLACK_WEBHOOK_URL")) do |faraday|
+    Faraday.new(url: ENV.fetch("SLACK_WEBHOOK")) do |faraday|
       faraday.request :json
       faraday.response :json
       faraday.response :logger, nil, { bodies: true, headers: true }
