@@ -1,15 +1,23 @@
 ### Context
 
-Include relevant motivation and context.
+<!-- Why are you making this change? -->
 
 ### Changes proposed in this pull request
 
-Include a summary of the change.
+<!-- Include a summary of the change. -->
+<!-- Why this particular solution? -->
+<!-- What assumptions have you made? -->
+<!-- Are there any side effects to note? -->
+<!-- If there are UI changes, please include Before and After screenshots. -->
 
 ### Guidance to review
 
-Include any useful information needed to review this change.
-Include any dependencies that are required for this change.
+<!-- How could someone else check this work? -->
+<!-- Which parts do you want more feedback on? -->
+
+### Link to Trello card
+
+<!-- http://trello.com/123-example-card -->
 
 ### Checklist
 
