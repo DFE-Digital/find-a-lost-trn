@@ -60,7 +60,7 @@ runs:
         azure-credentials: ${{ inputs.azure_credentials }}
 
     - name: Install kubectl
-      uses: azure/setup-kubectl@v3
+      uses: azure/setup-kubectl@v4.0.0
       with:
         version: "v1.26.1"
 
