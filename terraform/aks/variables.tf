@@ -3,6 +3,11 @@ variable "app_environment" {
   description = "Environment name in full e.g development"
 }
 
+variable "app_key_vault" {
+  default     = null
+  description = "app kv name"
+}
+
 variable "file_environment" {
   type        = string
   description = "AKS environment name e.g dev"
