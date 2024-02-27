@@ -564,7 +564,7 @@ DEPENDENCIES
   faraday (~> 2.9)
   foreman (~> 0.87.2)
   gds_zendesk
-  govuk-components (~> 5.0.0)
+  govuk-components (~> 5.0.2)
   govuk_design_system_formbuilder
   govuk_markdown (~> 2.0)
   jsbundling-rails
