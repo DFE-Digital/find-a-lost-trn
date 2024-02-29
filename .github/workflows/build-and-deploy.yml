@@ -171,30 +171,28 @@ jobs:
             job=deploy_production
           fi
           tf_vars_file=aks/config/${{ env.ENVIRONMENT_NAME }}.tfvars.json
-          echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-          echo "KEY_VAULT_INFRA_SECRET_NAME=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "KEY_VAULT_NAME=$(jq -r '.inf_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
           echo "JOB=${job}" >> $GITHUB_ENV
-          echo "REVIEW=${review}" >> $GITHUB_ENV
 
       - uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - uses: DfE-Digital/keyvault-yaml-secret@v1
-        id: get_monitoring_secret
+      - name: Fetch slack web hook
+        uses: azure/CLI@v1
+        id: slack-web-hook
         with:
-          keyvault: ${{ env.KEY_VAULT_NAME }}
-          secret: ${{ env.KEY_VAULT_INFRA_SECRET_NAME }}
-          key: SLACK_WEBHOOK
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          inlineScript: |
+            SECRET_VALUE=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ env.KEY_VAULT_NAME }}" --query "value" -o tsv)
+            echo "::add-mask::$SECRET_VALUE"
+            echo "SLACK_WEBHOOK=$SECRET_VALUE" >> $GITHUB_OUTPUT
 
       - name: Notify Slack channel on job failure
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_USERNAME: CI Deployment
-          SLACK_TITLE: Deployment of check-the-childrens-barred-list ${{ env.REVIEW && 'review' }} failed
+          SLACK_TITLE: Deployment of Find a lost TRN failed
           SLACK_MESSAGE: Job ${{ env.JOB }} failed
-          SLACK_WEBHOOK: ${{ steps.get_monitoring_secret.outputs.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ steps.slack-web-hook.outputs.SLACK_WEBHOOK }}
           SLACK_COLOR: failure
           SLACK_FOOTER: Sent from Build and Deploy workflow
