@@ -15,6 +15,18 @@ on:
       - opened
       - converted_to_draft
 
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment"
+        required: true
+        type: choice
+        options:
+          - development
+          - test
+          - preproduction
+          - production
+
 env:
   CONTAINER_REGISTRY: ghcr.io
 
@@ -60,16 +72,32 @@ jobs:
           message: |
             AKS review app deployed to https://find-a-lost-trn-review-pr-${{ github.event.pull_request.number }}.test.teacherservices.cloud
 
+  set_matrix:
+    name: Set deployment matrix
+    runs-on: ubuntu-latest
+    needs: [docker]
+    outputs:
+      deployment_matrix: ${{ steps.set_matrix.outputs.deployment_matrix }}
+    steps:
+      - id: set_matrix
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            DEPLOYMENT_MATRIX="{ 'environment': ['${{ github.event.inputs.environment }}'] }"
+          else
+            DEPLOYMENT_MATRIX="{ 'environment': ['development', 'test', 'preproduction'] }"
+          fi
+          echo "deployment_matrix=$DEPLOYMENT_MATRIX" >> $GITHUB_OUTPUT
+
   deploy_nonprod:
     name: Deploy to ${{ matrix.environment }} environment
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     concurrency: deploy_${{ matrix.environment }}
-    needs: [docker]
+    needs: [docker, set_matrix]
     strategy:
-      max-parallel: 1
-      matrix:
-        environment: [development, test, preproduction]
+      fail-fast: false # this is necessary to prevent early terminiation of terraform deployments that will result in tfstate locks
+      max-parallel: 3
+      matrix: ${{ fromJson(needs.set_matrix.outputs.deployment_matrix) }}
     environment:
       name: ${{ matrix.environment }}
       url: ${{ steps.deploy.outputs.environment_url }}
