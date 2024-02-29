@@ -103,6 +103,7 @@ jobs:
       url: ${{ steps.deploy.outputs.environment_url }}
     outputs:
       environment_url: ${{ steps.deploy.outputs.environment_url }}
+      environment_name: ${{ matrix.environment }}
 
     steps:
       - uses: actions/checkout@v4
@@ -131,6 +132,7 @@ jobs:
 
     outputs:
       environment_url: ${{ steps.deploy.outputs.environment_url }}
+      environment_name: 'production'
 
     steps:
       - uses: actions/checkout@v4
@@ -141,3 +143,58 @@ jobs:
           docker_image: ${{ needs.docker.outputs.docker_image }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
+
+  notify_slack_of_failures:
+    name: Notify Slack of failures
+    runs-on: ubuntu-latest
+    needs:
+      [docker, deploy_nonprod, deploy_production]
+    environment: ${{ needs.deploy_production.outputs.environment_name || needs.deploy_nonprod.outputs.environment_name || 'unknown'}}
+    env:
+      ENVIRONMENT_NAME: ${{ needs.deploy_production.outputs.environment_name || needs.deploy_nonprod.outputs.environment_name }}
+    if: failure()
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Environment variables
+        shell: bash
+        working-directory: terraform
+        run: |
+          if ${{ needs.docker.result == 'failure' }}
+          then
+            job=docker
+          elif ${{ needs.deploy_nonprod.result == 'failure' }}
+          then
+            job=deploy_nonprod
+          elif ${{ needs.deploy_production.result == 'failure' }}
+          then
+            job=deploy_production
+          fi
+          tf_vars_file=aks/config/${{ env.ENVIRONMENT_NAME }}.tfvars.json
+          echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "KEY_VAULT_INFRA_SECRET_NAME=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "JOB=${job}" >> $GITHUB_ENV
+          echo "REVIEW=${review}" >> $GITHUB_ENV
+
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: DfE-Digital/keyvault-yaml-secret@v1
+        id: get_monitoring_secret
+        with:
+          keyvault: ${{ env.KEY_VAULT_NAME }}
+          secret: ${{ env.KEY_VAULT_INFRA_SECRET_NAME }}
+          key: SLACK_WEBHOOK
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify Slack channel on job failure
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_USERNAME: CI Deployment
+          SLACK_TITLE: Deployment of check-the-childrens-barred-list ${{ env.REVIEW && 'review' }} failed
+          SLACK_MESSAGE: Job ${{ env.JOB }} failed
+          SLACK_WEBHOOK: ${{ steps.get_monitoring_secret.outputs.SLACK_WEBHOOK }}
+          SLACK_COLOR: failure
+          SLACK_FOOTER: Sent from Build and Deploy workflow
