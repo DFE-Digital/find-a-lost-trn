@@ -132,7 +132,7 @@ jobs:
 
     outputs:
       environment_url: ${{ steps.deploy.outputs.environment_url }}
-      environment_name: 'production'
+      environment_name: "production"
 
     steps:
       - uses: actions/checkout@v4
@@ -147,8 +147,7 @@ jobs:
   notify_slack_of_failures:
     name: Notify Slack of failures
     runs-on: ubuntu-latest
-    needs:
-      [docker, deploy_nonprod, deploy_production]
+    needs: [docker, deploy_nonprod, deploy_production]
     environment: ${{ needs.deploy_production.outputs.environment_name || needs.deploy_nonprod.outputs.environment_name || 'unknown'}}
     env:
       ENVIRONMENT_NAME: ${{ needs.deploy_production.outputs.environment_name || needs.deploy_nonprod.outputs.environment_name }}
