@@ -31,7 +31,7 @@ jobs:
           echo "CLUSTER=$CLUSTER" >> $GITHUB_ENV
           echo "APP_ENVIRONMENT=$APP_ENVIRONMENT" >> $GITHUB_ENV
 
-      - uses: Azure/login@v1
+      - uses: Azure/login@v2
         with:
           creds: ${{ secrets.azure_credentials }}
 

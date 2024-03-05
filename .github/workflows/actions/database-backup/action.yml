@@ -42,7 +42,7 @@ runs:
 
         echo "envs are:  ${{ env.INF_VAULT_NAME }} ${{ env.NAMESPACE }}  ${{ env.APP_ENVIRONMENT }}  ${{ env.CLUSTER }}"
 
-    - uses: Azure/login@v1
+    - uses: Azure/login@v2
       with:
         creds: ${{ inputs.azure_credentials }}
 
