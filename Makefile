@@ -10,7 +10,6 @@ help: ## Show this help
 
 SERVICE_SHORT=faltrn
 
-
 .PHONY: aks
 aks:  ## Sets environment variables for aks deployment
 	$(eval PLATFORM=aks)
@@ -79,17 +78,6 @@ install-fetch-config: ## Install the fetch-config script, for viewing/editing se
 		&& curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb \
 		&& chmod +x bin/fetch_config.rb \
 		|| true
-
-edit-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
-	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} \
-		-e -d azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml -c
-
-print-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
-	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml
-
-validate-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
-	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -d quiet \
-		&& echo Data in ${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} looks valid
 
 .PHONY: set-space-developer
 set-space-developer: read-deployment-config ## make dev set-space-developer USER_ID=first.last@digital.education.gov.uk
