@@ -10,7 +10,6 @@ help: ## Show this help
 
 SERVICE_SHORT=faltrn
 
-
 .PHONY: aks
 aks:  ## Sets environment variables for aks deployment
 	$(eval PLATFORM=aks)
@@ -79,50 +78,6 @@ install-fetch-config: ## Install the fetch-config script, for viewing/editing se
 		&& curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb \
 		&& chmod +x bin/fetch_config.rb \
 		|| true
-
-edit-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
-	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} \
-		-e -d azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml -c
-
-print-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
-	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml
-
-validate-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
-	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -d quiet \
-		&& echo Data in ${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} looks valid
-
-.PHONY: set-space-developer
-set-space-developer: read-deployment-config ## make dev set-space-developer USER_ID=first.last@digital.education.gov.uk
-	$(if $(USER_ID), , $(error Missing environment variable "USER_ID", USER_ID required for this command to run))
-	cf set-space-role ${USER_ID} dfe ${SPACE} SpaceDeveloper
-
-.PHONY: unset-space-developer
-unset-space-developer: read-deployment-config ## make dev unset-space-developer USER_ID=first.last@digital.education.gov.uk
-	$(if $(USER_ID), , $(error Missing environment variable "USER_ID", USER_ID required for this command to run))
-	cf unset-space-role ${USER_ID} dfe ${SPACE} SpaceDeveloper
-
-stop-app: read-deployment-config ## Stops api app, make dev stop-app CONFIRM_STOP=1
-	$(if $(CONFIRM_STOP), , $(error stop-app can only run with CONFIRM_STOP))
-	cf target -s ${SPACE}
-	cf stop ${FLT_APP_NAME}
-
-get-postgres-instance-guid: read-deployment-config ## Gets the postgres service instance's guid
-	cf target -s ${SPACE} > /dev/null
-	cf service ${POSTGRES_DATABASE_NAME} --guid
-	$(eval DB_INSTANCE_GUID=$(shell cf service ${POSTGRES_DATABASE_NAME} --guid))
-
-rename-postgres-service: read-deployment-config ## make dev rename-postgres-service NEW_NAME_SUFFIX=old CONFIRM_RENAME
-	$(if $(CONFIRM_RENAME), , $(error can only run with CONFIRM_RENAME))
-	$(if $(NEW_NAME_SUFFIX), , $(error NEW_NAME_SUFFIX is required))
-	cf target -s ${SPACE} > /dev/null
-	cf rename-service  ${POSTGRES_DATABASE_NAME} ${POSTGRES_DATABASE_NAME}-$(NEW_NAME_SUFFIX)
-
-restore-data-from-backup: read-deployment-config # make production restore-data-from-backup CONFIRM_RESTORE=YES BACKUP_FILENAME="find-a-lost-trn-production-pg-svc-2022-04-28-01"
-	@if [[ "$(CONFIRM_RESTORE)" != YES ]]; then echo "Please enter "CONFIRM_RESTORE=YES" to run workflow"; exit 1; fi
-	$(eval export AZURE_BACKUP_STORAGE_ACCOUNT_NAME=$(AZURE_BACKUP_STORAGE_ACCOUNT_NAME))
-	$(if $(BACKUP_FILENAME), , $(error can only run with BACKUP_FILENAME, eg BACKUP_FILENAME="find-a-lost-trn-production-pg-svc-2022-04-28-01"))
-	bin/download-db-backup ${AZURE_BACKUP_STORAGE_ACCOUNT_NAME} ${AZURE_BACKUP_STORAGE_CONTAINER_NAME} ${BACKUP_FILENAME}.tar.gz
-	bin/restore-db ${DEPLOY_ENV} ${CONFIRM_RESTORE} ${SPACE} ${BACKUP_FILENAME}.sql ${POSTGRES_DATABASE_NAME}
 
 terraform-init: bin/terrafile
 	[[ "${SP_AUTH}" != "true" ]] && az account set -s $(AZURE_SUBSCRIPTION) || true
