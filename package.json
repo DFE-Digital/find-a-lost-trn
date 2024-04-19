@@ -2,7 +2,7 @@
   "name": "app",
   "private": "true",
   "dependencies": {
-    "accessible-autocomplete": "^2.0.4",
+    "accessible-autocomplete": "^3.0.0",
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete#main",
     "esbuild": "^0.20.1",
     "govuk-frontend": "^5.2.0",
