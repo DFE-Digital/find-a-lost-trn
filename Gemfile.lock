@@ -93,7 +93,7 @@ GEM
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
-    audits1984 (0.1.4)
+    audits1984 (0.1.6)
       console1984
       rinku
       rouge
@@ -102,7 +102,7 @@ GEM
     base64 (0.2.0)
     bcrypt (3.1.20)
     benchmark (0.2.1)
-    bigdecimal (3.1.6)
+    bigdecimal (3.1.7)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -156,8 +156,7 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
-    drb (2.2.0)
-      ruby2_keywords
+    drb (2.2.1)
     e2mmap (0.1.0)
     erubi (1.12.0)
     et-orbi (1.2.7)
@@ -213,7 +212,7 @@ GEM
       concurrent-ruby (~> 1.0)
     inflection (1.0.0)
     io-console (0.7.2)
-    irb (1.11.2)
+    irb (1.12.0)
       rdoc
       reline (>= 0.4.2)
     jaro_winkler (1.5.4)
@@ -246,7 +245,7 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.5)
-    minitest (5.22.2)
+    minitest (5.22.3)
     msgpack (1.6.0)
     multi_xml (0.6.0)
     multipart-post (2.2.3)
@@ -263,11 +262,11 @@ GEM
     net-smtp (0.4.0.1)
       net-protocol
     nio4r (2.7.0)
-    nokogiri (1.16.2-arm64-darwin)
+    nokogiri (1.16.4-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.2-x86_64-darwin)
+    nokogiri (1.16.4-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.2-x86_64-linux)
+    nokogiri (1.16.4-x86_64-linux)
       racc (~> 1.4)
     notifications-ruby-client (5.4.0)
       jwt (>= 1.5, < 3)
@@ -311,7 +310,7 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.7.3)
-    rack (2.2.8.1)
+    rack (2.2.9)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
     rack-protection (3.0.1)
@@ -358,14 +357,14 @@ GEM
       thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
-    rake (13.1.0)
+    rake (13.2.1)
     rbs (2.8.4)
     rdoc (6.6.3.1)
       psych (>= 4.0.0)
     redcarpet (3.6.0)
     redis (4.8.1)
     regexp_parser (2.9.0)
-    reline (0.4.3)
+    reline (0.5.3)
       io-console (~> 0.5)
     responders (3.1.1)
       actionpack (>= 5.2)
@@ -375,7 +374,7 @@ GEM
     rexml (3.2.6)
     rinku (2.0.6)
     rladr (1.2.0)
-    rouge (4.1.2)
+    rouge (4.2.1)
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
       rspec-expectations (~> 3.12.0)
@@ -434,7 +433,6 @@ GEM
     ruby-graphviz (1.2.5)
       rexml
     ruby-progressbar (1.13.0)
-    ruby2_keywords (0.0.5)
     sentry-rails (5.10.0)
       railties (>= 5.0)
       sentry-ruby (~> 5.10.0)
@@ -497,7 +495,7 @@ GEM
     thor (1.3.1)
     tilt (2.2.0)
     timeout (0.4.1)
-    turbo-rails (1.4.0)
+    turbo-rails (2.0.5)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
@@ -546,7 +544,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
-  audits1984 (~> 0.1.4)
+  audits1984 (~> 0.1.6)
   bootsnap
   capybara (~> 3.40)
   capybara-email
