@@ -42,7 +42,7 @@ variable "deploy_azure_backing_services" {
 
 variable "enable_monitoring" {
   type        = bool
-  default     = true
+  default     = false
   description = "Enable monitoring and alerting"
 }
 
