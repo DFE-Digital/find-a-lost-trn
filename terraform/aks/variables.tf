@@ -45,6 +45,15 @@ variable "enable_monitoring" {
   default     = false
   description = "Enable monitoring and alerting"
 }
+variable "postgres_enable_high_availability" {
+  default = false
+}
+variable "postgres_flexible_server_sku" {
+  default = "B_Standard_B1ms"
+}
+variable "azure_maintenance_window" {
+  default = null
+}
 
 variable "enable_postgres_ssl" {
   default     = true
