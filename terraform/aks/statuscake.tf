@@ -10,7 +10,7 @@ module "statuscake" {
 }
 
 resource "statuscake_ssl_check" "domain-alert" {
-  for_each = var.statuscake_alerts
+  for_each = { for k, v in var.statuscake_alerts : k => v if can(v.ssl_domain) }
 
   check_interval   = 3600 # Check once per hour
   contact_groups   = each.value.contact_group
