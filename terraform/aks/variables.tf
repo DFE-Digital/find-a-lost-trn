@@ -40,6 +40,8 @@ variable "deploy_azure_backing_services" {
   description = "Deploy real Azure backing services like databases, as opposed to containers inside of AKS"
 }
 
+variable "enable_logit" { default = false }
+
 variable "enable_monitoring" {
   type        = bool
   default     = false
