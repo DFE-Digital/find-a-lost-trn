@@ -23,6 +23,7 @@ module "web_application" {
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
   docker_image           = var.app_docker_image
+  enable_logit           = var.enable_logit
   max_memory             = var.memory_max
   replicas               = var.replicas
   web_external_hostnames = var.gov_uk_host_names
@@ -65,4 +66,5 @@ module "worker_application" {
   probe_command              = ["pgrep", "-f", "sidekiq"]
   max_memory                 = var.worker_memory_max
   replicas                   = var.worker_replicas
+  enable_logit               = var.enable_logit
 }
