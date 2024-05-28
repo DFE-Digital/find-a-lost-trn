@@ -1,7 +1,6 @@
 require_relative "../../lib/ok_computer_checks/zendesk_check"
 require_relative "../../lib/ok_computer_checks/notify_check"
 
-OkComputer.logger = Rails.logger
 OkComputer.mount_at = "health"
 
 OkComputer::Registry.register "postgresql", OkComputer::ActiveRecordCheck.new
