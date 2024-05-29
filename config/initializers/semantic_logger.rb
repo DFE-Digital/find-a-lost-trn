@@ -1,3 +1,5 @@
+return unless defined?(SemanticLogger)
+
 Rails.application.configure do
   config.semantic_logger.application = "" # This is added by logstash from its tags
   config.log_tags = [:request_id]         # Prepend all log lines with the following tags
