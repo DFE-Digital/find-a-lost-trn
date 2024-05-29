@@ -94,3 +94,7 @@ group :test do
   gem "vcr", "~> 6.2"
   gem "webmock", "~> 3.18"
 end
+
+group :production do
+  gem "rails_semantic_logger"
+end
