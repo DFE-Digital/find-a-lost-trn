@@ -96,4 +96,9 @@ Rails.application.configure do
   config.action_mailer.notify_settings = {
     api_key: ENV.fetch("GOVUK_NOTIFY_API_KEY"),
   }
+
+  config.log_level = :info                                # Or :warn, or :error
+  config.log_format = :json                               # For parsing in Logit
+  config.rails_semantic_logger.add_file_appender = false  # Don't log to file
+  config.active_record.logger = nil                       # Don't log SQL
 end
