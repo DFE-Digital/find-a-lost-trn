@@ -3,7 +3,7 @@
 
 <%= form_with model: @itt_provider_form, url: itt_provider_path do |f| %>
   <%= f.govuk_error_summary %>
-  <%= f.govuk_radio_buttons_fieldset(:itt_provider_enrolled, legend: { tag: 'h1', size: 'xl', text: 'Did a university, SCITT or school award your QTS?' }) do %>
+  <%= f.govuk_radio_buttons_fieldset(:itt_provider_enrolled, legend: { tag: 'h1', size: 'l', text: 'Did a university, School Centred Initial Teacher Training (SCITT) provider or school award your QTS?' }) do %>
     <%= f.govuk_radio_button :itt_provider_enrolled, true, label: { text: 'Yes' }, link_errors: true do %>
       <% if FeatureFlag.active?(:use_dqt_api_itt_providers) %>
         <%= render DfE::Autocomplete::View.new(
@@ -16,7 +16,7 @@
               f.object.itt_provider_name,
             ),
             label: { text: 'Where did you get your QTS?', class: 'govuk-label govuk-label--s' },
-            hint: { text: 'Your university, SCITT, school or other training provider' },
+            hint: { text: 'Enter your university, SCITT, school or other training provider' },
           )
         ) %>
       <% else %>
