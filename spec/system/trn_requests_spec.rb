@@ -761,7 +761,7 @@ RSpec.describe "TRN requests", type: :system do
     expect(page.driver.browser.current_title).to start_with(
       "Your date of birth",
     )
-    expect(page).to have_content("Your date of birth")
+    expect(page).to have_content("What is your date of birth")
   end
   alias_method :then_i_am_redirected_to_the_date_of_birth_page,
                :then_i_see_the_date_of_birth_page
@@ -771,7 +771,7 @@ RSpec.describe "TRN requests", type: :system do
     expect(page.driver.browser.current_title).to start_with(
       "Your email address",
     )
-    expect(page).to have_content("Your email address")
+    expect(page).to have_content("What is your email address")
   end
 
   def then_i_see_the_existing_name
@@ -787,10 +787,10 @@ RSpec.describe "TRN requests", type: :system do
   def then_i_see_the_itt_provider_page
     expect(page).to have_current_path("/itt-provider")
     expect(page.driver.browser.current_title).to start_with(
-      "Did a university, SCITT or school award your QTS?",
+      "Did a university, School Centred Initial Teacher Training (SCITT) provider or school award your QTS?",
     )
     expect(page).to have_content(
-      "Did a university, SCITT or school award your QTS?",
+      "Did a university, School Centred Initial Teacher Training (SCITT) provider or school award your QTS?",
     )
   end
 
@@ -804,8 +804,8 @@ RSpec.describe "TRN requests", type: :system do
 
   def then_i_see_the_name_page
     expect(page).to have_current_path("/name")
-    expect(page.driver.browser.current_title).to start_with("What’s your name?")
-    expect(page).to have_content("What’s your name?")
+    expect(page.driver.browser.current_title).to start_with("What is your name?")
+    expect(page).to have_content("What is your name?")
   end
   alias_method :then_i_am_redirected_to_the_name_page, :then_i_see_the_name_page
 
@@ -1055,12 +1055,12 @@ RSpec.describe "TRN requests", type: :system do
   alias_method :and_i_press_back, :when_i_press_back
 
   def when_i_fill_in_my_email_address
-    fill_in "Your email address", with: "kevin@kevin.com"
+    fill_in "What is your email address?", with: "kevin@kevin.com"
   end
   alias_method :and_i_fill_in_my_email_address, :when_i_fill_in_my_email_address
 
   def when_i_fill_in_my_new_email_address
-    fill_in "Your email address", with: "new@example.com"
+    fill_in "What is your email address?", with: "new@example.com"
   end
   alias_method :and_i_fill_in_my_new_email_address,
                :when_i_fill_in_my_new_email_address

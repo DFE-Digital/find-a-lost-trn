@@ -85,11 +85,11 @@ RSpec.describe "Matching spec", type: :system do
   end
 
   def then_i_see_the_date_of_birth_page
-    expect(page).to have_content("Your date of birth")
+    expect(page).to have_content("What is your date of birth")
   end
 
   def then_i_see_the_email_page
-    expect(page).to have_content("Your email address")
+    expect(page).to have_content("What is your email address")
   end
 
   def then_i_see_the_have_ni_page
@@ -100,12 +100,12 @@ RSpec.describe "Matching spec", type: :system do
 
   def then_i_see_the_itt_provider_page
     expect(page).to have_content(
-      "Did a university, SCITT or school award your QTS?",
+      "Did a university, School Centred Initial Teacher Training (SCITT) provider or school award your QTS?",
     )
   end
 
   def then_i_see_the_name_page
-    expect(page).to have_content("What’s your name?")
+    expect(page).to have_content("What is your name?")
   end
 
   def then_i_see_the_start_page
@@ -171,7 +171,7 @@ RSpec.describe "Matching spec", type: :system do
   end
 
   def when_i_fill_in_my_email_address
-    fill_in "Your email address", with: "kevin.e@example.com"
+    fill_in "What is your email address?", with: "kevin.e@example.com"
   end
 
   def when_i_fill_in_my_itt_provider

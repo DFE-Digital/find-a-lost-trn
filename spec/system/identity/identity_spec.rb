@@ -284,11 +284,11 @@ RSpec.describe "Identity", type: :system do
   end
 
   def then_i_see_the_name_page
-    expect(page).to have_content("What’s your name?")
+    expect(page).to have_content("What is your name?")
   end
 
   def then_i_see_the_date_of_birth_page
-    expect(page).to have_content("Your date of birth")
+    expect(page).to have_content("What is your date of birth")
   end
 
   def then_i_see_the_have_ni_number_page
