@@ -76,7 +76,7 @@ class TrnDetailsComponent < ViewComponent::Base
   def itt_provider_key
     return "Where did you get your QTS?" if @trn_request.itt_provider_enrolled
 
-    "Did a university, SCITT or school award your QTS?"
+    "Did a university, School Centred Initial Teacher Training (SCITT) provider or school award your QTS?"
   end
 
   def itt_provider_value

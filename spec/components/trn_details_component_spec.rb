@@ -218,7 +218,7 @@ RSpec.describe TrnDetailsComponent, type: :component do
 
     it do
       is_expected.to include(
-        "Did a university, SCITT or school award your QTS?",
+        "Did a university, School Centred Initial Teacher Training (SCITT) provider or school award your QTS?",
       )
     end
     it { is_expected.to include("No, I was awarded QTS another way") }

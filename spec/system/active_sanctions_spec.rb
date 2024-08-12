@@ -72,7 +72,7 @@ RSpec.describe "TRN requests", type: :system do
   alias_method :and_i_fill_in_my_ni_number, :when_i_fill_in_my_ni_number
 
   def when_i_fill_in_my_email_address
-    fill_in "Your email address", with: "test@example.com"
+    fill_in "What is your email address?", with: "test@example.com"
   end
   alias_method :and_i_fill_in_my_email_address, :when_i_fill_in_my_email_address
 
