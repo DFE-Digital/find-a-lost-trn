@@ -60,9 +60,7 @@ runs:
         azure-credentials: ${{ inputs.azure_credentials }}
 
     - name: Install kubectl
-      uses: azure/setup-kubectl@v4.0.0
-      with:
-        version: "v1.26.1"
+      uses: DFE-Digital/github-actions/set-kubectl@master
 
     - name: Get environment variables
       shell: bash
@@ -104,7 +102,7 @@ runs:
             ;;
         esac
 
-    - uses: azure/setup-kubectl@v3
+    - uses: DFE-Digital/github-actions/set-kubectl@master
 
     - name: K8 setup
       shell: bash
