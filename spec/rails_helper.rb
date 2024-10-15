@@ -115,6 +115,10 @@ VCR.configure do |config|
       match.captures.first
     end
   end
+
+  config.ignore_request do |request|
+    URI(request.uri).path.ends_with?("/favicon")
+  end
 end
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
