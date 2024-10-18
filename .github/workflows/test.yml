@@ -51,5 +51,8 @@ jobs:
       - name: Setup DB
         run: bin/rails db:prepare
 
+      - name: Start tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Run tests
         run: bin/bundle exec rspec --format documentation
