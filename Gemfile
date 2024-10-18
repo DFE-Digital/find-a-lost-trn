@@ -18,7 +18,7 @@ gem "dfe-autocomplete",
     ref: "11738c0"
 gem "faraday", "~> 2.9"
 gem "gds_zendesk"
-gem "govuk-components", "~> 5.0.2"
+gem "govuk-components", "~> 5.7.0"
 gem "govuk_design_system_formbuilder"
 gem "govuk_markdown", "~> 2.0"
 gem "jsbundling-rails"

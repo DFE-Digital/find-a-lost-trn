@@ -54,7 +54,7 @@ Faker::Config.locale = "en-GB"
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = Rails.root.join("spec/fixtures")
+  config.fixture_paths = Rails.root.join("spec/fixtures")
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -114,10 +114,6 @@ VCR.configure do |config|
     if (match = auths.match(/^Bearer\s+([^,\s]+)/))
       match.captures.first
     end
-  end
-
-  config.ignore_request do |request|
-    URI(request.uri).path.ends_with?("/favicon")
   end
 end
 
