@@ -71,7 +71,6 @@ bin/fetch_config.rb
 terraform/*token*
 terraform/**/vendor/
 terraform/*/.terraform
-bin/terrafile
 bin/konduit.sh
 
 # Local .terraform directories

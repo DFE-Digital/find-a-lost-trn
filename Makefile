@@ -52,14 +52,10 @@ bin/konduit.sh:
 	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
 		&& chmod +x bin/konduit.sh
 
-bin/terrafile: ## Install terrafile to manage terraform modules
-	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
-		| tar xz -C ./bin terrafile
-
-.PHONY: terrafile
-terrafile: bin/terrafile
-	./bin/terrafile -p terraform/aks/vendor/modules \
-		-f terraform/aks/workspace_variables/$(CONFIG)_Terrafile
+.PHONY: vendor-modules
+vendor-modules:
+	rm -rf terraform/aks/vendor/modules
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/aks/vendor/modules/aks
 
 tags: ##Tags that will be added to resource group on it's creation in ARM template
 	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Find a Lost TRN", "Service Line": "Teaching Workforce", "Service": "Teacher Services", "Service Offering": "Find a Lost TRN", "Environment" : "$(ENV_TAG)"}' | jq . ))
@@ -79,9 +75,8 @@ install-fetch-config: ## Install the fetch-config script, for viewing/editing se
 		&& chmod +x bin/fetch_config.rb \
 		|| true
 
-terraform-init: bin/terrafile
+terraform-init: vendor-modules
 	[[ "${SP_AUTH}" != "true" ]] && az account set -s $(AZURE_SUBSCRIPTION) || true
-	./bin/terrafile -p terraform/aks/vendor/modules -f terraform/aks/workspace_variables/$(CONFIG)_Terrafile
 	terraform -chdir=terraform/aks init -backend-config workspace_variables/$(CONFIG).backend.tfvars $(backend_config) -upgrade -reconfigure
 	$(if $(DOCKER_IMAGE), $(eval export TF_VAR_app_docker_image=$(DOCKER_IMAGE)), $(error Missing environment variable "DOCKER_IMAGE"))
 
@@ -137,9 +132,13 @@ domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resou
 		--name "${DNS_ZONE}domains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-rg" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}${DNS_ZONE}domainstf" "tfStorageContainerName=${DNS_ZONE}domains-tf"  "keyVaultName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-kv" ${WHAT_IF}
 
-domains-infra-init: bin/terrafile faltrn_domain set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
-	./bin/terrafile -p terraform/domains/infrastructure/vendor/modules -f terraform/domains/infrastructure/config/zones_Terrafile
+.PHONY: vendor-domain-infra-modules
+vendor-domain-infra-modules:
+	rm -rf terraform/domains/infrastructure/vendor/modules/domains
+	TERRAFORM_MODULES_TAG=stable
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/domains/infrastructure/vendor/modules/domains
 
+domains-infra-init: faltrn_domain vendor-domain-infra-modules set-azure-account ## make domains-infra-init -  terraform init for dns core resources, eg Main FrontDoor resource
 	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
@@ -150,9 +149,12 @@ domains-infra-apply: domains-infra-init ## terraform apply for dns core resource
 
 ######################################
 
-domains-init: bin/terrafile faltrn_domain set-azure-account ## terraform init for dns resources: make <env>  domains-init
-	./bin/terrafile -p terraform/domains/environment_domains/vendor/modules -f terraform/domains/environment_domains/config/${CONFIG}_Terrafile
+.PHONY: vendor-domain-modules
+vendor-domain-modules:
+	rm -rf terraform/domains/environment_domains/vendor/modules/domains
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/domains/environment_domains/vendor/modules/domains
 
+domains-init: faltrn_domain vendor-domain-modules set-azure-account ## terraform init for dns resources: make <env>  domains-init
 	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=$(or $(DOMAINS_TERRAFORM_BACKEND_KEY),faltrndomains_$(DEPLOY_ENV).tfstate)
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
