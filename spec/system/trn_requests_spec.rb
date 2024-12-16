@@ -372,8 +372,7 @@ RSpec.describe "TRN requests", type: :system do
 
   it "service is closed" do
     given_the_service_is_closed
-    and_i_visit_the_home_page
-    then_i_should_not_see_the_home_page
+    when_i_visit_the_homepage_i_should_get_an_authentication_error
 
     when_i_am_authorized_as_a_support_user
     and_i_visit_the_home_page
@@ -1157,5 +1156,15 @@ RSpec.describe "TRN requests", type: :system do
 
   def when_i_navigate_to_the_email_page
     visit email_path
+  end
+
+  def then_i_should_see_an_auth_error
+    expect(response).to raise_error(Ferrum::AuthError)
+  end
+
+  def when_i_visit_the_homepage_i_should_get_an_authentication_error
+    expect {
+      visit root_path
+    }.to raise_error(Ferrum::StatusError, /ERR_INVALID_AUTH_CREDENTIALS/)
   end
 end
