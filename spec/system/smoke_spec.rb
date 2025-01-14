@@ -80,7 +80,7 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
   end
 
   def then_i_see_the_email_page
-    expect(page).to have_content("Your email address")
+    expect(page).to have_content("What is your email address?")
   end
 
   def then_i_see_the_have_ni_page
