@@ -75,7 +75,7 @@ jobs:
   set_matrix:
     name: Set deployment matrix
     runs-on: ubuntu-latest
-    needs: [docker]
+    # needs: [docker]
     outputs:
       deployment_matrix: ${{ steps.set_matrix.outputs.deployment_matrix }}
     steps:
