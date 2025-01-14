@@ -46,6 +46,9 @@ runs:
           echo "::add-mask::$SUPPORT_PASSWORD"
           echo "SUPPORT_PASSWORD=$SUPPORT_PASSWORD" >> $GITHUB_OUTPUT
 
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+
     - name: Run deployment smoke test
       shell: bash
       run: bin/smoke
