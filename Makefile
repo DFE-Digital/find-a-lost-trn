@@ -1,4 +1,3 @@
-TERRAFILE_VERSION=0.8
 .DEFAULT_GOAL		:=help
 SHELL				:=/bin/bash
 
