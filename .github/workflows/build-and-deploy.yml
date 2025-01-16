@@ -3,17 +3,17 @@ name: Deploy
 on:
   push:
     branches:
-      - main
+      - 2205-bug-find-a-lost-trn-smoke-test-failures
 
-  pull_request:
-    branches:
-      - main
-    types:
-      - labeled
-      - synchronize
-      - reopened
-      - opened
-      - converted_to_draft
+  # pull_request:
+  #   branches:
+  #     - main
+  #   types:
+  #     - labeled
+  #     - synchronize
+  #     - reopened
+  #     - opened
+  #     - converted_to_draft
 
   workflow_dispatch:
     inputs:
@@ -31,51 +31,51 @@ env:
   CONTAINER_REGISTRY: ghcr.io
 
 jobs:
-  docker:
-    name: Docker build and push
-    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
-    outputs:
-      docker_image: ${{ steps.dockerimage.outputs.docker_image_tag }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/actions/build-docker
-        id: dockerimage
-        with:
-          github_username: ${{ github.actor }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+  # docker:
+  #   name: Docker build and push
+  #   if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     docker_image: ${{ steps.dockerimage.outputs.docker_image_tag }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: ./.github/workflows/actions/build-docker
+  #       id: dockerimage
+  #       with:
+  #         github_username: ${{ github.actor }}
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy_review:
-    name: Deploy to review environment
-    concurrency: deploy_review_${{ github.event.pull_request.number }}
-    needs: [docker]
-    runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'deploy')
-    environment:
-      name: review
+  # deploy_review:
+  #   name: Deploy to review environment
+  #   concurrency: deploy_review_${{ github.event.pull_request.number }}
+  #   needs: [docker]
+  #   runs-on: ubuntu-latest
+  #   if: contains(github.event.pull_request.labels.*.name, 'deploy')
+  #   environment:
+  #     name: review
 
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/actions/deploy
-        id: deploy
-        with:
-          environment: review
-          docker_image: ${{ needs.docker.outputs.docker_image }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
-          pr-id: ${{ github.event.pull_request.number }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: ./.github/workflows/actions/deploy
+  #       id: deploy
+  #       with:
+  #         environment: review
+  #         docker_image: ${{ needs.docker.outputs.docker_image }}
+  #         azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+  #         arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
+  #         pr-id: ${{ github.event.pull_request.number }}
 
-      - name: Post sticky pull request comment
-        if: github.event_name == 'pull_request'
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          message: |
-            AKS review app deployed to https://find-a-lost-trn-review-pr-${{ github.event.pull_request.number }}.test.teacherservices.cloud
+  #     - name: Post sticky pull request comment
+  #       if: github.event_name == 'pull_request'
+  #       uses: marocchino/sticky-pull-request-comment@v2
+  #       with:
+  #         message: |
+  #           AKS review app deployed to https://find-a-lost-trn-review-pr-${{ github.event.pull_request.number }}.test.teacherservices.cloud
 
   set_matrix:
     name: Set deployment matrix
     runs-on: ubuntu-latest
-    needs: [docker]
+    # needs: [docker]
     outputs:
       deployment_matrix: ${{ steps.set_matrix.outputs.deployment_matrix }}
     steps:
@@ -84,16 +84,15 @@ jobs:
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             DEPLOYMENT_MATRIX="{ 'environment': ['${{ github.event.inputs.environment }}'] }"
           else
-            DEPLOYMENT_MATRIX="{ 'environment': ['development', 'test', 'preproduction'] }"
+            DEPLOYMENT_MATRIX="{ 'environment': ['development'] }"
           fi
           echo "deployment_matrix=$DEPLOYMENT_MATRIX" >> $GITHUB_OUTPUT
 
   deploy_nonprod:
     name: Deploy to ${{ matrix.environment }} environment
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     concurrency: deploy_${{ matrix.environment }}
-    needs: [docker, set_matrix]
+    needs: [set_matrix]
     strategy:
       fail-fast: false # this is necessary to prevent early terminiation of terraform deployments that will result in tfstate locks
       max-parallel: 3
@@ -107,26 +106,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      # - uses: azure/login@v2
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Fetch secrets from key vault
-        uses: azure/CLI@v2
-        id: keyvault-yaml-secret
-        with:
-          inlineScript: |
-            SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
-            echo "::add-mask::$SLACK_WEBHOOK"
-            echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
+      # - name: Fetch secrets from key vault
+      #   uses: azure/CLI@v2
+      #   id: keyvault-yaml-secret
+      #   with:
+      #     inlineScript: |
+      #       SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
+      #       echo "::add-mask::$SLACK_WEBHOOK"
+      #       echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
 
-      - uses: ./.github/workflows/actions/deploy
-        id: deploy
-        with:
-          environment: ${{ matrix.environment }}
-          docker_image: ${{ needs.docker.outputs.docker_image }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
+      # - uses: ./.github/workflows/actions/deploy
+      #   id: deploy
+      #   with:
+      #     environment: ${{ matrix.environment }}
+      #     docker_image: ${{ needs.docker.outputs.docker_image }}
+      #     azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      #     arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
 
       - uses: ./.github/workflows/actions/smoke-test
         id: smoke-test
@@ -134,57 +133,57 @@ jobs:
           environment: ${{ matrix.environment }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Slack Notification
-        if: failure()
-        uses: rtCamp/action-slack-notify@master
-        env:
-          SLACK_COLOR: failure
-          SLACK_TITLE: Failure deploying release to ${{ matrix.environment }}
-          SLACK_MESSAGE: Failure deploying release to ${{ matrix.environment }} - Docker tag ${{ needs.docker.outputs.docker_image }}
-          SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
+      # - name: Slack Notification
+      #   if: failure()
+      #   uses: rtCamp/action-slack-notify@master
+      #   env:
+      #     SLACK_COLOR: failure
+      #     SLACK_TITLE: Failure deploying release to ${{ matrix.environment }}
+      #     SLACK_MESSAGE: Failure deploying release to ${{ matrix.environment }} - Docker tag ${{ needs.docker.outputs.docker_image }}
+      #     SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
 
-  deploy_production:
-    name: Deploy to production environment
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    environment:
-      name: production
-      url: ${{ steps.deploy.outputs.environment_url }}
-    concurrency: deploy_production
-    needs: [docker, deploy_nonprod]
+  # deploy_production:
+  #   name: Deploy to production environment
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  #   environment:
+  #     name: production
+  #     url: ${{ steps.deploy.outputs.environment_url }}
+  #   concurrency: deploy_production
+  #   needs: [docker, deploy_nonprod]
 
-    outputs:
-      environment_url: ${{ steps.deploy.outputs.environment_url }}
+  #   outputs:
+  #     environment_url: ${{ steps.deploy.outputs.environment_url }}
 
-    steps:
-      - uses: actions/checkout@v4
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+  #     - uses: azure/login@v2
+  #       with:
+  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Fetch secrets from key vault
-        uses: azure/CLI@v2
-        id: keyvault-yaml-secret
-        with:
-          inlineScript: |
-            SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
-            echo "::add-mask::$SLACK_WEBHOOK"
-            echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
+  #     - name: Fetch secrets from key vault
+  #       uses: azure/CLI@v2
+  #       id: keyvault-yaml-secret
+  #       with:
+  #         inlineScript: |
+  #           SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
+  #           echo "::add-mask::$SLACK_WEBHOOK"
+  #           echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
 
-      - uses: ./.github/workflows/actions/deploy
-        id: deploy
-        with:
-          environment: production
-          docker_image: ${{ needs.docker.outputs.docker_image }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
+  #     - uses: ./.github/workflows/actions/deploy
+  #       id: deploy
+  #       with:
+  #         environment: production
+  #         docker_image: ${{ needs.docker.outputs.docker_image }}
+  #         azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+  #         arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
 
-      - name: Slack Notification
-        if: failure()
-        uses: rtCamp/action-slack-notify@master
-        env:
-          SLACK_COLOR: failure
-          SLACK_TITLE: Failure deploying release to production
-          SLACK_MESSAGE: Failure deploying release to production - Docker tag ${{ needs.docker.outputs.docker_image }}
-          SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
+  #     - name: Slack Notification
+  #       if: failure()
+  #       uses: rtCamp/action-slack-notify@master
+  #       env:
+  #         SLACK_COLOR: failure
+  #         SLACK_TITLE: Failure deploying release to production
+  #         SLACK_MESSAGE: Failure deploying release to production - Docker tag ${{ needs.docker.outputs.docker_image }}
+  #         SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
