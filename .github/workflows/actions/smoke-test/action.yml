@@ -46,14 +46,14 @@ runs:
           echo "::add-mask::$SUPPORT_PASSWORD"
           echo "SUPPORT_PASSWORD=$SUPPORT_PASSWORD" >> $GITHUB_OUTPUT
 
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-      env:
-        HOSTING_DOMAIN: ${{ steps.retrieve-secrets.outputs.HOSTING_DOMAIN }}
-        RAILS_ENV: ${{ steps.retrieve-secrets.outputs.HOSTING_ENVIRONMENT_NAME }}
-        GOVUK_NOTIFY_API_KEY: ${{ steps.retrieve-secrets.outputs.GOVUK_NOTIFY_API_KEY }}
-        SUPPORT_USERNAME: ${{ steps.retrieve-secrets.outputs.SUPPORT_USERNAME }}
-        SUPPORT_PASSWORD: ${{ steps.retrieve-secrets.outputs.SUPPORT_PASSWORD }}
+    # - name: Setup tmate session
+    #   uses: mxschmitt/action-tmate@v3
+    #   env:
+    #     HOSTING_DOMAIN: ${{ steps.retrieve-secrets.outputs.HOSTING_DOMAIN }}
+    #     RAILS_ENV: ${{ steps.retrieve-secrets.outputs.HOSTING_ENVIRONMENT_NAME }}
+    #     GOVUK_NOTIFY_API_KEY: ${{ steps.retrieve-secrets.outputs.GOVUK_NOTIFY_API_KEY }}
+    #     SUPPORT_USERNAME: ${{ steps.retrieve-secrets.outputs.SUPPORT_USERNAME }}
+    #     SUPPORT_PASSWORD: ${{ steps.retrieve-secrets.outputs.SUPPORT_PASSWORD }}
 
     - name: Run deployment smoke test
       shell: bash

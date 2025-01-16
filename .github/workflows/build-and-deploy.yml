@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - 2205-bug-find-a-lost-trn-smoke-test-failures
+      - 2205-bug-find-a-lost-trn-smoke-test-failures-2
 
   # pull_request:
   #   branches:
