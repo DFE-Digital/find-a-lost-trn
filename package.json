@@ -4,7 +4,7 @@
   "dependencies": {
     "accessible-autocomplete": "^2.0.4",
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete#main",
-    "esbuild": "^0.23.1",
+    "esbuild": "^0.24.0",
     "govuk-frontend": "^5.6.0",
     "sass": "^1.79.1"
   },
