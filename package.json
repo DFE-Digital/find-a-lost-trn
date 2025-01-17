@@ -6,7 +6,7 @@
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete#main",
     "esbuild": "^0.23.1",
     "govuk-frontend": "^5.6.0",
-    "sass": "^1.79.1"
+    "sass": "^1.83.0"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
