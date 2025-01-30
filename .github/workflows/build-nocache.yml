@@ -3,8 +3,8 @@ name: Build No Cache
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 12 * * 0"
-    # Will run once a week on Sunday afternoon
+    - cron: "0 0/1 * * *"
+    # Every hour
 
 jobs:
   build-no-cache:
@@ -30,7 +30,7 @@ jobs:
 
       - name: Build without cache and push docker image
         id: build-image
-        uses: DFE-Digital/github-actions/build-docker-image@master
+        uses: DFE-Digital/github-actions/build-docker-image@2221-fix-docker-tag-on-workflowdispatch
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           context: .
