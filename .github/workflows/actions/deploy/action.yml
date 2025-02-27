@@ -7,8 +7,14 @@ inputs:
   docker_image:
     description: Docker image to be deployed
     required: true
-  azure-credentials:
-    description: Credentials for azure
+  azure-client-id:
+    description: Azure Client ID for authentication
+    required: true
+  azure-tenant-id:
+    description: Azure Tenant ID for authentication
+    required: true
+  azure-subscription-id:
+    description: Azure Subscription ID for authentication
     required: true
   arm-access-key:
     required: true
@@ -55,11 +61,15 @@ runs:
 
     - uses: azure/login@v2
       with:
-        creds: ${{ inputs.azure-credentials }}
+        client-id: ${{ inputs.azure-client-id }}
+        tenant-id: ${{ inputs.azure-tenant-id }}
+        subscription-id: ${{ inputs.azure-subscription-id }}
 
     - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
-        azure-credentials: ${{ inputs.azure-credentials }}
+        azure-client-id: ${{ inputs.azure-client-id }}
+        azure-tenant-id: ${{ inputs.azure-tenant-id }}
+        azure-subscription-id: ${{ inputs.azure-subscription-id }}
 
     - name: Terraform init, plan & apply
       shell: bash
@@ -68,5 +78,4 @@ runs:
         ARM_ACCESS_KEY: ${{ inputs.arm-access-key }}
         DOCKER_IMAGE: ${{ inputs.docker_image }}
         pr_id: ${{ inputs.pr-id }}
-        TF_VAR_azure_credentials: ${{ inputs.azure-credentials }}
         CONFIRM_PRODUCTION: true

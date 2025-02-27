@@ -25,6 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: development
+    permissions:
+      id-token: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -42,11 +45,15 @@ jobs:
         with:
           environment: development
           docker_image: ${{ steps.image.outputs.tag }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
 
       - uses: ./.github/workflows/actions/smoke-test
         id: smoke-test
         with:
           environment: development
-          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}

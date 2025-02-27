@@ -5,10 +5,18 @@ on:
   schedule: # 01:00 UTC
     - cron: "0 1 * * *"
 
+env:
+  SERVICE_NAME: faltrn
+  SERVICE_SHORT: faltrn
+  TF_VARS_PATH: terraform/aks/workspace_variables
+
 jobs:
   backup:
     name: Backup AKS Database
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
     strategy:
       max-parallel: 1
       matrix:
@@ -19,8 +27,11 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
+
       - uses: ./.github/workflows/actions/database-backup
         id: aks_db_backup
         with:
-          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           environment: ${{ matrix.environment }}

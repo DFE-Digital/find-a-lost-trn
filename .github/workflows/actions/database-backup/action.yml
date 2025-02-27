@@ -5,8 +5,14 @@ inputs:
   environment:
     description: "The name of the environment"
     required: true
-  azure_credentials:
-    description: "JSON object containing a service principal that can read from Azure Key Vault"
+  azure-client-id:
+    description: Azure Client ID for authentication
+    required: true
+  azure-tenant-id:
+    description: Azure Tenant ID for authentication
+    required: true
+  azure-subscription-id:
+    description: Azure Subscription ID for authentication
     required: true
 
 outputs:
@@ -44,7 +50,9 @@ runs:
 
     - uses: Azure/login@v2
       with:
-        creds: ${{ inputs.azure_credentials }}
+        client-id: ${{ inputs.azure-client-id }}
+        tenant-id: ${{ inputs.azure-tenant-id }}
+        subscription-id: ${{ inputs.azure-subscription-id }}
 
     - name: Fetch slack web hook
       uses: azure/CLI@v1
@@ -57,7 +65,9 @@ runs:
 
     - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
-        azure-credentials: ${{ inputs.azure_credentials }}
+        azure-client-id: ${{ inputs.azure-client-id }}
+        azure-tenant-id: ${{ inputs.azure-tenant-id }}
+        azure-subscription-id: ${{ inputs.azure-subscription-id }}
 
     - name: Install kubectl
       uses: DFE-Digital/github-actions/set-kubectl@master
@@ -121,7 +131,7 @@ runs:
     - name: Backup ${{ inputs.environment }} DB
       shell: bash
       run: |
-        bin/konduit.sh find-a-lost-trn-${{ inputs.environment }} -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f ${BACKUP_FILE_NAME}.sql
+        bin/konduit.sh -n ${{ env.NAMESPACE }} find-a-lost-trn-${{ inputs.environment }} -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f ${BACKUP_FILE_NAME}.sql
         tar -cvzf ${BACKUP_FILE_NAME}.tar.gz ${BACKUP_FILE_NAME}.sql
 
     - name: Set Connection String
