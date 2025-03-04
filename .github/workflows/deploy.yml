@@ -13,9 +13,7 @@ on:
         description: Commit sha to be deployed
         required: true
         default: 588bfd4567e53f6b809d5ed107dc70b3d040710a
-        type: choice
-        options:
-          - 588bfd4567e53f6b809d5ed107dc70b3d040710a
+        type: string
 env:
   CONTAINER_REGISTRY: ghcr.io
 
@@ -37,7 +35,7 @@ jobs:
           echo ::set-output name=tag::$CONTAINER_REGISTRY/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]'):$INPUT_GITHUB_SHA
         env:
           CONTAINER_REGISTRY: ${{ env.CONTAINER_REGISTRY }}
-          INPUT_GITHUB_SHA: 588bfd4567e53f6b809d5ed107dc70b3d040710a
+          INPUT_GITHUB_SHA: ${{ inputs.sha }}
         shell: bash
 
       - uses: ./.github/workflows/actions/deploy
