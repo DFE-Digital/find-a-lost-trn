@@ -1,9 +1,3 @@
-variable "zone" {
-  type        = string
-  description = "Name of DNS zone"
-  default     = "find-a-lost-trn.education.gov.uk"
-}
-
 variable "front_door_name" {
   type        = string
   description = "Name of Azure Front Door"
@@ -36,12 +30,8 @@ variable "origin_hostname" {
 }
 
 locals {
-  hostname = "${var.domains[0]}.${var.zone}"
-}
-
-variable "hosted_zone" {
-  type    = map(any)
-  default = {}
+  zone     = "find-a-lost-trn.education.gov.uk"
+  hostname = "${var.domains[0]}.${local.zone}"
 }
 
 variable "null_host_header" {
