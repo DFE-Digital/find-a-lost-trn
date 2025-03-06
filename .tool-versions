@@ -1,7 +1,8 @@
 azure-cli 2.57.0
-nodejs 18.1.0
-postgres 13.5
-redis 6.2.6
-ruby 3.3.0
-yarn 1.22.19
+nodejs    18.1.0
+postgres  13.5
+redis     6.2.6
+ruby      3.3.0
+yarn      1.22.19
 kubelogin 0.1.0
+terraform 1.5.0
