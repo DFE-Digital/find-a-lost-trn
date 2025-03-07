@@ -45,7 +45,7 @@ review: aks test-cluster ## Specify review aks environment
 ci:	## Run in automation environment
 	$(eval DISABLE_PASSCODE=true)
 	$(eval AUTO_APPROVE=-auto-approve)
-	$(eval SP_AUTH=true)
+	$(eval SKIP_AZURE_LOGIN=true)
 
 bin/konduit.sh:
 	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
@@ -64,8 +64,7 @@ clone:
 
 ##@ Query parameter store to display environment variables. Requires Azure credentials
 set-azure-account: ${environment}
-	echo "Logging on to ${AZURE_SUBSCRIPTION}"
-	az account set -s ${AZURE_SUBSCRIPTION}
+	[ "${SKIP_AZURE_LOGIN}" != "true" ] && az account set -s ${AZURE_SUBSCRIPTION} || true
 
 .PHONY: install-fetch-config
 install-fetch-config: ## Install the fetch-config script, for viewing/editing secrets in Azure Key Vault
@@ -74,8 +73,7 @@ install-fetch-config: ## Install the fetch-config script, for viewing/editing se
 		&& chmod +x bin/fetch_config.rb \
 		|| true
 
-terraform-init: vendor-modules
-	[[ "${SP_AUTH}" != "true" ]] && az account set -s $(AZURE_SUBSCRIPTION) || true
+terraform-init: vendor-modules set-azure-account
 	terraform -chdir=terraform/aks init -backend-config workspace_variables/$(CONFIG).backend.tfvars $(backend_config) -upgrade -reconfigure
 	$(if $(DOCKER_IMAGE), $(eval export TF_VAR_app_docker_image=$(DOCKER_IMAGE)), $(error Missing environment variable "DOCKER_IMAGE"))
 
