@@ -215,8 +215,8 @@ jobs:
     name: Deploy Domains Infrastructure
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    concurrency: deploy_production
-    needs: [deploy_nonprod]
+    concurrency: deploy_domains_infra
+    needs: [deploy_production]
     environment:
       name: production
     permissions:
