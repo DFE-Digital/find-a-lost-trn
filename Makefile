@@ -185,3 +185,20 @@ get-cluster-credentials: set-azure-account ## make <config> get-cluster-credenti
 
 console: get-cluster-credentials
 	kubectl -n tra-${DEPLOY_ENV} exec -ti --tty deployment/find-a-lost-trn-${DEPLOY_ENV} -- /bin/sh -c 'cd /app && /usr/local/bin/bundle exec rails c'
+
+maintenance-image-push:
+	$(if ${GITHUB_TOKEN},, $(error Provide a valid Github token with write:packages permissions as GITHUB_TOKEN variable))
+	$(if ${MAINTENANCE_IMAGE_TAG},, $(eval export MAINTENANCE_IMAGE_TAG=$(shell date +%s)))
+	docker build --platform linux/amd64 -t ghcr.io/dfe-digital/find-a-lost-trn-maintenance:${MAINTENANCE_IMAGE_TAG} maintenance_page
+	echo ${GITHUB_TOKEN} | docker login ghcr.io -u USERNAME --password-stdin
+	docker push ghcr.io/dfe-digital/find-a-lost-trn-maintenance:${MAINTENANCE_IMAGE_TAG}
+
+maintenance-fail-over: get-cluster-credentials
+	$(eval export CONFIG)
+	./maintenance_page/scripts/failover.sh
+
+enable-maintenance: maintenance-image-push maintenance-fail-over
+
+disable-maintenance: get-cluster-credentials
+	$(eval export CONFIG)
+	./maintenance_page/scripts/failback.sh
