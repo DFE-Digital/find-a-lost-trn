@@ -90,7 +90,7 @@ group :test do
   gem "faker"
   gem "rspec"
   gem "rspec-rails"
-  gem "shoulda-matchers", "~> 5.3"
+  gem "shoulda-matchers", "~> 6.4"
   gem "vcr", "~> 6.2"
   gem "webmock", "~> 3.18"
 end
