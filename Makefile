@@ -8,6 +8,7 @@ help: ## Show this help
 ##@ Set environment and corresponding configuration
 
 SERVICE_SHORT=faltrn
+DOCKER_REPOSITORY=ghcr.io/dfe-digital/find-a-lost-trn
 
 .PHONY: aks
 aks:  ## Sets environment variables for aks deployment
@@ -35,9 +36,9 @@ production: aks production-cluster ## Specify production aks environment
 
 .PHONY: review
 review: aks test-cluster ## Specify review aks environment
-	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
+	$(if $(PR_NUMBER), , $(error Missing environment variable "PR_NUMBER"))
 	$(eval include global_config/review.sh)
-	$(eval env=-pr-$(pr_id))
+	$(eval env=-pr-$(PR_NUMBER))
 	$(eval backend_config=-backend-config="key=review$(env).tfstate")
 	$(eval export TF_VAR_app_suffix=$(env))
 
@@ -75,7 +76,7 @@ install-fetch-config: ## Install the fetch-config script, for viewing/editing se
 
 terraform-init: vendor-modules set-azure-account
 	terraform -chdir=terraform/aks init -backend-config workspace_variables/$(CONFIG).backend.tfvars $(backend_config) -upgrade -reconfigure
-	$(if $(DOCKER_IMAGE), $(eval export TF_VAR_app_docker_image=$(DOCKER_IMAGE)), $(error Missing environment variable "DOCKER_IMAGE"))
+	$(if $(DOCKER_IMAGE), $(eval export TF_VAR_app_docker_image=$(DOCKER_IMAGE)), $(eval export TF_VAR_app_docker_image=$(DOCKER_REPOSITORY):main))
 
 terraform-plan: terraform-init
 	terraform -chdir=terraform/aks plan -var-file workspace_variables/$(CONFIG).tfvars.json
