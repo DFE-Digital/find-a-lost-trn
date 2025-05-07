@@ -2,89 +2,41 @@ name: Delete Review App
 
 on:
   pull_request:
-    types: [closed]
-    branches: [main]
+    branches:
+      - main
+    types:
+      - closed
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR number of review app to delete
+        required: false
+        type: string
 
 jobs:
   delete-review-app:
-    name: Delete Review App ${{ github.event.pull_request.number }}
-    concurrency: deploy_review_${{ github.event.pull_request.number }}
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
+    name: Delete Review App ${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+    concurrency: deploy_review_${{ github.event.pull_request.number || github.event.inputs.pr_number }}
     runs-on: ubuntu-latest
+    if: >
+      github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, 'deploy') ||
+      (github.event.action == 'unlabeled' && github.event.label.name == 'deploy') || (github.event_name ==
+      'workflow_dispatch')
+
     environment: review
     permissions:
       pull-requests: write
       id-token: write
+
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Extract configuration from tfvars
-        shell: bash
-        id: config
-        run: |
-          tf_vars_file=terraform/aks/workspace_variables/review.tfvars.json
-          cat $tf_vars_file
-          APP_VAULT_NAME=$(jq -r '.app_vault_name' ${tf_vars_file})
-          NAMESPACE=$(jq -r '.namespace' ${tf_vars_file})
-          APP_ENVIRONMENT=$(jq -r '.app_environment' ${tf_vars_file})
-          CLUSTER=$(jq -r '.cluster' ${tf_vars_file})
-
-          echo "APP_VAULT_NAME=$APP_VAULT_NAME" >> $GITHUB_ENV
-          echo "NAMESPACE=$NAMESPACE" >> $GITHUB_ENV
-          echo "CLUSTER=$CLUSTER" >> $GITHUB_ENV
-          echo "APP_ENVIRONMENT=$APP_ENVIRONMENT" >> $GITHUB_ENV
-
-      - uses: Azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - uses: azure/CLI@v2
-        id: get_secrets
-        with:
-          inlineScript: |
-            TFSTATE_CONTAINER_ACCESS_KEY=$(az keyvault secret show --name "TFSTATE-CONTAINER-ACCESS-KEY" --vault-name "${{ env.APP_VAULT_NAME }}" --query "value" -o tsv)
-            echo "::add-mask::$TFSTATE_CONTAINER_ACCESS_KEY"
-            echo "TFSTATE_CONTAINER_ACCESS_KEY=$TFSTATE_CONTAINER_ACCESS_KEY" >> $GITHUB_ENV
-
-      - name: Set Environment variables
-        run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
-          TF_STATE_FILE=review-pr-$PR_NUMBER.tfstate
-          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-          echo "TF_STATE_FILE=$TF_STATE_FILE" >> $GITHUB_ENV
-          pr_state_file=$(az storage blob list -c faltrn-tfstate \
-            --account-key ${{ env.TFSTATE_CONTAINER_ACCESS_KEY }} \
-            --account-name "s189t01faltrntfstatervsa" \
-            --prefix $TF_STATE_FILE --query "[].name" -o tsv)
-          if [ ! -z "$pr_state_file" ]; then echo "TF_STATE_EXISTS=true" >> $GITHUB_ENV; fi;
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.5.0
-          terraform_wrapper: false
-
-      - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
-        if: ${{ env.TF_STATE_EXISTS }} == 'true'
+      - uses: DFE-Digital/github-actions/delete-review-app@master
         with:
           azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Terraform
-        if: ${{ env.TF_STATE_EXISTS }} == 'true'
-        id: terraform
-        run: |
-          make ci review terraform-destroy
-        env:
-          DOCKER_IMAGE: "ghcr.io/dfe-digital/find-a-lost-trn:no-tag"
-          pr_id: ${{ github.event.pull_request.number }}
-        shell: bash
-
-      - name: Delete tf state file
-        if: ${{ env.TF_STATE_EXISTS }} == 'true'
-        run: |
-          az storage blob delete -c faltrn-tfstate --name ${{ env.TF_STATE_FILE }} \
-          --account-key ${{ env.TFSTATE_CONTAINER_ACCESS_KEY }} \
-          --account-name "s189t01faltrntfstatervsa"
+          terraform-base: terraform/aks
+          pr-number: ${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+          resource-group-name: s189t01-faltrn-rv-rg
+          storage-account-name: s189t01faltrntfstatervsa
+          container-name: faltrn-tfstate
+          tf-state-file: review-pr-${{ github.event.pull_request.number || github.event.inputs.pr_number }}.tfstate
