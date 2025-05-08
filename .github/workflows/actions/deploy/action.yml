@@ -77,5 +77,5 @@ runs:
       env:
         ARM_ACCESS_KEY: ${{ inputs.arm-access-key }}
         DOCKER_IMAGE: ${{ inputs.docker_image }}
-        pr_id: ${{ inputs.pr-id }}
+        PR_NUMBER: ${{ inputs.pr-id }}
         CONFIRM_PRODUCTION: true
