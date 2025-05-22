@@ -10,7 +10,7 @@ module "postgres" {
   cluster_configuration_map      = module.cluster_data.configuration_map
   use_azure                      = var.deploy_azure_backing_services
   azure_enable_monitoring        = var.enable_monitoring
-  azure_extensions               = ["plpgsql", "citext", "uuid-ossp"]
+  azure_extensions               = ["citext", "uuid-ossp"]
   server_version                 = "14"
   azure_enable_backup_storage    = var.azure_enable_backup_storage
   azure_sku_name                 = var.postgres_flexible_server_sku
