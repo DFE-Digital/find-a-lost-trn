@@ -30,7 +30,7 @@ gem "omniauth-rails_csrf_protection"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.4"
 gem "rack-attack"
-gem "rails", "~> 7.1.3"
+gem "rails", "~> 7.2.2"
 gem "sentry-rails"
 gem "sidekiq", "< 7" # v7 requires Redis 6.2 that Azure doesn't support yet
 gem "sidekiq-cron", "~> 1.10"
