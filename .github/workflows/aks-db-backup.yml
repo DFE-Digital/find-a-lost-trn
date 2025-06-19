@@ -77,7 +77,7 @@ jobs:
           echo "KEYVAULT_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv" >> $GITHUB_ENV
 
       - name: Backup ${{ env.DEPLOY_ENV }} postgres
-        uses: DFE-Digital/github-actions/backup-postgres@master
+        uses: DFE-Digital/github-actions/backup-postgres@2368-disable-overwrite-for-postgres-backups
         with:
           storage-account: ${{ env.STORAGE_ACCOUNT_NAME }}
           resource-group: ${{ env.RESOURCE_GROUP_NAME }}
