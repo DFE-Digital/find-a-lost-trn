@@ -7,6 +7,7 @@ module "statuscake" {
   contact_groups = each.value.contact_group
 
   confirmation = try(each.value.confirmations, 2)
+  content_matchers  = try(each.value.content_matchers, [])
 }
 
 resource "statuscake_ssl_check" "domain-alert" {

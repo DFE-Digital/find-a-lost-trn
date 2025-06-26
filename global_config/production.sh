@@ -8,4 +8,4 @@ RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-tsc-${CONFIG_SHORT}-rg
 ENV_TAG=Prod
 ENVIRONMENT=production
 DOMAINS_TERRAFORM_BACKEND_KEY=faltrndomains_prod.tfstate
-TERRAFORM_MODULES_TAG=stable
+TERRAFORM_MODULES_TAG=1664-implement-statuscake-string-matching-in-the-terraform-module
