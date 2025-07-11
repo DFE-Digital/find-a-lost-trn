@@ -9,4 +9,5 @@ module "domains" {
   null_host_header    = try(var.null_host_header, false)
   cached_paths        = try(var.cached_paths, [])
   rate_limit          = try(var.rate_limit, null)
+  rate_limit_max      = try(var.rate_limit_max, null)
 }
