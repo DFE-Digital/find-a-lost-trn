@@ -7,6 +7,9 @@ RUN apk -U upgrade && \
 RUN echo "Europe/London" > /etc/timezone && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime
 
+# Create non-root user and group with specific UIDs/GIDs
+RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
+
 ENV GOVUK_NOTIFY_API_KEY=TestKey \
     HOSTING_DOMAIN=https://required-but-not-used \
     LANG=en_GB.UTF-8 \
@@ -40,6 +43,13 @@ COPY . .
 
 RUN bundle exec rails assets:precompile && \
     rm -rf tmp/* log/* node_modules /tmp/*
+
+# Change ownership only for directories that need write access
+
+RUN chown appuser:appgroup /app/tmp
+
+# Switch to non-root user
+USER 10001
 
 CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \
     bundle exec rails data:migrate:ignore_concurrent_migration_exceptions && \

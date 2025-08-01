@@ -24,6 +24,7 @@ module "web_application" {
 
   docker_image           = var.app_docker_image
   enable_logit           = var.enable_logit
+  run_as_non_root        = var.run_as_non_root
   max_memory             = var.memory_max
   replicas               = var.replicas
   web_external_hostnames = var.gov_uk_host_names
@@ -67,4 +68,5 @@ module "worker_application" {
   max_memory                 = var.worker_memory_max
   replicas                   = var.worker_replicas
   enable_logit               = var.enable_logit
+  run_as_non_root            = var.run_as_non_root
 }

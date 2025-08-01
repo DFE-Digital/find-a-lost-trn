@@ -149,3 +149,9 @@ variable "statuscake_alerts" {
 }
 
 variable "api_token" { default = "" }
+
+variable "run_as_non_root" {
+  type        = bool
+  default     = true
+  description = "Whether to enforce that containers must run as non-root user"
+}
