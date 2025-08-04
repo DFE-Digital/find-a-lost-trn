@@ -9,6 +9,7 @@ gem "audits1984", "~> 0.1.7"
 gem "bootsnap", require: false
 gem "console1984", "~> 0.2.2"
 gem "cssbundling-rails"
+gem "csv"
 gem "data_migrate"
 gem "devise"
 gem "devise_invitable"
