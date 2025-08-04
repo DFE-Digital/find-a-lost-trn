@@ -4,9 +4,9 @@
   "dependencies": {
     "accessible-autocomplete": "^2.0.4",
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete#main",
-    "esbuild": "^0.23.1",
+    "esbuild": "^0.25.8",
     "govuk-frontend": "^5.6.0",
-    "sass": "^1.79.1"
+    "sass": "^1.89.2"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
@@ -18,7 +18,7 @@
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-prettier": "^0.0.0-empty",
     "prettier": "^3.5.3"
   }
