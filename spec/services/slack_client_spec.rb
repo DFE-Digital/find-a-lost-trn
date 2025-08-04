@@ -46,7 +46,7 @@ RSpec.describe SlackClient, type: :service do
       it "raises an exception" do
         expect { create_message }.to raise_error(
           SlackClient::Error,
-          'Status code: 500 - {:errors=>["There was an error"]}',
+          'Status code: 500 - {errors: ["There was an error"]}',
         )
       end
     end
