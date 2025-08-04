@@ -197,9 +197,9 @@ RSpec.describe "Identity", type: :system do
       sig: "an invalid sig",
     }
 
-    expect { post identity_path, params: }.to raise_error(
-      IdentityController::IdentityDataError,
-    )
+    post(identity_path, params:)
+
+    expect(response.status).to eq 500
   end
 
   def when_i_complete_and_submit_the_name_form
