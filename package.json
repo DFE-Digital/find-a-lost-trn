@@ -17,7 +17,7 @@
     "@prettier/plugin-ruby": "^4.0.4",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-prettier": "^0.0.0-empty",
     "prettier": "^3.6.2"
