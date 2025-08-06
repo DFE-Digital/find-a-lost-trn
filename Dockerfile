@@ -1,8 +1,8 @@
-FROM ruby:3.3.0-alpine
+FROM ruby:3.4.4-alpine
 
 RUN apk -U upgrade && \
     apk add --update --no-cache gcc git libc6-compat libc-dev make nodejs \
-    postgresql13-dev tzdata yarn g++
+    postgresql15-dev tzdata yarn g++ yaml-dev
 
 RUN echo "Europe/London" > /etc/timezone && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime

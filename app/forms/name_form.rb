@@ -16,7 +16,7 @@ class NameForm
   validates :previous_last_name, length: { maximum: 255 }
   validate :name_change
 
-  delegate :email?, :first_name, :last_name, to: :trn_request, allow_nil: true
+  delegate :email?, to: :trn_request, allow_nil: true
 
   def first_name
     @first_name ||= trn_request&.first_name

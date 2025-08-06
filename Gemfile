@@ -3,12 +3,13 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.0"
+ruby "3.4.4"
 
 gem "audits1984", "~> 0.1.7"
 gem "bootsnap", require: false
 gem "console1984", "~> 0.2.2"
 gem "cssbundling-rails"
+gem "csv"
 gem "data_migrate"
 gem "devise"
 gem "devise_invitable"
