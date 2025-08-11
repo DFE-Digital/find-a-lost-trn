@@ -5,7 +5,7 @@
     "accessible-autocomplete": "^2.0.4",
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete#main",
     "esbuild": "^0.25.8",
-    "govuk-frontend": "^5.6.0",
+    "govuk-frontend": "^5.11.1",
     "sass": "^1.90.0"
   },
   "scripts": {
