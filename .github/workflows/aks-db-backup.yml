@@ -48,7 +48,7 @@ jobs:
       BACKUP_FILE: ${{ inputs.backup-file || 'schedule'  }}
     concurrency: ${{matrix.environment}}_${{github.event.number}}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: azure/login@v2
         with:
