@@ -527,7 +527,8 @@ GEM
     unicode-emoji (4.0.4)
     uri (0.13.2)
     useragent (0.16.11)
-    vcr (6.2.0)
+    vcr (6.3.1)
+      base64
     version_gem (1.1.1)
     view_component (3.9.0)
       activesupport (>= 5.2.0, < 8.0)
@@ -621,7 +622,7 @@ DEPENDENCIES
   syntax_tree-haml (~> 4.0)
   syntax_tree-rbs (~> 1.0.0)
   tzinfo-data
-  vcr (~> 6.2)
+  vcr (~> 6.3)
   web-console
   webmock (~> 3.18)
 
