@@ -60,11 +60,6 @@ class FeatureFlag
       "Theodor Vararu",
     ],
     [
-      :unlock_teachers_self_service_portal_account,
-      "Unlock a teacher's self service portal account if their TRN is found",
-      "Ransom Voke Anighoro",
-    ],
-    [
       :automated_trn_exports,
       "Automatically export TRN requests to Slack",
       "Felix Clack",
