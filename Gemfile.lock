@@ -254,6 +254,7 @@ GEM
     msgpack (1.8.0)
     multi_xml (0.6.0)
     multipart-post (2.4.1)
+    mutex_m (0.3.0)
     net-http (0.4.1)
       uri
     net-imap (0.5.9)
@@ -296,6 +297,7 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
+    ostruct (0.6.3)
     pagy (6.4.3)
     parallel (1.27.0)
     parser (3.3.9.0)
@@ -594,9 +596,11 @@ DEPENDENCIES
   jsbundling-rails
   logstop (~> 0.4.1)
   mail-notify
+  mutex_m
   okcomputer (~> 1.18)
   omniauth-oauth2 (~> 1.8)
   omniauth-rails_csrf_protection
+  ostruct
   pg (~> 1.5)
   prettier_print (~> 1.2.1)
   pry-byebug

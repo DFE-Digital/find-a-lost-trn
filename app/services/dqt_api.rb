@@ -25,16 +25,7 @@ class DqtApi
 
     raise NoResults if results.empty?
 
-    teacher_account = results.first
-
-    unless trn_request.previous_trn_success_for_email?
-      UnlockTeacherAccountJob.perform_later(
-        uid: teacher_account.fetch("uid"),
-        trn_request_id: trn_request.id,
-      )
-    end
-
-    teacher_account
+    results.first
   end
 
   def self.find_teacher!(date_of_birth:, trn:)
@@ -56,19 +47,6 @@ class DqtApi
 
     return [] unless response.body.key?("ittProviders")
     response.body["ittProviders"]
-  end
-
-  def self.unlock_teacher!(uid:)
-    if FeatureFlag.active?(:unlock_teachers_self_service_portal_account)
-      begin
-        response = new.client.put("/v2/unlock-teacher/#{uid}", { timeout: 10 })
-        raise ApiError, response.reason_phrase unless response.success?
-        response.body["hasBeenUnlocked"]
-      rescue ApiError => e
-        Sentry.capture_exception(e)
-        nil
-      end
-    end
   end
 
   def self.trn_request_params(trn_request)
