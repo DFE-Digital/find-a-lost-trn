@@ -22,7 +22,8 @@
       ) %>
       <%= f.govuk_text_field(:email,
         label: { size: 's', text: 'Email' },
-        hint: { text: 'Used by matching' }
+        hint: { text: 'Used by matching' },
+        autocomplete: "email"
       ) %>
       <%= f.govuk_text_field(:journey_id,
         disabled: true,
