@@ -6,7 +6,8 @@
   <%= f.govuk_email_field(
         :email,
         label: { tag: 'h1', size: 'xl', text: 'What is your email address?' },
-        hint: { text: 'If we can find your TRN, we’ll send it to the email address you give.' }
+        hint: { text: 'If we can find your TRN, we’ll send it to the email address you give.' },
+        autocomplete: "email"
       )
   %>
   <%= f.govuk_submit prevent_double_click: false %>

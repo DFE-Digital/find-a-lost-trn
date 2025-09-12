@@ -14,11 +14,13 @@
 
   <%= f.govuk_text_field(:first_name,
         label: { size: 's', text: 'First name' },
-        required: true
+        required: true,
+        autocomplete: "given-name"
       ) %>
   <%= f.govuk_text_field(:last_name,
         label: { size: 's', text: 'Last name' },
-        required: true
+        required: true,
+        autocomplete: "family-name"
       ) %>
 
   <%= f.govuk_radio_buttons_fieldset :name_changed, legend: { size: 'm', text: 'Have you ever changed your name?' } do %>
@@ -28,8 +30,8 @@
       <p class="govuk-body">You do not have to tell us your previous name, but it will help us identify you.</p>
       <p class="govuk-body">If we cannot match your current name against our records, we'll try to match your previous name.</p>
       <p class="govuk-body">If you changed your name more than once, please tell us your most recent previous name.</p>
-      <%= f.govuk_text_field(:previous_first_name, label: { size: 's', text: 'Previous first name (optional)' }) %>
-      <%= f.govuk_text_field(:previous_last_name, label: { size: 's', text: 'Previous last name (optional)' }) %>
+      <%= f.govuk_text_field(:previous_first_name, label: { size: 's', text: 'Previous first name (optional)' }, autocomplete: "given-name") %>
+      <%= f.govuk_text_field(:previous_last_name, label: { size: 's', text: 'Previous last name (optional)' }, autocomplete: "family-name") %>
     <% end %>
     <%= f.govuk_radio_button :name_changed, "prefer", label: { text: 'Prefer not to say' } %>
   <% end %>

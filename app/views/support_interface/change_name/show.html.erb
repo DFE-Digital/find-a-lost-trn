@@ -16,7 +16,7 @@
 
   <h2 class="govuk-heading-m">New preferred name</h2>
 
-  <%= f.govuk_text_field(:first_name, label: { size: 's', text: "First name" }) %>
-  <%= f.govuk_text_field(:last_name, label: { size: 's', text: "Last name" }) %>
+  <%= f.govuk_text_field(:first_name, label: { size: 's', text: "First name" }, autocomplete: "given-name") %>
+  <%= f.govuk_text_field(:last_name, label: { size: 's', text: "Last name" }, autocomplete: "family-name") %>
   <%= f.govuk_submit prevent_double_click: false %>
 <% end %>

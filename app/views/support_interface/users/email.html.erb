@@ -2,6 +2,6 @@
 <% content_for :back_link_url, back_link_url %>
 <%= form_with model: @email_form, url: support_interface_update_identity_user_email_path(@uuid), method: :put do |f| %>
   <%= f.govuk_error_summary %>
-  <%= f.govuk_text_field(:email, label: { size: 'xl', text: "Change email address" }) %>
+  <%= f.govuk_text_field(:email, label: { size: 'xl', text: "Change email address" }, autocomplete: "email") %>
   <%= f.govuk_submit prevent_double_click: false %>
 <% end %>
