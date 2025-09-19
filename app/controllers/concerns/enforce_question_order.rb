@@ -56,6 +56,12 @@ module EnforceQuestionOrder
     )
   end
 
+  # If you want to use this method in a view, add `helper_method :check_answers_back_path` to the controller
+  # this module is included in
+  def check_answers_back_path
+    questions.last[:path]
+  end
+
   private
 
   def trn_request

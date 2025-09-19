@@ -1,4 +1,5 @@
 <% content_for :page_title, 'Check your answers' %>
+<% content_for :back_link_url, check_answers_back_path %>
 
 <h1 class="govuk-heading-xl">Check your answers</h1>
 <% unless @trn_request.from_get_an_identity? %>
