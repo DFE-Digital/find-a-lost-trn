@@ -31,7 +31,7 @@ module ApplicationHelper
   end
 
   def custom_title(page_title)
-    [page_title, service_name].compact.join(" - ")
+    [page_title, service_name, I18n.t("govuk.title")].compact.join(" - ")
   end
 
   def custom_header

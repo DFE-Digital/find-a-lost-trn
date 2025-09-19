@@ -4,6 +4,7 @@ class TrnRequestsController < ApplicationController
   end
 
   include EnforceQuestionOrder
+  helper_method :check_answers_back_path
 
   layout "two_thirds"
 

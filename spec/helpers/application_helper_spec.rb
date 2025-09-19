@@ -20,20 +20,20 @@ RSpec.describe ApplicationHelper, type: :helper do
     it "Uses client_title if it is set" do
       session[:identity_client_title] = "Custom Client Title"
       result = custom_title("Page Title")
-      expect(result).to eq("Page Title - Custom Client Title")
+      expect(result).to eq("Page Title - Custom Client Title - GOV.UK")
     end
 
     it "Defaults to page_title if client_title is not set" do
       result = custom_title("Page Title")
       expect(result).to eq(
-        "Page Title - Find a lost teacher reference number (TRN)",
+        "Page Title - Find a lost teacher reference number (TRN) - GOV.UK",
       )
     end
 
     it "escapes evil input" do
       session[:identity_client_title] = '<script>alert("evil")</script>'
       result = custom_title("Page Title")
-      expect(result).to eq("Page Title - alert(\"evil\")")
+      expect(result).to eq("Page Title - alert(\"evil\") - GOV.UK")
     end
   end
 

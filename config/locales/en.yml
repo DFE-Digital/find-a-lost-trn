@@ -1,6 +1,7 @@
 en:
   govuk:
     url: https://www.gov.uk
+    title: "GOV.UK"
   service:
     email: teaching.status@education.gov.uk
     name: Find a lost teacher reference number (TRN)
