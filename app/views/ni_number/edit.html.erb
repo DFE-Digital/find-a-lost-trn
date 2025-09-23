@@ -6,8 +6,7 @@
   <%= f.govuk_text_field(:ni_number,
         label: { tag: 'h1', size: 'xl', text: 'What is your National Insurance number?' },
         hint: { text: 'It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.' },
-        class: 'govuk-input--width-10',
-        required: true
+        class: 'govuk-input--width-10'
       ) %>
 
   <%= f.govuk_submit 'Submit', prevent_double_click: false, class: 'govuk-visually-hidden', name: 'submit', value: 'hidden_submit', tabindex: '-1' %>
