@@ -3,17 +3,17 @@ class Staff::UnlocksController < Devise::UnlocksController
 
   # GET /resource/unlock/new
   # def new
-  #   super
+  #   super()
   # end
 
   # POST /resource/unlock
   # def create
-  #   super
+  #   super()
   # end
 
   # GET /resource/unlock?unlock_token=abcdef
   # def show
-  #   super
+  #   super()
   # end
 
   # protected

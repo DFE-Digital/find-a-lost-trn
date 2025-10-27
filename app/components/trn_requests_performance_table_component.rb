@@ -1,9 +1,9 @@
 # frozen_string_literal: true
-class TrnRequestsPerformanceTableComponent < ViewComponent::Base
+class TrnRequestsPerformanceTableComponent < ApplicationComponent
   include PerformanceTableHelpers
 
   def initialize(grouped_request_counts:, total_grouped_requests:, since:)
-    super
+    super()
     @grouped_request_counts = grouped_request_counts
     @since = since
     @total_grouped_requests = total_grouped_requests

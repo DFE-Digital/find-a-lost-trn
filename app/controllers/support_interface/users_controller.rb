@@ -8,9 +8,10 @@ module SupportInterface
 
     def index
       page = params[:page] || 1
-      @all_users ||= identity_users_api.get_users(page:)
+      per_page = IdentityUsersApi::DEFAULT_PER_PAGE
+      @all_users ||= identity_users_api.get_users(page:, per_page: per_page)
       @total = @all_users[:total]
-      @pagy = Pagy.new(count: @total, page:)
+      @pagy = Pagy.new(count: @total, page:, limit: per_page)
       @users = @all_users[:users]
     end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-class ConfirmDqtComponent < ViewComponent::Base
+class ConfirmDqtComponent < ApplicationComponent
   def initialize(user:, dqt_record:)
-    super
+    super()
     @user = user
     @dqt_record = dqt_record
   end
