@@ -38,7 +38,7 @@ class Staff::InvitationsController < Devise::InvitationsController
     end
   end
 
-  def after_invite_path_for(inviter, invitee)
+  def after_invite_path_for(_inviter, invitee)
     invitee.is_a?(Staff) ? support_interface_staff_index_path : super()
   end
 
