@@ -1,9 +1,9 @@
 # frozen_string_literal: true
-class JourneysPerformanceTableComponent < ViewComponent::Base
+class JourneysPerformanceTableComponent < ApplicationComponent
   include PerformanceTableHelpers
 
   def initialize(which_questions_were_needed)
-    super
+    super()
     @which_questions_were_needed = which_questions_were_needed
   end
 

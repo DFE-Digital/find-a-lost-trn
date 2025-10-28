@@ -11,10 +11,10 @@ module SupportInterface
 
       @zendesk_tickets_total = closed_tickets.count
 
-      @zendesk_delete_requests_total = ZendeskDeleteRequest.count
+      @all_zendesk_delete_requests = ZendeskDeleteRequest.order(closed_at: :desc)
+      @zendesk_delete_requests_total = @all_zendesk_delete_requests.count
 
-      @pagy, @zendesk_delete_requests =
-        pagy(ZendeskDeleteRequest.order(closed_at: :desc))
+      @pagy, @zendesk_delete_requests = pagy(@all_zendesk_delete_requests, limit: 100)
 
       @export_form = SupportInterface::ZendeskExportForm.new
     end

@@ -1,8 +1,8 @@
-class TileComponent < ViewComponent::Base
+class TileComponent < ApplicationComponent
   attr_reader :count, :label, :colour
 
   def initialize(count:, label:, colour: :default, size: :regular)
-    super
+    super()
     @count = count
     @label = label
     @colour = colour

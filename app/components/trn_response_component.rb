@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class TrnResponseComponent < ViewComponent::Base
+class TrnResponseComponent < ApplicationComponent
   include ActiveModel::API
 
   attr_accessor :anonymise, :trn_response

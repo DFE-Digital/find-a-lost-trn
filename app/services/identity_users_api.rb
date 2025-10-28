@@ -2,6 +2,8 @@
 class IdentityUsersApi < IdentityApi
   attr_reader :access_token
 
+  DEFAULT_PER_PAGE = 100
+
   def initialize(access_token)
     super()
     @access_token = access_token
@@ -27,7 +29,7 @@ class IdentityUsersApi < IdentityApi
     response.body
   end
 
-  def get_users(page: 1, per_page: 100)
+  def get_users(page: 1, per_page: DEFAULT_PER_PAGE)
     raise_if_timeout_feature_flag_active!
 
     response =

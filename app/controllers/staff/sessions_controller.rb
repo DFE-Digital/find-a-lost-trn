@@ -5,17 +5,17 @@ class Staff::SessionsController < Devise::SessionsController
 
   # GET /resource/sign_in
   # def new
-  #   super
+  #   super()
   # end
 
   # POST /resource/sign_in
   # def create
-  #   super
+  #   super()
   # end
 
   # DELETE /resource/sign_out
   # def destroy
-  #   super
+  #   super()
   # end
 
   def after_sign_out_path_for(_resource_or_scope)

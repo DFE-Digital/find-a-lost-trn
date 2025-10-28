@@ -3,22 +3,22 @@ class Staff::PasswordsController < Devise::PasswordsController
 
   # GET /resource/password/new
   # def new
-  #   super
+  #   super()
   # end
 
   # POST /resource/password
   # def create
-  #   super
+  #   super()
   # end
 
   # GET /resource/password/edit?reset_password_token=abcdef
   # def edit
-  #   super
+  #   super()
   # end
 
   # PUT /resource/password
   # def update
-  #   super
+  #   super()
   # end
 
   # protected

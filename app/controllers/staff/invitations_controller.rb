@@ -5,27 +5,27 @@ class Staff::InvitationsController < Devise::InvitationsController
 
   # GET /resource/invitation/new
   # def new
-  #   super
+  #   super()
   # end
 
   # POST /resource/invitation
   # def create
-  #   super
+  #   super()
   # end
 
   # GET /resource/invitation/accept?invitation_token=abcdef
   # def edit
-  #   super
+  #   super()
   # end
 
   # PUT /resource/invitation
   # def update
-  #   super
+  #   super()
   # end
 
   # GET /resource/invitation/remove?invitation_token=abcdef
   # def destroy
-  #   super
+  #   super()
   # end
 
   protected
@@ -34,15 +34,15 @@ class Staff::InvitationsController < Devise::InvitationsController
     if current_inviter.is_a?(AnonymousSupportUser)
       resource_class.invite!(invite_params, &block)
     else
-      super
+      super()
     end
   end
 
-  def after_invite_path_for(inviter, invitee)
-    invitee.is_a?(Staff) ? support_interface_staff_index_path : super
+  def after_invite_path_for(_inviter, invitee)
+    invitee.is_a?(Staff) ? support_interface_staff_index_path : super()
   end
 
   def after_accept_path_for(resource)
-    resource.is_a?(Staff) ? support_interface_staff_index_path : super
+    resource.is_a?(Staff) ? support_interface_staff_index_path : super()
   end
 end

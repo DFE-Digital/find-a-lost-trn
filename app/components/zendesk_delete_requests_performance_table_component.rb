@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class ZendeskDeleteRequestsPerformanceTableComponent < ViewComponent::Base
+class ZendeskDeleteRequestsPerformanceTableComponent < ApplicationComponent
   include ActiveModel::Model
 
   attr_accessor :grouped_request_counts, :since, :total_grouped_requests

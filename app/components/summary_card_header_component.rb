@@ -1,6 +1,6 @@
-class SummaryCardHeaderComponent < ViewComponent::Base
+class SummaryCardHeaderComponent < ApplicationComponent
   def initialize(title:, heading_level: 2, anchor: nil)
-    super
+    super()
     @title = title
     @heading_level = heading_level
     @anchor = anchor

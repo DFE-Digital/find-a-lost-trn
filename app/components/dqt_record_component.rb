@@ -1,6 +1,6 @@
-class DqtRecordComponent < ViewComponent::Base
+class DqtRecordComponent < ApplicationComponent
   def initialize(dqt_record:)
-    super
+    super()
     @dqt_record = dqt_record
   end
 

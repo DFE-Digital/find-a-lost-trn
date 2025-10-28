@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-class TrnDetailsComponent < ViewComponent::Base
+class TrnDetailsComponent < ApplicationComponent
   def initialize(trn_request:, actions: false, anonymise: false)
-    super
+    super()
     @actions = actions
     @anonymise = anonymise
     @trn_request = trn_request
