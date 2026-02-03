@@ -43,7 +43,7 @@ jobs:
     outputs:
       docker-image: ${{ steps.build-image.outputs.image }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Build and push docker image
         id: build-image
@@ -65,7 +65,7 @@ jobs:
       name: review
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ./.github/workflows/actions/deploy
         id: deploy
         with:
@@ -117,7 +117,7 @@ jobs:
       environment_url: ${{ steps.deploy.outputs.environment_url }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: azure/login@v2
         with:
@@ -175,7 +175,7 @@ jobs:
       environment_url: ${{ steps.deploy.outputs.environment_url }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: azure/login@v2
         with:
