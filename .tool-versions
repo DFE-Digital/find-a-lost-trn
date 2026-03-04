@@ -5,4 +5,4 @@ redis     6.2.6
 ruby      3.4.8
 yarn      1.22.19
 kubelogin 0.1.0
-terraform 1.5.0
+terraform 1.14.5
