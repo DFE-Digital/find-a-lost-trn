@@ -71,8 +71,9 @@
   color: #0b0c0c;
 }
 @media print {
-  [href^="/"].govuk-link:after,[href^="http://"].govuk-link:after,[href^="https://"].govuk-link:after
-  {
+  [href^="/"].govuk-link:after,
+  [href^="http://"].govuk-link:after,
+  [href^="https://"].govuk-link:after {
     content: " (" attr(href) ")";
     font-size: 90%;
     word-wrap: break-word;
