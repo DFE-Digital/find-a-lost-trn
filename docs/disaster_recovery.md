@@ -59,7 +59,7 @@ Run the [Recover deleted postgres database server workflow](https://github.com/D
 
 Restore point in time:
 
-- This should be at least 10 minutes after the server was deleted.
+- The restore point provided should be at least 10 minutes after the server was deleted and should be in the past, this is to provide time for the backup to become available.
 - **Important:** You should convert the time to UTC before actually using it. When you record the time, note what timezone you are using. Especially during BST (British Summer Time).
 
 Environment server names:
@@ -190,6 +190,8 @@ e.g. `bin/konduit.sh -x itt-mentor-services-staging -- psql`
 ### Restore data into the live server
 
 To perform a complete restore of the live server from the PTR copy, use the [Restore database from Azure storage workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/database-restore.yml) and choose the backup file created above to restore to the live postgres server.
+
+Note that when entering the backup filename that the name entered in the `Upload restored database to Azure storage` job should be appended with `.sql.gz` so that the file can correctly be looked up.
 
 ### Restart applications
 
