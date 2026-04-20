@@ -119,21 +119,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: azure/login@v3
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Fetch secrets from key vault
-        uses: azure/CLI@v2
-        id: keyvault-yaml-secret
-        with:
-          inlineScript: |
-            SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
-            echo "::add-mask::$SLACK_WEBHOOK"
-            echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
-
       - uses: ./.github/workflows/actions/deploy
         id: deploy
         with:
@@ -152,14 +137,15 @@ jobs:
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Slack Notification
-        if: failure()
-        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # Pinned at v2.3.3
-        env:
-          SLACK_COLOR: failure
-          SLACK_TITLE: Failure deploying release to ${{ matrix.environment }}
-          SLACK_MESSAGE: Failure deploying release to ${{ matrix.environment }} - Docker image ${{ needs.build_image.outputs.docker-image }}
-          SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
+      - name: Notify teams channel failure
+        if: ${{ failure() }}
+        uses: DFE-Digital/github-actions/send-to-teams-channel@master
+        with:
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          title: Failure deploying release to ${{ matrix.environment }}
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
+          message: |
+            Failure deploying release to ${{ matrix.environment }} - Docker image ${{ needs.build_image.outputs.docker-image }}
 
   deploy_production:
     name: Deploy to production environment
@@ -177,21 +163,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: azure/login@v3
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Fetch secrets from key vault
-        uses: azure/CLI@v2
-        id: keyvault-yaml-secret
-        with:
-          inlineScript: |
-            SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
-            echo "::add-mask::$SLACK_WEBHOOK"
-            echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
-
       - uses: ./.github/workflows/actions/deploy
         id: deploy
         with:
@@ -202,14 +173,15 @@ jobs:
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           arm-access-key: ${{ secrets.ARM_ACCESS_KEY }}
 
-      - name: Slack Notification
-        if: failure()
-        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # Pinned at v2.3.3
-        env:
-          SLACK_COLOR: failure
-          SLACK_TITLE: Failure deploying release to production
-          SLACK_MESSAGE: Failure deploying release to production - Docker image ${{ needs.build_image.outputs.docker-image }}
-          SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
+      - name: Notify teams channel failure
+        if: ${{ failure() }}
+        uses: DFE-Digital/github-actions/send-to-teams-channel@master
+        with:
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          title: Failure deploying release to production
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
+          message: |
+            Failure deploying release to production - Docker image ${{ needs.build_image.outputs.docker-image }}
 
   deploy_domains_infra:
     name: Deploy Domains Infrastructure
@@ -230,7 +202,8 @@ jobs:
           azure-client-id: ${{ secrets.AZURE_CLIENT_ID  }}
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID   }}
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID   }}
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
 
   deploy_domains_env:
     name: Deploy Domains to ${{ matrix.domain_environment }} environment
@@ -257,4 +230,5 @@ jobs:
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID   }}
           environment: ${{ matrix.domain_environment }}
           healthcheck: health
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}

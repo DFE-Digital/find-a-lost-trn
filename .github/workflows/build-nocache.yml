@@ -21,21 +21,6 @@ jobs:
       - uses: actions/checkout@v5
         name: Checkout
 
-      - uses: azure/login@v3
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Fetch secrets from key vault
-        uses: azure/CLI@v2
-        id: keyvault-yaml-secret
-        with:
-          inlineScript: |
-            SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
-            echo "::add-mask::$SLACK_WEBHOOK"
-            echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
-
       - name: Build without cache and push docker image
         id: build-image
         uses: DFE-Digital/github-actions/build-docker-image@master
@@ -46,13 +31,12 @@ jobs:
           reuse-cache: false
           snyk-token: ${{ secrets.SNYK_TOKEN }}
 
-      - name: Notify slack on failure
-        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # Pinned at v2.3.3
+      - name: Notify teams channel failure
         if: ${{ failure() }}
+        uses: DFE-Digital/github-actions/send-to-teams-channel@master
         with:
-          SLACK_USERNAME: CI Deployment
-          SLACK_COLOR: failure
-          SLACK_ICON_EMOJI: ":github-logo:"
-          SLACK_TITLE: "Build failure"
-          SLACK_MESSAGE: ":alert: Rebuild docker cache failure :sadparrot:"
-          SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          title: Build failure
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
+          message: |
+            Rebuild docker cache failure
