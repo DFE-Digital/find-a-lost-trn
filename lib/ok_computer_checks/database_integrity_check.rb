@@ -12,7 +12,7 @@ module OkComputerChecks
     private
 
     def tables_missing_for_models?
-      ActiveRecord::Base.descendants.map(&method(:table_present_for_model?)).include?(false)
+      ApplicationRecord.descendants.map(&method(:table_present_for_model?)).include?(false)
     end
 
     def table_present_for_model?(model)
