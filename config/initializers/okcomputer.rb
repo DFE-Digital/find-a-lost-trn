@@ -1,9 +1,11 @@
 require_relative "../../lib/ok_computer_checks/zendesk_check"
 require_relative "../../lib/ok_computer_checks/notify_check"
+require_relative "../../lib/ok_computer_checks/database_integrity_check"
 
 OkComputer.mount_at = "health"
 
 OkComputer::Registry.register "postgresql", OkComputer::ActiveRecordCheck.new
+OkComputer::Registry.register "database_integrity", OkComputerChecks::DatabaseIntegrityCheck.new
 
 Sidekiq.redis do |conn|
   OkComputer::Registry.register "sidekiq",
