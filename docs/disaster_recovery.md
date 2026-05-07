@@ -38,13 +38,13 @@ Follow the [incident playbook](https://tech-docs.teacherservices.cloud/operating
 
 ### Freeze pipeline
 
-Alert developers that no one should merge to main.
+Alert developers that no one should merge to main, this is to prevent automated deploys from interrupting the recovery process.
 
 - In github setings, a user with repo admin privileges should update the _Branch protection rules_ and set required PR approvers to 6
 
 ### Recreate the lost postgres database server
 
-Follow the steps for either Option 1 (to recover from azure backups) or Option 2 (to recreate via terraform and restore from scheduled offline backup).
+Follow the steps for either Option 1 (to recover from azure backups) or Option 2 (to recreate via terraform and restore from scheduled offline backup). Details regarding which option to choose can be found at the start of this scenario.
 
 #### Option 1: Recover from Azure backups
 
@@ -74,7 +74,7 @@ Environment server names:
 
 ##### Recreate the postgres server via terraform
 
-Run the [deploy workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/build-and-deploy.yml) to recreate the missing postgres database as detailed below.
+Run the [deploy workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/build-and-deploy.yml) to recreate the missing postgres database as detailed below. This will create an empty database for us to restore the data into in the next step.
 
 Check and delete any postgres diagnostics remaining for the deleted instance in https://portal.azure.com/#view/Microsoft_Azure_Monitoring/AzureMonitoringBrowseBlade/~/diagnosticsLogs as the later deploy to rebuild postgres will fail if it remains. e.g. search using subscription the appropriate subscription and resource group combination (see below) and look for enabled Diagnostic settings.
 
@@ -86,7 +86,7 @@ Check and delete any postgres diagnostics remaining for the deleted instance in 
 
 ##### Restore the data from previous backup in Azure storage
 
-Run the [Restore database from Azure storage workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/database-restore.yml).
+Run the [Restore database from Azure storage workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/database-restore.yml). This will restore the most recent backup taken by the scheduled github workflow, so there may be some data loss depending on when the last backup was taken.
 
 This step isn't required if using the restore-deleted-postgres workflow i.e. option 1 in the previous step.
 
@@ -94,7 +94,15 @@ This step isn't required if using the restore-deleted-postgres workflow i.e. opt
 
 Confirm the app is working and you can see the restored data.
 
-You may also want to check any healthcheck urls (e.g. /healthcheck), admin interfaces, api requests, etc
+You may also want to check any healthcheck urls (e.g. /healthcheck), admin interfaces, api requests, etc.
+
+Healthcheck URLs for different environments can be found at:
+
+| Environment   | Healthcheck URL                                             |
+| ------------- | ----------------------------------------------------------- |
+| production    | https://find-a-lost-trn.education.gov.uk/health/all         |
+| preproduction | https://preprod.find-a-lost-trn.education.gov.uk/health/all |
+| test          | https://test.find-a-lost-trn.education.gov.uk/health/all    |
 
 ### Unfreeze pipeline
 
@@ -145,15 +153,19 @@ Follow the [incident playbook](https://tech-docs.teacherservices.cloud/operating
 
 ### Freeze pipeline
 
-Alert developers that no one should merge to main.
+Alert developers that no one should merge to main. This is to prevent automated deploys from interrupting the recovery process, and also to prevent any further data corruption if the issue was caused by a recent change.
 
 - In github setings, a user with repo admin privileges should update the _Branch protection rules_ and set required PR approvers to 6
 
 ### Back up the database (optional)
 
-If users have entered data or new users have signed up, we may need to keep this data for reconciliation later on. Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) to save a copy of the flawed database. Use a specific name to identify the backup file later on.
+This step is optional, however if users have entered data or new users have signed up since the database corruption we don't want to lose that data and we may need to keep this data for reconciliation later on. To do that we need to back up the current state of the database before restoring the previous data. This backup can then be used to extract any new data entered since the corruption, and also to compare against the restored data to understand what was lost.
+
+Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) to save a copy of the flawed database. Use a specific name to identify the backup file later on.
 
 ### Restore postgres database
+
+First we must restore the database to a new postgres server using the point in time restore (PTR) feature. This will create a new copy of the database as it was at the point in time chosen for the restore, and this copy will be on a new postgres server. The live server will not be affected by this process, and the restored data can be checked and validated before being copied back into the live server.
 
 Run the [Restore database from point in time to new database server workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/database-restore-ptr.yml) using a time before the data was deleted. If you need to rerun the workflow, it may fail if the new server was already created. Override the new server name to work around the issue.
 
@@ -168,24 +180,30 @@ Run the [Restore database from point in time to new database server workflow](ht
 
 ### Upload restored database to Azure storage
 
+At this point we have restored the database at the point in time we want to recover onto a new postgres server. We now need to get this data back into the live server. To do that, we first need to back up the restored database to Azure storage so that it can then be used as the source for restoring into the live server.
+
+This step is required even if you completed the optional backup step before restoring the PTR copy, as that backup would have been taken of the corrupted data, whereas this backup will be taken of the restored data.
+
 Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) workflow and choose the restored server as input. Use a specific name to identify the backup file later on.
 
 ### Validate data
 
-It may be necessary to connect to the PTR postgres server for troubleshooting, before deciding on a full restore or otherwise. For instance, the PTR restore may have to be rerun with a different date/time.
+It may be necessary to connect to the PTR postgres server for troubleshooting, before deciding on a full restore or otherwise. For instance, the PTR restore may have to be rerun with a different date/time. Konduit allows you to connect to a backend service via an app instance, and can be used to connect to the PTR postgres server to check the data before restoring to the live server. This can be used to check if the restore was successful, and if the correct point in time was chosen for the restore.
+
+The following needs to be done locally within a cloned copy of the repository, and requires `konduit.sh` to be installed locally.
 
 To connect to the PTR postgres copy using `psql` via konduit:
 
 - Install `konduit.sh` locally using the `make` command
 - Run: `bin/konduit.sh -x -n <namespace-of-deployment> -s <name-of-ptr-server> <name-of-deployment> -- psql`
 
-e.g. `bin/konduit.sh -x -n tra-test -s s189t01-ittms-stg-pg-ptr itt-mentor-services-staging -- psql`
+e.g. `bin/konduit.sh -x -n tra-test -s <name-of-ptr-server> find-a-lost-trn-test -- psql`
 
 To connect to the existing live postgres server for comparison:
 
 - Run: `bin/konduit.sh -x name-of-deployment -- psql`
 
-e.g. `bin/konduit.sh -x itt-mentor-services-staging -- psql`
+e.g. `bin/konduit.sh -x find-a-lost-trn-test -- psql`
 
 ### Restore data into the live server
 
@@ -207,6 +225,14 @@ Confirm the app is working and can see the restored data.
 
 You may also want to check any healthcheck urls (e.g. /healthcheck), admin interfaces, api requests, etc
 
+Healthcheck URLs for different environments can be found at:
+
+| Environment   | Healthcheck URL                                             |
+| ------------- | ----------------------------------------------------------- |
+| production    | https://find-a-lost-trn.education.gov.uk/health/all         |
+| preproduction | https://preprod.find-a-lost-trn.education.gov.uk/health/all |
+| test          | https://test.find-a-lost-trn.education.gov.uk/health/all    |
+
 ### Unfreeze pipeline
 
 Alert developers that merge to main is allowed.
@@ -215,7 +241,7 @@ Alert developers that merge to main is allowed.
 
 ### Tidy up
 
-If a PTR was run, the database copy server should be deleted.
+If a PTR was run, the database copy server should be deleted. To do this locate the database server in the Azure portal and delete it. Locating the database server can be done by going to the resource group for the environment and looking for a server with the name used when creating the PTR copy. For example, within the test environment navigating to the resource group `s189t01-faltrn-ts-rg` and looking for a server with the name `<original-server-name>-ptr` or the custom name used when creating the PTR copy.
 
 If this document is being followed as part of a DR test, then [complete DR test post scenario steps](https://github.com/DFE-Digital/teacher-services-cloud/blob/main/documentation/disaster-recovery-testing.md#post-scenario-steps)
 
