@@ -150,7 +150,7 @@ jobs:
   deploy_production:
     name: Deploy to production environment
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: (github.ref == 'refs/heads/main' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
     environment:
       name: production
       url: ${{ steps.deploy.outputs.environment_url }}
@@ -186,7 +186,7 @@ jobs:
   deploy_domains_infra:
     name: Deploy Domains Infrastructure
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: (github.ref == 'refs/heads/main' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
     concurrency: deploy_domains_infra
     needs: [deploy_production]
     environment:
