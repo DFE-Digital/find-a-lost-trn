@@ -79,7 +79,7 @@ terraform-init: vendor-modules set-azure-account
 	$(if $(DOCKER_IMAGE), $(eval export TF_VAR_app_docker_image=$(DOCKER_IMAGE)), $(eval export TF_VAR_app_docker_image=$(DOCKER_REPOSITORY):main))
 
 terraform-plan: terraform-init
-	terraform -chdir=terraform/aks plan -var-file workspace_variables/$(CONFIG).tfvars.json
+	terraform -chdir=terraform/aks plan ${DETAILED_EXITCODE} -var-file workspace_variables/$(CONFIG).tfvars.json
 
 terraform-apply: terraform-init
 	terraform -chdir=terraform/aks apply -var-file workspace_variables/$(CONFIG).tfvars.json ${AUTO_APPROVE}
@@ -140,7 +140,7 @@ domains-infra-init: faltrn_domain vendor-domain-infra-modules set-azure-account 
 	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
-	terraform -chdir=terraform/domains/infrastructure plan -var-file config/zones.tfvars.json
+	terraform -chdir=terraform/domains/infrastructure plan ${DETAILED_EXITCODE} -var-file config/zones.tfvars.json
 
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
@@ -156,7 +156,7 @@ domains-init: faltrn_domain vendor-domain-modules set-azure-account ## terraform
 	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=$(or $(DOMAINS_TERRAFORM_BACKEND_KEY),faltrndomains_$(DEPLOY_ENV).tfstate)
 
 domains-plan: domains-init  ## terraform plan for dns resources, eg dev.<domain_name> dns records and frontdoor routing
-	terraform -chdir=terraform/domains/environment_domains plan -var-file config/$(DEPLOY_ENV).tfvars.json
+	terraform -chdir=terraform/domains/environment_domains plan ${DETAILED_EXITCODE} -var-file config/$(DEPLOY_ENV).tfvars.json
 
 domains-apply: domains-init ## terraform apply for dns resources
 	terraform -chdir=terraform/domains/environment_domains apply -var-file config/$(DEPLOY_ENV).tfvars.json ${AUTO_APPROVE}
