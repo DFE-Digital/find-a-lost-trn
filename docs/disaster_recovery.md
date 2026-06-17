@@ -4,6 +4,21 @@ The systems are built with resiliency in mind, but they may [fail in different w
 
 This document covers the most critical scenarios and should be used in case of an incident. They should be regularly tested by following the [Disaster recovery testing document](disaster-recovery-testing.md).
 
+## Permissions
+
+Before you can carry out any of the recovery steps below, you need access to the following:
+
+- **Azure portal** — you need access to the relevant Azure subscriptions (`s189-teacher-services-cloud-production` and/or `s189-teacher-services-cloud-test`) with sufficient permissions to view and manage resources such as Postgres flexible servers, storage accounts, and diagnostic settings.
+- **GitHub** — you need write access to the [find-a-lost-trn](https://github.com/DFE-Digital/find-a-lost-trn) repository to trigger workflows, and admin access to update branch protection rules for the pipeline freeze.
+
+If you don't have these permissions, contact your team lead or infrastructure team to get them set up before proceeding.
+
+## Which scenario are you in?
+
+If the Azure Postgres flexible server itself is gone — you can't find it in the Azure portal, or Azure reports the resource as deleted — you're dealing with [Scenario 1: Loss of database server](#scenario-1-loss-of-database-server).
+
+If the server is still running but the data is wrong — records are missing, corrupted, or otherwise incorrect — you're dealing with [Scenario 2: Loss of data](#scenario-2-loss-of-data).
+
 ## Database Failure Scenarios
 
 1. [Loss of database server](#scenario-1-loss-of-database-server)
@@ -23,18 +38,30 @@ Option 1 should be attempted first, as it can recover very close to the point of
 The steps involved in recovery are (choosing either option 1 or 2 for the postgres recreation):
 
 1. [Start the incident process](#start-the-incident-process-if-not-already-in-progress)
+1. [Stop the service](#stop-the-service)
 1. [Freeze pipeline](#freeze-pipeline)
 1. [Recreate the lost postgres database server](#recreate-the-lost-postgres-database-server)
    - [Option 1: Recover from Azure backups](#option-1-recover-from-azure-backups)
    - [Option 2: Recreate via terraform and restore from scheduled offline backup](#option-2-recreate-via-terraform-and-restore-from-scheduled-offline-backup)
      - [Recreate the postgres server via terraform](#step-1-recreate-the-postgres-server-via-terraform)
      - [Restore the data from previous backup in Azure storage](#step-2-restore-the-data-from-previous-backup-in-azure-storage)
+1. [Restart applications](#restart-applications)
 1. [Validate app](#validate-app)
 1. [Unfreeze pipeline](#unfreeze-pipeline)
 
 ### Start the incident process (if not already in progress)
 
 Follow the [incident playbook](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html) and contact the relevant stakeholders as described in [create-an-incident-slack-channel-and-inform-the-stakeholders-comms-lead](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#4-create-an-incident-slack-channel-and-inform-the-stakeholders-comms-lead).
+
+### Stop the service
+
+Even though the database is gone, the application may still be running and showing errors to users. Stop the web app and workers to prevent this, and so users see a maintenance page rather than error screens.
+
+e.g. [update namespace and deployment names as required, the below refers to the tra-test environment]
+
+- `kubectl -n tra-test get deployments`
+- `kubectl -n tra-test scale deployment find-a-lost-trn-test --replicas 0`
+- `kubectl -n tra-test scale deployment find-a-lost-trn-test-worker --replicas 0`
 
 ### Freeze pipeline
 
@@ -57,9 +84,15 @@ Run the [Recover deleted postgres database server workflow](https://github.com/D
 | Restore point in time  | Restore point in time in UTC.<br/>See below for important notes. | e.g. 2024-07-24T06:00:00        |
 | Server name to restore | The server name to be restored.                                  | See table below                 |
 
+Finding the deletion timestamp:
+
+1. In the [Azure portal](https://portal.azure.com/#blade/Microsoft_Azure_ActivityLog/ActivityLogBlade), go to **Monitor** then **Activity Log**.
+2. Add filters for **Subscription** (the subscription hosting the deleted server) and **Operation** (`Delete PostgreSQL Server` / `Microsoft.DBforPostgreSQL/flexibleservers/delete`).
+3. Select the deletion event and open the **JSON tab**. Copy the `submissionTimestamp` value — this is the time the server was deleted.
+
 Restore point in time:
 
-- The restore point provided should be at least 10 minutes after the server was deleted and should be in the past, this is to provide time for the backup to become available.
+- The restore point provided should be at least 10 minutes after the `submissionTimestamp` and should be in the past, this is to provide time for the backup to become available.
 - **Important:** You should convert the time to UTC before actually using it. When you record the time, note what timezone you are using. Especially during BST (British Summer Time).
 
 Environment server names:
@@ -72,7 +105,11 @@ Environment server names:
 
 #### Option 2: Recreate via terraform and restore from scheduled offline backup
 
+**Important:** Option 2 means restoring from the most recent nightly backup, so you will lose any data entered between that backup and the point of failure. Make sure you highlight this to the team and any affected users.
+
 ##### Recreate the postgres server via terraform
+
+Note that recreating the database server via terraform can take a significant amount of time. Be prepared for this step to take a while.
 
 Run the [deploy workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/build-and-deploy.yml) to recreate the missing postgres database as detailed below. This will create an empty database for us to restore the data into in the next step.
 
@@ -86,9 +123,23 @@ Check and delete any postgres diagnostics remaining for the deleted instance in 
 
 ##### Restore the data from previous backup in Azure storage
 
-Run the [Restore database from Azure storage workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/database-restore.yml). This will restore the most recent backup taken by the scheduled github workflow, so there may be some data loss depending on when the last backup was taken.
+Run the [Restore database from Azure storage workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/database-restore.yml).
+
+The workflow has a backup filename parameter. Leave it blank to use the default, which restores from the most recent automated nightly backup. The default only works with the automated nightly backups — if you need to restore from a manually triggered (adhoc) backup, you'll need to specify the adhoc backup file's name explicitly.
+
+If you need to find the filename of a nightly backup, you can get it from the output of the [scheduled backup GitHub Action](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) workflow run that created it.
 
 This step isn't required if using the restore-deleted-postgres workflow i.e. option 1 in the previous step.
+
+### Restart applications
+
+Scale the deployments back up to restore the service.
+
+e.g. [update namespace and deployment names as required, the below refers to the tra-test environment]
+
+- `kubectl -n tra-test get deployments`
+- `kubectl -n tra-test scale deployment find-a-lost-trn-test --replicas 2`
+- `kubectl -n tra-test scale deployment find-a-lost-trn-test-worker --replicas 1`
 
 ### Validate app
 
@@ -128,9 +179,9 @@ The steps involved in this are:
 2. [Start the incident process](#start-the-incident-process-if-not-already-in-progress)
 3. [Freeze pipeline](#freeze-pipeline)
 4. [Back up the database (optional)](#back-up-the-database-optional)
-5. [Restore postgres database](#restore-postgres-database)
-6. [Upload restored database to Azure storage](#upload-restored-database-to-azure-storage)
-7. [Validate data](#validate-data)
+5. [Validate data](#validate-data)
+6. [Restore postgres database](#restore-postgres-database)
+7. [Upload restored database to Azure storage](#upload-restored-database-to-azure-storage)
 8. [Restore data into the live server](#restore-data-into-the-live-server)
 9. [Restart applications](#restart-applications)
 10. [Validate app](#validate-app)
@@ -178,14 +229,6 @@ Run the [Restore database from point in time to new database server workflow](ht
 
 **Important:** You should convert the time to UTC before actually using it. When you record the time, note what timezone you are using. Especially during BST (British Summer Time).
 
-### Upload restored database to Azure storage
-
-At this point we have restored the database at the point in time we want to recover onto a new postgres server. We now need to get this data back into the live server. To do that, we first need to back up the restored database to Azure storage so that it can then be used as the source for restoring into the live server.
-
-This step is required even if you completed the optional backup step before restoring the PTR copy, as that backup would have been taken of the corrupted data, whereas this backup will be taken of the restored data.
-
-Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) workflow and choose the restored server as input. Use a specific name to identify the backup file later on.
-
 ### Validate data
 
 It may be necessary to connect to the PTR postgres server for troubleshooting, before deciding on a full restore or otherwise. For instance, the PTR restore may have to be rerun with a different date/time. Konduit allows you to connect to a backend service via an app instance, and can be used to connect to the PTR postgres server to check the data before restoring to the live server. This can be used to check if the restore was successful, and if the correct point in time was chosen for the restore.
@@ -204,6 +247,14 @@ To connect to the existing live postgres server for comparison:
 - Run: `bin/konduit.sh -x name-of-deployment -- psql`
 
 e.g. `bin/konduit.sh -x find-a-lost-trn-test -- psql`
+
+### Upload restored database to Azure storage
+
+At this point we have restored the database at the point in time we want to recover onto a new postgres server. We now need to get this data back into the live server. To do that, we first need to back up the restored database to Azure storage so that it can then be used as the source for restoring into the live server.
+
+This step is required even if you completed the optional backup step before restoring the PTR copy, as that backup would have been taken of the corrupted data, whereas this backup will be taken of the restored data.
+
+Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) workflow and choose the restored server as input. Use a specific name to identify the backup file later on.
 
 ### Restore data into the live server
 

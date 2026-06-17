@@ -107,6 +107,34 @@ faltrn_domain:   ## runs a script to config variables for setting up dns
 	$(eval include global_config/domain.sh)
 	echo "processed script"
 
+set-pgserver:
+	$(eval SERVERNAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-pg)
+
+list-pglogs: set-resource-group-name set-pgserver set-azure-account
+	az postgres flexible-server server-logs list --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME}
+
+download-pglogs: set-resource-group-name set-pgserver set-azure-account
+	$(if $(LOG_NAME), , $(error Please specify a LOG_NAME for download))
+	az postgres flexible-server server-logs download --name ${LOG_NAME} --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME}
+	ls -l $(LOG_NAME)*
+
+enable-pglogs: set-resource-group-name set-pgserver set-azure-account
+	echo "Enabling server logs for PostgreSQL server ${SERVERNAME}"
+	echo "Current Value"
+	az postgres flexible-server parameter show --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} --name logfiles.download_enable --query value
+	echo "Setting Value"
+	az postgres flexible-server parameter set --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} --name logfiles.download_enable --value on
+	echo "New Value"
+	az postgres flexible-server parameter show --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} --name logfiles.download_enable --query value
+
+disable-pglogs: set-resource-group-name set-pgserver set-azure-account
+	echo "Current Value"
+	az postgres flexible-server parameter show --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} --name logfiles.download_enable --query value
+	echo "Setting Value"
+	az postgres flexible-server parameter set --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} --name logfiles.download_enable --value off
+	echo "New Value"
+	az postgres flexible-server parameter show --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} --name logfiles.download_enable --query value
+
 .PHONY: set-resource-group-name
 set-resource-group-name:
 	$(eval RESOURCE_GROUP_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-rg)

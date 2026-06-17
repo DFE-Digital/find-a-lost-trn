@@ -49,7 +49,7 @@ You can use this user to test that matching works against the preprod
 - Ruby 3.x
 - Node.js 16.x
 - Yarn 1.22.x
-- PostgreSQL 13.x
+- PostgreSQL 17.x
 - Redis 6.x
 
 ## Local development dependencies
