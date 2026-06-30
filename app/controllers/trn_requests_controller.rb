@@ -14,7 +14,9 @@ class TrnRequestsController < ApplicationController
   end
 
   def update
-    redirect_to root_url unless trn_request
+    return redirect_to root_url unless trn_request
+    return redirect_to_completed_submission unless claim_submission!
+
     session[:form_complete] = false
 
     update_answers_checked_on_trn_request
@@ -38,6 +40,7 @@ class TrnRequestsController < ApplicationController
         redirect_to trn_found_path
       end
     rescue DqtApi::NoResults
+      release_submission!
       redirect_to no_match_path
     rescue DqtApi::ApiError,
            Faraday::ConnectionFailed,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2022_10_19_115943) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_30_134004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -139,6 +139,7 @@ ActiveRecord::Schema[7.1].define(version: 2022_10_19_115943) do
     t.string "preferred_first_name"
     t.string "preferred_last_name"
     t.boolean "official_name_preferred"
+    t.datetime "submitted_at"
   end
 
   create_table "trn_responses", force: :cascade do |t|
