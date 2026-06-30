@@ -13,6 +13,8 @@ class NoMatchController < ApplicationController
     if @no_match_form.valid? && @no_match_form.try_again?
       redirect_to check_answers_path
     elsif @no_match_form.valid?
+      return redirect_to_completed_submission unless claim_submission!
+
       if trn_request.from_get_an_identity?
         # Send a request to Get An Identity API with no TRN found
         IdentityApi.submit_trn!(trn_request, session[:identity_journey_id])
