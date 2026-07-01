@@ -24,7 +24,17 @@ class NoMatchController < ApplicationController
         redirect_to session[:identity_redirect_url], allow_other_host: true
         session[:identity_client_title] = nil
       else
-        create_zendesk_ticket
+        begin
+          create_zendesk_ticket
+        rescue ZendeskService::ConnectionError
+          # The connection error is raised before the ticket is created, so the
+          # side effect has not committed: release the claim to keep the
+          # submission retryable, then re-raise so the failure still surfaces.
+          # Deliberately narrow — releasing after a committed side effect (a sent
+          # Identity submission, or a created ticket) would let a replay repeat it.
+          release_submission!
+          raise
+        end
 
         redirect_to helpdesk_request_submitted_path
       end
