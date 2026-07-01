@@ -78,11 +78,18 @@ module EnforceQuestionOrder
   end
 
   # Where to send a replayed or duplicate submission whose outcome already exists.
+  # Each branch keys off persisted outcome state (or session state present in the
+  # original request), because a replay carries the pre-submission cookie and
+  # cannot see anything the first request's response wrote to the session. A
+  # raised Zendesk ticket is checked before the identity branch: a Get An Identity
+  # request that fell back to a ticket has both zendesk_ticket_id and
+  # from_get_an_identity? set, and belongs on the helpdesk page, not back at the
+  # identity host.
   def redirect_to_completed_submission
-    if trn_request.from_get_an_identity? && session[:identity_redirect_url]
-      redirect_to session[:identity_redirect_url], allow_other_host: true
-    elsif trn_request.zendesk_ticket_id
+    if trn_request.zendesk_ticket_id
       redirect_to helpdesk_request_submitted_path
+    elsif trn_request.from_get_an_identity? && session[:identity_redirect_url]
+      redirect_to session[:identity_redirect_url], allow_other_host: true
     elsif trn_request.trn
       redirect_to trn_found_path
     else

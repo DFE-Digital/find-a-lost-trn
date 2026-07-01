@@ -116,4 +116,35 @@ RSpec.describe "TrnRequests replay protection", type: :request do
       expect(IdentityApi).not_to have_received(:submit_trn!)
     end
   end
+
+  # A Get An Identity request can fall back to a Zendesk ticket (e.g. the DQT
+  # lookup raises TooManyResults), leaving both zendesk_ticket_id and
+  # from_get_an_identity? set. Its replay belongs on the helpdesk page, not back
+  # at the identity host, so the ticket outcome must take precedence over the
+  # identity redirect — even while session[:identity_redirect_url] is still set.
+  context "when an identity request that raised a ticket is replayed" do
+    let(:trn_request) do
+      create(
+        :trn_request,
+        :has_zendesk_ticket,
+        :from_get_an_identity,
+        official_name_preferred: true,
+        awarded_qts: false,
+        trn_from_user: "1234567",
+        submitted_at: Time.current,
+      )
+    end
+
+    before do
+      stub_current_trn_request(trn_request)
+      allow_any_instance_of(TrnRequestsController).to receive(:session)
+        .and_return({ identity_redirect_url: "https://identity.example/back" })
+    end
+
+    it "redirects the replay to the helpdesk page, not the identity host" do
+      put trn_request_path, params: params
+
+      expect(response).to redirect_to(helpdesk_request_submitted_path)
+    end
+  end
 end
