@@ -15,13 +15,13 @@
 <!-- How could someone else check this work? -->
 <!-- Which parts do you want more feedback on? -->
 
-### Link to Trello card
+### Link to GitHub issue
 
-<!-- http://trello.com/123-example-card -->
+<!-- https://github.com/DFE-Digital/find-a-lost-trn/issues/123 -->
 
 ### Checklist
 
-- [ ] Attach to Trello card
+- [ ] Attach to GitHub issue
 - [ ] Rebased main
 - [ ] Cleaned commit history
 - [ ] Tested by running locally
