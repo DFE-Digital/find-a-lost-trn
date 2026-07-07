@@ -213,7 +213,9 @@ get-cluster-credentials: set-azure-account ## make <config> get-cluster-credenti
 	kubelogin convert-kubeconfig -l $(if ${AAD_LOGIN_METHOD},${AAD_LOGIN_METHOD},azurecli)
 
 console: get-cluster-credentials
-	kubectl -n tra-${DEPLOY_ENV} exec -ti --tty deployment/find-a-lost-trn-${DEPLOY_ENV} -- /bin/sh -c 'cd /app && /usr/local/bin/bundle exec rails c'
+	$(eval NAMESPACE=$(shell jq -r '.namespace' terraform/aks/workspace_variables/$(CONFIG).tfvars.json))
+	$(eval APP_ENV=$(shell jq -r '.app_environment' terraform/aks/workspace_variables/$(CONFIG).tfvars.json)$(env))
+	kubectl -n $(NAMESPACE) exec -ti --tty deployment/find-a-lost-trn-$(APP_ENV) -- /bin/sh -c 'cd /app && /usr/local/bin/bundle exec rails c'
 
 maintenance-image-push:
 	$(if ${GITHUB_TOKEN},, $(error Provide a valid Github token with write:packages permissions as GITHUB_TOKEN variable))
