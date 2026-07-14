@@ -24,6 +24,7 @@
 #  preferred_last_name     :string
 #  previous_first_name     :string(510)
 #  previous_last_name      :string(510)
+#  submitted_at            :datetime
 #  trn                     :string
 #  trn_from_user           :string
 #  created_at              :datetime         not null

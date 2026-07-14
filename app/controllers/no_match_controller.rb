@@ -13,6 +13,8 @@ class NoMatchController < ApplicationController
     if @no_match_form.valid? && @no_match_form.try_again?
       redirect_to check_answers_path
     elsif @no_match_form.valid?
+      return redirect_to_completed_submission unless claim_submission!
+
       if trn_request.from_get_an_identity?
         # Send a request to Get An Identity API with no TRN found
         IdentityApi.submit_trn!(trn_request, session[:identity_journey_id])
@@ -22,7 +24,17 @@ class NoMatchController < ApplicationController
         redirect_to session[:identity_redirect_url], allow_other_host: true
         session[:identity_client_title] = nil
       else
-        create_zendesk_ticket
+        begin
+          create_zendesk_ticket
+        rescue ZendeskService::ConnectionError
+          # The connection error is raised before the ticket is created, so the
+          # side effect has not committed: release the claim to keep the
+          # submission retryable, then re-raise so the failure still surfaces.
+          # Deliberately narrow — releasing after a committed side effect (a sent
+          # Identity submission, or a created ticket) would let a replay repeat it.
+          release_submission!
+          raise
+        end
 
         redirect_to helpdesk_request_submitted_path
       end
