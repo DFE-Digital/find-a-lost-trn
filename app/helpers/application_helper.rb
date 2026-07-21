@@ -35,54 +35,57 @@ module ApplicationHelper
   end
 
   def custom_header
-    govuk_header(
-      homepage_url: t("govuk.url"),
+    govuk_header(homepage_url: t("govuk.url"))
+  end
+
+  def custom_service_navigation
+    govuk_service_navigation(
       service_name:,
       service_url: start_path,
-    ) do |header|
+    ) do |service_navigation|
       case try(:current_namespace)
       when "support_interface"
-        header.with_navigation_item(
+        service_navigation.with_navigation_item(
           active: current_page?(support_interface_trn_requests_path),
           href: support_interface_trn_requests_path,
           text: "TRNs",
         )
-        header.with_navigation_item(
+        service_navigation.with_navigation_item(
           active: current_page?(support_interface_features_path),
           href: support_interface_features_path,
           text: "Features",
         )
-        header.with_navigation_item(
+        service_navigation.with_navigation_item(
           active:
             request.path.start_with?("/support/identity") ||
               request.path.start_with?("/support/dqt_record"),
           href: support_interface_identity_user_index_path,
           text: "Identity",
         )
-        header.with_navigation_item(
+        service_navigation.with_navigation_item(
           active: request.path.start_with?("/support/staff"),
           href: support_interface_staff_index_path,
           text: "Staff",
         )
-        header.with_navigation_item(
+        service_navigation.with_navigation_item(
           active: false,
           href: support_interface_sidekiq_web_path,
           text: "Sidekiq",
         )
-        header.with_navigation_item(
+        service_navigation.with_navigation_item(
           active: current_page?(support_interface_validation_errors_path),
           href: support_interface_validation_errors_path,
           text: "Validations",
         )
-        header.with_navigation_item(
+        service_navigation.with_navigation_item(
           active: request.path.start_with?("/support/zendesk"),
           href: support_interface_zendesk_path,
           text: "Zendesk",
         )
         if current_staff
-          header.with_navigation_item(href: staff_sign_out_path, text: "Sign out")
+          service_navigation.with_navigation_item(href: staff_sign_out_path, text: "Sign out")
         else
-          header.with_navigation_item(href: new_staff_session_path, text: "Sign in")
+          service_navigation.with_navigation_item(href: new_staff_session_path, text: "Sign in")
         end
       end
     end
