@@ -135,17 +135,15 @@ RSpec.describe "Staff support", type: :system do
     OmniAuth.config.add_mock(
       :identity,
       {
-        uid: nil,
+        uid: SecureRandom.uuid,
         credentials: {
           token: {
             access_token: "1234567890",
             expires_at: 1.minute.from_now.to_i,
           },
         },
-        extra: {
-          raw_info: {
-            email: "new@example.com",
-          },
+        info: {
+          email: "new@example.com",
         },
       },
     )

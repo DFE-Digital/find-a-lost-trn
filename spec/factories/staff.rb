@@ -21,10 +21,12 @@
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string
 #  locked_at              :datetime
+#  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  sign_in_count          :integer          default(0), not null
+#  uid                    :string
 #  unconfirmed_email      :string
 #  unlock_token           :string
 #  created_at             :datetime         not null
@@ -38,6 +40,7 @@
 #  index_staff_on_invitation_token      (invitation_token) UNIQUE
 #  index_staff_on_invited_by            (invited_by_type,invited_by_id)
 #  index_staff_on_invited_by_id         (invited_by_id)
+#  index_staff_on_provider_and_uid      (provider,uid) UNIQUE
 #  index_staff_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_staff_on_unlock_token          (unlock_token) UNIQUE
 #
@@ -45,5 +48,7 @@ FactoryBot.define do
   factory :staff do
     email { "test@example.org" }
     password { "example" }
+    uid { SecureRandom.uuid }
+    provider { "identity" }
   end
 end

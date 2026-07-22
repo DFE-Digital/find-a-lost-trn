@@ -7,10 +7,9 @@ module IdentityAuthServiceHelper
     OmniAuth.config.mock_auth[:identity] = OmniAuth::AuthHash.new(
       {
         provider: "identity",
-        extra: {
-          raw_info: {
-            email: staff.email,
-          },
+        uid: staff.uid,
+        info: {
+          email: staff.email,
         },
         credentials: {
           token: {
