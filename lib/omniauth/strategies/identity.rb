@@ -12,8 +12,10 @@ module Omniauth
       option :pkce, true
       option :scope, "get-an-identity:support user:write"
 
+      uid { raw_info["sub"] }
+
       credentials { { token: access_token } }
-      info { { name: raw_info["name"], email: raw_info["email"] } }
+      info { { name: raw_info["name"], email: raw_info["email"]&.downcase } }
 
       extra { { "raw_info" => raw_info } }
 
