@@ -20,7 +20,6 @@ env:
   GLOBAL_CONFIG_PATH: global_config
   TF_VARS_PATH: terraform/aks/workspace_variables
   TERRAFORM_BASE: terraform/aks
-  TF_FILE: terraform.tf
   SERVICE_NAME: find-a-lost-trn
   RESOURCE_GROUP_NAME: s189t01-faltrn-rv-rg
   STORAGE_ACCOUNT_NAME: s189t01faltrntfstatervsa
@@ -52,7 +51,6 @@ jobs:
           resource-group-name: ${{ env.RESOURCE_GROUP_NAME }}
           storage-account-name: ${{ env.STORAGE_ACCOUNT_NAME }}
           terraform-base: ${{ env.TERRAFORM_BASE }}
-          tf-file: ${{ env.TF_FILE }}
           service-name: ${{ env.SERVICE_NAME }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-repo: ${{ github.repository }}
