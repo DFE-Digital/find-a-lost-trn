@@ -191,14 +191,14 @@ GEM
       zendesk_api (>= 1.37, < 4.0)
     globalid (1.4.0)
       activesupport (>= 6.1)
-    govuk-components (5.11.3)
+    govuk-components (6.4.0)
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
-      view_component (>= 4.0, < 4.1)
-    govuk_design_system_formbuilder (5.11.0)
-      actionview (>= 6.1)
-      activemodel (>= 6.1)
-      activesupport (>= 6.1)
+      view_component (>= 4.9, < 4.13)
+    govuk_design_system_formbuilder (6.3.0)
+      actionview (>= 7.2)
+      activemodel (>= 7.2)
+      activesupport (>= 7.2)
       html-attributes-utils (~> 1)
     govuk_markdown (2.0.3)
       activesupport
@@ -570,8 +570,9 @@ GEM
     vcr (6.3.1)
       base64
     version_gem (1.1.1)
-    view_component (4.0.2)
-      activesupport (>= 7.1.0, < 8.1)
+    view_component (4.12.0)
+      actionview (>= 7.1.0)
+      activesupport (>= 7.1.0)
       concurrent-ruby (~> 1)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -631,7 +632,7 @@ DEPENDENCIES
   faraday (~> 2.9)
   foreman (~> 0.87.2)
   gds_zendesk
-  govuk-components (~> 5.11.3)
+  govuk-components (~> 6.4)
   govuk_design_system_formbuilder
   govuk_markdown (~> 2.0)
   jsbundling-rails
