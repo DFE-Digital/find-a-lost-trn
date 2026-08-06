@@ -28,7 +28,7 @@ require "./app/lib/hosting_environment"
 module FindALostTrn
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.0
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -40,12 +40,6 @@ module FindALostTrn
 
     # Don't generate system test files.
     config.generators.system_tests = nil
-
-    # Adopted ahead of the 8.1 defaults, which set it. Rails 8.0 deprecates the
-    # :offset behaviour, and the only `to_time` callers here parse strings that
-    # carry no zone, so the two behave identically. Redundant once
-    # load_defaults reaches 8.1.
-    config.active_support.to_time_preserves_timezone = :zone
 
     config.active_job.queue_adapter = :sidekiq
 
