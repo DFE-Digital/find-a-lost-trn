@@ -28,7 +28,7 @@ require "./app/lib/hosting_environment"
 module FindALostTrn
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 8.1
+    config.load_defaults 8.0
 
     # Configuration for the application, engines, and railties goes here.
     #
