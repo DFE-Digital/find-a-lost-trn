@@ -46,12 +46,12 @@ module ApplicationHelper
       case try(:current_namespace)
       when "support_interface"
         service_navigation.with_navigation_item(
-          active: current_page?(support_interface_trn_requests_path),
+          current: current_page?(support_interface_trn_requests_path),
           href: support_interface_trn_requests_path,
           text: "TRNs",
         )
         service_navigation.with_navigation_item(
-          active: current_page?(support_interface_features_path),
+          current: current_page?(support_interface_features_path),
           href: support_interface_features_path,
           text: "Features",
         )
@@ -73,7 +73,7 @@ module ApplicationHelper
           text: "Sidekiq",
         )
         service_navigation.with_navigation_item(
-          active: current_page?(support_interface_validation_errors_path),
+          current: current_page?(support_interface_validation_errors_path),
           href: support_interface_validation_errors_path,
           text: "Validations",
         )
