@@ -2,7 +2,7 @@
 
 The systems are built with resiliency in mind, but they may [fail in different ways](https://technical-guidance.education.gov.uk/infrastructure/disaster-recovery/) and could cause an incident.
 
-This document covers the most critical scenarios and should be used in case of an incident. They should be regularly tested by following the [Disaster recovery testing document](disaster-recovery-testing.md).
+This document covers the most critical scenarios and should be used in case of an incident. They should be regularly tested by following the [Disaster recovery testing document](https://github.com/DFE-Digital/teacher-services-cloud/blob/main/documentation/disaster-recovery-testing.md).
 
 ## Permissions
 
@@ -51,7 +51,7 @@ The steps involved in recovery are (choosing either option 1 or 2 for the postgr
 
 ### Start the incident process (if not already in progress)
 
-Follow the [incident playbook](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html) and contact the relevant stakeholders as described in [create-an-incident-slack-channel-and-inform-the-stakeholders-comms-lead](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#4-create-an-incident-slack-channel-and-inform-the-stakeholders-comms-lead).
+Follow the [incident playbook](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html). Open an incident thread as described in [3. Open an incident thread in Teams](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#3-open-an-incident-thread-in-teams-any-incident-lead), then contact the relevant stakeholders as described in [5. Determine who to contact and how](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#5-determine-who-to-contact-and-how-comms-lead).
 
 ### Stop the service
 
@@ -200,7 +200,7 @@ e.g. [update namespace and deployment names as required, the below refers to the
 
 ### Start the incident process (if not already in progress)
 
-Follow the [incident playbook](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html) and contact the relevant stakeholders as described in [create-an-incident-slack-channel-and-inform-the-stakeholders-comms-lead](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#4-create-an-incident-slack-channel-and-inform-the-stakeholders-comms-lead).
+Follow the [incident playbook](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html). Open an incident thread as described in [3. Open an incident thread in Teams](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#3-open-an-incident-thread-in-teams-any-incident-lead), then contact the relevant stakeholders as described in [5. Determine who to contact and how](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#5-determine-who-to-contact-and-how-comms-lead).
 
 ### Freeze pipeline
 
@@ -298,6 +298,6 @@ If this document is being followed as part of a DR test, then [complete DR test 
 
 ## Post DR review
 
-- Schedule an incident retro meeting with all the stakeholders
-- Review the incident and fill in the incident report
-- Raise trello cards for any process improvements
+- Hold an incident retro with all the stakeholders, following the playbook's [review the incident](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#review-the-incident-to-try-and-prevent-it-reoccurring) step
+- Fill in the incident report and [close and finish reporting on the incident](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#close-and-finish-reporting-on-the-incident)
+- Raise an issue on the [TRS team project board](https://github.com/DFE-Digital/teaching-record-team-project-board/issues) for any process improvements
