@@ -218,14 +218,14 @@ Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-los
 
 First we must restore the database to a new postgres server using the point in time restore (PTR) feature. This will create a new copy of the database as it was at the point in time chosen for the restore, and this copy will be on a new postgres server. The live server will not be affected by this process, and the restored data can be checked and validated before being copied back into the live server.
 
-Run the [Restore database from point in time to new database server workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/database-restore-ptr.yml) using a time before the data was deleted. If you need to rerun the workflow, it may fail if the new server was already created. Override the new server name to work around the issue.
+Run the [Restore database from point in time to new database server workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/database-restore-ptr.yml) using a time before the data was deleted. Always set a custom name for the new server rather than accepting the default `<original-server-name>-ptr` — include the date, for example `s189t01-faltrn-ts-pg-ptr-2026-08-20`. The default name is the same on every run, so a second attempt fails while a PTR server from an earlier attempt still exists. You need this name again to [validate the data](#validate-data), to [upload the restored database](#upload-restored-database-to-azure-storage) and to [tidy up](#tidy-up).
 
-| Required Parameter               | Description                                                      | Options                                |
-| -------------------------------- | ---------------------------------------------------------------- | -------------------------------------- |
-| Environment to restore           | The environment to restore the database server in.               | test, preproduction, production        |
-| Confirm production               | A true/false confirmation if running in production.              | true, false                            |
-| Restore point in time            | Restore point in time in UTC.<br/>See below for important notes. | e.g. 2024-07-24T06:00:00               |
-| Name of the new database server. | The name to be used for the new server.                          | Default is <original-server-name>-ptr. |
+| Required Parameter               | Description                                                      | Options                                  |
+| -------------------------------- | ---------------------------------------------------------------- | ---------------------------------------- |
+| Environment to restore           | The environment to restore the database server in.               | test, preproduction, production          |
+| Confirm production               | A true/false confirmation if running in production.              | true, false                              |
+| Restore point in time            | Restore point in time in UTC.<br/>See below for important notes. | e.g. 2024-07-24T06:00:00                 |
+| Name of the new database server. | The name to be used for the new server.                          | Default is `<original-server-name>-ptr`. |
 
 **Important:** You should convert the time to UTC before actually using it. When you record the time, note what timezone you are using. Especially during BST (British Summer Time).
 
