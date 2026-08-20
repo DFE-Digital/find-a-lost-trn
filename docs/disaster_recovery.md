@@ -212,7 +212,9 @@ Alert developers that no one should merge to main. This is to prevent automated 
 
 This step is optional, however if users have entered data or new users have signed up since the database corruption we don't want to lose that data and we may need to keep this data for reconciliation later on. To do that we need to back up the current state of the database before restoring the previous data. This backup can then be used to extract any new data entered since the corruption, and also to compare against the restored data to understand what was lost.
 
-Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) to save a copy of the flawed database. Use a specific name to identify the backup file later on.
+Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) to save a copy of the flawed database. Set `Backup file` to a name you will recognise later; left at its default an adhoc run is named `faltrn_[env]_adhoc_YYYY-MM-DD`, which collides with any other adhoc backup taken the same day. The nightly scheduled run at 01:00 UTC uses `faltrn_[env]_YYYY-MM-DD`.
+
+**Note:** dispatching this workflow ignores the environment you pick and backs up development, test, preproduction and production in turn, applying any `Db server` override to each of them. Check the run's job list to confirm which environments it touched.
 
 ### Restore postgres database
 
@@ -254,7 +256,15 @@ At this point we have restored the database at the point in time we want to reco
 
 This step is required even if you completed the optional backup step before restoring the PTR copy, as that backup would have been taken of the corrupted data, whereas this backup will be taken of the restored data.
 
-Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) workflow and choose the restored server as input. Use a specific name to identify the backup file later on.
+Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) again, this time pointing it at the PTR server rather than the live one.
+
+| Required Parameter | Description                                                                                                                   | Options                                    |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Environment        | The environment holding the PTR server.                                                                                       | test, preproduction, production            |
+| Backup file        | Name without extension. Set it explicitly — the file lands as `<name>.sql.gz`, which is what the live restore below asks for. | e.g. `faltrn_production_ptr_2026-08-20`    |
+| Db server          | Full name of the PTR server, as named when you ran the point in time restore. Left blank it backs up the live server instead. | e.g. `s189t01-faltrn-ts-pg-ptr-2026-08-20` |
+
+**Note:** dispatching this workflow ignores the environment you pick and backs up development, test, preproduction and production in turn, applying any `Db server` override to each of them. Check the run's job list to confirm which environments it touched.
 
 ### Restore data into the live server
 
