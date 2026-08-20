@@ -2,7 +2,7 @@
 
 The systems are built with resiliency in mind, but they may [fail in different ways](https://technical-guidance.education.gov.uk/infrastructure/disaster-recovery/) and could cause an incident.
 
-This document covers the most critical scenarios and should be used in case of an incident. They should be regularly tested by following the [Disaster recovery testing document](disaster-recovery-testing.md).
+This document covers the most critical scenarios and should be used in case of an incident. They should be regularly tested by following the [Disaster recovery testing document](https://github.com/DFE-Digital/teacher-services-cloud/blob/main/documentation/disaster-recovery-testing.md).
 
 ## Permissions
 
@@ -43,15 +43,15 @@ The steps involved in recovery are (choosing either option 1 or 2 for the postgr
 1. [Recreate the lost postgres database server](#recreate-the-lost-postgres-database-server)
    - [Option 1: Recover from Azure backups](#option-1-recover-from-azure-backups)
    - [Option 2: Recreate via terraform and restore from scheduled offline backup](#option-2-recreate-via-terraform-and-restore-from-scheduled-offline-backup)
-     - [Recreate the postgres server via terraform](#step-1-recreate-the-postgres-server-via-terraform)
-     - [Restore the data from previous backup in Azure storage](#step-2-restore-the-data-from-previous-backup-in-azure-storage)
+     - [Recreate the postgres server via terraform](#recreate-the-postgres-server-via-terraform)
+     - [Restore the data from previous backup in Azure storage](#restore-the-data-from-previous-backup-in-azure-storage)
 1. [Restart applications](#restart-applications)
 1. [Validate app](#validate-app)
 1. [Unfreeze pipeline](#unfreeze-pipeline)
 
 ### Start the incident process (if not already in progress)
 
-Follow the [incident playbook](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html) and contact the relevant stakeholders as described in [create-an-incident-slack-channel-and-inform-the-stakeholders-comms-lead](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#4-create-an-incident-slack-channel-and-inform-the-stakeholders-comms-lead).
+Follow the [incident playbook](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html). Open an incident thread as described in [3. Open an incident thread in Teams](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#3-open-an-incident-thread-in-teams-any-incident-lead), then contact the relevant stakeholders as described in [5. Determine who to contact and how](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#5-determine-who-to-contact-and-how-comms-lead).
 
 ### Stop the service
 
@@ -179,8 +179,8 @@ The steps involved in this are:
 2. [Start the incident process](#start-the-incident-process-if-not-already-in-progress)
 3. [Freeze pipeline](#freeze-pipeline)
 4. [Back up the database (optional)](#back-up-the-database-optional)
-5. [Validate data](#validate-data)
-6. [Restore postgres database](#restore-postgres-database)
+5. [Restore postgres database](#restore-postgres-database)
+6. [Validate data](#validate-data)
 7. [Upload restored database to Azure storage](#upload-restored-database-to-azure-storage)
 8. [Restore data into the live server](#restore-data-into-the-live-server)
 9. [Restart applications](#restart-applications)
@@ -200,7 +200,7 @@ e.g. [update namespace and deployment names as required, the below refers to the
 
 ### Start the incident process (if not already in progress)
 
-Follow the [incident playbook](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html) and contact the relevant stakeholders as described in [create-an-incident-slack-channel-and-inform-the-stakeholders-comms-lead](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#4-create-an-incident-slack-channel-and-inform-the-stakeholders-comms-lead).
+Follow the [incident playbook](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html). Open an incident thread as described in [3. Open an incident thread in Teams](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#3-open-an-incident-thread-in-teams-any-incident-lead), then contact the relevant stakeholders as described in [5. Determine who to contact and how](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#5-determine-who-to-contact-and-how-comms-lead).
 
 ### Freeze pipeline
 
@@ -212,20 +212,22 @@ Alert developers that no one should merge to main. This is to prevent automated 
 
 This step is optional, however if users have entered data or new users have signed up since the database corruption we don't want to lose that data and we may need to keep this data for reconciliation later on. To do that we need to back up the current state of the database before restoring the previous data. This backup can then be used to extract any new data entered since the corruption, and also to compare against the restored data to understand what was lost.
 
-Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) to save a copy of the flawed database. Use a specific name to identify the backup file later on.
+Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) to save a copy of the flawed database. Set `Backup file` to a name you will recognise later; left at its default an adhoc run is named `faltrn_[env]_adhoc_YYYY-MM-DD`, which collides with any other adhoc backup taken the same day. The nightly scheduled run at 01:00 UTC uses `faltrn_[env]_YYYY-MM-DD`.
+
+**Note:** dispatching this workflow ignores the environment you pick and backs up development, test, preproduction and production in turn, applying any `Db server` override to each of them. Check the run's job list to confirm which environments it touched.
 
 ### Restore postgres database
 
 First we must restore the database to a new postgres server using the point in time restore (PTR) feature. This will create a new copy of the database as it was at the point in time chosen for the restore, and this copy will be on a new postgres server. The live server will not be affected by this process, and the restored data can be checked and validated before being copied back into the live server.
 
-Run the [Restore database from point in time to new database server workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/database-restore-ptr.yml) using a time before the data was deleted. If you need to rerun the workflow, it may fail if the new server was already created. Override the new server name to work around the issue.
+Run the [Restore database from point in time to new database server workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/database-restore-ptr.yml) using a time before the data was deleted. Always set a custom name for the new server rather than accepting the default `<original-server-name>-ptr` — include the date, for example `s189t01-faltrn-ts-pg-ptr-2026-08-20`. The default name is the same on every run, so a second attempt fails while a PTR server from an earlier attempt still exists. You need this name again to [validate the data](#validate-data), to [upload the restored database](#upload-restored-database-to-azure-storage) and to [tidy up](#tidy-up).
 
-| Required Parameter               | Description                                                      | Options                                |
-| -------------------------------- | ---------------------------------------------------------------- | -------------------------------------- |
-| Environment to restore           | The environment to restore the database server in.               | test, preproduction, production        |
-| Confirm production               | A true/false confirmation if running in production.              | true, false                            |
-| Restore point in time            | Restore point in time in UTC.<br/>See below for important notes. | e.g. 2024-07-24T06:00:00               |
-| Name of the new database server. | The name to be used for the new server.                          | Default is <original-server-name>-ptr. |
+| Required Parameter               | Description                                                      | Options                                  |
+| -------------------------------- | ---------------------------------------------------------------- | ---------------------------------------- |
+| Environment to restore           | The environment to restore the database server in.               | test, preproduction, production          |
+| Confirm production               | A true/false confirmation if running in production.              | true, false                              |
+| Restore point in time            | Restore point in time in UTC.<br/>See below for important notes. | e.g. 2024-07-24T06:00:00                 |
+| Name of the new database server. | The name to be used for the new server.                          | Default is `<original-server-name>-ptr`. |
 
 **Important:** You should convert the time to UTC before actually using it. When you record the time, note what timezone you are using. Especially during BST (British Summer Time).
 
@@ -254,7 +256,15 @@ At this point we have restored the database at the point in time we want to reco
 
 This step is required even if you completed the optional backup step before restoring the PTR copy, as that backup would have been taken of the corrupted data, whereas this backup will be taken of the restored data.
 
-Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) workflow and choose the restored server as input. Use a specific name to identify the backup file later on.
+Use the [Backup AKS Database workflow](https://github.com/DFE-Digital/find-a-lost-trn/actions/workflows/aks-db-backup.yml) again, this time pointing it at the PTR server rather than the live one.
+
+| Required Parameter | Description                                                                                                                   | Options                                    |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Environment        | The environment holding the PTR server.                                                                                       | test, preproduction, production            |
+| Backup file        | Name without extension. Set it explicitly — the file lands as `<name>.sql.gz`, which is what the live restore below asks for. | e.g. `faltrn_production_ptr_2026-08-20`    |
+| Db server          | Full name of the PTR server, as named when you ran the point in time restore. Left blank it backs up the live server instead. | e.g. `s189t01-faltrn-ts-pg-ptr-2026-08-20` |
+
+**Note:** dispatching this workflow ignores the environment you pick and backs up development, test, preproduction and production in turn, applying any `Db server` override to each of them. Check the run's job list to confirm which environments it touched.
 
 ### Restore data into the live server
 
@@ -298,6 +308,6 @@ If this document is being followed as part of a DR test, then [complete DR test 
 
 ## Post DR review
 
-- Schedule an incident retro meeting with all the stakeholders
-- Review the incident and fill in the incident report
-- Raise trello cards for any process improvements
+- Hold an incident retro with all the stakeholders, following the playbook's [review the incident](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#review-the-incident-to-try-and-prevent-it-reoccurring) step
+- Fill in the incident report and [close and finish reporting on the incident](https://tech-docs.teacherservices.cloud/operating-a-service/incident-playbook.html#close-and-finish-reporting-on-the-incident)
+- Raise an issue on the [TRS team project board](https://github.com/DFE-Digital/teaching-record-team-project-board/issues) for any process improvements
