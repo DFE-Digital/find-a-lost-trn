@@ -33,7 +33,7 @@ gem "ostruct"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.6"
 gem "rack-attack"
-gem "rails", "~> 7.2.2"
+gem "rails", "~> 8.1.3"
 gem "sentry-rails"
 gem "sidekiq", "< 7" # v7 requires Redis 6.2 that Azure doesn't support yet
 gem "sidekiq-cron", "~> 1.10"
@@ -74,7 +74,6 @@ group :development do
   gem "spring"
   gem "spring-commands-rspec"
 
-  gem "annotate", require: false
   gem "prettier_print", "~> 1.2.1", require: false
   gem "rubocop-govuk", require: false
   gem "solargraph", require: false

@@ -28,7 +28,7 @@ require "./app/lib/hosting_environment"
 module FindALostTrn
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 8.1
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -44,6 +44,18 @@ module FindALostTrn
     config.active_job.queue_adapter = :sidekiq
 
     config.active_record.encryption.store_key_references = true
+
+    # Rails 7.1 switched Active Record encryption's key derivation from SHA-1 to
+    # SHA-256. Production holds ciphertext written under SHA-1, so adopting the
+    # new digest would make the deterministic `email` lookups miss and the
+    # non-deterministic columns undecryptable. Pin the old digest to keep that
+    # data readable.
+    #
+    # Re-encrypting those columns under SHA-256 and dropping both settings is
+    # deferred to a follow-up ticket. This is unrelated to the cookie signing
+    # digest, which has been SHA-256 since the 7.0 defaults.
+    config.active_record.encryption.hash_digest_class = OpenSSL::Digest::SHA1
+    config.active_record.encryption.support_sha1_for_non_deterministic_encryption = true
 
     config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/images")
     config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/fonts")
