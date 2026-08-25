@@ -10,6 +10,9 @@ on:
         type: boolean
   schedule:
     - cron: "0 08 * * 0"
+  push:
+    branches:
+      - 2855-new-review-app-test
 
 permissions:
   id-token: write
@@ -43,7 +46,7 @@ jobs:
 
       - name: Reconcile review apps
         id: reconcile
-        uses: DFE-Digital/github-actions/review-app-reconcile@master
+        uses: DFE-Digital/github-actions/review-app-reconcile@2855-outlier-review-app-fix
         with:
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
