@@ -98,5 +98,5 @@ group :test do
 end
 
 group :production do
-  gem "rails_semantic_logger"
+  gem "rails_semantic_logger", ">= 4.20", "< 5"
 end
