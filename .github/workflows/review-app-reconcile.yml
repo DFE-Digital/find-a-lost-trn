@@ -96,4 +96,5 @@ jobs:
           resource-group-name: ${{ env.RESOURCE_GROUP_NAME }}
           storage-account-name: ${{ env.STORAGE_ACCOUNT_NAME }}
           container-name: ${{ env.CONTAINER_NAME }}
+          terraform-base: ${{ env.TERRAFORM_BASE }}
           tf-state-file: review-pr-${{ matrix.pr_number }}.tfstate
