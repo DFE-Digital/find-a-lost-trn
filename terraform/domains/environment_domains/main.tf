@@ -10,4 +10,6 @@ module "domains" {
   cached_paths        = try(var.cached_paths, [])
   rate_limit          = try(var.rate_limit, null)
   rate_limit_max      = try(var.rate_limit_max, null)
+  allow_aks           = var.allow_aks
+  block_ip            = var.block_ip
 }
