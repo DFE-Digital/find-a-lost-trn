@@ -154,6 +154,29 @@ RSpec.describe "Log redaction" do
       end
     end
 
+    it "scrubs a cause whose class builds its own message" do
+      details = { "requester" => [{ "description" => "Email teacher@example.com is invalid" }] }
+      wrapped =
+        begin
+          begin
+            raise ZendeskAPI::Error::RecordInvalid.new(nil, { status: 422, body: { "details" => details } })
+          rescue ZendeskAPI::Error::RecordInvalid
+            raise ZendeskService::CreateError, "Could not create Zendesk ticket"
+          end
+        rescue ZendeskService::CreateError => e
+          e
+        end
+      logger.error("Error performing CreateZendeskTicketJob", wrapped)
+      SemanticLogger.flush
+
+      aggregate_failures do
+        expect(lines.last.dig("exception", "cause", "name")).to eq("ZendeskAPI::Error::RecordInvalid")
+        [json.string, colour.string].each do |output|
+          expect(output).not_to include("teacher@example.com")
+        end
+      end
+    end
+
     it "leaves the original exception alone" do
       logger.error("Error delivering mail", notify_error)
       SemanticLogger.flush

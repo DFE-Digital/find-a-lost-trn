@@ -23,10 +23,14 @@ Rails.application.config.after_initialize do
   )
   # Copies, so whatever rescued the original still sees its real message. dup
   # first: copying a frozen exception raises an error quoting the original text.
-  # The copy's own cause is still the original, hence the replacement method.
+  # The copy's cause, and any to_s override (zendesk_api's errors have one), still
+  # read the original, hence the replacement methods.
   scrub_exception = lambda do |exception|
     cause = exception.cause && scrub_exception.call(exception.cause)
-    exception.dup.exception(Logstop.scrub(exception.message)).tap do |copy|
+    message = Logstop.scrub(exception.message)
+    exception.dup.exception(message).tap do |copy|
+      copy.define_singleton_method(:message) { message }
+      copy.define_singleton_method(:to_s) { message }
       copy.define_singleton_method(:cause) { cause }
     end
   end
