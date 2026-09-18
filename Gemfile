@@ -97,6 +97,8 @@ group :test do
   gem "webmock", "~> 3.25"
 end
 
-group :production do
+# Not development, where Rails' own logger keeps Logstop.guard and
+# verbose_query_logs working. Test needs it to spec the log redaction.
+group :production, :test do
   gem "rails_semantic_logger", ">= 4.20", "< 5"
 end
