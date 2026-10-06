@@ -1,0 +1,17 @@
+---
+shared:
+  :console1984_users:
+    - username
+  :staff:
+    - email
+  :trn_requests:
+    - date_of_birth
+    - email
+    - first_name
+    - last_name
+    - ni_number
+    - preferred_first_name
+    - preferred_last_name
+    - previous_first_name
+    - previous_last_name
+    - trn

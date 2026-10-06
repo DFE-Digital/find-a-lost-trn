@@ -1,0 +1,44 @@
+---
+:shared:
+  :validation_errors:
+    - messages
+  :trn_responses:
+    - raw_result
+  :trn_requests:
+    - trn_from_user
+  :staff:
+    - encrypted_password
+    - reset_password_token
+    - current_sign_in_ip
+    - last_sign_in_ip
+    - confirmation_token
+    - unconfirmed_email
+    - unlock_token
+    - invitation_token
+  :console1984_sessions:
+    - id
+    - reason
+    - user_id
+    - created_at
+    - updated_at
+  :console1984_sensitive_accesses:
+    - id
+    - justification
+    - session_id
+    - created_at
+    - updated_at
+  :console1984_commands:
+    - id
+    - statements
+    - sensitive_access_id
+    - session_id
+    - created_at
+    - updated_at
+  :audits1984_audits:
+    - id
+    - status
+    - notes
+    - session_id
+    - auditor_id
+    - created_at
+    - updated_at
