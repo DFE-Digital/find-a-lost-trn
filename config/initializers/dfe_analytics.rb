@@ -7,4 +7,6 @@ DfE::Analytics.configure do |config|
   # Airbyte replicates the database, so the gem's own database events stay off
   config.airbyte_enabled = true
   config.database_events_enabled = false
+
+  config.enable_analytics = proc { FeatureFlag.active?(:send_analytics_events) }
 end
