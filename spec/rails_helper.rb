@@ -11,6 +11,7 @@ end
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 require "capybara/cuprite"
+require "dfe/analytics/testing"
 require "sidekiq/testing"
 require "vcr"
 require "view_component/test_helpers"
