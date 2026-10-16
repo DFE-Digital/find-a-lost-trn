@@ -155,3 +155,117 @@ variable "run_as_non_root" {
   default     = true
   description = "Whether to enforce that containers must run as non-root user"
 }
+
+# Analytics: dfe-analytics request events and Airbyte database replication
+
+variable "enable_dfe_analytics_federated_auth" {
+  type        = bool
+  default     = false
+  description = "Create the Google Cloud resources for request events and give the worker federated access to them"
+}
+
+variable "pg_airbyte_enabled" {
+  type        = bool
+  default     = false
+  description = "Enable logical replication on Postgres for Airbyte. Restarts the database server several times"
+}
+
+variable "airbyte_enabled" {
+  type        = bool
+  default     = false
+  description = "Create the Airbyte source, destination and connection that replicate the database to BigQuery"
+
+  validation {
+    condition     = !var.airbyte_enabled || var.pg_airbyte_enabled
+    error_message = "airbyte_enabled needs pg_airbyte_enabled: Airbyte reads changes through Postgres logical replication."
+  }
+
+  # The gem tags the hidden columns using the request events credentials
+  validation {
+    condition     = !var.airbyte_enabled || var.enable_dfe_analytics_federated_auth
+    error_message = "airbyte_enabled needs enable_dfe_analytics_federated_auth, otherwise PII columns reach BigQuery without the hidden policy tag."
+  }
+}
+
+variable "airbyte_connection_status" {
+  type        = string
+  default     = "inactive"
+  description = "Airbyte connection status, either active or inactive"
+
+  validation {
+    condition     = contains(["active", "inactive"], var.airbyte_connection_status)
+    error_message = "airbyte_connection_status must be active or inactive."
+  }
+}
+
+variable "airbyte_environment" {
+  type        = string
+  default     = null
+  description = "Shorter environment name for Airbyte resources, whose names have length limits. Defaults to the environment name"
+}
+
+variable "gcp_project_id" {
+  type        = string
+  default     = null
+  description = "Google Cloud project holding the BigQuery datasets"
+
+  validation {
+    condition     = !var.enable_dfe_analytics_federated_auth || var.gcp_project_id != null
+    error_message = "gcp_project_id must be set when enable_dfe_analytics_federated_auth is on."
+  }
+}
+
+variable "gcp_taxonomy_id" {
+  type        = number
+  default     = null
+  description = "BigQuery policy tag taxonomy ID"
+
+  validation {
+    condition     = !var.enable_dfe_analytics_federated_auth || var.gcp_taxonomy_id != null
+    error_message = "gcp_taxonomy_id must be set when enable_dfe_analytics_federated_auth is on."
+  }
+}
+
+variable "gcp_policy_tag_id" {
+  type        = number
+  default     = null
+  description = "ID of the policy tag that hides PII columns in the request events table"
+
+  validation {
+    condition     = !var.enable_dfe_analytics_federated_auth || var.gcp_policy_tag_id != null
+    error_message = "gcp_policy_tag_id must be set when enable_dfe_analytics_federated_auth is on."
+  }
+}
+
+variable "gcp_airbyte_policy_tag_id" {
+  type        = number
+  default     = null
+  description = "ID of the policy tag that hides PII columns in the Airbyte tables"
+
+  validation {
+    condition     = !var.airbyte_enabled || var.gcp_airbyte_policy_tag_id != null
+    error_message = "gcp_airbyte_policy_tag_id must be set when airbyte_enabled is on."
+  }
+}
+
+variable "gcp_keyring" {
+  type        = string
+  default     = null
+  description = "Google Cloud KMS keyring for dataset encryption"
+
+  validation {
+    condition     = !var.enable_dfe_analytics_federated_auth || var.gcp_keyring != null
+    error_message = "gcp_keyring must be set when enable_dfe_analytics_federated_auth is on."
+  }
+}
+
+variable "gcp_key" {
+  type        = string
+  default     = null
+  description = "Google Cloud KMS key for dataset encryption"
+
+  validation {
+    condition     = !var.enable_dfe_analytics_federated_auth || var.gcp_key != null
+    error_message = "gcp_key must be set when enable_dfe_analytics_federated_auth is on."
+  }
+}
