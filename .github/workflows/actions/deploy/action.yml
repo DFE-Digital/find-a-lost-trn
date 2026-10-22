@@ -65,6 +65,11 @@ runs:
         tenant-id: ${{ inputs.azure-tenant-id }}
         subscription-id: ${{ inputs.azure-subscription-id }}
 
+    - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+      with:
+        project_id: teaching-qualifications
+        workload_identity_provider: projects/708780292301/locations/global/workloadIdentityPools/find-a-lost-trn/providers/find-a-lost-trn
+
     - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
         azure-client-id: ${{ inputs.azure-client-id }}
