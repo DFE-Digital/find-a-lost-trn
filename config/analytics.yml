@@ -1,0 +1,86 @@
+---
+shared:
+  :account_unlock_events:
+    - id
+    - trn_request_id
+    - created_at
+    - updated_at
+  :console1984_users:
+    - id
+    - username
+    - created_at
+    - updated_at
+  :features:
+    - id
+    - name
+    - active
+    - created_at
+    - updated_at
+  :staff:
+    - id
+    - email
+    - confirmation_sent_at
+    - confirmed_at
+    - current_sign_in_at
+    - failed_attempts
+    - invitation_accepted_at
+    - invitation_created_at
+    - invitation_limit
+    - invitation_sent_at
+    - invitations_count
+    - invited_by_id
+    - invited_by_type
+    - last_sign_in_at
+    - locked_at
+    - remember_created_at
+    - reset_password_sent_at
+    - sign_in_count
+    - created_at
+    - updated_at
+  :trn_requests:
+    - id
+    - awarded_qts
+    - checked_at
+    - date_of_birth
+    - email
+    - first_name
+    - from_get_an_identity
+    - has_active_sanctions
+    - has_ni_number
+    - itt_provider_enrolled
+    - itt_provider_name
+    - itt_provider_ukprn
+    - last_name
+    - name_changed
+    - ni_number
+    - official_name_preferred
+    - preferred_first_name
+    - preferred_last_name
+    - previous_first_name
+    - previous_last_name
+    - submitted_at
+    - trn
+    - zendesk_ticket_id
+    - created_at
+    - updated_at
+  :trn_responses:
+    - id
+    - trn_request_id
+    - created_at
+    - updated_at
+  :validation_errors:
+    - id
+    - trn_request_id
+    - form_object
+    - created_at
+    - updated_at
+  :zendesk_delete_requests:
+    - id
+    - ticket_id
+    - enquiry_type
+    - group_name
+    - no_action_required
+    - received_at
+    - closed_at
+    - created_at
+    - updated_at

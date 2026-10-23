@@ -1,8 +1,11 @@
 FROM ruby:3.4.8-alpine3.22
 
+# git depends on pcre2, and 10.46-r0 has two high-severity vulnerabilities.
+# Naming the fixed version also stops the build reusing a cached layer that
+# installed the old one
 RUN apk -U upgrade && \
     apk add --update --no-cache gcc git libc6-compat libc-dev make nodejs \
-    postgresql17-dev tzdata yarn g++ yaml-dev
+    postgresql17-dev tzdata yarn g++ yaml-dev "pcre2>=10.46-r1"
 
 RUN echo "Europe/London" > /etc/timezone && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime
