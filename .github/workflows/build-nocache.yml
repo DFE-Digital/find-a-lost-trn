@@ -3,8 +3,8 @@ name: Build No Cache
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 12 * * 0"
-    # Will run once a week on Sunday afternoon
+    - cron: "0 5 * * *"
+    # Will run once a day in the early morning
 
 permissions:
   packages: write
