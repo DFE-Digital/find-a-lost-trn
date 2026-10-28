@@ -56,11 +56,11 @@ RSpec.feature "Zendesk ticket exports", type: :system do
   end
 
   def then_the_exported_file_should_contain_the_deleted_ticket
-    expect(page.response_headers["Content-Disposition"]).to eq(
+    expect(response_header("Content-Disposition")).to eq(
       "attachment; filename=\"2022_11_01_deleted_zendesk_tickets.csv\"; " \
         "filename*=UTF-8''2022_11_01_deleted_zendesk_tickets.csv",
     )
-    expect(page.response_headers["Content-Type"]).to eq("text/csv")
+    expect(response_header("Content-Type")).to eq("text/csv")
     expect(download_content).to eq(
       "Ticket,Group Name,Received At,Closed At,Enquiry Type,No Action Required\n" \
         "1,QTS Enquiries,2022-06-05 13:00,2022-11-01 12:00,Trn,\n",

@@ -48,11 +48,11 @@ RSpec.feature "Trn Request exports", type: :system do
   end
 
   def then_the_exported_file_should_contain_the_trn_request
-    expect(page.response_headers["Content-Disposition"]).to eq(
+    expect(response_header("Content-Disposition")).to eq(
       "attachment; filename=\"2022_11_30_trn_requests.csv\"; " \
         "filename*=UTF-8''2022_11_30_trn_requests.csv",
     )
-    expect(page.response_headers["Content-Type"]).to eq("text/csv")
+    expect(response_header("Content-Type")).to eq("text/csv")
     expect(download_content).to eq(
       "Id,Trn,Email,First Unlocked At,Created At,Updated At\n" \
         "1,123456,trn@example.com,,2022-11-18 12:00:00 UTC,2022-11-18 12:00:00 UTC\n",
