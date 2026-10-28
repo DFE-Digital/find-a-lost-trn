@@ -1,5 +1,5 @@
 azure-cli 2.57.0
-nodejs    18.1.0
+nodejs    24.22.1
 postgres  17.9
 redis     6.2.6
 ruby      3.4.12

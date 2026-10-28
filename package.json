@@ -1,12 +1,15 @@
 {
   "name": "app",
   "private": "true",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "dependencies": {
     "accessible-autocomplete": "^2.0.4",
     "dfe-autocomplete": "github:DFE-Digital/dfe-autocomplete#main",
     "esbuild": "^0.28.1",
     "govuk-frontend": "^6.3.0",
-    "sass": "^1.98.0"
+    "sass": "^1.106.1"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
