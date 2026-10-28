@@ -546,7 +546,7 @@ RSpec.describe "TRN requests", type: :system do
     expect(current_email.subject).to eq(
       "We’ve received the information you submitted",
     )
-    expect(current_email.body).to include(
+    expect(current_email.personalisation.fetch(:body)).to include(
       "We’ve received the information you submitted, and you’ll get an email with your TRN if we find a match.",
     )
   end
