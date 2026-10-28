@@ -33,3 +33,4 @@ storage
 tmp
 vendor
 *.min.js
+*.min.css
