@@ -16,6 +16,12 @@ module System
       File.read(download)
     end
 
+    # Header names are case-insensitive, but the driver returns them as the
+    # server sent them, and Puma 7+ and Rack 3 send them lowercase.
+    def response_header(name)
+      page.response_headers.transform_keys(&:downcase).fetch(name.downcase)
+    end
+
     def wait_for_download
       Timeout.timeout(TIMEOUT, Timeout::Error) { sleep 0.1 until downloaded? }
     end
