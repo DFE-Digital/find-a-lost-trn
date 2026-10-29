@@ -15,18 +15,6 @@ require "sidekiq/testing"
 require "vcr"
 require "view_component/test_helpers"
 
-Capybara.register_driver(:cuprite) do |app|
-  browser_options = {}
-  browser_options['no-sandbox'] = nil if ENV['CI']
-
-  Capybara::Cuprite::Driver.new(
-    app,
-    timeout: 10,
-    process_timeout: 30,
-    window_size: [1200, 800],
-    browser_options:
-  )
-end
 Capybara.default_driver = :cuprite
 Capybara.javascript_driver = :cuprite
 
@@ -88,7 +76,19 @@ RSpec.configure do |config|
 
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  config.before(:each, type: :system) { driven_by(:cuprite) }
+  # driven_by registers its own :cuprite driver over any registered elsewhere,
+  # so the driver's options have to be passed here.
+  config.before(:each, type: :system) do
+    driven_by(
+      :cuprite,
+      screen_size: [1200, 800],
+      options: {
+        timeout: 10,
+        process_timeout: 30,
+        browser_options: ENV["CI"] ? { "no-sandbox" => nil } : {},
+      },
+    )
+  end
 
   config.include ActiveSupport::Testing::TimeHelpers
   config.include ActiveJob::TestHelper
