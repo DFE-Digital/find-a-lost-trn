@@ -13,6 +13,9 @@ gem "csv"
 gem "data_migrate"
 gem "devise"
 gem "devise_invitable"
+gem "dfe-analytics",
+    github: "DFE-Digital/dfe-analytics",
+    ref: "1beb572140130981efc7c7a77229c1702c7e79bd" # v1.16.1
 gem "dfe-autocomplete",
     require: "dfe/autocomplete",
     github: "DFE-Digital/dfe-autocomplete",
@@ -25,6 +28,9 @@ gem "govuk_markdown", "~> 2.0"
 gem "jsbundling-rails"
 gem "logstop", "~> 0.4.1"
 gem "mail-notify"
+# representable (via dfe-analytics' BigQuery client) requires multi_json without
+# declaring it, and googleauth no longer pulls it in
+gem "multi_json"
 gem "mutex_m"
 gem "okcomputer", "~> 1.18"
 gem "omniauth-oauth2", "~> 1.8"
