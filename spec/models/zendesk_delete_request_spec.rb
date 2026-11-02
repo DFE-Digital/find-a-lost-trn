@@ -1,17 +1,3 @@
-# == Schema Information
-#
-# Table name: zendesk_delete_requests
-#
-#  id                 :bigint           not null, primary key
-#  closed_at          :datetime         not null
-#  enquiry_type       :string
-#  group_name         :string
-#  no_action_required :string
-#  received_at        :datetime         not null
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  ticket_id          :integer          not null
-#
 require "rails_helper"
 
 RSpec.describe ZendeskDeleteRequest, type: :model do
