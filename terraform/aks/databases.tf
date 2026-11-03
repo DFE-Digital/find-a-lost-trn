@@ -1,3 +1,7 @@
+locals {
+  postgres_server_version = "17"
+}
+
 module "postgres" {
   source = "./vendor/modules/aks//aks/postgres"
 
@@ -11,11 +15,13 @@ module "postgres" {
   use_azure                      = var.deploy_azure_backing_services
   azure_enable_monitoring        = var.enable_monitoring
   azure_extensions               = ["citext", "uuid-ossp"]
-  server_version                 = "17"
+  server_version                 = local.postgres_server_version
   azure_enable_backup_storage    = var.azure_enable_backup_storage
   azure_sku_name                 = var.postgres_flexible_server_sku
   azure_enable_high_availability = var.postgres_enable_high_availability
   azure_maintenance_window       = var.azure_maintenance_window
+
+  use_airbyte = var.pg_airbyte_enabled
 }
 
 module "redis" {

@@ -1,0 +1,11 @@
+---
+shared:
+  :console1984_users:
+    - username
+  :staff:
+    - email
+  :trn_requests:
+    - date_of_birth
+    - preferred_first_name
+    - preferred_last_name
+    - trn

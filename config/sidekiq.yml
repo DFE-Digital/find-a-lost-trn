@@ -10,3 +10,4 @@ production:
   - critical
   - default
   - low
+  - analytics

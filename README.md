@@ -218,6 +218,10 @@ Regenerate this diagram with `bundle exec rake erd`.
 
 [OPS manual](docs/ops-manual.md).
 
+### Analytics
+
+The service sends data to BigQuery through Airbyte and the dfe-analytics gem. See [analytics](docs/analytics.md) for how it works, which columns leave the service, what to do when a migration adds one, and how to switch it on for an environment.
+
 ## Licence
 
 [MIT Licence](LICENCE).
