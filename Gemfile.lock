@@ -132,6 +132,9 @@ GEM
       bigdecimal
       rexml
     crass (1.0.8)
+    cronex (0.15.0)
+      tzinfo
+      unicode (>= 0.4.4.5)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
     csv (3.3.5)
@@ -162,7 +165,7 @@ GEM
     drb (2.2.3)
     erb (6.0.7)
     erubi (1.13.1)
-    et-orbi (1.2.11)
+    et-orbi (1.4.2)
       tzinfo
     factory_bot (6.5.5)
       activesupport (>= 6.1.0)
@@ -183,8 +186,8 @@ GEM
       webrick (~> 1.7)
       websocket-driver (>= 0.6, < 0.8)
     foreman (0.87.2)
-    fugit (1.11.1)
-      et-orbi (~> 1, >= 1.2.11)
+    fugit (1.14.0)
+      et-orbi (~> 1.4)
       raabro (~> 1.4)
     gds_zendesk (3.7.0)
       null_logger (~> 0)
@@ -338,7 +341,7 @@ GEM
     public_suffix (6.0.2)
     puma (8.0.2)
       nio4r (~> 2.0)
-    raabro (1.4.0)
+    raabro (1.5.0)
     racc (1.8.1)
     rack (2.2.24)
     rack-attack (6.7.0)
@@ -491,10 +494,11 @@ GEM
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
-    sidekiq-cron (1.10.1)
-      fugit (~> 1.8)
+    sidekiq-cron (2.4.0)
+      cronex (>= 0.13.0)
+      fugit (~> 1.8, >= 1.11.1)
       globalid (>= 1.0.1)
-      sidekiq (>= 6)
+      sidekiq (>= 6.5.0)
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
@@ -566,6 +570,7 @@ GEM
       railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unicode (0.4.4.5)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
@@ -662,7 +667,7 @@ DEPENDENCIES
   sentry-rails
   shoulda-matchers (~> 6.5)
   sidekiq (< 7)
-  sidekiq-cron (~> 1.10)
+  sidekiq-cron (~> 2.4)
   solargraph
   solargraph-rails
   spring
