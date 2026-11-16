@@ -14,6 +14,13 @@ class FeatureFlag
 
   PERMANENT_SETTINGS = [
     [
+      :send_analytics_events,
+      "Send web request events to BigQuery. Only activate once this " \
+        "environment has BigQuery credentials, otherwise every request " \
+        "queues a job that fails.",
+      "Naomi Lockhart",
+    ],
+    [
       :slack_alerts,
       "Enable Slack alerts and notifications for this environment",
       "Felix Clack",

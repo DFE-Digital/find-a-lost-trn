@@ -2,9 +2,17 @@ terraform {
   required_version = "1.14.5"
 
   required_providers {
+    airbyte = {
+      source  = "airbytehq/airbyte"
+      version = "= 0.10.0"
+    }
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "= 4.61.0"
+    }
+    google = {
+      source  = "hashicorp/google"
+      version = "= 6.6.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"

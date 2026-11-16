@@ -3,14 +3,14 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Deploy environment ( development, test, preprod or production )"
+        description: "Deploy environment ( development, test or preproduction )"
         required: true
         default: development
         type: choice
         options:
           - development
           - test
-          - preprod
+          - preproduction
       sha:
         description: Commit sha to be deployed
         required: true

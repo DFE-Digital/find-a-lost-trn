@@ -40,13 +40,21 @@ module "application_configuration" {
   azure_resource_prefix = var.azure_resource_prefix
   service_short         = var.service_short
   config_short          = var.config_short
-  config_variables = {
-    AKS_ENV_NAME     = var.file_environment
-    EnableMetrics    = false
-    ENVIRONMENT_NAME = local.environment
-    PGSSLMODE        = local.postgres_ssl_mode
-  }
-  secret_variables       = local.app_secrets
+  config_variables = merge(
+    {
+      AKS_ENV_NAME     = var.file_environment
+      EnableMetrics    = false
+      ENVIRONMENT_NAME = local.environment
+      PGSSLMODE        = local.postgres_ssl_mode
+    },
+    local.airbyte_dataset_variables,
+    local.airbyte_config_variables,
+  )
+  secret_variables = merge(
+    local.app_secrets,
+    local.dfe_analytics_secret_variables,
+    local.airbyte_secret_variables,
+  )
   secret_key_vault_short = "app"
 
   is_rails_application = true
@@ -69,4 +77,5 @@ module "worker_application" {
   replicas                   = var.worker_replicas
   enable_logit               = var.enable_logit
   run_as_non_root            = var.run_as_non_root
+  enable_gcp_wif             = var.enable_dfe_analytics_federated_auth
 }

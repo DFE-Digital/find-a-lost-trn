@@ -92,6 +92,8 @@ jobs:
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          gcp-wip: projects/708780292301/locations/global/workloadIdentityPools/find-a-lost-trn/providers/find-a-lost-trn
+          gcp-project-id: teaching-qualifications
           pr-number: ${{ matrix.pr_number }}
           resource-group-name: ${{ env.RESOURCE_GROUP_NAME }}
           storage-account-name: ${{ env.STORAGE_ACCOUNT_NAME }}
