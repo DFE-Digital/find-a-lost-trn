@@ -1,5 +1,6 @@
+# Not gated on airbyte_enabled: turning Airbyte off must still give the
+# provider credentials to destroy the Airbyte resources
 module "infrastructure_secrets" {
-  count  = var.airbyte_enabled ? 1 : 0
   source = "./vendor/modules/aks//aks/secrets"
 
   azure_resource_prefix = var.azure_resource_prefix
@@ -22,9 +23,9 @@ module "airbyte" {
 
   host_name     = module.postgres.host
   database_name = module.postgres.name
-  workspace_id  = module.infrastructure_secrets[0].map.AIRBYTE-WORKSPACE-ID
-  client_id     = module.infrastructure_secrets[0].map.AIRBYTE-CLIENT-ID
-  client_secret = module.infrastructure_secrets[0].map.AIRBYTE-CLIENT-SECRET
+  workspace_id  = module.infrastructure_secrets.map.AIRBYTE-WORKSPACE-ID
+  client_id     = module.infrastructure_secrets.map.AIRBYTE-CLIENT-ID
+  client_secret = module.infrastructure_secrets.map.AIRBYTE-CLIENT-SECRET
 
   server_url        = local.airbyte_server_url
   connection_status = var.airbyte_connection_status
@@ -71,8 +72,8 @@ locals {
   } : {}
 
   airbyte_secret_variables = var.airbyte_enabled ? {
-    AIRBYTE_CLIENT_ID     = module.infrastructure_secrets[0].map.AIRBYTE-CLIENT-ID
-    AIRBYTE_CLIENT_SECRET = module.infrastructure_secrets[0].map.AIRBYTE-CLIENT-SECRET
+    AIRBYTE_CLIENT_ID     = module.infrastructure_secrets.map.AIRBYTE-CLIENT-ID
+    AIRBYTE_CLIENT_SECRET = module.infrastructure_secrets.map.AIRBYTE-CLIENT-SECRET
     AIRBYTE_CONFIGURATION = jsonencode({
       SOURCE_ID      = module.airbyte[0].airbyte_source_id
       DESTINATION_ID = module.airbyte[0].airbyte_destination_id

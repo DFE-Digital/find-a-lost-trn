@@ -5,10 +5,12 @@ provider "azurerm" {
 }
 
 provider "airbyte" {
-  server_url = var.airbyte_enabled ? "${local.airbyte_server_url}/api/public/v1" : ""
+  server_url = "${local.airbyte_server_url}/api/public/v1"
 
-  client_id     = var.airbyte_enabled ? module.infrastructure_secrets[0].map.AIRBYTE-CLIENT-ID : ""
-  client_secret = var.airbyte_enabled ? module.infrastructure_secrets[0].map.AIRBYTE-CLIENT-SECRET : ""
+  # try() so the provider still has credentials while Airbyte resources are
+  # being destroyed, and "" where the infra Key Vault has no Airbyte secrets
+  client_id     = try(module.infrastructure_secrets.map.AIRBYTE-CLIENT-ID, "")
+  client_secret = try(module.infrastructure_secrets.map.AIRBYTE-CLIENT-SECRET, "")
 }
 
 provider "google" {
