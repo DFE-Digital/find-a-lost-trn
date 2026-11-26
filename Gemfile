@@ -5,6 +5,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.4.12"
 
+# 2.10 changes how Addressable::Template expands and matches, which
+# google-apis-core uses to build dfe-analytics' BigQuery request URLs
+gem "addressable", "~> 2.9.1"
 gem "audits1984", "~> 0.1.7"
 gem "bootsnap", require: false
 gem "console1984", "~> 0.2.2"

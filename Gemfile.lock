@@ -99,8 +99,8 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    addressable (2.8.7)
-      public_suffix (>= 2.0.2, < 7.0)
+    addressable (2.9.2)
+      public_suffix (>= 2.0.2, < 8.0)
     anonymous_loader (0.1.5)
       version_gem (~> 1.1, >= 1.1.17)
     ast (2.4.3)
@@ -695,6 +695,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  addressable (~> 2.9.1)
   audits1984 (~> 0.1.7)
   bootsnap
   capybara (~> 3.40)
