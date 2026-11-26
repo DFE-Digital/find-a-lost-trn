@@ -71,6 +71,13 @@ class FeatureFlag
       "Automatically export TRN requests to Slack",
       "Felix Clack",
     ],
+    [
+      :tps_contact_banner,
+      "Show a banner on every page telling users to contact Teachers’ " \
+        "Pensions directly about portal access, their details or an " \
+        "unrecognised TRN",
+      "Naomi Lockhart",
+    ],
   ].freeze
 
   FEATURES =

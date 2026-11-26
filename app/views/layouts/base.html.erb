@@ -42,6 +42,17 @@
       <%= yield(:before_content) %>
 
       <main class="govuk-main-wrapper" id="main-content" role="main">
+        <% if FeatureFlag.active?(:tps_contact_banner) %>
+          <%# The design system wants banners as wide as the page content, which is two-thirds on our pages %>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+              <%# Its own title id, or a flash banner on the same page would be labelled "Important" too %>
+              <%= govuk_notification_banner(title_text: "Important", title_id: "tps-contact-banner-title") do %>
+                <p class="govuk-body">Due to current issues on the Teachers’ Pension Portal, please contact them directly for access issues, updating details or if your Teacher Reference Number (TRN) is not recognised by their service. Telephone: 0345 6066166 or international call +44 1227 213243.</p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
         <%= render(FlashMessageComponent.new(flash: flash)) %>
         <%= content_for?(:content) ? yield(:content) : yield %>
       </main>
