@@ -2,6 +2,7 @@
 require "spec_helper"
 require "capybara/rspec"
 require "capybara/cuprite"
+require_relative "../support/basic_auth_helpers"
 
 Capybara.javascript_driver = :cuprite
 Capybara.always_include_port = false
@@ -102,7 +103,7 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
   end
 
   def when_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize(
+    basic_authorize(
       ENV["SUPPORT_USERNAME"],
       ENV["SUPPORT_PASSWORD"],
     )

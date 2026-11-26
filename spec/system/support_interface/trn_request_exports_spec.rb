@@ -23,7 +23,7 @@ RSpec.feature "Trn Request exports", type: :system do
   private
 
   def and_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize("test", "test")
+    basic_authorize("test", "test")
   end
 
   def and_i_am_on_the_trn_requests_page

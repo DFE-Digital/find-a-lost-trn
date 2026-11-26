@@ -1130,7 +1130,7 @@ RSpec.describe "TRN requests", type: :system do
   end
 
   def when_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize("test", "test")
+    basic_authorize("test", "test")
   end
 
   def when_i_click_on_the_forgotten_ni_number_link

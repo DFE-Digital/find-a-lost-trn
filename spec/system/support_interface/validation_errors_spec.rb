@@ -57,7 +57,7 @@ RSpec.describe "Validation errors", type: :system do
   end
 
   def when_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize("test", "test")
+    basic_authorize("test", "test")
   end
 
   def when_i_click_the_link_of_the_first_error_group
