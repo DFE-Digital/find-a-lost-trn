@@ -651,11 +651,12 @@ RSpec.describe "TRN requests", type: :system do
   end
 
   def then_i_see_the_updated_suggested_provider
+    expect(page).to have_current_path("/check-answers")
     expect(page).to have_content("Astra SCITT")
   end
 
   def then_i_see_provider_suggestions
-    expect(page).to have_content("Astra SCITT")
+    expect(page).to have_css(".autocomplete__option", text: "Astra SCITT")
   end
 
   def then_i_see_a_message_to_check_my_email
