@@ -170,6 +170,12 @@ variable "pg_airbyte_enabled" {
   description = "Enable logical replication on Postgres for Airbyte. Restarts the database server several times"
 }
 
+# wal_threshold is read by the database-replication-monitor workflow, not by terraform
+variable "wal_threshold" {
+  default     = null
+  description = "WAL size in bytes above which the monitor workflow drops the Airbyte replication slot"
+}
+
 variable "airbyte_enabled" {
   type        = bool
   default     = false
