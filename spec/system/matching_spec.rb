@@ -137,7 +137,7 @@ RSpec.describe "Matching spec", type: :system do
   end
 
   def when_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize(
+    basic_authorize(
       ENV["SUPPORT_USERNAME"],
       ENV["SUPPORT_PASSWORD"],
     )

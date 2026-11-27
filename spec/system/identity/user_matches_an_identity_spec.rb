@@ -25,7 +25,7 @@ RSpec.feature "Get an identity", type: :system do
   end
 
   def given_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize("test", "test")
+    basic_authorize("test", "test")
   end
 
   def given_the_identity_endpoint_is_open

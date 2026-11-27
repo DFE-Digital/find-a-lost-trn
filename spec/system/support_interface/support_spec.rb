@@ -45,7 +45,7 @@ RSpec.describe "Support", type: :system do
   end
 
   def when_i_am_authorized_as_a_support_user
-    page.driver.basic_authorize("test", "test")
+    basic_authorize("test", "test")
   end
 
   def when_i_visit_the_feature_flags_page

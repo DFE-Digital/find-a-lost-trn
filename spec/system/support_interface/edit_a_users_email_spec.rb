@@ -16,7 +16,7 @@ RSpec.describe "Edit a user's email in support", vcr: true, type: :system do
   private
 
   def given_i_am_authorized_as_staff
-    page.driver.basic_authorize("test", "test")
+    basic_authorize("test", "test")
   end
 
   def and_a_user_exists_on_the_identity_api
